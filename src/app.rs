@@ -27,18 +27,27 @@ pub trait App: Sized {
 }
 
 /// See [cef_execute_process] for more documentation.
-pub fn execute_process<T: App>(args: &Args, app: Option<T>) -> i32 {
-    let args = args.to_raw();
+pub fn execute_process<T: App>(args: &mut Args, app: Option<T>) -> Result<()> {
+    let args = args.as_raw();
     let app = app
         .map(|app| app.into_raw())
         .unwrap_or(std::ptr::null_mut());
 
-    unsafe { cef_execute_process(&args, app, std::ptr::null_mut()) }
+    let code = unsafe { cef_execute_process(&args, app, std::ptr::null_mut()) };
+    if code == -1 {
+        Ok(())
+    } else {
+        if code == 0 {
+            return Ok(());
+        }
+
+        Err(Error::Exit(code))
+    }
 }
 
 /// See [cef_initialize] for more documentation.
-pub fn initialize<T: App>(args: &Args, settings: &Settings, app: Option<T>) -> Result<()> {
-    let args = args.to_raw();
+pub fn initialize<T: App>(args: &mut Args, settings: &Settings, app: Option<T>) -> Result<()> {
+    let args = args.as_raw();
     let settings = settings.as_raw();
     let app = app
         .map(|app| app.into_raw())

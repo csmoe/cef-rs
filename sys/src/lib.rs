@@ -1,5 +1,9 @@
-#[allow(unused, nonstandard_style, clippy::all)]
-mod bindings;
+#[allow(nonstandard_style)]
+#[allow(clippy::all)]
+#[allow(unused)]
+mod bindings {
+    include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
+}
 
 pub use bindings::*;
 

@@ -99,7 +99,7 @@ pub trait WindowDelegate: PanelDelegate {
         object.on_window_destroyed = Some(on_window_destroyed::<Self>);
         object.can_close = Some(can_close::<Self>);
 
-        RcImpl::new(object, self) as *mut _
+        RcImpl::new(object, self).cast()
     }
 }
 

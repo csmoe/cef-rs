@@ -6,7 +6,8 @@ use cef_sys::{
 };
 
 use crate::{
-    client::Client, rc::RefGuard, string::CefString, window::WindowInfo, wrapper, State, View,
+    client::Client, error::Error, error::Result, rc::RefGuard, string::CefString,
+    window::WindowInfo, wrapper, State, View,
 };
 
 /// See [cef_browser_settings_t] for more documentation.
@@ -153,7 +154,7 @@ pub fn create_browser_view<T: Client>(
     url: CefString,
     settings: BrowserSettings,
     // TODO delegate: *mut _cef_browser_view_delegate_t,
-) -> BrowserView {
+) -> Result<BrowserView> {
     let client = client.map(|c| c.into_raw()).unwrap_or(null_mut());
 
     let view = unsafe {
@@ -166,6 +167,9 @@ pub fn create_browser_view<T: Client>(
             null_mut(),
         )
     };
+    if view.is_null() {
+        return Err(Error::CannotCreateBrowserView);
+    }
 
-    unsafe { BrowserView::from_raw(view) }
+    Ok(unsafe { BrowserView::from_raw(view) })
 }

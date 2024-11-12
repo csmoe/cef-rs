@@ -8,6 +8,14 @@ description = "Use cef in Rust"
 repository = "https://github.com/wusyong/cef-rs"
 readme = "README.md"
 
+[package.metadata.bundle.example.demo]
+name = "demo"
+identifier = "com.cef.demo"
+category = "Utility"
+short_description = "An example of a bundled CEF application"
+long_description = """ CEF application in Rust """
+osx_frameworks = [ "/Users/mac/Downloads/cef/Release/Chromium Embedded Framework.framework" ]
+
 [features]
 dox = ["cef-sys/dox"]
 
