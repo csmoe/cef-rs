@@ -8,6 +8,6 @@ pub trait Client: Sized {
     fn into_raw(self) -> *mut cef_client_t {
         let object: cef_client_t = unsafe { std::mem::zeroed() };
 
-        RcImpl::new(object, self) as *mut _
+        RcImpl::new(object, self).cast()
     }
 }

@@ -1,10 +1,11 @@
 use cef_sys::{
-    cef_app_t, cef_command_line_t, cef_execute_process, cef_initialize, cef_quit_message_loop,
-    cef_run_message_loop, cef_shutdown, cef_string_t,
+    cef_app_t, cef_command_line_t, cef_execute_process, cef_get_exit_code, cef_initialize,
+    cef_quit_message_loop, cef_run_message_loop, cef_shutdown, cef_string_t,
 };
 
 use crate::{
-    args::Args, command_line::CommandLine, rc::RcImpl, settings::Settings, string::CefString,
+    args::Args, command_line::CommandLine, error::Error, error::Result, rc::RcImpl,
+    settings::Settings, string::CefString,
 };
 
 /// See [cef_app_t] for more documentation.
@@ -21,7 +22,7 @@ pub trait App: Sized {
 
         object.on_before_command_line_processing = Some(on_before_command_line_processing::<Self>);
 
-        RcImpl::new(object, self) as *mut _
+        RcImpl::new(object, self).cast()
     }
 }
 
@@ -36,14 +37,17 @@ pub fn execute_process<T: App>(args: &Args, app: Option<T>) -> i32 {
 }
 
 /// See [cef_initialize] for more documentation.
-pub fn initialize<T: App>(args: &Args, settings: &Settings, app: Option<T>) -> bool {
+pub fn initialize<T: App>(args: &Args, settings: &Settings, app: Option<T>) -> Result<()> {
     let args = args.to_raw();
-    let settings = settings.get_raw();
+    let settings = settings.as_raw();
     let app = app
         .map(|app| app.into_raw())
         .unwrap_or(std::ptr::null_mut());
-
-    unsafe { cef_initialize(&args, &settings, app, std::ptr::null_mut()) == 1 }
+    if unsafe { cef_initialize(&args, &settings, app, std::ptr::null_mut()) != 1 } {
+        Err(Error::CannotInit(unsafe { cef_get_exit_code() }))
+    } else {
+        Ok(())
+    }
 }
 
 /// See [cef_run_message_loop] for more documentation.

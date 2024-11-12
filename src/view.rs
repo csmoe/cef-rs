@@ -50,11 +50,11 @@ pub trait ViewDelegate: Sized {
 
         add_view_delegate_methods!(object);
 
-        RcImpl::new(object, self) as *mut _
+        RcImpl::new(object, self).cast()
     }
 }
 
-/// View delegate could be otehr types' base. Use this macro to add view methods for them.
+/// View delegate could be other types' base. Use this macro to add view methods for them.
 macro_rules! add_view_delegate_methods {
     ($name:ident) => {
         use crate::view::*;

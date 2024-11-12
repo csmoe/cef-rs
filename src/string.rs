@@ -51,10 +51,10 @@ impl CefString {
 
     /// Get raw [cef_string_utf16_t] which doesn't have the ownership of the value.
     /// This should be used when you need to pass the `*const cef_string_utf16_t` to the function.
-    pub fn get_raw(&self) -> cef_string_utf16_t {
+    pub fn as_raw(&self) -> cef_string_utf16_t {
         cef_string_utf16_t {
             length: self.0.len(),
-            str_: self.0.as_ptr() as *mut _,
+            str_: self.0.as_ptr().cast_mut(),
             dtor: None,
         }
     }

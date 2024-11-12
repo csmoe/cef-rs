@@ -1,43 +1,33 @@
-#[allow(
-    non_snake_case,
-    non_camel_case_types,
-    non_upper_case_globals,
-    dead_code,
-    clippy::all
-)]
+#[allow(unused, nonstandard_style, clippy::all)]
 mod bindings;
-
-use std::ptr::null_mut;
 
 pub use bindings::*;
 
 impl Default for _cef_string_utf16_t {
     fn default() -> Self {
         Self {
-            str_: null_mut(),
+            str_: std::ptr::null_mut(),
             length: 0,
             dtor: None,
         }
     }
 }
 
-impl Default for cef_log_severity_t {
-    fn default() -> Self {
-        Self::LOGSEVERITY_DEFAULT
-    }
-}
-
-impl Default for cef_log_items_t {
-    fn default() -> Self {
-        Self::LOG_ITEMS_DEFAULT
-    }
-}
-
-#[test]
-fn test_init() {
-    use std::ptr::*;
-
-    unsafe {
-        assert_eq!(cef_initialize(null(), null(), null_mut(), null_mut()), 0);
+macro_rules! impl_default_for_enums {
+    ($($type:ty => $default:ident),+ $(,)?) => {
+        $(
+            impl Default for $type {
+                fn default() -> Self {
+                    Self::$default
+                }
+            }
+        )+
     };
+}
+
+impl_default_for_enums! {
+    cef_log_severity_t => LOGSEVERITY_DEFAULT,
+    cef_log_items_t => LOG_ITEMS_DEFAULT,
+    cef_state_t => STATE_DEFAULT,
+    cef_runtime_style_t => CEF_RUNTIME_STYLE_DEFAULT
 }

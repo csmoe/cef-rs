@@ -42,7 +42,7 @@ fn main() {
     // dbg!(&args);
     let app = Application;
     let settings = Settings::new();
-    dbg!(cef::initialize(&args, &settings, Some(app)));
+    dbg!(cef::initialize(&args, &settings, Some(app)).unwrap());
     dbg!(cef::execute_process(&args, Some(app)));
 
     // let window_info = WindowInfo::new();
@@ -58,12 +58,12 @@ fn main() {
     let delegate = DemoWindow { browser_view };
 
     let x = dbg!(cef::create_top_level_window(delegate));
-    // dbg!(cef::create_browser(
-    //     window_info,
-    //     Some(client),
-    //     url,
-    //     browser_settings
-    // ));
+    //dbg!(cef::create_browser(
+    //    window_info,
+    //    Some(client),
+    //    url,
+    //    browser_settings
+    //));
 
     cef::run_message_loop();
     dbg!(x.has_one_ref());

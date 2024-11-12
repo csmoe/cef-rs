@@ -1,6 +1,6 @@
 [package]
 name = "cef"
-version = "117.2.6"
+version = "130.1.16"
 edition = "2021"
 license = "Apache-2.0 OR MIT"
 authors = ["Wu Yu Wei <yuweiwu@pm.me>"]
@@ -22,8 +22,10 @@ members = [
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-cef-sys = { package = "libcef-sys", version = "117.2.5", path = "sys" }
+cef-sys = { package = "libcef-sys", version = "130.1.16", path = "sys" }
 widestring = "1.0"
+anyhow = "1"
+thiserror = "1"
 
 [dev-dependencies]
 winit = "0.28"
