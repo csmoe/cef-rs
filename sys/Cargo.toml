@@ -17,9 +17,8 @@ dox = []
 [package.metadata.docs.rs]
 features = [ "dox" ]
 
-[package.metadata.cef]
-version = "130.1.16+g5a7e5ed"
-chromium_version = "130.0.6723.117"
+[package.metadata]
+cef_version = "130.1.16+g5a7e5ed+chromium-130.0.6723.117"
 
 [dependencies]
 
@@ -28,10 +27,3 @@ winit = "0.28"
 
 [build-dependencies]
 build-rs = "0"
-bindgen = "0"
-cargo_metadata = "0"
-ureq = "2"
-tar = "0"
-bzip2 = "0"
-serde_json = "1"
-sha1_smol = "1"

@@ -6,3 +6,4 @@ build
 .flatpak-builder
 cargo-sources.json
 .DS_Store
+/sys/cef

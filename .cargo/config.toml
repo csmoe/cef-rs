@@ -1,0 +1,5 @@
+[net]
+git-fetch-with-cli = true
+
+[env]
+CEF_PATH = { value = "sys/cef/archive", relative = true, force = true }
