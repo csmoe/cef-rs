@@ -38,38 +38,25 @@ const URL: &str = "https://cef-builds.spotifycdn.com";
 
 fn main() {
     use std::ops::Deref;
+    let cef_path = std::env::var("CEF_PATH")
+        .map(std::path::PathBuf::from)
+        .unwrap();
     let args = std::env::args().collect::<Vec<_>>();
     let args = args.iter().map(|s| s.deref()).collect::<Vec<_>>();
 
     match args.as_slice() {
-        [_, "all", ..] => {
-            let threads = TARGETS
-                .iter()
-                .map(|target| {
-                    std::thread::spawn(move || {
-                        let path = download_prebuilt_cef(target);
-                        (target, path)
-                    })
-                })
-                .collect::<Vec<_>>();
-            for t in threads {
-                if let Ok((target, path)) = t.join() {
-                    bindgen(&target, &path);
-                }
-            }
-        }
+
         [_, target @ _, "--download", ..] => {
             if TARGETS.contains(target) {
-                download_prebuilt_cef(target);
+                download_prebuilt_cef(target, &cef_path);
             } else {
                 eprintln!("expected targets: {TARGETS:?}");
                 std::process::exit(1);
             }
         }
-        [_, target @ _, ..] => {
+        [_, target @ _, "--bindgen", ..] => {
             if TARGETS.contains(target) {
-                let path = download_prebuilt_cef(target);
-                bindgen(&target, &path);
+                bindgen(&target, &cef_path);
             } else {
                 eprintln!("expected targets: {TARGETS:?}");
                 std::process::exit(1);
@@ -82,10 +69,7 @@ fn main() {
     }
 }
 
-fn download_prebuilt_cef(target: &str) -> std::path::PathBuf {
-    let cef_path = std::env::var("CEF_PATH")
-        .map(std::path::PathBuf::from)
-        .unwrap();
+fn download_prebuilt_cef(target: &str, cef_path: &std::path::Path) -> std::path::PathBuf {
     let metadata = cargo_metadata::MetadataCommand::new()
         .no_deps()
         .manifest_path("./Cargo.toml")
