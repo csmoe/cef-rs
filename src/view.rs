@@ -15,27 +15,24 @@ wrapper!(
 
 impl View {
     pub fn as_browser_view(&self) -> Option<BrowserView> {
-        let r = self.0.as_browser_view.map(|f| {
-            let p = unsafe { f(self.0.get_raw()) };
-            p
-        });
+        let r = self
+            .0
+            .as_browser_view
+            .map(|f| unsafe { f(self.0.get_raw()) });
 
         r.filter(|p| p.is_null())
             .map(|p| BrowserView(unsafe { RefGuard::from_raw(p) }))
     }
 
     pub fn as_panel(&self) -> Option<Panel> {
-        self.0
-            .as_panel
-            .map(|f| {
-                let p = unsafe { f(self.0.get_raw()) };
-                if p.is_null() {
-                    None
-                } else {
-                    Some(Panel(unsafe { RefGuard::from_raw(p) }))
-                }
-            })
-            .flatten()
+        self.0.as_panel.and_then(|f| {
+            let p = unsafe { f(self.0.get_raw()) };
+            if p.is_null() {
+                None
+            } else {
+                Some(Panel(unsafe { RefGuard::from_raw(p) }))
+            }
+        })
     }
 }
 

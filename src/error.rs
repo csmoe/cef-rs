@@ -6,6 +6,9 @@ pub enum Error {
     Exit(i32),
     #[error("cannot create browser view")]
     CannotCreateBrowserView,
+    #[cfg(windows)]
+    #[error("windows os error: {0}")]
+    WinOs(windows::core::Error),
 }
 
 pub type Result<T> = std::result::Result<T, Error>;

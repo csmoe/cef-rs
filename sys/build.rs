@@ -7,10 +7,7 @@ fn main() {
 
     match build::cargo_cfg_target_os().as_str() {
         "macos" => {
-            build::rustc_link_search_kind(
-                "framework",
-                std::path::PathBuf::from(cef_path).join("Release"),
-            );
+            build::rustc_link_search_kind("framework", cef_path.join("Release"));
             build::rustc_link_lib_kind("framework", "Chromium Embedded Framework");
         }
         "linux" => {
@@ -21,7 +18,7 @@ fn main() {
             build::rustc_link_lib_kind("dylib", "libcef");
             build::rustc_link_search_kind("native", cef_path);
         }
-        os @ _ => {
+        os => {
             panic!("unsupported {os}");
         }
     }

@@ -69,6 +69,7 @@ pub struct Settings {
 
     chrome_app_icon_id: c_int,
     chrome_policy_id: CefString,
+    #[cfg(target_family = "unix")]
     disable_signal_handlers: bool,
 }
 
@@ -90,6 +91,7 @@ impl Settings {
             main_bundle_path: self.main_bundle_path.as_raw(),
             chrome_app_icon_id: self.chrome_app_icon_id,
             chrome_policy_id: self.chrome_policy_id.as_raw(),
+            #[cfg(target_family = "unix")]
             disable_signal_handlers: self.disable_signal_handlers as c_int,
             multi_threaded_message_loop: self.multi_threaded_message_loop as c_int,
             external_message_pump: self.external_message_pump as c_int,

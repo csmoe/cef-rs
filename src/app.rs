@@ -28,7 +28,7 @@ pub trait App: Sized {
 
 /// See [cef_execute_process] for more documentation.
 pub fn execute_process<T: App>(args: &mut Args, app: Option<T>) -> Result<()> {
-    let args = args.as_raw();
+    let args = args.as_raw()?;
     let app = app
         .map(|app| app.into_raw())
         .unwrap_or(std::ptr::null_mut());
@@ -47,7 +47,7 @@ pub fn execute_process<T: App>(args: &mut Args, app: Option<T>) -> Result<()> {
 
 /// See [cef_initialize] for more documentation.
 pub fn initialize<T: App>(args: &mut Args, settings: &Settings, app: Option<T>) -> Result<()> {
-    let args = args.as_raw();
+    let args = args.as_raw()?;
     let settings = settings.as_raw();
     let app = app
         .map(|app| app.into_raw())
@@ -80,7 +80,7 @@ extern "C" fn on_before_command_line_processing<I: App>(
     command_line: *mut cef_command_line_t,
 ) {
     let obj: &mut RcImpl<_, I> = RcImpl::get(this);
-    let process_type = CefString::from_raw(process_type);
+    let process_type = unsafe { CefString::from_raw(process_type) };
     let cmd = unsafe { CommandLine::from_raw(command_line) };
 
     obj.interface

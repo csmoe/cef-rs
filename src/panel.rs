@@ -15,23 +15,20 @@ wrapper!(
 
 impl Panel {
     pub fn add_child_view(&self, view: View) {
-        self.0
-            .add_child_view
-            .map(|f| unsafe { f(self.0.get_raw(), view.0.into_raw()) });
+        if let Some(f) = self.0.add_child_view {
+            unsafe { f(self.0.get_raw(), view.0.into_raw()) }
+        }
     }
 
     pub fn as_window(&self) -> Option<Window> {
-        self.0
-            .as_window
-            .map(|f| {
-                let p = unsafe { f(self.0.get_raw()) };
-                if p.is_null() {
-                    None
-                } else {
-                    Some(unsafe { Window::from_raw(p) })
-                }
-            })
-            .flatten()
+        self.0.as_window.and_then(|f| {
+            let p = unsafe { f(self.0.get_raw()) };
+            if p.is_null() {
+                None
+            } else {
+                Some(unsafe { Window::from_raw(p) })
+            }
+        })
     }
 }
 

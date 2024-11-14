@@ -6,7 +6,7 @@
 //!
 //! In order to create a new Rust type for a raw cef type, simply create a module for it first. And
 //! then work on the implementations based on following conditions:
-//!  
+//!
 //! ## If raw cef type is a simple struct with basic fields
 //! For example like [`cef_settings_t`], just create a struct like [`Settings`] and define a method
 //! `get_raw` that can create the raw cef type.
@@ -61,6 +61,8 @@ pub trait Rc {
 
     /// Decrease reference count by 1 and release the value if the count meets 0.
     /// Reuturn `True` if it is released.
+    ///
+    /// # Safety
     unsafe fn release(&self) -> bool {
         self.as_base().release()
     }
@@ -125,10 +127,10 @@ macro_rules! gen_fn {
         $visibility fn $method(&self $(,$a: $t)*) $(-> $value)? {
             unsafe {
                 let _result = self.0.$method.map(|f|
-                    f(self.0.get_raw() $(,crate::gen_fn!($c $arg))*)
+                    f(self.0.get_raw() $(,$crate::gen_fn!($c $arg))*)
                 );
 
-                $(crate::gen_fn!(return $($n)? _result))?
+                $($crate::gen_fn!(return $($n)? _result))?
             }
         }
     };
@@ -153,30 +155,32 @@ macro_rules! wrapper {
     $(->$value:ty)?;)*
     ) => {
         $(#[$attr])*
-        pub struct $name(pub(crate) crate::rc::RefGuard<$sys>);
+        pub struct $name(pub(crate) $crate::rc::RefGuard<$sys>);
 
-        impl crate::rc::Rc for $sys {
+        impl $crate::rc::Rc for $sys {
             fn as_base(&self) -> &cef_sys::cef_base_ref_counted_t {
                 &self.base.as_base()
             }
         }
 
-        impl crate::rc::Rc for $name {
+        impl $crate::rc::Rc for $name {
             fn as_base(&self) -> &cef_sys::cef_base_ref_counted_t {
                 self.0.as_base()
             }
         }
 
         impl $name {
+            #[allow(clippy::missing_safety_doc)]
             pub unsafe fn from_raw(ptr: *mut $sys) -> Self {
                 Self(RefGuard::from_raw(ptr))
             }
 
+            #[allow(clippy::missing_safety_doc)]
             pub unsafe fn into_raw(self) -> *mut $sys {
                 self.0.into_raw()
             }
 
-            $(crate::gen_fn!($visibility fn $method(
+            $($crate::gen_fn!($visibility fn $method(
                 $($arg: $ref $type)*
             )$(-> $value)?);)*
         }

@@ -56,10 +56,23 @@ impl WindowInfo {
             windowless_rendering_enabled: self.windowless_rendering_enabled as c_int,
             shared_texture_enabled: self.shared_texture_enabled as c_int,
             external_begin_frame_enabled: self.external_begin_frame_enabled as c_int,
+            #[cfg(target_os = "macos")]
             hidden: 0,
+            #[cfg(target_os = "macos")]
             parent_view: null_mut(),
+            #[cfg(target_os = "macos")]
             view: null_mut(),
             runtime_style: cef_sys::cef_runtime_style_t::CEF_RUNTIME_STYLE_ALLOY,
+            #[cfg(windows)]
+            menu: null_mut(),
+            #[cfg(windows)]
+            ex_style: 0,
+            #[cfg(windows)]
+            style: 0,
+            #[cfg(any(windows, target_os = "linux"))]
+            parent_window: null_mut(),
+            #[cfg(any(windows, target_os = "linux"))]
+            window: null_mut(),
         }
     }
 }
