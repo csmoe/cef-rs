@@ -1,8 +1,13 @@
-use std::{ffi::c_int, ptr::null_mut};
+use std::{
+    ffi::{c_int},
+    ptr::null_mut,
+};
 
 use cef_sys::{
     cef_window_create_top_level, cef_window_delegate_t, cef_window_info_t, cef_window_t,
 };
+use windows::Win32::Foundation::HWND;
+use windows::Win32::UI::WindowsAndMessaging::HMENU;
 
 use crate::{
     add_view_delegate_methods,
@@ -13,35 +18,30 @@ use crate::{
 };
 
 /// See [cef_window_info_t] for more documentation.
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Default)]
 pub struct WindowInfo {
-    pub window_name: CefString,
-    pub bounds: Rect,
-    // TODO: raw_window_handle
-    pub parent_window: u64,
-    pub windowless_rendering_enabled: bool,
-    pub shared_texture_enabled: bool,
-    pub external_begin_frame_enabled: bool,
-    pub window: u64,
-}
-
-impl Default for WindowInfo {
-    fn default() -> Self {
-        Self {
-            window_name: CefString::new("UwU"),
-            bounds: Rect {
-                x: 0,
-                y: 0,
-                width: 1280,
-                height: 720,
-            },
-            parent_window: 0,
-            windowless_rendering_enabled: false,
-            shared_texture_enabled: false,
-            external_begin_frame_enabled: false,
-            window: 0,
-        }
-    }
+    window_name: CefString,
+    bounds: Rect,
+    windowless_rendering_enabled: i32,
+    shared_texture_enabled: bool,
+    external_begin_frame_enabled: bool,
+    #[cfg(target_os = "macos")]
+    hidden: bool,
+    #[cfg(target_os = "macos")]
+    parent_view: *mut std::ffi::c_void,
+    #[cfg(target_os = "macos")]
+    view: *mut std::ffi::c_void,
+    runtime_style: cef_sys::cef_runtime_style_t,
+    #[cfg(windows)]
+    menu: HMENU,
+    #[cfg(windows)]
+    ex_style: i32,
+    #[cfg(windows)]
+    style: i32,
+    #[cfg(any(windows, target_os = "linux"))]
+    parent_window: HWND,
+    #[cfg(any(windows, target_os = "linux"))]
+    window: HWND,
 }
 
 impl WindowInfo {

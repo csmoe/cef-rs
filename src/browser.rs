@@ -151,7 +151,7 @@ impl BrowserView {
 /// See [cef_browser_view_create] for more documentation.
 pub fn create_browser_view<T: Client>(
     client: Option<T>,
-    url: CefString,
+    url: &CefString,
     settings: BrowserSettings,
     // TODO delegate: *mut _cef_browser_view_delegate_t,
 ) -> Result<BrowserView> {

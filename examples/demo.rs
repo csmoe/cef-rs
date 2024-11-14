@@ -8,7 +8,7 @@ struct Application;
 
 impl App for Application {}
 
-#[derive(Debug)]
+#[derive(Debug, Copy, Clone)]
 struct DemoClient;
 
 impl Client for DemoClient {}
@@ -19,7 +19,7 @@ struct DemoWindow {
 }
 
 impl ViewDelegate for DemoWindow {
-    fn on_child_view_changed(&self, view: cef::View, _added: bool, _child: cef::View) {
+    fn on_child_view_changed(&self, _view: cef::View, _added: bool, _child: cef::View) {
         // view.as_panel().map(|x| x.as_window().map(|w| w.close()));
     }
 }
@@ -49,7 +49,7 @@ fn main() {
     let client = DemoClient;
     let url = CefString::new("https://www.google.com");
 
-    let browser_view = cef::create_browser_view(Some(client), url, browser_settings).unwrap();
+    let browser_view = cef::create_browser_view(Some(client), &url, browser_settings.clone()).unwrap();
     let delegate = DemoWindow { browser_view };
 
     let x = dbg!(cef::create_top_level_window(delegate));

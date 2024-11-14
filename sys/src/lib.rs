@@ -3,12 +3,23 @@ mod bindings;
 
 pub use bindings::*;
 
-impl Default for _cef_string_utf16_t {
+impl Default for cef_string_utf16_t {
     fn default() -> Self {
         Self {
             str_: std::ptr::null_mut(),
             length: 0,
             dtor: None,
+        }
+    }
+}
+
+impl Default for cef_rect_t {
+    fn default() -> Self {
+        Self {
+            x: 0,
+            y: 0,
+            width: 1378,
+            height: 800,
         }
     }
 }
