@@ -31,8 +31,8 @@ impl Args {
         #[cfg(target_family = "windows")]
         {
             use crate::error::Error;
-            use windows::Win32::System::LibraryLoader::GetModuleHandleA;
-            let instance = unsafe { GetModuleHandleA(None).map_err(Error::WinOs)? };
+            use windows::Win32::System::LibraryLoader::GetModuleHandleW;
+            let instance = unsafe { GetModuleHandleW(None).map_err(Error::WinOs)? };
             Ok(cef_sys::cef_main_args_t {
                 instance: instance.0.cast(),
             })

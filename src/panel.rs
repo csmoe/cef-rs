@@ -40,6 +40,6 @@ pub trait PanelDelegate: ViewDelegate {
         let view = &mut object.base;
         add_view_delegate_methods!(view);
 
-        RcImpl::new(object, self) as *mut _
+        RcImpl::new(object, self).cast()
     }
 }

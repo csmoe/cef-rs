@@ -1,5 +1,5 @@
 use cef::{
-    args::Args, client::Client, rc::Rc, string::CefString, App, BrowserSettings, BrowserView,
+    args::Args, client::Client, string::CefString, App, BrowserSettings, BrowserView,
     PanelDelegate, Settings, ViewDelegate, WindowDelegate,
 };
 
@@ -49,19 +49,19 @@ fn main() {
     let client = DemoClient;
     let url = CefString::new("https://www.google.com");
 
-    let browser_view = cef::create_browser_view(Some(client), &url, browser_settings.clone()).unwrap();
+    let browser_view =
+        cef::create_browser_view(Some(client), &url, browser_settings.clone()).unwrap();
     let delegate = DemoWindow { browser_view };
 
-    let x = dbg!(cef::create_top_level_window(delegate));
-    dbg!(cef::create_browser(
+    cef::create_top_level_window(delegate);
+    cef::create_browser(
         window_info,
         Some(client),
         url,
         browser_settings
-    ));
+    );
 
     cef::run_message_loop();
-    dbg!(x.has_one_ref());
 
     cef::shutdown();
 }

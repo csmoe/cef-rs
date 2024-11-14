@@ -1,8 +1,3 @@
-use std::{
-    ffi::{c_int},
-    ptr::null_mut,
-};
-
 use cef_sys::{
     cef_window_create_top_level, cef_window_delegate_t, cef_window_info_t, cef_window_t,
 };
@@ -22,7 +17,7 @@ use crate::{
 pub struct WindowInfo {
     window_name: CefString,
     bounds: Rect,
-    windowless_rendering_enabled: i32,
+    windowless_rendering_enabled: bool,
     shared_texture_enabled: bool,
     external_begin_frame_enabled: bool,
     #[cfg(target_os = "macos")]
@@ -35,9 +30,9 @@ pub struct WindowInfo {
     #[cfg(windows)]
     menu: HMENU,
     #[cfg(windows)]
-    ex_style: i32,
+    ex_style: u32,
     #[cfg(windows)]
-    style: i32,
+    style: u32,
     #[cfg(any(windows, target_os = "linux"))]
     parent_window: HWND,
     #[cfg(any(windows, target_os = "linux"))]
@@ -49,30 +44,30 @@ impl WindowInfo {
         Self::default()
     }
 
-    pub fn as_raw(self) -> cef_window_info_t {
+    pub fn as_raw(&self) -> cef_window_info_t {
         cef_window_info_t {
             window_name: self.window_name.as_raw(),
             bounds: self.bounds,
-            windowless_rendering_enabled: self.windowless_rendering_enabled as c_int,
-            shared_texture_enabled: self.shared_texture_enabled as c_int,
-            external_begin_frame_enabled: self.external_begin_frame_enabled as c_int,
+            windowless_rendering_enabled: self.windowless_rendering_enabled.into(),
+            shared_texture_enabled: self.shared_texture_enabled.into(),
+            external_begin_frame_enabled: self.external_begin_frame_enabled.into(),
             #[cfg(target_os = "macos")]
-            hidden: 0,
+            hidden: self.hidden.into(),
             #[cfg(target_os = "macos")]
-            parent_view: null_mut(),
+            parent_view: self.view.cast(),
             #[cfg(target_os = "macos")]
-            view: null_mut(),
-            runtime_style: cef_sys::cef_runtime_style_t::CEF_RUNTIME_STYLE_ALLOY,
+            view: self.view.cast(),
+            runtime_style: self.runtime_style,
             #[cfg(windows)]
-            menu: null_mut(),
+            menu: self.menu.0.cast(),
             #[cfg(windows)]
-            ex_style: 0,
+            ex_style: self.ex_style,
             #[cfg(windows)]
-            style: 0,
+            style: self.style,
             #[cfg(any(windows, target_os = "linux"))]
-            parent_window: null_mut(),
+            parent_window: self.parent_window.0.cast(),
             #[cfg(any(windows, target_os = "linux"))]
-            window: null_mut(),
+            window: self.window.0.cast(),
         }
     }
 }
