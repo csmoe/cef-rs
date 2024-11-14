@@ -15,14 +15,14 @@ pub struct _cef_string_wide_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_string_wide_t"][::std::mem::size_of::<_cef_string_wide_t>() - 24usize];
-    ["Alignment of _cef_string_wide_t"][::std::mem::align_of::<_cef_string_wide_t>() - 8usize];
+    ["Size of _cef_string_wide_t"][::std::mem::size_of::<_cef_string_wide_t>() - 12usize];
+    ["Alignment of _cef_string_wide_t"][::std::mem::align_of::<_cef_string_wide_t>() - 4usize];
     ["Offset of field: _cef_string_wide_t::str_"]
         [::std::mem::offset_of!(_cef_string_wide_t, str_) - 0usize];
     ["Offset of field: _cef_string_wide_t::length"]
-        [::std::mem::offset_of!(_cef_string_wide_t, length) - 8usize];
+        [::std::mem::offset_of!(_cef_string_wide_t, length) - 4usize];
     ["Offset of field: _cef_string_wide_t::dtor"]
-        [::std::mem::offset_of!(_cef_string_wide_t, dtor) - 16usize];
+        [::std::mem::offset_of!(_cef_string_wide_t, dtor) - 8usize];
 };
 #[doc = "\n CEF string type definitions. Whomever allocates |str| is responsible for\n providing an appropriate |dtor| implementation that will free the string in\n the same memory space. When reusing an existing string structure make sure\n to call |dtor| for the old value before assigning new |str| and |dtor|\n values. Static strings will have a NULL |dtor| value. Using the below\n functions if you want this managed for you.\n"]
 pub type cef_string_wide_t = _cef_string_wide_t;
@@ -35,14 +35,14 @@ pub struct _cef_string_utf8_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_string_utf8_t"][::std::mem::size_of::<_cef_string_utf8_t>() - 24usize];
-    ["Alignment of _cef_string_utf8_t"][::std::mem::align_of::<_cef_string_utf8_t>() - 8usize];
+    ["Size of _cef_string_utf8_t"][::std::mem::size_of::<_cef_string_utf8_t>() - 12usize];
+    ["Alignment of _cef_string_utf8_t"][::std::mem::align_of::<_cef_string_utf8_t>() - 4usize];
     ["Offset of field: _cef_string_utf8_t::str_"]
         [::std::mem::offset_of!(_cef_string_utf8_t, str_) - 0usize];
     ["Offset of field: _cef_string_utf8_t::length"]
-        [::std::mem::offset_of!(_cef_string_utf8_t, length) - 8usize];
+        [::std::mem::offset_of!(_cef_string_utf8_t, length) - 4usize];
     ["Offset of field: _cef_string_utf8_t::dtor"]
-        [::std::mem::offset_of!(_cef_string_utf8_t, dtor) - 16usize];
+        [::std::mem::offset_of!(_cef_string_utf8_t, dtor) - 8usize];
 };
 pub type cef_string_utf8_t = _cef_string_utf8_t;
 #[repr(C)]
@@ -54,14 +54,14 @@ pub struct _cef_string_utf16_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_string_utf16_t"][::std::mem::size_of::<_cef_string_utf16_t>() - 24usize];
-    ["Alignment of _cef_string_utf16_t"][::std::mem::align_of::<_cef_string_utf16_t>() - 8usize];
+    ["Size of _cef_string_utf16_t"][::std::mem::size_of::<_cef_string_utf16_t>() - 12usize];
+    ["Alignment of _cef_string_utf16_t"][::std::mem::align_of::<_cef_string_utf16_t>() - 4usize];
     ["Offset of field: _cef_string_utf16_t::str_"]
         [::std::mem::offset_of!(_cef_string_utf16_t, str_) - 0usize];
     ["Offset of field: _cef_string_utf16_t::length"]
-        [::std::mem::offset_of!(_cef_string_utf16_t, length) - 8usize];
+        [::std::mem::offset_of!(_cef_string_utf16_t, length) - 4usize];
     ["Offset of field: _cef_string_utf16_t::dtor"]
-        [::std::mem::offset_of!(_cef_string_utf16_t, dtor) - 16usize];
+        [::std::mem::offset_of!(_cef_string_utf16_t, dtor) - 8usize];
 };
 pub type cef_string_utf16_t = _cef_string_utf16_t;
 extern "C" {
@@ -847,12 +847,12 @@ pub struct _cef_main_args_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_main_args_t"][::std::mem::size_of::<_cef_main_args_t>() - 16usize];
-    ["Alignment of _cef_main_args_t"][::std::mem::align_of::<_cef_main_args_t>() - 8usize];
+    ["Size of _cef_main_args_t"][::std::mem::size_of::<_cef_main_args_t>() - 8usize];
+    ["Alignment of _cef_main_args_t"][::std::mem::align_of::<_cef_main_args_t>() - 4usize];
     ["Offset of field: _cef_main_args_t::argc"]
         [::std::mem::offset_of!(_cef_main_args_t, argc) - 0usize];
     ["Offset of field: _cef_main_args_t::argv"]
-        [::std::mem::offset_of!(_cef_main_args_t, argv) - 8usize];
+        [::std::mem::offset_of!(_cef_main_args_t, argv) - 4usize];
 };
 #[doc = "\n Structure representing CefExecuteProcess arguments.\n"]
 pub type cef_main_args_t = _cef_main_args_t;
@@ -879,24 +879,24 @@ pub struct _cef_window_info_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_window_info_t"][::std::mem::size_of::<_cef_window_info_t>() - 80usize];
-    ["Alignment of _cef_window_info_t"][::std::mem::align_of::<_cef_window_info_t>() - 8usize];
+    ["Size of _cef_window_info_t"][::std::mem::size_of::<_cef_window_info_t>() - 52usize];
+    ["Alignment of _cef_window_info_t"][::std::mem::align_of::<_cef_window_info_t>() - 4usize];
     ["Offset of field: _cef_window_info_t::window_name"]
         [::std::mem::offset_of!(_cef_window_info_t, window_name) - 0usize];
     ["Offset of field: _cef_window_info_t::bounds"]
-        [::std::mem::offset_of!(_cef_window_info_t, bounds) - 24usize];
+        [::std::mem::offset_of!(_cef_window_info_t, bounds) - 12usize];
     ["Offset of field: _cef_window_info_t::parent_window"]
-        [::std::mem::offset_of!(_cef_window_info_t, parent_window) - 40usize];
+        [::std::mem::offset_of!(_cef_window_info_t, parent_window) - 28usize];
     ["Offset of field: _cef_window_info_t::windowless_rendering_enabled"]
-        [::std::mem::offset_of!(_cef_window_info_t, windowless_rendering_enabled) - 48usize];
+        [::std::mem::offset_of!(_cef_window_info_t, windowless_rendering_enabled) - 32usize];
     ["Offset of field: _cef_window_info_t::shared_texture_enabled"]
-        [::std::mem::offset_of!(_cef_window_info_t, shared_texture_enabled) - 52usize];
+        [::std::mem::offset_of!(_cef_window_info_t, shared_texture_enabled) - 36usize];
     ["Offset of field: _cef_window_info_t::external_begin_frame_enabled"]
-        [::std::mem::offset_of!(_cef_window_info_t, external_begin_frame_enabled) - 56usize];
+        [::std::mem::offset_of!(_cef_window_info_t, external_begin_frame_enabled) - 40usize];
     ["Offset of field: _cef_window_info_t::window"]
-        [::std::mem::offset_of!(_cef_window_info_t, window) - 64usize];
+        [::std::mem::offset_of!(_cef_window_info_t, window) - 44usize];
     ["Offset of field: _cef_window_info_t::runtime_style"]
-        [::std::mem::offset_of!(_cef_window_info_t, runtime_style) - 72usize];
+        [::std::mem::offset_of!(_cef_window_info_t, runtime_style) - 48usize];
 };
 #[doc = "\n Class representing window information.\n"]
 pub type cef_window_info_t = _cef_window_info_t;
@@ -1083,68 +1083,68 @@ pub struct _cef_settings_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_settings_t"][::std::mem::size_of::<_cef_settings_t>() - 440usize];
-    ["Alignment of _cef_settings_t"][::std::mem::align_of::<_cef_settings_t>() - 8usize];
+    ["Size of _cef_settings_t"][::std::mem::size_of::<_cef_settings_t>() - 240usize];
+    ["Alignment of _cef_settings_t"][::std::mem::align_of::<_cef_settings_t>() - 4usize];
     ["Offset of field: _cef_settings_t::size"]
         [::std::mem::offset_of!(_cef_settings_t, size) - 0usize];
     ["Offset of field: _cef_settings_t::no_sandbox"]
-        [::std::mem::offset_of!(_cef_settings_t, no_sandbox) - 8usize];
+        [::std::mem::offset_of!(_cef_settings_t, no_sandbox) - 4usize];
     ["Offset of field: _cef_settings_t::browser_subprocess_path"]
-        [::std::mem::offset_of!(_cef_settings_t, browser_subprocess_path) - 16usize];
+        [::std::mem::offset_of!(_cef_settings_t, browser_subprocess_path) - 8usize];
     ["Offset of field: _cef_settings_t::framework_dir_path"]
-        [::std::mem::offset_of!(_cef_settings_t, framework_dir_path) - 40usize];
+        [::std::mem::offset_of!(_cef_settings_t, framework_dir_path) - 20usize];
     ["Offset of field: _cef_settings_t::main_bundle_path"]
-        [::std::mem::offset_of!(_cef_settings_t, main_bundle_path) - 64usize];
+        [::std::mem::offset_of!(_cef_settings_t, main_bundle_path) - 32usize];
     ["Offset of field: _cef_settings_t::multi_threaded_message_loop"]
-        [::std::mem::offset_of!(_cef_settings_t, multi_threaded_message_loop) - 88usize];
+        [::std::mem::offset_of!(_cef_settings_t, multi_threaded_message_loop) - 44usize];
     ["Offset of field: _cef_settings_t::external_message_pump"]
-        [::std::mem::offset_of!(_cef_settings_t, external_message_pump) - 92usize];
+        [::std::mem::offset_of!(_cef_settings_t, external_message_pump) - 48usize];
     ["Offset of field: _cef_settings_t::windowless_rendering_enabled"]
-        [::std::mem::offset_of!(_cef_settings_t, windowless_rendering_enabled) - 96usize];
+        [::std::mem::offset_of!(_cef_settings_t, windowless_rendering_enabled) - 52usize];
     ["Offset of field: _cef_settings_t::command_line_args_disabled"]
-        [::std::mem::offset_of!(_cef_settings_t, command_line_args_disabled) - 100usize];
+        [::std::mem::offset_of!(_cef_settings_t, command_line_args_disabled) - 56usize];
     ["Offset of field: _cef_settings_t::cache_path"]
-        [::std::mem::offset_of!(_cef_settings_t, cache_path) - 104usize];
+        [::std::mem::offset_of!(_cef_settings_t, cache_path) - 60usize];
     ["Offset of field: _cef_settings_t::root_cache_path"]
-        [::std::mem::offset_of!(_cef_settings_t, root_cache_path) - 128usize];
+        [::std::mem::offset_of!(_cef_settings_t, root_cache_path) - 72usize];
     ["Offset of field: _cef_settings_t::persist_session_cookies"]
-        [::std::mem::offset_of!(_cef_settings_t, persist_session_cookies) - 152usize];
+        [::std::mem::offset_of!(_cef_settings_t, persist_session_cookies) - 84usize];
     ["Offset of field: _cef_settings_t::user_agent"]
-        [::std::mem::offset_of!(_cef_settings_t, user_agent) - 160usize];
+        [::std::mem::offset_of!(_cef_settings_t, user_agent) - 88usize];
     ["Offset of field: _cef_settings_t::user_agent_product"]
-        [::std::mem::offset_of!(_cef_settings_t, user_agent_product) - 184usize];
+        [::std::mem::offset_of!(_cef_settings_t, user_agent_product) - 100usize];
     ["Offset of field: _cef_settings_t::locale"]
-        [::std::mem::offset_of!(_cef_settings_t, locale) - 208usize];
+        [::std::mem::offset_of!(_cef_settings_t, locale) - 112usize];
     ["Offset of field: _cef_settings_t::log_file"]
-        [::std::mem::offset_of!(_cef_settings_t, log_file) - 232usize];
+        [::std::mem::offset_of!(_cef_settings_t, log_file) - 124usize];
     ["Offset of field: _cef_settings_t::log_severity"]
-        [::std::mem::offset_of!(_cef_settings_t, log_severity) - 256usize];
+        [::std::mem::offset_of!(_cef_settings_t, log_severity) - 136usize];
     ["Offset of field: _cef_settings_t::log_items"]
-        [::std::mem::offset_of!(_cef_settings_t, log_items) - 260usize];
+        [::std::mem::offset_of!(_cef_settings_t, log_items) - 140usize];
     ["Offset of field: _cef_settings_t::javascript_flags"]
-        [::std::mem::offset_of!(_cef_settings_t, javascript_flags) - 264usize];
+        [::std::mem::offset_of!(_cef_settings_t, javascript_flags) - 144usize];
     ["Offset of field: _cef_settings_t::resources_dir_path"]
-        [::std::mem::offset_of!(_cef_settings_t, resources_dir_path) - 288usize];
+        [::std::mem::offset_of!(_cef_settings_t, resources_dir_path) - 156usize];
     ["Offset of field: _cef_settings_t::locales_dir_path"]
-        [::std::mem::offset_of!(_cef_settings_t, locales_dir_path) - 312usize];
+        [::std::mem::offset_of!(_cef_settings_t, locales_dir_path) - 168usize];
     ["Offset of field: _cef_settings_t::remote_debugging_port"]
-        [::std::mem::offset_of!(_cef_settings_t, remote_debugging_port) - 336usize];
+        [::std::mem::offset_of!(_cef_settings_t, remote_debugging_port) - 180usize];
     ["Offset of field: _cef_settings_t::uncaught_exception_stack_size"]
-        [::std::mem::offset_of!(_cef_settings_t, uncaught_exception_stack_size) - 340usize];
+        [::std::mem::offset_of!(_cef_settings_t, uncaught_exception_stack_size) - 184usize];
     ["Offset of field: _cef_settings_t::background_color"]
-        [::std::mem::offset_of!(_cef_settings_t, background_color) - 344usize];
+        [::std::mem::offset_of!(_cef_settings_t, background_color) - 188usize];
     ["Offset of field: _cef_settings_t::accept_language_list"]
-        [::std::mem::offset_of!(_cef_settings_t, accept_language_list) - 352usize];
+        [::std::mem::offset_of!(_cef_settings_t, accept_language_list) - 192usize];
     ["Offset of field: _cef_settings_t::cookieable_schemes_list"]
-        [::std::mem::offset_of!(_cef_settings_t, cookieable_schemes_list) - 376usize];
+        [::std::mem::offset_of!(_cef_settings_t, cookieable_schemes_list) - 204usize];
     ["Offset of field: _cef_settings_t::cookieable_schemes_exclude_defaults"]
-        [::std::mem::offset_of!(_cef_settings_t, cookieable_schemes_exclude_defaults) - 400usize];
+        [::std::mem::offset_of!(_cef_settings_t, cookieable_schemes_exclude_defaults) - 216usize];
     ["Offset of field: _cef_settings_t::chrome_policy_id"]
-        [::std::mem::offset_of!(_cef_settings_t, chrome_policy_id) - 408usize];
+        [::std::mem::offset_of!(_cef_settings_t, chrome_policy_id) - 220usize];
     ["Offset of field: _cef_settings_t::chrome_app_icon_id"]
-        [::std::mem::offset_of!(_cef_settings_t, chrome_app_icon_id) - 432usize];
+        [::std::mem::offset_of!(_cef_settings_t, chrome_app_icon_id) - 232usize];
     ["Offset of field: _cef_settings_t::disable_signal_handlers"]
-        [::std::mem::offset_of!(_cef_settings_t, disable_signal_handlers) - 436usize];
+        [::std::mem::offset_of!(_cef_settings_t, disable_signal_handlers) - 236usize];
 };
 #[doc = "\n Initialization settings. Specify NULL or 0 to get the recommended default\n values. Many of these and other settings can also configured using command-\n line switches.\n"]
 pub type cef_settings_t = _cef_settings_t;
@@ -1167,28 +1167,28 @@ pub struct _cef_request_context_settings_t {
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
     ["Size of _cef_request_context_settings_t"]
-        [::std::mem::size_of::<_cef_request_context_settings_t>() - 96usize];
+        [::std::mem::size_of::<_cef_request_context_settings_t>() - 48usize];
     ["Alignment of _cef_request_context_settings_t"]
-        [::std::mem::align_of::<_cef_request_context_settings_t>() - 8usize];
+        [::std::mem::align_of::<_cef_request_context_settings_t>() - 4usize];
     ["Offset of field: _cef_request_context_settings_t::size"]
         [::std::mem::offset_of!(_cef_request_context_settings_t, size) - 0usize];
     ["Offset of field: _cef_request_context_settings_t::cache_path"]
-        [::std::mem::offset_of!(_cef_request_context_settings_t, cache_path) - 8usize];
+        [::std::mem::offset_of!(_cef_request_context_settings_t, cache_path) - 4usize];
     ["Offset of field: _cef_request_context_settings_t::persist_session_cookies"][::std::mem::offset_of!(
         _cef_request_context_settings_t,
         persist_session_cookies
-    ) - 32usize];
+    ) - 16usize];
     ["Offset of field: _cef_request_context_settings_t::accept_language_list"]
-        [::std::mem::offset_of!(_cef_request_context_settings_t, accept_language_list) - 40usize];
+        [::std::mem::offset_of!(_cef_request_context_settings_t, accept_language_list) - 20usize];
     ["Offset of field: _cef_request_context_settings_t::cookieable_schemes_list"][::std::mem::offset_of!(
         _cef_request_context_settings_t,
         cookieable_schemes_list
-    ) - 64usize];
+    ) - 32usize];
     ["Offset of field: _cef_request_context_settings_t::cookieable_schemes_exclude_defaults"][::std::mem::offset_of!(
         _cef_request_context_settings_t,
         cookieable_schemes_exclude_defaults
     )
-        - 88usize];
+        - 44usize];
 };
 #[doc = "\n Request context initialization settings. Specify NULL or 0 to get the\n recommended default values.\n"]
 pub type cef_request_context_settings_t = _cef_request_context_settings_t;
@@ -1247,67 +1247,67 @@ pub struct _cef_browser_settings_t {
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
     ["Size of _cef_browser_settings_t"]
-        [::std::mem::size_of::<_cef_browser_settings_t>() - 264usize];
+        [::std::mem::size_of::<_cef_browser_settings_t>() - 168usize];
     ["Alignment of _cef_browser_settings_t"]
-        [::std::mem::align_of::<_cef_browser_settings_t>() - 8usize];
+        [::std::mem::align_of::<_cef_browser_settings_t>() - 4usize];
     ["Offset of field: _cef_browser_settings_t::size"]
         [::std::mem::offset_of!(_cef_browser_settings_t, size) - 0usize];
     ["Offset of field: _cef_browser_settings_t::windowless_frame_rate"]
-        [::std::mem::offset_of!(_cef_browser_settings_t, windowless_frame_rate) - 8usize];
+        [::std::mem::offset_of!(_cef_browser_settings_t, windowless_frame_rate) - 4usize];
     ["Offset of field: _cef_browser_settings_t::standard_font_family"]
-        [::std::mem::offset_of!(_cef_browser_settings_t, standard_font_family) - 16usize];
+        [::std::mem::offset_of!(_cef_browser_settings_t, standard_font_family) - 8usize];
     ["Offset of field: _cef_browser_settings_t::fixed_font_family"]
-        [::std::mem::offset_of!(_cef_browser_settings_t, fixed_font_family) - 40usize];
+        [::std::mem::offset_of!(_cef_browser_settings_t, fixed_font_family) - 20usize];
     ["Offset of field: _cef_browser_settings_t::serif_font_family"]
-        [::std::mem::offset_of!(_cef_browser_settings_t, serif_font_family) - 64usize];
+        [::std::mem::offset_of!(_cef_browser_settings_t, serif_font_family) - 32usize];
     ["Offset of field: _cef_browser_settings_t::sans_serif_font_family"]
-        [::std::mem::offset_of!(_cef_browser_settings_t, sans_serif_font_family) - 88usize];
+        [::std::mem::offset_of!(_cef_browser_settings_t, sans_serif_font_family) - 44usize];
     ["Offset of field: _cef_browser_settings_t::cursive_font_family"]
-        [::std::mem::offset_of!(_cef_browser_settings_t, cursive_font_family) - 112usize];
+        [::std::mem::offset_of!(_cef_browser_settings_t, cursive_font_family) - 56usize];
     ["Offset of field: _cef_browser_settings_t::fantasy_font_family"]
-        [::std::mem::offset_of!(_cef_browser_settings_t, fantasy_font_family) - 136usize];
+        [::std::mem::offset_of!(_cef_browser_settings_t, fantasy_font_family) - 68usize];
     ["Offset of field: _cef_browser_settings_t::default_font_size"]
-        [::std::mem::offset_of!(_cef_browser_settings_t, default_font_size) - 160usize];
+        [::std::mem::offset_of!(_cef_browser_settings_t, default_font_size) - 80usize];
     ["Offset of field: _cef_browser_settings_t::default_fixed_font_size"]
-        [::std::mem::offset_of!(_cef_browser_settings_t, default_fixed_font_size) - 164usize];
+        [::std::mem::offset_of!(_cef_browser_settings_t, default_fixed_font_size) - 84usize];
     ["Offset of field: _cef_browser_settings_t::minimum_font_size"]
-        [::std::mem::offset_of!(_cef_browser_settings_t, minimum_font_size) - 168usize];
+        [::std::mem::offset_of!(_cef_browser_settings_t, minimum_font_size) - 88usize];
     ["Offset of field: _cef_browser_settings_t::minimum_logical_font_size"]
-        [::std::mem::offset_of!(_cef_browser_settings_t, minimum_logical_font_size) - 172usize];
+        [::std::mem::offset_of!(_cef_browser_settings_t, minimum_logical_font_size) - 92usize];
     ["Offset of field: _cef_browser_settings_t::default_encoding"]
-        [::std::mem::offset_of!(_cef_browser_settings_t, default_encoding) - 176usize];
+        [::std::mem::offset_of!(_cef_browser_settings_t, default_encoding) - 96usize];
     ["Offset of field: _cef_browser_settings_t::remote_fonts"]
-        [::std::mem::offset_of!(_cef_browser_settings_t, remote_fonts) - 200usize];
+        [::std::mem::offset_of!(_cef_browser_settings_t, remote_fonts) - 108usize];
     ["Offset of field: _cef_browser_settings_t::javascript"]
-        [::std::mem::offset_of!(_cef_browser_settings_t, javascript) - 204usize];
+        [::std::mem::offset_of!(_cef_browser_settings_t, javascript) - 112usize];
     ["Offset of field: _cef_browser_settings_t::javascript_close_windows"]
-        [::std::mem::offset_of!(_cef_browser_settings_t, javascript_close_windows) - 208usize];
+        [::std::mem::offset_of!(_cef_browser_settings_t, javascript_close_windows) - 116usize];
     ["Offset of field: _cef_browser_settings_t::javascript_access_clipboard"]
-        [::std::mem::offset_of!(_cef_browser_settings_t, javascript_access_clipboard) - 212usize];
+        [::std::mem::offset_of!(_cef_browser_settings_t, javascript_access_clipboard) - 120usize];
     ["Offset of field: _cef_browser_settings_t::javascript_dom_paste"]
-        [::std::mem::offset_of!(_cef_browser_settings_t, javascript_dom_paste) - 216usize];
+        [::std::mem::offset_of!(_cef_browser_settings_t, javascript_dom_paste) - 124usize];
     ["Offset of field: _cef_browser_settings_t::image_loading"]
-        [::std::mem::offset_of!(_cef_browser_settings_t, image_loading) - 220usize];
+        [::std::mem::offset_of!(_cef_browser_settings_t, image_loading) - 128usize];
     ["Offset of field: _cef_browser_settings_t::image_shrink_standalone_to_fit"][::std::mem::offset_of!(
         _cef_browser_settings_t,
         image_shrink_standalone_to_fit
-    ) - 224usize];
+    ) - 132usize];
     ["Offset of field: _cef_browser_settings_t::text_area_resize"]
-        [::std::mem::offset_of!(_cef_browser_settings_t, text_area_resize) - 228usize];
+        [::std::mem::offset_of!(_cef_browser_settings_t, text_area_resize) - 136usize];
     ["Offset of field: _cef_browser_settings_t::tab_to_links"]
-        [::std::mem::offset_of!(_cef_browser_settings_t, tab_to_links) - 232usize];
+        [::std::mem::offset_of!(_cef_browser_settings_t, tab_to_links) - 140usize];
     ["Offset of field: _cef_browser_settings_t::local_storage"]
-        [::std::mem::offset_of!(_cef_browser_settings_t, local_storage) - 236usize];
+        [::std::mem::offset_of!(_cef_browser_settings_t, local_storage) - 144usize];
     ["Offset of field: _cef_browser_settings_t::databases"]
-        [::std::mem::offset_of!(_cef_browser_settings_t, databases) - 240usize];
+        [::std::mem::offset_of!(_cef_browser_settings_t, databases) - 148usize];
     ["Offset of field: _cef_browser_settings_t::webgl"]
-        [::std::mem::offset_of!(_cef_browser_settings_t, webgl) - 244usize];
+        [::std::mem::offset_of!(_cef_browser_settings_t, webgl) - 152usize];
     ["Offset of field: _cef_browser_settings_t::background_color"]
-        [::std::mem::offset_of!(_cef_browser_settings_t, background_color) - 248usize];
+        [::std::mem::offset_of!(_cef_browser_settings_t, background_color) - 156usize];
     ["Offset of field: _cef_browser_settings_t::chrome_status_bubble"]
-        [::std::mem::offset_of!(_cef_browser_settings_t, chrome_status_bubble) - 252usize];
+        [::std::mem::offset_of!(_cef_browser_settings_t, chrome_status_bubble) - 160usize];
     ["Offset of field: _cef_browser_settings_t::chrome_zoom_bubble"]
-        [::std::mem::offset_of!(_cef_browser_settings_t, chrome_zoom_bubble) - 256usize];
+        [::std::mem::offset_of!(_cef_browser_settings_t, chrome_zoom_bubble) - 164usize];
 };
 #[doc = "\n Browser initialization settings. Specify NULL or 0 to get the recommended\n default values. The consequences of using custom values may not be well\n tested. Many of these and other settings can also configured using command-\n line switches.\n"]
 pub type cef_browser_settings_t = _cef_browser_settings_t;
@@ -1350,28 +1350,28 @@ pub struct _cef_urlparts_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_urlparts_t"][::std::mem::size_of::<_cef_urlparts_t>() - 240usize];
-    ["Alignment of _cef_urlparts_t"][::std::mem::align_of::<_cef_urlparts_t>() - 8usize];
+    ["Size of _cef_urlparts_t"][::std::mem::size_of::<_cef_urlparts_t>() - 120usize];
+    ["Alignment of _cef_urlparts_t"][::std::mem::align_of::<_cef_urlparts_t>() - 4usize];
     ["Offset of field: _cef_urlparts_t::spec"]
         [::std::mem::offset_of!(_cef_urlparts_t, spec) - 0usize];
     ["Offset of field: _cef_urlparts_t::scheme"]
-        [::std::mem::offset_of!(_cef_urlparts_t, scheme) - 24usize];
+        [::std::mem::offset_of!(_cef_urlparts_t, scheme) - 12usize];
     ["Offset of field: _cef_urlparts_t::username"]
-        [::std::mem::offset_of!(_cef_urlparts_t, username) - 48usize];
+        [::std::mem::offset_of!(_cef_urlparts_t, username) - 24usize];
     ["Offset of field: _cef_urlparts_t::password"]
-        [::std::mem::offset_of!(_cef_urlparts_t, password) - 72usize];
+        [::std::mem::offset_of!(_cef_urlparts_t, password) - 36usize];
     ["Offset of field: _cef_urlparts_t::host"]
-        [::std::mem::offset_of!(_cef_urlparts_t, host) - 96usize];
+        [::std::mem::offset_of!(_cef_urlparts_t, host) - 48usize];
     ["Offset of field: _cef_urlparts_t::port"]
-        [::std::mem::offset_of!(_cef_urlparts_t, port) - 120usize];
+        [::std::mem::offset_of!(_cef_urlparts_t, port) - 60usize];
     ["Offset of field: _cef_urlparts_t::origin"]
-        [::std::mem::offset_of!(_cef_urlparts_t, origin) - 144usize];
+        [::std::mem::offset_of!(_cef_urlparts_t, origin) - 72usize];
     ["Offset of field: _cef_urlparts_t::path"]
-        [::std::mem::offset_of!(_cef_urlparts_t, path) - 168usize];
+        [::std::mem::offset_of!(_cef_urlparts_t, path) - 84usize];
     ["Offset of field: _cef_urlparts_t::query"]
-        [::std::mem::offset_of!(_cef_urlparts_t, query) - 192usize];
+        [::std::mem::offset_of!(_cef_urlparts_t, query) - 96usize];
     ["Offset of field: _cef_urlparts_t::fragment"]
-        [::std::mem::offset_of!(_cef_urlparts_t, fragment) - 216usize];
+        [::std::mem::offset_of!(_cef_urlparts_t, fragment) - 108usize];
 };
 #[doc = "\n URL component parts.\n"]
 pub type cef_urlparts_t = _cef_urlparts_t;
@@ -1424,30 +1424,30 @@ pub struct _cef_cookie_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_cookie_t"][::std::mem::size_of::<_cef_cookie_t>() - 144usize];
+    ["Size of _cef_cookie_t"][::std::mem::size_of::<_cef_cookie_t>() - 96usize];
     ["Alignment of _cef_cookie_t"][::std::mem::align_of::<_cef_cookie_t>() - 8usize];
     ["Offset of field: _cef_cookie_t::name"][::std::mem::offset_of!(_cef_cookie_t, name) - 0usize];
     ["Offset of field: _cef_cookie_t::value"]
-        [::std::mem::offset_of!(_cef_cookie_t, value) - 24usize];
+        [::std::mem::offset_of!(_cef_cookie_t, value) - 12usize];
     ["Offset of field: _cef_cookie_t::domain"]
-        [::std::mem::offset_of!(_cef_cookie_t, domain) - 48usize];
-    ["Offset of field: _cef_cookie_t::path"][::std::mem::offset_of!(_cef_cookie_t, path) - 72usize];
+        [::std::mem::offset_of!(_cef_cookie_t, domain) - 24usize];
+    ["Offset of field: _cef_cookie_t::path"][::std::mem::offset_of!(_cef_cookie_t, path) - 36usize];
     ["Offset of field: _cef_cookie_t::secure"]
-        [::std::mem::offset_of!(_cef_cookie_t, secure) - 96usize];
+        [::std::mem::offset_of!(_cef_cookie_t, secure) - 48usize];
     ["Offset of field: _cef_cookie_t::httponly"]
-        [::std::mem::offset_of!(_cef_cookie_t, httponly) - 100usize];
+        [::std::mem::offset_of!(_cef_cookie_t, httponly) - 52usize];
     ["Offset of field: _cef_cookie_t::creation"]
-        [::std::mem::offset_of!(_cef_cookie_t, creation) - 104usize];
+        [::std::mem::offset_of!(_cef_cookie_t, creation) - 56usize];
     ["Offset of field: _cef_cookie_t::last_access"]
-        [::std::mem::offset_of!(_cef_cookie_t, last_access) - 112usize];
+        [::std::mem::offset_of!(_cef_cookie_t, last_access) - 64usize];
     ["Offset of field: _cef_cookie_t::has_expires"]
-        [::std::mem::offset_of!(_cef_cookie_t, has_expires) - 120usize];
+        [::std::mem::offset_of!(_cef_cookie_t, has_expires) - 72usize];
     ["Offset of field: _cef_cookie_t::expires"]
-        [::std::mem::offset_of!(_cef_cookie_t, expires) - 128usize];
+        [::std::mem::offset_of!(_cef_cookie_t, expires) - 80usize];
     ["Offset of field: _cef_cookie_t::same_site"]
-        [::std::mem::offset_of!(_cef_cookie_t, same_site) - 136usize];
+        [::std::mem::offset_of!(_cef_cookie_t, same_site) - 88usize];
     ["Offset of field: _cef_cookie_t::priority"]
-        [::std::mem::offset_of!(_cef_cookie_t, priority) - 140usize];
+        [::std::mem::offset_of!(_cef_cookie_t, priority) - 92usize];
 };
 #[doc = "\n Cookie information.\n"]
 pub type cef_cookie_t = _cef_cookie_t;
@@ -2259,17 +2259,17 @@ pub struct _cef_linux_window_properties_t {
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
     ["Size of _cef_linux_window_properties_t"]
-        [::std::mem::size_of::<_cef_linux_window_properties_t>() - 96usize];
+        [::std::mem::size_of::<_cef_linux_window_properties_t>() - 48usize];
     ["Alignment of _cef_linux_window_properties_t"]
-        [::std::mem::align_of::<_cef_linux_window_properties_t>() - 8usize];
+        [::std::mem::align_of::<_cef_linux_window_properties_t>() - 4usize];
     ["Offset of field: _cef_linux_window_properties_t::wayland_app_id"]
         [::std::mem::offset_of!(_cef_linux_window_properties_t, wayland_app_id) - 0usize];
     ["Offset of field: _cef_linux_window_properties_t::wm_class_class"]
-        [::std::mem::offset_of!(_cef_linux_window_properties_t, wm_class_class) - 24usize];
+        [::std::mem::offset_of!(_cef_linux_window_properties_t, wm_class_class) - 12usize];
     ["Offset of field: _cef_linux_window_properties_t::wm_class_name"]
-        [::std::mem::offset_of!(_cef_linux_window_properties_t, wm_class_name) - 48usize];
+        [::std::mem::offset_of!(_cef_linux_window_properties_t, wm_class_name) - 24usize];
     ["Offset of field: _cef_linux_window_properties_t::wm_role_name"]
-        [::std::mem::offset_of!(_cef_linux_window_properties_t, wm_role_name) - 72usize];
+        [::std::mem::offset_of!(_cef_linux_window_properties_t, wm_role_name) - 36usize];
 };
 #[doc = "\n Linux window properties, such as X11's WM_CLASS or Wayland's app_id.\n Those are passed to CefWindowDelegate, so the client can set them\n for the CefWindow's top-level. Thus, allowing window managers to correctly\n display the application's information (e.g., icons).\n"]
 pub type cef_linux_window_properties_t = _cef_linux_window_properties_t;
@@ -2916,16 +2916,16 @@ pub struct _cef_cursor_info_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_cursor_info_t"][::std::mem::size_of::<_cef_cursor_info_t>() - 32usize];
-    ["Alignment of _cef_cursor_info_t"][::std::mem::align_of::<_cef_cursor_info_t>() - 8usize];
+    ["Size of _cef_cursor_info_t"][::std::mem::size_of::<_cef_cursor_info_t>() - 24usize];
+    ["Alignment of _cef_cursor_info_t"][::std::mem::align_of::<_cef_cursor_info_t>() - 4usize];
     ["Offset of field: _cef_cursor_info_t::hotspot"]
         [::std::mem::offset_of!(_cef_cursor_info_t, hotspot) - 0usize];
     ["Offset of field: _cef_cursor_info_t::image_scale_factor"]
         [::std::mem::offset_of!(_cef_cursor_info_t, image_scale_factor) - 8usize];
     ["Offset of field: _cef_cursor_info_t::buffer"]
-        [::std::mem::offset_of!(_cef_cursor_info_t, buffer) - 16usize];
+        [::std::mem::offset_of!(_cef_cursor_info_t, buffer) - 12usize];
     ["Offset of field: _cef_cursor_info_t::size"]
-        [::std::mem::offset_of!(_cef_cursor_info_t, size) - 24usize];
+        [::std::mem::offset_of!(_cef_cursor_info_t, size) - 16usize];
 };
 #[doc = "\n Structure representing cursor information. |buffer| will be\n |size.width|*|size.height|*4 bytes in size and represents a BGRA image with\n an upper-left origin.\n"]
 pub type cef_cursor_info_t = _cef_cursor_info_t;
@@ -3021,7 +3021,7 @@ pub struct _cef_pdf_print_settings_t {
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
     ["Size of _cef_pdf_print_settings_t"]
-        [::std::mem::size_of::<_cef_pdf_print_settings_t>() - 160usize];
+        [::std::mem::size_of::<_cef_pdf_print_settings_t>() - 120usize];
     ["Alignment of _cef_pdf_print_settings_t"]
         [::std::mem::align_of::<_cef_pdf_print_settings_t>() - 8usize];
     ["Offset of field: _cef_pdf_print_settings_t::landscape"]
@@ -3049,15 +3049,15 @@ const _: () = {
     ["Offset of field: _cef_pdf_print_settings_t::page_ranges"]
         [::std::mem::offset_of!(_cef_pdf_print_settings_t, page_ranges) - 72usize];
     ["Offset of field: _cef_pdf_print_settings_t::display_header_footer"]
-        [::std::mem::offset_of!(_cef_pdf_print_settings_t, display_header_footer) - 96usize];
+        [::std::mem::offset_of!(_cef_pdf_print_settings_t, display_header_footer) - 84usize];
     ["Offset of field: _cef_pdf_print_settings_t::header_template"]
-        [::std::mem::offset_of!(_cef_pdf_print_settings_t, header_template) - 104usize];
+        [::std::mem::offset_of!(_cef_pdf_print_settings_t, header_template) - 88usize];
     ["Offset of field: _cef_pdf_print_settings_t::footer_template"]
-        [::std::mem::offset_of!(_cef_pdf_print_settings_t, footer_template) - 128usize];
+        [::std::mem::offset_of!(_cef_pdf_print_settings_t, footer_template) - 100usize];
     ["Offset of field: _cef_pdf_print_settings_t::generate_tagged_pdf"]
-        [::std::mem::offset_of!(_cef_pdf_print_settings_t, generate_tagged_pdf) - 152usize];
+        [::std::mem::offset_of!(_cef_pdf_print_settings_t, generate_tagged_pdf) - 112usize];
     ["Offset of field: _cef_pdf_print_settings_t::generate_document_outline"]
-        [::std::mem::offset_of!(_cef_pdf_print_settings_t, generate_document_outline) - 156usize];
+        [::std::mem::offset_of!(_cef_pdf_print_settings_t, generate_document_outline) - 116usize];
 };
 #[doc = "\n Structure representing PDF print settings. These values match the parameters\n supported by the DevTools Page.printToPDF function. See\n https://chromedevtools.github.io/devtools-protocol/tot/Page/#method-printToPDF\n"]
 pub type cef_pdf_print_settings_t = _cef_pdf_print_settings_t;
@@ -3516,15 +3516,15 @@ pub struct _cef_media_sink_device_info_t {
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
     ["Size of _cef_media_sink_device_info_t"]
-        [::std::mem::size_of::<_cef_media_sink_device_info_t>() - 56usize];
+        [::std::mem::size_of::<_cef_media_sink_device_info_t>() - 28usize];
     ["Alignment of _cef_media_sink_device_info_t"]
-        [::std::mem::align_of::<_cef_media_sink_device_info_t>() - 8usize];
+        [::std::mem::align_of::<_cef_media_sink_device_info_t>() - 4usize];
     ["Offset of field: _cef_media_sink_device_info_t::ip_address"]
         [::std::mem::offset_of!(_cef_media_sink_device_info_t, ip_address) - 0usize];
     ["Offset of field: _cef_media_sink_device_info_t::port"]
-        [::std::mem::offset_of!(_cef_media_sink_device_info_t, port) - 24usize];
+        [::std::mem::offset_of!(_cef_media_sink_device_info_t, port) - 12usize];
     ["Offset of field: _cef_media_sink_device_info_t::model_name"]
-        [::std::mem::offset_of!(_cef_media_sink_device_info_t, model_name) - 32usize];
+        [::std::mem::offset_of!(_cef_media_sink_device_info_t, model_name) - 16usize];
 };
 #[doc = "\n Device information for a MediaSink object.\n"]
 pub type cef_media_sink_device_info_t = _cef_media_sink_device_info_t;
@@ -3915,7 +3915,7 @@ pub struct _cef_task_info_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_task_info_t"][::std::mem::size_of::<_cef_task_info_t>() - 80usize];
+    ["Size of _cef_task_info_t"][::std::mem::size_of::<_cef_task_info_t>() - 72usize];
     ["Alignment of _cef_task_info_t"][::std::mem::align_of::<_cef_task_info_t>() - 8usize];
     ["Offset of field: _cef_task_info_t::id"]
         [::std::mem::offset_of!(_cef_task_info_t, id) - 0usize];
@@ -3926,15 +3926,15 @@ const _: () = {
     ["Offset of field: _cef_task_info_t::title"]
         [::std::mem::offset_of!(_cef_task_info_t, title) - 16usize];
     ["Offset of field: _cef_task_info_t::cpu_usage"]
-        [::std::mem::offset_of!(_cef_task_info_t, cpu_usage) - 40usize];
+        [::std::mem::offset_of!(_cef_task_info_t, cpu_usage) - 32usize];
     ["Offset of field: _cef_task_info_t::number_of_processors"]
-        [::std::mem::offset_of!(_cef_task_info_t, number_of_processors) - 48usize];
+        [::std::mem::offset_of!(_cef_task_info_t, number_of_processors) - 40usize];
     ["Offset of field: _cef_task_info_t::memory"]
-        [::std::mem::offset_of!(_cef_task_info_t, memory) - 56usize];
+        [::std::mem::offset_of!(_cef_task_info_t, memory) - 48usize];
     ["Offset of field: _cef_task_info_t::gpu_memory"]
-        [::std::mem::offset_of!(_cef_task_info_t, gpu_memory) - 64usize];
+        [::std::mem::offset_of!(_cef_task_info_t, gpu_memory) - 56usize];
     ["Offset of field: _cef_task_info_t::is_gpu_memory_inflated"]
-        [::std::mem::offset_of!(_cef_task_info_t, is_gpu_memory_inflated) - 72usize];
+        [::std::mem::offset_of!(_cef_task_info_t, is_gpu_memory_inflated) - 64usize];
 };
 #[doc = "\n Structure representing task information provided by CefTaskManager.\n"]
 pub type cef_task_info_t = _cef_task_info_t;
@@ -3955,19 +3955,19 @@ pub struct _cef_base_ref_counted_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_base_ref_counted_t"][::std::mem::size_of::<_cef_base_ref_counted_t>() - 40usize];
+    ["Size of _cef_base_ref_counted_t"][::std::mem::size_of::<_cef_base_ref_counted_t>() - 20usize];
     ["Alignment of _cef_base_ref_counted_t"]
-        [::std::mem::align_of::<_cef_base_ref_counted_t>() - 8usize];
+        [::std::mem::align_of::<_cef_base_ref_counted_t>() - 4usize];
     ["Offset of field: _cef_base_ref_counted_t::size"]
         [::std::mem::offset_of!(_cef_base_ref_counted_t, size) - 0usize];
     ["Offset of field: _cef_base_ref_counted_t::add_ref"]
-        [::std::mem::offset_of!(_cef_base_ref_counted_t, add_ref) - 8usize];
+        [::std::mem::offset_of!(_cef_base_ref_counted_t, add_ref) - 4usize];
     ["Offset of field: _cef_base_ref_counted_t::release"]
-        [::std::mem::offset_of!(_cef_base_ref_counted_t, release) - 16usize];
+        [::std::mem::offset_of!(_cef_base_ref_counted_t, release) - 8usize];
     ["Offset of field: _cef_base_ref_counted_t::has_one_ref"]
-        [::std::mem::offset_of!(_cef_base_ref_counted_t, has_one_ref) - 24usize];
+        [::std::mem::offset_of!(_cef_base_ref_counted_t, has_one_ref) - 12usize];
     ["Offset of field: _cef_base_ref_counted_t::has_at_least_one_ref"]
-        [::std::mem::offset_of!(_cef_base_ref_counted_t, has_at_least_one_ref) - 32usize];
+        [::std::mem::offset_of!(_cef_base_ref_counted_t, has_at_least_one_ref) - 16usize];
 };
 pub type cef_base_ref_counted_t = _cef_base_ref_counted_t;
 #[repr(C)]
@@ -3978,12 +3978,12 @@ pub struct _cef_base_scoped_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_base_scoped_t"][::std::mem::size_of::<_cef_base_scoped_t>() - 16usize];
-    ["Alignment of _cef_base_scoped_t"][::std::mem::align_of::<_cef_base_scoped_t>() - 8usize];
+    ["Size of _cef_base_scoped_t"][::std::mem::size_of::<_cef_base_scoped_t>() - 8usize];
+    ["Alignment of _cef_base_scoped_t"][::std::mem::align_of::<_cef_base_scoped_t>() - 4usize];
     ["Offset of field: _cef_base_scoped_t::size"]
         [::std::mem::offset_of!(_cef_base_scoped_t, size) - 0usize];
     ["Offset of field: _cef_base_scoped_t::del"]
-        [::std::mem::offset_of!(_cef_base_scoped_t, del) - 8usize];
+        [::std::mem::offset_of!(_cef_base_scoped_t, del) - 4usize];
 };
 pub type cef_base_scoped_t = _cef_base_scoped_t;
 #[doc = "\n Callback structure for cef_browser_host_t::AddDevToolsMessageObserver. The\n functions of this structure will be called on the browser process UI thread.\n"]
@@ -4040,29 +4040,29 @@ pub struct _cef_dev_tools_message_observer_t {
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
     ["Size of _cef_dev_tools_message_observer_t"]
-        [::std::mem::size_of::<_cef_dev_tools_message_observer_t>() - 80usize];
+        [::std::mem::size_of::<_cef_dev_tools_message_observer_t>() - 40usize];
     ["Alignment of _cef_dev_tools_message_observer_t"]
-        [::std::mem::align_of::<_cef_dev_tools_message_observer_t>() - 8usize];
+        [::std::mem::align_of::<_cef_dev_tools_message_observer_t>() - 4usize];
     ["Offset of field: _cef_dev_tools_message_observer_t::base"]
         [::std::mem::offset_of!(_cef_dev_tools_message_observer_t, base) - 0usize];
     ["Offset of field: _cef_dev_tools_message_observer_t::on_dev_tools_message"]
-        [::std::mem::offset_of!(_cef_dev_tools_message_observer_t, on_dev_tools_message) - 40usize];
+        [::std::mem::offset_of!(_cef_dev_tools_message_observer_t, on_dev_tools_message) - 20usize];
     ["Offset of field: _cef_dev_tools_message_observer_t::on_dev_tools_method_result"][::std::mem::offset_of!(
         _cef_dev_tools_message_observer_t,
         on_dev_tools_method_result
-    ) - 48usize];
+    ) - 24usize];
     ["Offset of field: _cef_dev_tools_message_observer_t::on_dev_tools_event"]
-        [::std::mem::offset_of!(_cef_dev_tools_message_observer_t, on_dev_tools_event) - 56usize];
+        [::std::mem::offset_of!(_cef_dev_tools_message_observer_t, on_dev_tools_event) - 28usize];
     ["Offset of field: _cef_dev_tools_message_observer_t::on_dev_tools_agent_attached"][::std::mem::offset_of!(
         _cef_dev_tools_message_observer_t,
         on_dev_tools_agent_attached
     )
-        - 64usize];
+        - 32usize];
     ["Offset of field: _cef_dev_tools_message_observer_t::on_dev_tools_agent_detached"][::std::mem::offset_of!(
         _cef_dev_tools_message_observer_t,
         on_dev_tools_agent_detached
     )
-        - 72usize];
+        - 36usize];
 };
 #[doc = "\n Callback structure for cef_browser_host_t::AddDevToolsMessageObserver. The\n functions of this structure will be called on the browser process UI thread.\n"]
 pub type cef_dev_tools_message_observer_t = _cef_dev_tools_message_observer_t;
@@ -4183,52 +4183,52 @@ pub struct _cef_value_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_value_t"][::std::mem::size_of::<_cef_value_t>() - 216usize];
-    ["Alignment of _cef_value_t"][::std::mem::align_of::<_cef_value_t>() - 8usize];
+    ["Size of _cef_value_t"][::std::mem::size_of::<_cef_value_t>() - 108usize];
+    ["Alignment of _cef_value_t"][::std::mem::align_of::<_cef_value_t>() - 4usize];
     ["Offset of field: _cef_value_t::base"][::std::mem::offset_of!(_cef_value_t, base) - 0usize];
     ["Offset of field: _cef_value_t::is_valid"]
-        [::std::mem::offset_of!(_cef_value_t, is_valid) - 40usize];
+        [::std::mem::offset_of!(_cef_value_t, is_valid) - 20usize];
     ["Offset of field: _cef_value_t::is_owned"]
-        [::std::mem::offset_of!(_cef_value_t, is_owned) - 48usize];
+        [::std::mem::offset_of!(_cef_value_t, is_owned) - 24usize];
     ["Offset of field: _cef_value_t::is_read_only"]
-        [::std::mem::offset_of!(_cef_value_t, is_read_only) - 56usize];
+        [::std::mem::offset_of!(_cef_value_t, is_read_only) - 28usize];
     ["Offset of field: _cef_value_t::is_same"]
-        [::std::mem::offset_of!(_cef_value_t, is_same) - 64usize];
+        [::std::mem::offset_of!(_cef_value_t, is_same) - 32usize];
     ["Offset of field: _cef_value_t::is_equal"]
-        [::std::mem::offset_of!(_cef_value_t, is_equal) - 72usize];
-    ["Offset of field: _cef_value_t::copy"][::std::mem::offset_of!(_cef_value_t, copy) - 80usize];
+        [::std::mem::offset_of!(_cef_value_t, is_equal) - 36usize];
+    ["Offset of field: _cef_value_t::copy"][::std::mem::offset_of!(_cef_value_t, copy) - 40usize];
     ["Offset of field: _cef_value_t::get_type"]
-        [::std::mem::offset_of!(_cef_value_t, get_type) - 88usize];
+        [::std::mem::offset_of!(_cef_value_t, get_type) - 44usize];
     ["Offset of field: _cef_value_t::get_bool"]
-        [::std::mem::offset_of!(_cef_value_t, get_bool) - 96usize];
+        [::std::mem::offset_of!(_cef_value_t, get_bool) - 48usize];
     ["Offset of field: _cef_value_t::get_int"]
-        [::std::mem::offset_of!(_cef_value_t, get_int) - 104usize];
+        [::std::mem::offset_of!(_cef_value_t, get_int) - 52usize];
     ["Offset of field: _cef_value_t::get_double"]
-        [::std::mem::offset_of!(_cef_value_t, get_double) - 112usize];
+        [::std::mem::offset_of!(_cef_value_t, get_double) - 56usize];
     ["Offset of field: _cef_value_t::get_string"]
-        [::std::mem::offset_of!(_cef_value_t, get_string) - 120usize];
+        [::std::mem::offset_of!(_cef_value_t, get_string) - 60usize];
     ["Offset of field: _cef_value_t::get_binary"]
-        [::std::mem::offset_of!(_cef_value_t, get_binary) - 128usize];
+        [::std::mem::offset_of!(_cef_value_t, get_binary) - 64usize];
     ["Offset of field: _cef_value_t::get_dictionary"]
-        [::std::mem::offset_of!(_cef_value_t, get_dictionary) - 136usize];
+        [::std::mem::offset_of!(_cef_value_t, get_dictionary) - 68usize];
     ["Offset of field: _cef_value_t::get_list"]
-        [::std::mem::offset_of!(_cef_value_t, get_list) - 144usize];
+        [::std::mem::offset_of!(_cef_value_t, get_list) - 72usize];
     ["Offset of field: _cef_value_t::set_null"]
-        [::std::mem::offset_of!(_cef_value_t, set_null) - 152usize];
+        [::std::mem::offset_of!(_cef_value_t, set_null) - 76usize];
     ["Offset of field: _cef_value_t::set_bool"]
-        [::std::mem::offset_of!(_cef_value_t, set_bool) - 160usize];
+        [::std::mem::offset_of!(_cef_value_t, set_bool) - 80usize];
     ["Offset of field: _cef_value_t::set_int"]
-        [::std::mem::offset_of!(_cef_value_t, set_int) - 168usize];
+        [::std::mem::offset_of!(_cef_value_t, set_int) - 84usize];
     ["Offset of field: _cef_value_t::set_double"]
-        [::std::mem::offset_of!(_cef_value_t, set_double) - 176usize];
+        [::std::mem::offset_of!(_cef_value_t, set_double) - 88usize];
     ["Offset of field: _cef_value_t::set_string"]
-        [::std::mem::offset_of!(_cef_value_t, set_string) - 184usize];
+        [::std::mem::offset_of!(_cef_value_t, set_string) - 92usize];
     ["Offset of field: _cef_value_t::set_binary"]
-        [::std::mem::offset_of!(_cef_value_t, set_binary) - 192usize];
+        [::std::mem::offset_of!(_cef_value_t, set_binary) - 96usize];
     ["Offset of field: _cef_value_t::set_dictionary"]
-        [::std::mem::offset_of!(_cef_value_t, set_dictionary) - 200usize];
+        [::std::mem::offset_of!(_cef_value_t, set_dictionary) - 100usize];
     ["Offset of field: _cef_value_t::set_list"]
-        [::std::mem::offset_of!(_cef_value_t, set_list) - 208usize];
+        [::std::mem::offset_of!(_cef_value_t, set_list) - 104usize];
 };
 #[doc = "\n Structure that wraps other data value types. Complex types (binary,\n dictionary and list) will be referenced but not owned by this object. Can be\n used on any process and thread.\n"]
 pub type cef_value_t = _cef_value_t;
@@ -4287,26 +4287,26 @@ pub struct _cef_binary_value_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_binary_value_t"][::std::mem::size_of::<_cef_binary_value_t>() - 104usize];
-    ["Alignment of _cef_binary_value_t"][::std::mem::align_of::<_cef_binary_value_t>() - 8usize];
+    ["Size of _cef_binary_value_t"][::std::mem::size_of::<_cef_binary_value_t>() - 52usize];
+    ["Alignment of _cef_binary_value_t"][::std::mem::align_of::<_cef_binary_value_t>() - 4usize];
     ["Offset of field: _cef_binary_value_t::base"]
         [::std::mem::offset_of!(_cef_binary_value_t, base) - 0usize];
     ["Offset of field: _cef_binary_value_t::is_valid"]
-        [::std::mem::offset_of!(_cef_binary_value_t, is_valid) - 40usize];
+        [::std::mem::offset_of!(_cef_binary_value_t, is_valid) - 20usize];
     ["Offset of field: _cef_binary_value_t::is_owned"]
-        [::std::mem::offset_of!(_cef_binary_value_t, is_owned) - 48usize];
+        [::std::mem::offset_of!(_cef_binary_value_t, is_owned) - 24usize];
     ["Offset of field: _cef_binary_value_t::is_same"]
-        [::std::mem::offset_of!(_cef_binary_value_t, is_same) - 56usize];
+        [::std::mem::offset_of!(_cef_binary_value_t, is_same) - 28usize];
     ["Offset of field: _cef_binary_value_t::is_equal"]
-        [::std::mem::offset_of!(_cef_binary_value_t, is_equal) - 64usize];
+        [::std::mem::offset_of!(_cef_binary_value_t, is_equal) - 32usize];
     ["Offset of field: _cef_binary_value_t::copy"]
-        [::std::mem::offset_of!(_cef_binary_value_t, copy) - 72usize];
+        [::std::mem::offset_of!(_cef_binary_value_t, copy) - 36usize];
     ["Offset of field: _cef_binary_value_t::get_raw_data"]
-        [::std::mem::offset_of!(_cef_binary_value_t, get_raw_data) - 80usize];
+        [::std::mem::offset_of!(_cef_binary_value_t, get_raw_data) - 40usize];
     ["Offset of field: _cef_binary_value_t::get_size"]
-        [::std::mem::offset_of!(_cef_binary_value_t, get_size) - 88usize];
+        [::std::mem::offset_of!(_cef_binary_value_t, get_size) - 44usize];
     ["Offset of field: _cef_binary_value_t::get_data"]
-        [::std::mem::offset_of!(_cef_binary_value_t, get_data) - 96usize];
+        [::std::mem::offset_of!(_cef_binary_value_t, get_data) - 48usize];
 };
 #[doc = "\n Structure representing a binary value. Can be used on any process and\n thread.\n"]
 pub type cef_binary_value_t = _cef_binary_value_t;
@@ -4519,69 +4519,69 @@ pub struct _cef_dictionary_value_t {
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
     ["Size of _cef_dictionary_value_t"]
-        [::std::mem::size_of::<_cef_dictionary_value_t>() - 272usize];
+        [::std::mem::size_of::<_cef_dictionary_value_t>() - 136usize];
     ["Alignment of _cef_dictionary_value_t"]
-        [::std::mem::align_of::<_cef_dictionary_value_t>() - 8usize];
+        [::std::mem::align_of::<_cef_dictionary_value_t>() - 4usize];
     ["Offset of field: _cef_dictionary_value_t::base"]
         [::std::mem::offset_of!(_cef_dictionary_value_t, base) - 0usize];
     ["Offset of field: _cef_dictionary_value_t::is_valid"]
-        [::std::mem::offset_of!(_cef_dictionary_value_t, is_valid) - 40usize];
+        [::std::mem::offset_of!(_cef_dictionary_value_t, is_valid) - 20usize];
     ["Offset of field: _cef_dictionary_value_t::is_owned"]
-        [::std::mem::offset_of!(_cef_dictionary_value_t, is_owned) - 48usize];
+        [::std::mem::offset_of!(_cef_dictionary_value_t, is_owned) - 24usize];
     ["Offset of field: _cef_dictionary_value_t::is_read_only"]
-        [::std::mem::offset_of!(_cef_dictionary_value_t, is_read_only) - 56usize];
+        [::std::mem::offset_of!(_cef_dictionary_value_t, is_read_only) - 28usize];
     ["Offset of field: _cef_dictionary_value_t::is_same"]
-        [::std::mem::offset_of!(_cef_dictionary_value_t, is_same) - 64usize];
+        [::std::mem::offset_of!(_cef_dictionary_value_t, is_same) - 32usize];
     ["Offset of field: _cef_dictionary_value_t::is_equal"]
-        [::std::mem::offset_of!(_cef_dictionary_value_t, is_equal) - 72usize];
+        [::std::mem::offset_of!(_cef_dictionary_value_t, is_equal) - 36usize];
     ["Offset of field: _cef_dictionary_value_t::copy"]
-        [::std::mem::offset_of!(_cef_dictionary_value_t, copy) - 80usize];
+        [::std::mem::offset_of!(_cef_dictionary_value_t, copy) - 40usize];
     ["Offset of field: _cef_dictionary_value_t::get_size"]
-        [::std::mem::offset_of!(_cef_dictionary_value_t, get_size) - 88usize];
+        [::std::mem::offset_of!(_cef_dictionary_value_t, get_size) - 44usize];
     ["Offset of field: _cef_dictionary_value_t::clear"]
-        [::std::mem::offset_of!(_cef_dictionary_value_t, clear) - 96usize];
+        [::std::mem::offset_of!(_cef_dictionary_value_t, clear) - 48usize];
     ["Offset of field: _cef_dictionary_value_t::has_key"]
-        [::std::mem::offset_of!(_cef_dictionary_value_t, has_key) - 104usize];
+        [::std::mem::offset_of!(_cef_dictionary_value_t, has_key) - 52usize];
     ["Offset of field: _cef_dictionary_value_t::get_keys"]
-        [::std::mem::offset_of!(_cef_dictionary_value_t, get_keys) - 112usize];
+        [::std::mem::offset_of!(_cef_dictionary_value_t, get_keys) - 56usize];
     ["Offset of field: _cef_dictionary_value_t::remove"]
-        [::std::mem::offset_of!(_cef_dictionary_value_t, remove) - 120usize];
+        [::std::mem::offset_of!(_cef_dictionary_value_t, remove) - 60usize];
     ["Offset of field: _cef_dictionary_value_t::get_type"]
-        [::std::mem::offset_of!(_cef_dictionary_value_t, get_type) - 128usize];
+        [::std::mem::offset_of!(_cef_dictionary_value_t, get_type) - 64usize];
     ["Offset of field: _cef_dictionary_value_t::get_value"]
-        [::std::mem::offset_of!(_cef_dictionary_value_t, get_value) - 136usize];
+        [::std::mem::offset_of!(_cef_dictionary_value_t, get_value) - 68usize];
     ["Offset of field: _cef_dictionary_value_t::get_bool"]
-        [::std::mem::offset_of!(_cef_dictionary_value_t, get_bool) - 144usize];
+        [::std::mem::offset_of!(_cef_dictionary_value_t, get_bool) - 72usize];
     ["Offset of field: _cef_dictionary_value_t::get_int"]
-        [::std::mem::offset_of!(_cef_dictionary_value_t, get_int) - 152usize];
+        [::std::mem::offset_of!(_cef_dictionary_value_t, get_int) - 76usize];
     ["Offset of field: _cef_dictionary_value_t::get_double"]
-        [::std::mem::offset_of!(_cef_dictionary_value_t, get_double) - 160usize];
+        [::std::mem::offset_of!(_cef_dictionary_value_t, get_double) - 80usize];
     ["Offset of field: _cef_dictionary_value_t::get_string"]
-        [::std::mem::offset_of!(_cef_dictionary_value_t, get_string) - 168usize];
+        [::std::mem::offset_of!(_cef_dictionary_value_t, get_string) - 84usize];
     ["Offset of field: _cef_dictionary_value_t::get_binary"]
-        [::std::mem::offset_of!(_cef_dictionary_value_t, get_binary) - 176usize];
+        [::std::mem::offset_of!(_cef_dictionary_value_t, get_binary) - 88usize];
     ["Offset of field: _cef_dictionary_value_t::get_dictionary"]
-        [::std::mem::offset_of!(_cef_dictionary_value_t, get_dictionary) - 184usize];
+        [::std::mem::offset_of!(_cef_dictionary_value_t, get_dictionary) - 92usize];
     ["Offset of field: _cef_dictionary_value_t::get_list"]
-        [::std::mem::offset_of!(_cef_dictionary_value_t, get_list) - 192usize];
+        [::std::mem::offset_of!(_cef_dictionary_value_t, get_list) - 96usize];
     ["Offset of field: _cef_dictionary_value_t::set_value"]
-        [::std::mem::offset_of!(_cef_dictionary_value_t, set_value) - 200usize];
+        [::std::mem::offset_of!(_cef_dictionary_value_t, set_value) - 100usize];
     ["Offset of field: _cef_dictionary_value_t::set_null"]
-        [::std::mem::offset_of!(_cef_dictionary_value_t, set_null) - 208usize];
+        [::std::mem::offset_of!(_cef_dictionary_value_t, set_null) - 104usize];
     ["Offset of field: _cef_dictionary_value_t::set_bool"]
-        [::std::mem::offset_of!(_cef_dictionary_value_t, set_bool) - 216usize];
+        [::std::mem::offset_of!(_cef_dictionary_value_t, set_bool) - 108usize];
     ["Offset of field: _cef_dictionary_value_t::set_int"]
-        [::std::mem::offset_of!(_cef_dictionary_value_t, set_int) - 224usize];
+        [::std::mem::offset_of!(_cef_dictionary_value_t, set_int) - 112usize];
     ["Offset of field: _cef_dictionary_value_t::set_double"]
-        [::std::mem::offset_of!(_cef_dictionary_value_t, set_double) - 232usize];
+        [::std::mem::offset_of!(_cef_dictionary_value_t, set_double) - 116usize];
     ["Offset of field: _cef_dictionary_value_t::set_string"]
-        [::std::mem::offset_of!(_cef_dictionary_value_t, set_string) - 240usize];
+        [::std::mem::offset_of!(_cef_dictionary_value_t, set_string) - 120usize];
     ["Offset of field: _cef_dictionary_value_t::set_binary"]
-        [::std::mem::offset_of!(_cef_dictionary_value_t, set_binary) - 248usize];
+        [::std::mem::offset_of!(_cef_dictionary_value_t, set_binary) - 124usize];
     ["Offset of field: _cef_dictionary_value_t::set_dictionary"]
-        [::std::mem::offset_of!(_cef_dictionary_value_t, set_dictionary) - 256usize];
+        [::std::mem::offset_of!(_cef_dictionary_value_t, set_dictionary) - 128usize];
     ["Offset of field: _cef_dictionary_value_t::set_list"]
-        [::std::mem::offset_of!(_cef_dictionary_value_t, set_list) - 264usize];
+        [::std::mem::offset_of!(_cef_dictionary_value_t, set_list) - 132usize];
 };
 #[doc = "\n Structure representing a dictionary value. Can be used on any process and\n thread.\n"]
 pub type cef_dictionary_value_t = _cef_dictionary_value_t;
@@ -4753,66 +4753,66 @@ pub struct _cef_list_value_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_list_value_t"][::std::mem::size_of::<_cef_list_value_t>() - 264usize];
-    ["Alignment of _cef_list_value_t"][::std::mem::align_of::<_cef_list_value_t>() - 8usize];
+    ["Size of _cef_list_value_t"][::std::mem::size_of::<_cef_list_value_t>() - 132usize];
+    ["Alignment of _cef_list_value_t"][::std::mem::align_of::<_cef_list_value_t>() - 4usize];
     ["Offset of field: _cef_list_value_t::base"]
         [::std::mem::offset_of!(_cef_list_value_t, base) - 0usize];
     ["Offset of field: _cef_list_value_t::is_valid"]
-        [::std::mem::offset_of!(_cef_list_value_t, is_valid) - 40usize];
+        [::std::mem::offset_of!(_cef_list_value_t, is_valid) - 20usize];
     ["Offset of field: _cef_list_value_t::is_owned"]
-        [::std::mem::offset_of!(_cef_list_value_t, is_owned) - 48usize];
+        [::std::mem::offset_of!(_cef_list_value_t, is_owned) - 24usize];
     ["Offset of field: _cef_list_value_t::is_read_only"]
-        [::std::mem::offset_of!(_cef_list_value_t, is_read_only) - 56usize];
+        [::std::mem::offset_of!(_cef_list_value_t, is_read_only) - 28usize];
     ["Offset of field: _cef_list_value_t::is_same"]
-        [::std::mem::offset_of!(_cef_list_value_t, is_same) - 64usize];
+        [::std::mem::offset_of!(_cef_list_value_t, is_same) - 32usize];
     ["Offset of field: _cef_list_value_t::is_equal"]
-        [::std::mem::offset_of!(_cef_list_value_t, is_equal) - 72usize];
+        [::std::mem::offset_of!(_cef_list_value_t, is_equal) - 36usize];
     ["Offset of field: _cef_list_value_t::copy"]
-        [::std::mem::offset_of!(_cef_list_value_t, copy) - 80usize];
+        [::std::mem::offset_of!(_cef_list_value_t, copy) - 40usize];
     ["Offset of field: _cef_list_value_t::set_size"]
-        [::std::mem::offset_of!(_cef_list_value_t, set_size) - 88usize];
+        [::std::mem::offset_of!(_cef_list_value_t, set_size) - 44usize];
     ["Offset of field: _cef_list_value_t::get_size"]
-        [::std::mem::offset_of!(_cef_list_value_t, get_size) - 96usize];
+        [::std::mem::offset_of!(_cef_list_value_t, get_size) - 48usize];
     ["Offset of field: _cef_list_value_t::clear"]
-        [::std::mem::offset_of!(_cef_list_value_t, clear) - 104usize];
+        [::std::mem::offset_of!(_cef_list_value_t, clear) - 52usize];
     ["Offset of field: _cef_list_value_t::remove"]
-        [::std::mem::offset_of!(_cef_list_value_t, remove) - 112usize];
+        [::std::mem::offset_of!(_cef_list_value_t, remove) - 56usize];
     ["Offset of field: _cef_list_value_t::get_type"]
-        [::std::mem::offset_of!(_cef_list_value_t, get_type) - 120usize];
+        [::std::mem::offset_of!(_cef_list_value_t, get_type) - 60usize];
     ["Offset of field: _cef_list_value_t::get_value"]
-        [::std::mem::offset_of!(_cef_list_value_t, get_value) - 128usize];
+        [::std::mem::offset_of!(_cef_list_value_t, get_value) - 64usize];
     ["Offset of field: _cef_list_value_t::get_bool"]
-        [::std::mem::offset_of!(_cef_list_value_t, get_bool) - 136usize];
+        [::std::mem::offset_of!(_cef_list_value_t, get_bool) - 68usize];
     ["Offset of field: _cef_list_value_t::get_int"]
-        [::std::mem::offset_of!(_cef_list_value_t, get_int) - 144usize];
+        [::std::mem::offset_of!(_cef_list_value_t, get_int) - 72usize];
     ["Offset of field: _cef_list_value_t::get_double"]
-        [::std::mem::offset_of!(_cef_list_value_t, get_double) - 152usize];
+        [::std::mem::offset_of!(_cef_list_value_t, get_double) - 76usize];
     ["Offset of field: _cef_list_value_t::get_string"]
-        [::std::mem::offset_of!(_cef_list_value_t, get_string) - 160usize];
+        [::std::mem::offset_of!(_cef_list_value_t, get_string) - 80usize];
     ["Offset of field: _cef_list_value_t::get_binary"]
-        [::std::mem::offset_of!(_cef_list_value_t, get_binary) - 168usize];
+        [::std::mem::offset_of!(_cef_list_value_t, get_binary) - 84usize];
     ["Offset of field: _cef_list_value_t::get_dictionary"]
-        [::std::mem::offset_of!(_cef_list_value_t, get_dictionary) - 176usize];
+        [::std::mem::offset_of!(_cef_list_value_t, get_dictionary) - 88usize];
     ["Offset of field: _cef_list_value_t::get_list"]
-        [::std::mem::offset_of!(_cef_list_value_t, get_list) - 184usize];
+        [::std::mem::offset_of!(_cef_list_value_t, get_list) - 92usize];
     ["Offset of field: _cef_list_value_t::set_value"]
-        [::std::mem::offset_of!(_cef_list_value_t, set_value) - 192usize];
+        [::std::mem::offset_of!(_cef_list_value_t, set_value) - 96usize];
     ["Offset of field: _cef_list_value_t::set_null"]
-        [::std::mem::offset_of!(_cef_list_value_t, set_null) - 200usize];
+        [::std::mem::offset_of!(_cef_list_value_t, set_null) - 100usize];
     ["Offset of field: _cef_list_value_t::set_bool"]
-        [::std::mem::offset_of!(_cef_list_value_t, set_bool) - 208usize];
+        [::std::mem::offset_of!(_cef_list_value_t, set_bool) - 104usize];
     ["Offset of field: _cef_list_value_t::set_int"]
-        [::std::mem::offset_of!(_cef_list_value_t, set_int) - 216usize];
+        [::std::mem::offset_of!(_cef_list_value_t, set_int) - 108usize];
     ["Offset of field: _cef_list_value_t::set_double"]
-        [::std::mem::offset_of!(_cef_list_value_t, set_double) - 224usize];
+        [::std::mem::offset_of!(_cef_list_value_t, set_double) - 112usize];
     ["Offset of field: _cef_list_value_t::set_string"]
-        [::std::mem::offset_of!(_cef_list_value_t, set_string) - 232usize];
+        [::std::mem::offset_of!(_cef_list_value_t, set_string) - 116usize];
     ["Offset of field: _cef_list_value_t::set_binary"]
-        [::std::mem::offset_of!(_cef_list_value_t, set_binary) - 240usize];
+        [::std::mem::offset_of!(_cef_list_value_t, set_binary) - 120usize];
     ["Offset of field: _cef_list_value_t::set_dictionary"]
-        [::std::mem::offset_of!(_cef_list_value_t, set_dictionary) - 248usize];
+        [::std::mem::offset_of!(_cef_list_value_t, set_dictionary) - 124usize];
     ["Offset of field: _cef_list_value_t::set_list"]
-        [::std::mem::offset_of!(_cef_list_value_t, set_list) - 256usize];
+        [::std::mem::offset_of!(_cef_list_value_t, set_list) - 128usize];
 };
 #[doc = "\n Structure representing a list value. Can be used on any process and thread.\n"]
 pub type cef_list_value_t = _cef_list_value_t;
@@ -4924,35 +4924,35 @@ pub struct _cef_image_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_image_t"][::std::mem::size_of::<_cef_image_t>() - 144usize];
-    ["Alignment of _cef_image_t"][::std::mem::align_of::<_cef_image_t>() - 8usize];
+    ["Size of _cef_image_t"][::std::mem::size_of::<_cef_image_t>() - 72usize];
+    ["Alignment of _cef_image_t"][::std::mem::align_of::<_cef_image_t>() - 4usize];
     ["Offset of field: _cef_image_t::base"][::std::mem::offset_of!(_cef_image_t, base) - 0usize];
     ["Offset of field: _cef_image_t::is_empty"]
-        [::std::mem::offset_of!(_cef_image_t, is_empty) - 40usize];
+        [::std::mem::offset_of!(_cef_image_t, is_empty) - 20usize];
     ["Offset of field: _cef_image_t::is_same"]
-        [::std::mem::offset_of!(_cef_image_t, is_same) - 48usize];
+        [::std::mem::offset_of!(_cef_image_t, is_same) - 24usize];
     ["Offset of field: _cef_image_t::add_bitmap"]
-        [::std::mem::offset_of!(_cef_image_t, add_bitmap) - 56usize];
+        [::std::mem::offset_of!(_cef_image_t, add_bitmap) - 28usize];
     ["Offset of field: _cef_image_t::add_png"]
-        [::std::mem::offset_of!(_cef_image_t, add_png) - 64usize];
+        [::std::mem::offset_of!(_cef_image_t, add_png) - 32usize];
     ["Offset of field: _cef_image_t::add_jpeg"]
-        [::std::mem::offset_of!(_cef_image_t, add_jpeg) - 72usize];
+        [::std::mem::offset_of!(_cef_image_t, add_jpeg) - 36usize];
     ["Offset of field: _cef_image_t::get_width"]
-        [::std::mem::offset_of!(_cef_image_t, get_width) - 80usize];
+        [::std::mem::offset_of!(_cef_image_t, get_width) - 40usize];
     ["Offset of field: _cef_image_t::get_height"]
-        [::std::mem::offset_of!(_cef_image_t, get_height) - 88usize];
+        [::std::mem::offset_of!(_cef_image_t, get_height) - 44usize];
     ["Offset of field: _cef_image_t::has_representation"]
-        [::std::mem::offset_of!(_cef_image_t, has_representation) - 96usize];
+        [::std::mem::offset_of!(_cef_image_t, has_representation) - 48usize];
     ["Offset of field: _cef_image_t::remove_representation"]
-        [::std::mem::offset_of!(_cef_image_t, remove_representation) - 104usize];
+        [::std::mem::offset_of!(_cef_image_t, remove_representation) - 52usize];
     ["Offset of field: _cef_image_t::get_representation_info"]
-        [::std::mem::offset_of!(_cef_image_t, get_representation_info) - 112usize];
+        [::std::mem::offset_of!(_cef_image_t, get_representation_info) - 56usize];
     ["Offset of field: _cef_image_t::get_as_bitmap"]
-        [::std::mem::offset_of!(_cef_image_t, get_as_bitmap) - 120usize];
+        [::std::mem::offset_of!(_cef_image_t, get_as_bitmap) - 60usize];
     ["Offset of field: _cef_image_t::get_as_png"]
-        [::std::mem::offset_of!(_cef_image_t, get_as_png) - 128usize];
+        [::std::mem::offset_of!(_cef_image_t, get_as_png) - 64usize];
     ["Offset of field: _cef_image_t::get_as_jpeg"]
-        [::std::mem::offset_of!(_cef_image_t, get_as_jpeg) - 136usize];
+        [::std::mem::offset_of!(_cef_image_t, get_as_jpeg) - 68usize];
 };
 #[doc = "\n Container for a single image represented at different scale factors. All\n image representations should be the same size in density independent pixel\n (DIP) units. For example, if the image at scale factor 1.0 is 100x100 pixels\n then the image at scale factor 2.0 should be 200x200 pixels -- both images\n will display with a DIP size of 100x100 units. The functions of this\n structure can be called on any browser process thread.\n"]
 pub type cef_image_t = _cef_image_t;
@@ -4996,20 +4996,20 @@ pub struct _cef_read_handler_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_read_handler_t"][::std::mem::size_of::<_cef_read_handler_t>() - 80usize];
-    ["Alignment of _cef_read_handler_t"][::std::mem::align_of::<_cef_read_handler_t>() - 8usize];
+    ["Size of _cef_read_handler_t"][::std::mem::size_of::<_cef_read_handler_t>() - 40usize];
+    ["Alignment of _cef_read_handler_t"][::std::mem::align_of::<_cef_read_handler_t>() - 4usize];
     ["Offset of field: _cef_read_handler_t::base"]
         [::std::mem::offset_of!(_cef_read_handler_t, base) - 0usize];
     ["Offset of field: _cef_read_handler_t::read"]
-        [::std::mem::offset_of!(_cef_read_handler_t, read) - 40usize];
+        [::std::mem::offset_of!(_cef_read_handler_t, read) - 20usize];
     ["Offset of field: _cef_read_handler_t::seek"]
-        [::std::mem::offset_of!(_cef_read_handler_t, seek) - 48usize];
+        [::std::mem::offset_of!(_cef_read_handler_t, seek) - 24usize];
     ["Offset of field: _cef_read_handler_t::tell"]
-        [::std::mem::offset_of!(_cef_read_handler_t, tell) - 56usize];
+        [::std::mem::offset_of!(_cef_read_handler_t, tell) - 28usize];
     ["Offset of field: _cef_read_handler_t::eof"]
-        [::std::mem::offset_of!(_cef_read_handler_t, eof) - 64usize];
+        [::std::mem::offset_of!(_cef_read_handler_t, eof) - 32usize];
     ["Offset of field: _cef_read_handler_t::may_block"]
-        [::std::mem::offset_of!(_cef_read_handler_t, may_block) - 72usize];
+        [::std::mem::offset_of!(_cef_read_handler_t, may_block) - 36usize];
 };
 #[doc = "\n Structure the client can implement to provide a custom stream reader. The\n functions of this structure may be called on any thread.\n"]
 pub type cef_read_handler_t = _cef_read_handler_t;
@@ -5049,20 +5049,20 @@ pub struct _cef_stream_reader_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_stream_reader_t"][::std::mem::size_of::<_cef_stream_reader_t>() - 80usize];
-    ["Alignment of _cef_stream_reader_t"][::std::mem::align_of::<_cef_stream_reader_t>() - 8usize];
+    ["Size of _cef_stream_reader_t"][::std::mem::size_of::<_cef_stream_reader_t>() - 40usize];
+    ["Alignment of _cef_stream_reader_t"][::std::mem::align_of::<_cef_stream_reader_t>() - 4usize];
     ["Offset of field: _cef_stream_reader_t::base"]
         [::std::mem::offset_of!(_cef_stream_reader_t, base) - 0usize];
     ["Offset of field: _cef_stream_reader_t::read"]
-        [::std::mem::offset_of!(_cef_stream_reader_t, read) - 40usize];
+        [::std::mem::offset_of!(_cef_stream_reader_t, read) - 20usize];
     ["Offset of field: _cef_stream_reader_t::seek"]
-        [::std::mem::offset_of!(_cef_stream_reader_t, seek) - 48usize];
+        [::std::mem::offset_of!(_cef_stream_reader_t, seek) - 24usize];
     ["Offset of field: _cef_stream_reader_t::tell"]
-        [::std::mem::offset_of!(_cef_stream_reader_t, tell) - 56usize];
+        [::std::mem::offset_of!(_cef_stream_reader_t, tell) - 28usize];
     ["Offset of field: _cef_stream_reader_t::eof"]
-        [::std::mem::offset_of!(_cef_stream_reader_t, eof) - 64usize];
+        [::std::mem::offset_of!(_cef_stream_reader_t, eof) - 32usize];
     ["Offset of field: _cef_stream_reader_t::may_block"]
-        [::std::mem::offset_of!(_cef_stream_reader_t, may_block) - 72usize];
+        [::std::mem::offset_of!(_cef_stream_reader_t, may_block) - 36usize];
 };
 #[doc = "\n Structure used to read data from a stream. The functions of this structure\n may be called on any thread.\n"]
 pub type cef_stream_reader_t = _cef_stream_reader_t;
@@ -5121,20 +5121,20 @@ pub struct _cef_write_handler_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_write_handler_t"][::std::mem::size_of::<_cef_write_handler_t>() - 80usize];
-    ["Alignment of _cef_write_handler_t"][::std::mem::align_of::<_cef_write_handler_t>() - 8usize];
+    ["Size of _cef_write_handler_t"][::std::mem::size_of::<_cef_write_handler_t>() - 40usize];
+    ["Alignment of _cef_write_handler_t"][::std::mem::align_of::<_cef_write_handler_t>() - 4usize];
     ["Offset of field: _cef_write_handler_t::base"]
         [::std::mem::offset_of!(_cef_write_handler_t, base) - 0usize];
     ["Offset of field: _cef_write_handler_t::write"]
-        [::std::mem::offset_of!(_cef_write_handler_t, write) - 40usize];
+        [::std::mem::offset_of!(_cef_write_handler_t, write) - 20usize];
     ["Offset of field: _cef_write_handler_t::seek"]
-        [::std::mem::offset_of!(_cef_write_handler_t, seek) - 48usize];
+        [::std::mem::offset_of!(_cef_write_handler_t, seek) - 24usize];
     ["Offset of field: _cef_write_handler_t::tell"]
-        [::std::mem::offset_of!(_cef_write_handler_t, tell) - 56usize];
+        [::std::mem::offset_of!(_cef_write_handler_t, tell) - 28usize];
     ["Offset of field: _cef_write_handler_t::flush"]
-        [::std::mem::offset_of!(_cef_write_handler_t, flush) - 64usize];
+        [::std::mem::offset_of!(_cef_write_handler_t, flush) - 32usize];
     ["Offset of field: _cef_write_handler_t::may_block"]
-        [::std::mem::offset_of!(_cef_write_handler_t, may_block) - 72usize];
+        [::std::mem::offset_of!(_cef_write_handler_t, may_block) - 36usize];
 };
 #[doc = "\n Structure the client can implement to provide a custom stream writer. The\n functions of this structure may be called on any thread.\n"]
 pub type cef_write_handler_t = _cef_write_handler_t;
@@ -5174,20 +5174,20 @@ pub struct _cef_stream_writer_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_stream_writer_t"][::std::mem::size_of::<_cef_stream_writer_t>() - 80usize];
-    ["Alignment of _cef_stream_writer_t"][::std::mem::align_of::<_cef_stream_writer_t>() - 8usize];
+    ["Size of _cef_stream_writer_t"][::std::mem::size_of::<_cef_stream_writer_t>() - 40usize];
+    ["Alignment of _cef_stream_writer_t"][::std::mem::align_of::<_cef_stream_writer_t>() - 4usize];
     ["Offset of field: _cef_stream_writer_t::base"]
         [::std::mem::offset_of!(_cef_stream_writer_t, base) - 0usize];
     ["Offset of field: _cef_stream_writer_t::write"]
-        [::std::mem::offset_of!(_cef_stream_writer_t, write) - 40usize];
+        [::std::mem::offset_of!(_cef_stream_writer_t, write) - 20usize];
     ["Offset of field: _cef_stream_writer_t::seek"]
-        [::std::mem::offset_of!(_cef_stream_writer_t, seek) - 48usize];
+        [::std::mem::offset_of!(_cef_stream_writer_t, seek) - 24usize];
     ["Offset of field: _cef_stream_writer_t::tell"]
-        [::std::mem::offset_of!(_cef_stream_writer_t, tell) - 56usize];
+        [::std::mem::offset_of!(_cef_stream_writer_t, tell) - 28usize];
     ["Offset of field: _cef_stream_writer_t::flush"]
-        [::std::mem::offset_of!(_cef_stream_writer_t, flush) - 64usize];
+        [::std::mem::offset_of!(_cef_stream_writer_t, flush) - 32usize];
     ["Offset of field: _cef_stream_writer_t::may_block"]
-        [::std::mem::offset_of!(_cef_stream_writer_t, may_block) - 72usize];
+        [::std::mem::offset_of!(_cef_stream_writer_t, may_block) - 36usize];
 };
 #[doc = "\n Structure used to write data to a stream. The functions of this structure\n may be called on any thread.\n"]
 pub type cef_stream_writer_t = _cef_stream_writer_t;
@@ -5329,64 +5329,64 @@ pub struct _cef_drag_data_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_drag_data_t"][::std::mem::size_of::<_cef_drag_data_t>() - 256usize];
-    ["Alignment of _cef_drag_data_t"][::std::mem::align_of::<_cef_drag_data_t>() - 8usize];
+    ["Size of _cef_drag_data_t"][::std::mem::size_of::<_cef_drag_data_t>() - 128usize];
+    ["Alignment of _cef_drag_data_t"][::std::mem::align_of::<_cef_drag_data_t>() - 4usize];
     ["Offset of field: _cef_drag_data_t::base"]
         [::std::mem::offset_of!(_cef_drag_data_t, base) - 0usize];
     ["Offset of field: _cef_drag_data_t::clone"]
-        [::std::mem::offset_of!(_cef_drag_data_t, clone) - 40usize];
+        [::std::mem::offset_of!(_cef_drag_data_t, clone) - 20usize];
     ["Offset of field: _cef_drag_data_t::is_read_only"]
-        [::std::mem::offset_of!(_cef_drag_data_t, is_read_only) - 48usize];
+        [::std::mem::offset_of!(_cef_drag_data_t, is_read_only) - 24usize];
     ["Offset of field: _cef_drag_data_t::is_link"]
-        [::std::mem::offset_of!(_cef_drag_data_t, is_link) - 56usize];
+        [::std::mem::offset_of!(_cef_drag_data_t, is_link) - 28usize];
     ["Offset of field: _cef_drag_data_t::is_fragment"]
-        [::std::mem::offset_of!(_cef_drag_data_t, is_fragment) - 64usize];
+        [::std::mem::offset_of!(_cef_drag_data_t, is_fragment) - 32usize];
     ["Offset of field: _cef_drag_data_t::is_file"]
-        [::std::mem::offset_of!(_cef_drag_data_t, is_file) - 72usize];
+        [::std::mem::offset_of!(_cef_drag_data_t, is_file) - 36usize];
     ["Offset of field: _cef_drag_data_t::get_link_url"]
-        [::std::mem::offset_of!(_cef_drag_data_t, get_link_url) - 80usize];
+        [::std::mem::offset_of!(_cef_drag_data_t, get_link_url) - 40usize];
     ["Offset of field: _cef_drag_data_t::get_link_title"]
-        [::std::mem::offset_of!(_cef_drag_data_t, get_link_title) - 88usize];
+        [::std::mem::offset_of!(_cef_drag_data_t, get_link_title) - 44usize];
     ["Offset of field: _cef_drag_data_t::get_link_metadata"]
-        [::std::mem::offset_of!(_cef_drag_data_t, get_link_metadata) - 96usize];
+        [::std::mem::offset_of!(_cef_drag_data_t, get_link_metadata) - 48usize];
     ["Offset of field: _cef_drag_data_t::get_fragment_text"]
-        [::std::mem::offset_of!(_cef_drag_data_t, get_fragment_text) - 104usize];
+        [::std::mem::offset_of!(_cef_drag_data_t, get_fragment_text) - 52usize];
     ["Offset of field: _cef_drag_data_t::get_fragment_html"]
-        [::std::mem::offset_of!(_cef_drag_data_t, get_fragment_html) - 112usize];
+        [::std::mem::offset_of!(_cef_drag_data_t, get_fragment_html) - 56usize];
     ["Offset of field: _cef_drag_data_t::get_fragment_base_url"]
-        [::std::mem::offset_of!(_cef_drag_data_t, get_fragment_base_url) - 120usize];
+        [::std::mem::offset_of!(_cef_drag_data_t, get_fragment_base_url) - 60usize];
     ["Offset of field: _cef_drag_data_t::get_file_name"]
-        [::std::mem::offset_of!(_cef_drag_data_t, get_file_name) - 128usize];
+        [::std::mem::offset_of!(_cef_drag_data_t, get_file_name) - 64usize];
     ["Offset of field: _cef_drag_data_t::get_file_contents"]
-        [::std::mem::offset_of!(_cef_drag_data_t, get_file_contents) - 136usize];
+        [::std::mem::offset_of!(_cef_drag_data_t, get_file_contents) - 68usize];
     ["Offset of field: _cef_drag_data_t::get_file_names"]
-        [::std::mem::offset_of!(_cef_drag_data_t, get_file_names) - 144usize];
+        [::std::mem::offset_of!(_cef_drag_data_t, get_file_names) - 72usize];
     ["Offset of field: _cef_drag_data_t::get_file_paths"]
-        [::std::mem::offset_of!(_cef_drag_data_t, get_file_paths) - 152usize];
+        [::std::mem::offset_of!(_cef_drag_data_t, get_file_paths) - 76usize];
     ["Offset of field: _cef_drag_data_t::set_link_url"]
-        [::std::mem::offset_of!(_cef_drag_data_t, set_link_url) - 160usize];
+        [::std::mem::offset_of!(_cef_drag_data_t, set_link_url) - 80usize];
     ["Offset of field: _cef_drag_data_t::set_link_title"]
-        [::std::mem::offset_of!(_cef_drag_data_t, set_link_title) - 168usize];
+        [::std::mem::offset_of!(_cef_drag_data_t, set_link_title) - 84usize];
     ["Offset of field: _cef_drag_data_t::set_link_metadata"]
-        [::std::mem::offset_of!(_cef_drag_data_t, set_link_metadata) - 176usize];
+        [::std::mem::offset_of!(_cef_drag_data_t, set_link_metadata) - 88usize];
     ["Offset of field: _cef_drag_data_t::set_fragment_text"]
-        [::std::mem::offset_of!(_cef_drag_data_t, set_fragment_text) - 184usize];
+        [::std::mem::offset_of!(_cef_drag_data_t, set_fragment_text) - 92usize];
     ["Offset of field: _cef_drag_data_t::set_fragment_html"]
-        [::std::mem::offset_of!(_cef_drag_data_t, set_fragment_html) - 192usize];
+        [::std::mem::offset_of!(_cef_drag_data_t, set_fragment_html) - 96usize];
     ["Offset of field: _cef_drag_data_t::set_fragment_base_url"]
-        [::std::mem::offset_of!(_cef_drag_data_t, set_fragment_base_url) - 200usize];
+        [::std::mem::offset_of!(_cef_drag_data_t, set_fragment_base_url) - 100usize];
     ["Offset of field: _cef_drag_data_t::reset_file_contents"]
-        [::std::mem::offset_of!(_cef_drag_data_t, reset_file_contents) - 208usize];
+        [::std::mem::offset_of!(_cef_drag_data_t, reset_file_contents) - 104usize];
     ["Offset of field: _cef_drag_data_t::add_file"]
-        [::std::mem::offset_of!(_cef_drag_data_t, add_file) - 216usize];
+        [::std::mem::offset_of!(_cef_drag_data_t, add_file) - 108usize];
     ["Offset of field: _cef_drag_data_t::clear_filenames"]
-        [::std::mem::offset_of!(_cef_drag_data_t, clear_filenames) - 224usize];
+        [::std::mem::offset_of!(_cef_drag_data_t, clear_filenames) - 112usize];
     ["Offset of field: _cef_drag_data_t::get_image"]
-        [::std::mem::offset_of!(_cef_drag_data_t, get_image) - 232usize];
+        [::std::mem::offset_of!(_cef_drag_data_t, get_image) - 116usize];
     ["Offset of field: _cef_drag_data_t::get_image_hotspot"]
-        [::std::mem::offset_of!(_cef_drag_data_t, get_image_hotspot) - 240usize];
+        [::std::mem::offset_of!(_cef_drag_data_t, get_image_hotspot) - 120usize];
     ["Offset of field: _cef_drag_data_t::has_image"]
-        [::std::mem::offset_of!(_cef_drag_data_t, has_image) - 248usize];
+        [::std::mem::offset_of!(_cef_drag_data_t, has_image) - 124usize];
 };
 #[doc = "\n Structure used to represent drag data. The functions of this structure may\n be called on any thread.\n"]
 pub type cef_drag_data_t = _cef_drag_data_t;
@@ -5407,12 +5407,12 @@ pub struct _cef_domvisitor_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_domvisitor_t"][::std::mem::size_of::<_cef_domvisitor_t>() - 48usize];
-    ["Alignment of _cef_domvisitor_t"][::std::mem::align_of::<_cef_domvisitor_t>() - 8usize];
+    ["Size of _cef_domvisitor_t"][::std::mem::size_of::<_cef_domvisitor_t>() - 24usize];
+    ["Alignment of _cef_domvisitor_t"][::std::mem::align_of::<_cef_domvisitor_t>() - 4usize];
     ["Offset of field: _cef_domvisitor_t::base"]
         [::std::mem::offset_of!(_cef_domvisitor_t, base) - 0usize];
     ["Offset of field: _cef_domvisitor_t::visit"]
-        [::std::mem::offset_of!(_cef_domvisitor_t, visit) - 40usize];
+        [::std::mem::offset_of!(_cef_domvisitor_t, visit) - 20usize];
 };
 #[doc = "\n Structure to implement for visiting the DOM. The functions of this structure\n will be called on the render process main thread.\n"]
 pub type cef_domvisitor_t = _cef_domvisitor_t;
@@ -5487,38 +5487,38 @@ pub struct _cef_domdocument_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_domdocument_t"][::std::mem::size_of::<_cef_domdocument_t>() - 152usize];
-    ["Alignment of _cef_domdocument_t"][::std::mem::align_of::<_cef_domdocument_t>() - 8usize];
+    ["Size of _cef_domdocument_t"][::std::mem::size_of::<_cef_domdocument_t>() - 76usize];
+    ["Alignment of _cef_domdocument_t"][::std::mem::align_of::<_cef_domdocument_t>() - 4usize];
     ["Offset of field: _cef_domdocument_t::base"]
         [::std::mem::offset_of!(_cef_domdocument_t, base) - 0usize];
     ["Offset of field: _cef_domdocument_t::get_type"]
-        [::std::mem::offset_of!(_cef_domdocument_t, get_type) - 40usize];
+        [::std::mem::offset_of!(_cef_domdocument_t, get_type) - 20usize];
     ["Offset of field: _cef_domdocument_t::get_document"]
-        [::std::mem::offset_of!(_cef_domdocument_t, get_document) - 48usize];
+        [::std::mem::offset_of!(_cef_domdocument_t, get_document) - 24usize];
     ["Offset of field: _cef_domdocument_t::get_body"]
-        [::std::mem::offset_of!(_cef_domdocument_t, get_body) - 56usize];
+        [::std::mem::offset_of!(_cef_domdocument_t, get_body) - 28usize];
     ["Offset of field: _cef_domdocument_t::get_head"]
-        [::std::mem::offset_of!(_cef_domdocument_t, get_head) - 64usize];
+        [::std::mem::offset_of!(_cef_domdocument_t, get_head) - 32usize];
     ["Offset of field: _cef_domdocument_t::get_title"]
-        [::std::mem::offset_of!(_cef_domdocument_t, get_title) - 72usize];
+        [::std::mem::offset_of!(_cef_domdocument_t, get_title) - 36usize];
     ["Offset of field: _cef_domdocument_t::get_element_by_id"]
-        [::std::mem::offset_of!(_cef_domdocument_t, get_element_by_id) - 80usize];
+        [::std::mem::offset_of!(_cef_domdocument_t, get_element_by_id) - 40usize];
     ["Offset of field: _cef_domdocument_t::get_focused_node"]
-        [::std::mem::offset_of!(_cef_domdocument_t, get_focused_node) - 88usize];
+        [::std::mem::offset_of!(_cef_domdocument_t, get_focused_node) - 44usize];
     ["Offset of field: _cef_domdocument_t::has_selection"]
-        [::std::mem::offset_of!(_cef_domdocument_t, has_selection) - 96usize];
+        [::std::mem::offset_of!(_cef_domdocument_t, has_selection) - 48usize];
     ["Offset of field: _cef_domdocument_t::get_selection_start_offset"]
-        [::std::mem::offset_of!(_cef_domdocument_t, get_selection_start_offset) - 104usize];
+        [::std::mem::offset_of!(_cef_domdocument_t, get_selection_start_offset) - 52usize];
     ["Offset of field: _cef_domdocument_t::get_selection_end_offset"]
-        [::std::mem::offset_of!(_cef_domdocument_t, get_selection_end_offset) - 112usize];
+        [::std::mem::offset_of!(_cef_domdocument_t, get_selection_end_offset) - 56usize];
     ["Offset of field: _cef_domdocument_t::get_selection_as_markup"]
-        [::std::mem::offset_of!(_cef_domdocument_t, get_selection_as_markup) - 120usize];
+        [::std::mem::offset_of!(_cef_domdocument_t, get_selection_as_markup) - 60usize];
     ["Offset of field: _cef_domdocument_t::get_selection_as_text"]
-        [::std::mem::offset_of!(_cef_domdocument_t, get_selection_as_text) - 128usize];
+        [::std::mem::offset_of!(_cef_domdocument_t, get_selection_as_text) - 64usize];
     ["Offset of field: _cef_domdocument_t::get_base_url"]
-        [::std::mem::offset_of!(_cef_domdocument_t, get_base_url) - 136usize];
+        [::std::mem::offset_of!(_cef_domdocument_t, get_base_url) - 68usize];
     ["Offset of field: _cef_domdocument_t::get_complete_url"]
-        [::std::mem::offset_of!(_cef_domdocument_t, get_complete_url) - 144usize];
+        [::std::mem::offset_of!(_cef_domdocument_t, get_complete_url) - 72usize];
 };
 #[doc = "\n Structure used to represent a DOM document. The functions of this structure\n should only be called on the render process main thread thread.\n"]
 pub type cef_domdocument_t = _cef_domdocument_t;
@@ -5650,62 +5650,62 @@ pub struct _cef_domnode_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_domnode_t"][::std::mem::size_of::<_cef_domnode_t>() - 248usize];
-    ["Alignment of _cef_domnode_t"][::std::mem::align_of::<_cef_domnode_t>() - 8usize];
+    ["Size of _cef_domnode_t"][::std::mem::size_of::<_cef_domnode_t>() - 124usize];
+    ["Alignment of _cef_domnode_t"][::std::mem::align_of::<_cef_domnode_t>() - 4usize];
     ["Offset of field: _cef_domnode_t::base"]
         [::std::mem::offset_of!(_cef_domnode_t, base) - 0usize];
     ["Offset of field: _cef_domnode_t::get_type"]
-        [::std::mem::offset_of!(_cef_domnode_t, get_type) - 40usize];
+        [::std::mem::offset_of!(_cef_domnode_t, get_type) - 20usize];
     ["Offset of field: _cef_domnode_t::is_text"]
-        [::std::mem::offset_of!(_cef_domnode_t, is_text) - 48usize];
+        [::std::mem::offset_of!(_cef_domnode_t, is_text) - 24usize];
     ["Offset of field: _cef_domnode_t::is_element"]
-        [::std::mem::offset_of!(_cef_domnode_t, is_element) - 56usize];
+        [::std::mem::offset_of!(_cef_domnode_t, is_element) - 28usize];
     ["Offset of field: _cef_domnode_t::is_editable"]
-        [::std::mem::offset_of!(_cef_domnode_t, is_editable) - 64usize];
+        [::std::mem::offset_of!(_cef_domnode_t, is_editable) - 32usize];
     ["Offset of field: _cef_domnode_t::is_form_control_element"]
-        [::std::mem::offset_of!(_cef_domnode_t, is_form_control_element) - 72usize];
+        [::std::mem::offset_of!(_cef_domnode_t, is_form_control_element) - 36usize];
     ["Offset of field: _cef_domnode_t::get_form_control_element_type"]
-        [::std::mem::offset_of!(_cef_domnode_t, get_form_control_element_type) - 80usize];
+        [::std::mem::offset_of!(_cef_domnode_t, get_form_control_element_type) - 40usize];
     ["Offset of field: _cef_domnode_t::is_same"]
-        [::std::mem::offset_of!(_cef_domnode_t, is_same) - 88usize];
+        [::std::mem::offset_of!(_cef_domnode_t, is_same) - 44usize];
     ["Offset of field: _cef_domnode_t::get_name"]
-        [::std::mem::offset_of!(_cef_domnode_t, get_name) - 96usize];
+        [::std::mem::offset_of!(_cef_domnode_t, get_name) - 48usize];
     ["Offset of field: _cef_domnode_t::get_value"]
-        [::std::mem::offset_of!(_cef_domnode_t, get_value) - 104usize];
+        [::std::mem::offset_of!(_cef_domnode_t, get_value) - 52usize];
     ["Offset of field: _cef_domnode_t::set_value"]
-        [::std::mem::offset_of!(_cef_domnode_t, set_value) - 112usize];
+        [::std::mem::offset_of!(_cef_domnode_t, set_value) - 56usize];
     ["Offset of field: _cef_domnode_t::get_as_markup"]
-        [::std::mem::offset_of!(_cef_domnode_t, get_as_markup) - 120usize];
+        [::std::mem::offset_of!(_cef_domnode_t, get_as_markup) - 60usize];
     ["Offset of field: _cef_domnode_t::get_document"]
-        [::std::mem::offset_of!(_cef_domnode_t, get_document) - 128usize];
+        [::std::mem::offset_of!(_cef_domnode_t, get_document) - 64usize];
     ["Offset of field: _cef_domnode_t::get_parent"]
-        [::std::mem::offset_of!(_cef_domnode_t, get_parent) - 136usize];
+        [::std::mem::offset_of!(_cef_domnode_t, get_parent) - 68usize];
     ["Offset of field: _cef_domnode_t::get_previous_sibling"]
-        [::std::mem::offset_of!(_cef_domnode_t, get_previous_sibling) - 144usize];
+        [::std::mem::offset_of!(_cef_domnode_t, get_previous_sibling) - 72usize];
     ["Offset of field: _cef_domnode_t::get_next_sibling"]
-        [::std::mem::offset_of!(_cef_domnode_t, get_next_sibling) - 152usize];
+        [::std::mem::offset_of!(_cef_domnode_t, get_next_sibling) - 76usize];
     ["Offset of field: _cef_domnode_t::has_children"]
-        [::std::mem::offset_of!(_cef_domnode_t, has_children) - 160usize];
+        [::std::mem::offset_of!(_cef_domnode_t, has_children) - 80usize];
     ["Offset of field: _cef_domnode_t::get_first_child"]
-        [::std::mem::offset_of!(_cef_domnode_t, get_first_child) - 168usize];
+        [::std::mem::offset_of!(_cef_domnode_t, get_first_child) - 84usize];
     ["Offset of field: _cef_domnode_t::get_last_child"]
-        [::std::mem::offset_of!(_cef_domnode_t, get_last_child) - 176usize];
+        [::std::mem::offset_of!(_cef_domnode_t, get_last_child) - 88usize];
     ["Offset of field: _cef_domnode_t::get_element_tag_name"]
-        [::std::mem::offset_of!(_cef_domnode_t, get_element_tag_name) - 184usize];
+        [::std::mem::offset_of!(_cef_domnode_t, get_element_tag_name) - 92usize];
     ["Offset of field: _cef_domnode_t::has_element_attributes"]
-        [::std::mem::offset_of!(_cef_domnode_t, has_element_attributes) - 192usize];
+        [::std::mem::offset_of!(_cef_domnode_t, has_element_attributes) - 96usize];
     ["Offset of field: _cef_domnode_t::has_element_attribute"]
-        [::std::mem::offset_of!(_cef_domnode_t, has_element_attribute) - 200usize];
+        [::std::mem::offset_of!(_cef_domnode_t, has_element_attribute) - 100usize];
     ["Offset of field: _cef_domnode_t::get_element_attribute"]
-        [::std::mem::offset_of!(_cef_domnode_t, get_element_attribute) - 208usize];
+        [::std::mem::offset_of!(_cef_domnode_t, get_element_attribute) - 104usize];
     ["Offset of field: _cef_domnode_t::get_element_attributes"]
-        [::std::mem::offset_of!(_cef_domnode_t, get_element_attributes) - 216usize];
+        [::std::mem::offset_of!(_cef_domnode_t, get_element_attributes) - 108usize];
     ["Offset of field: _cef_domnode_t::set_element_attribute"]
-        [::std::mem::offset_of!(_cef_domnode_t, set_element_attribute) - 224usize];
+        [::std::mem::offset_of!(_cef_domnode_t, set_element_attribute) - 112usize];
     ["Offset of field: _cef_domnode_t::get_element_inner_text"]
-        [::std::mem::offset_of!(_cef_domnode_t, get_element_inner_text) - 232usize];
+        [::std::mem::offset_of!(_cef_domnode_t, get_element_inner_text) - 116usize];
     ["Offset of field: _cef_domnode_t::get_element_bounds"]
-        [::std::mem::offset_of!(_cef_domnode_t, get_element_bounds) - 240usize];
+        [::std::mem::offset_of!(_cef_domnode_t, get_element_bounds) - 120usize];
 };
 #[doc = "\n Structure used to represent a DOM node. The functions of this structure\n should only be called on the render process main thread.\n"]
 pub type cef_domnode_t = _cef_domnode_t;
@@ -5733,17 +5733,17 @@ pub struct _cef_shared_memory_region_t {
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
     ["Size of _cef_shared_memory_region_t"]
-        [::std::mem::size_of::<_cef_shared_memory_region_t>() - 64usize];
+        [::std::mem::size_of::<_cef_shared_memory_region_t>() - 32usize];
     ["Alignment of _cef_shared_memory_region_t"]
-        [::std::mem::align_of::<_cef_shared_memory_region_t>() - 8usize];
+        [::std::mem::align_of::<_cef_shared_memory_region_t>() - 4usize];
     ["Offset of field: _cef_shared_memory_region_t::base"]
         [::std::mem::offset_of!(_cef_shared_memory_region_t, base) - 0usize];
     ["Offset of field: _cef_shared_memory_region_t::is_valid"]
-        [::std::mem::offset_of!(_cef_shared_memory_region_t, is_valid) - 40usize];
+        [::std::mem::offset_of!(_cef_shared_memory_region_t, is_valid) - 20usize];
     ["Offset of field: _cef_shared_memory_region_t::size"]
-        [::std::mem::offset_of!(_cef_shared_memory_region_t, size) - 48usize];
+        [::std::mem::offset_of!(_cef_shared_memory_region_t, size) - 24usize];
     ["Offset of field: _cef_shared_memory_region_t::memory"]
-        [::std::mem::offset_of!(_cef_shared_memory_region_t, memory) - 56usize];
+        [::std::mem::offset_of!(_cef_shared_memory_region_t, memory) - 28usize];
 };
 #[doc = "\n Structure that wraps platform-dependent share memory region mapping.\n"]
 pub type cef_shared_memory_region_t = _cef_shared_memory_region_t;
@@ -5782,23 +5782,23 @@ pub struct _cef_process_message_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_process_message_t"][::std::mem::size_of::<_cef_process_message_t>() - 88usize];
+    ["Size of _cef_process_message_t"][::std::mem::size_of::<_cef_process_message_t>() - 44usize];
     ["Alignment of _cef_process_message_t"]
-        [::std::mem::align_of::<_cef_process_message_t>() - 8usize];
+        [::std::mem::align_of::<_cef_process_message_t>() - 4usize];
     ["Offset of field: _cef_process_message_t::base"]
         [::std::mem::offset_of!(_cef_process_message_t, base) - 0usize];
     ["Offset of field: _cef_process_message_t::is_valid"]
-        [::std::mem::offset_of!(_cef_process_message_t, is_valid) - 40usize];
+        [::std::mem::offset_of!(_cef_process_message_t, is_valid) - 20usize];
     ["Offset of field: _cef_process_message_t::is_read_only"]
-        [::std::mem::offset_of!(_cef_process_message_t, is_read_only) - 48usize];
+        [::std::mem::offset_of!(_cef_process_message_t, is_read_only) - 24usize];
     ["Offset of field: _cef_process_message_t::copy"]
-        [::std::mem::offset_of!(_cef_process_message_t, copy) - 56usize];
+        [::std::mem::offset_of!(_cef_process_message_t, copy) - 28usize];
     ["Offset of field: _cef_process_message_t::get_name"]
-        [::std::mem::offset_of!(_cef_process_message_t, get_name) - 64usize];
+        [::std::mem::offset_of!(_cef_process_message_t, get_name) - 32usize];
     ["Offset of field: _cef_process_message_t::get_argument_list"]
-        [::std::mem::offset_of!(_cef_process_message_t, get_argument_list) - 72usize];
+        [::std::mem::offset_of!(_cef_process_message_t, get_argument_list) - 36usize];
     ["Offset of field: _cef_process_message_t::get_shared_memory_region"]
-        [::std::mem::offset_of!(_cef_process_message_t, get_shared_memory_region) - 80usize];
+        [::std::mem::offset_of!(_cef_process_message_t, get_shared_memory_region) - 40usize];
 };
 #[doc = "\n Structure representing a message. Can be used on any process and thread.\n"]
 pub type cef_process_message_t = _cef_process_message_t;
@@ -5920,54 +5920,53 @@ pub struct _cef_request_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_request_t"][::std::mem::size_of::<_cef_request_t>() - 216usize];
-    ["Alignment of _cef_request_t"][::std::mem::align_of::<_cef_request_t>() - 8usize];
+    ["Size of _cef_request_t"][::std::mem::size_of::<_cef_request_t>() - 108usize];
+    ["Alignment of _cef_request_t"][::std::mem::align_of::<_cef_request_t>() - 4usize];
     ["Offset of field: _cef_request_t::base"]
         [::std::mem::offset_of!(_cef_request_t, base) - 0usize];
     ["Offset of field: _cef_request_t::is_read_only"]
-        [::std::mem::offset_of!(_cef_request_t, is_read_only) - 40usize];
+        [::std::mem::offset_of!(_cef_request_t, is_read_only) - 20usize];
     ["Offset of field: _cef_request_t::get_url"]
-        [::std::mem::offset_of!(_cef_request_t, get_url) - 48usize];
+        [::std::mem::offset_of!(_cef_request_t, get_url) - 24usize];
     ["Offset of field: _cef_request_t::set_url"]
-        [::std::mem::offset_of!(_cef_request_t, set_url) - 56usize];
+        [::std::mem::offset_of!(_cef_request_t, set_url) - 28usize];
     ["Offset of field: _cef_request_t::get_method"]
-        [::std::mem::offset_of!(_cef_request_t, get_method) - 64usize];
+        [::std::mem::offset_of!(_cef_request_t, get_method) - 32usize];
     ["Offset of field: _cef_request_t::set_method"]
-        [::std::mem::offset_of!(_cef_request_t, set_method) - 72usize];
+        [::std::mem::offset_of!(_cef_request_t, set_method) - 36usize];
     ["Offset of field: _cef_request_t::set_referrer"]
-        [::std::mem::offset_of!(_cef_request_t, set_referrer) - 80usize];
+        [::std::mem::offset_of!(_cef_request_t, set_referrer) - 40usize];
     ["Offset of field: _cef_request_t::get_referrer_url"]
-        [::std::mem::offset_of!(_cef_request_t, get_referrer_url) - 88usize];
+        [::std::mem::offset_of!(_cef_request_t, get_referrer_url) - 44usize];
     ["Offset of field: _cef_request_t::get_referrer_policy"]
-        [::std::mem::offset_of!(_cef_request_t, get_referrer_policy) - 96usize];
+        [::std::mem::offset_of!(_cef_request_t, get_referrer_policy) - 48usize];
     ["Offset of field: _cef_request_t::get_post_data"]
-        [::std::mem::offset_of!(_cef_request_t, get_post_data) - 104usize];
+        [::std::mem::offset_of!(_cef_request_t, get_post_data) - 52usize];
     ["Offset of field: _cef_request_t::set_post_data"]
-        [::std::mem::offset_of!(_cef_request_t, set_post_data) - 112usize];
+        [::std::mem::offset_of!(_cef_request_t, set_post_data) - 56usize];
     ["Offset of field: _cef_request_t::get_header_map"]
-        [::std::mem::offset_of!(_cef_request_t, get_header_map) - 120usize];
+        [::std::mem::offset_of!(_cef_request_t, get_header_map) - 60usize];
     ["Offset of field: _cef_request_t::set_header_map"]
-        [::std::mem::offset_of!(_cef_request_t, set_header_map) - 128usize];
+        [::std::mem::offset_of!(_cef_request_t, set_header_map) - 64usize];
     ["Offset of field: _cef_request_t::get_header_by_name"]
-        [::std::mem::offset_of!(_cef_request_t, get_header_by_name) - 136usize];
+        [::std::mem::offset_of!(_cef_request_t, get_header_by_name) - 68usize];
     ["Offset of field: _cef_request_t::set_header_by_name"]
-        [::std::mem::offset_of!(_cef_request_t, set_header_by_name) - 144usize];
-    ["Offset of field: _cef_request_t::set"]
-        [::std::mem::offset_of!(_cef_request_t, set) - 152usize];
+        [::std::mem::offset_of!(_cef_request_t, set_header_by_name) - 72usize];
+    ["Offset of field: _cef_request_t::set"][::std::mem::offset_of!(_cef_request_t, set) - 76usize];
     ["Offset of field: _cef_request_t::get_flags"]
-        [::std::mem::offset_of!(_cef_request_t, get_flags) - 160usize];
+        [::std::mem::offset_of!(_cef_request_t, get_flags) - 80usize];
     ["Offset of field: _cef_request_t::set_flags"]
-        [::std::mem::offset_of!(_cef_request_t, set_flags) - 168usize];
+        [::std::mem::offset_of!(_cef_request_t, set_flags) - 84usize];
     ["Offset of field: _cef_request_t::get_first_party_for_cookies"]
-        [::std::mem::offset_of!(_cef_request_t, get_first_party_for_cookies) - 176usize];
+        [::std::mem::offset_of!(_cef_request_t, get_first_party_for_cookies) - 88usize];
     ["Offset of field: _cef_request_t::set_first_party_for_cookies"]
-        [::std::mem::offset_of!(_cef_request_t, set_first_party_for_cookies) - 184usize];
+        [::std::mem::offset_of!(_cef_request_t, set_first_party_for_cookies) - 92usize];
     ["Offset of field: _cef_request_t::get_resource_type"]
-        [::std::mem::offset_of!(_cef_request_t, get_resource_type) - 192usize];
+        [::std::mem::offset_of!(_cef_request_t, get_resource_type) - 96usize];
     ["Offset of field: _cef_request_t::get_transition_type"]
-        [::std::mem::offset_of!(_cef_request_t, get_transition_type) - 200usize];
+        [::std::mem::offset_of!(_cef_request_t, get_transition_type) - 100usize];
     ["Offset of field: _cef_request_t::get_identifier"]
-        [::std::mem::offset_of!(_cef_request_t, get_identifier) - 208usize];
+        [::std::mem::offset_of!(_cef_request_t, get_identifier) - 104usize];
 };
 #[doc = "\n Structure used to represent a web request. The functions of this structure\n may be called on any thread.\n"]
 pub type cef_request_t = _cef_request_t;
@@ -6019,24 +6018,24 @@ pub struct _cef_post_data_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_post_data_t"][::std::mem::size_of::<_cef_post_data_t>() - 96usize];
-    ["Alignment of _cef_post_data_t"][::std::mem::align_of::<_cef_post_data_t>() - 8usize];
+    ["Size of _cef_post_data_t"][::std::mem::size_of::<_cef_post_data_t>() - 48usize];
+    ["Alignment of _cef_post_data_t"][::std::mem::align_of::<_cef_post_data_t>() - 4usize];
     ["Offset of field: _cef_post_data_t::base"]
         [::std::mem::offset_of!(_cef_post_data_t, base) - 0usize];
     ["Offset of field: _cef_post_data_t::is_read_only"]
-        [::std::mem::offset_of!(_cef_post_data_t, is_read_only) - 40usize];
+        [::std::mem::offset_of!(_cef_post_data_t, is_read_only) - 20usize];
     ["Offset of field: _cef_post_data_t::has_excluded_elements"]
-        [::std::mem::offset_of!(_cef_post_data_t, has_excluded_elements) - 48usize];
+        [::std::mem::offset_of!(_cef_post_data_t, has_excluded_elements) - 24usize];
     ["Offset of field: _cef_post_data_t::get_element_count"]
-        [::std::mem::offset_of!(_cef_post_data_t, get_element_count) - 56usize];
+        [::std::mem::offset_of!(_cef_post_data_t, get_element_count) - 28usize];
     ["Offset of field: _cef_post_data_t::get_elements"]
-        [::std::mem::offset_of!(_cef_post_data_t, get_elements) - 64usize];
+        [::std::mem::offset_of!(_cef_post_data_t, get_elements) - 32usize];
     ["Offset of field: _cef_post_data_t::remove_element"]
-        [::std::mem::offset_of!(_cef_post_data_t, remove_element) - 72usize];
+        [::std::mem::offset_of!(_cef_post_data_t, remove_element) - 36usize];
     ["Offset of field: _cef_post_data_t::add_element"]
-        [::std::mem::offset_of!(_cef_post_data_t, add_element) - 80usize];
+        [::std::mem::offset_of!(_cef_post_data_t, add_element) - 40usize];
     ["Offset of field: _cef_post_data_t::remove_elements"]
-        [::std::mem::offset_of!(_cef_post_data_t, remove_elements) - 88usize];
+        [::std::mem::offset_of!(_cef_post_data_t, remove_elements) - 44usize];
 };
 #[doc = "\n Structure used to represent post data for a web request. The functions of\n this structure may be called on any thread.\n"]
 pub type cef_post_data_t = _cef_post_data_t;
@@ -6092,27 +6091,27 @@ pub struct _cef_post_data_element_t {
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
     ["Size of _cef_post_data_element_t"]
-        [::std::mem::size_of::<_cef_post_data_element_t>() - 104usize];
+        [::std::mem::size_of::<_cef_post_data_element_t>() - 52usize];
     ["Alignment of _cef_post_data_element_t"]
-        [::std::mem::align_of::<_cef_post_data_element_t>() - 8usize];
+        [::std::mem::align_of::<_cef_post_data_element_t>() - 4usize];
     ["Offset of field: _cef_post_data_element_t::base"]
         [::std::mem::offset_of!(_cef_post_data_element_t, base) - 0usize];
     ["Offset of field: _cef_post_data_element_t::is_read_only"]
-        [::std::mem::offset_of!(_cef_post_data_element_t, is_read_only) - 40usize];
+        [::std::mem::offset_of!(_cef_post_data_element_t, is_read_only) - 20usize];
     ["Offset of field: _cef_post_data_element_t::set_to_empty"]
-        [::std::mem::offset_of!(_cef_post_data_element_t, set_to_empty) - 48usize];
+        [::std::mem::offset_of!(_cef_post_data_element_t, set_to_empty) - 24usize];
     ["Offset of field: _cef_post_data_element_t::set_to_file"]
-        [::std::mem::offset_of!(_cef_post_data_element_t, set_to_file) - 56usize];
+        [::std::mem::offset_of!(_cef_post_data_element_t, set_to_file) - 28usize];
     ["Offset of field: _cef_post_data_element_t::set_to_bytes"]
-        [::std::mem::offset_of!(_cef_post_data_element_t, set_to_bytes) - 64usize];
+        [::std::mem::offset_of!(_cef_post_data_element_t, set_to_bytes) - 32usize];
     ["Offset of field: _cef_post_data_element_t::get_type"]
-        [::std::mem::offset_of!(_cef_post_data_element_t, get_type) - 72usize];
+        [::std::mem::offset_of!(_cef_post_data_element_t, get_type) - 36usize];
     ["Offset of field: _cef_post_data_element_t::get_file"]
-        [::std::mem::offset_of!(_cef_post_data_element_t, get_file) - 80usize];
+        [::std::mem::offset_of!(_cef_post_data_element_t, get_file) - 40usize];
     ["Offset of field: _cef_post_data_element_t::get_bytes_count"]
-        [::std::mem::offset_of!(_cef_post_data_element_t, get_bytes_count) - 88usize];
+        [::std::mem::offset_of!(_cef_post_data_element_t, get_bytes_count) - 44usize];
     ["Offset of field: _cef_post_data_element_t::get_bytes"]
-        [::std::mem::offset_of!(_cef_post_data_element_t, get_bytes) - 96usize];
+        [::std::mem::offset_of!(_cef_post_data_element_t, get_bytes) - 48usize];
 };
 #[doc = "\n Structure used to represent a single element in the request post data. The\n functions of this structure may be called on any thread.\n"]
 pub type cef_post_data_element_t = _cef_post_data_element_t;
@@ -6133,13 +6132,13 @@ pub struct _cef_string_visitor_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_string_visitor_t"][::std::mem::size_of::<_cef_string_visitor_t>() - 48usize];
+    ["Size of _cef_string_visitor_t"][::std::mem::size_of::<_cef_string_visitor_t>() - 24usize];
     ["Alignment of _cef_string_visitor_t"]
-        [::std::mem::align_of::<_cef_string_visitor_t>() - 8usize];
+        [::std::mem::align_of::<_cef_string_visitor_t>() - 4usize];
     ["Offset of field: _cef_string_visitor_t::base"]
         [::std::mem::offset_of!(_cef_string_visitor_t, base) - 0usize];
     ["Offset of field: _cef_string_visitor_t::visit"]
-        [::std::mem::offset_of!(_cef_string_visitor_t, visit) - 40usize];
+        [::std::mem::offset_of!(_cef_string_visitor_t, visit) - 20usize];
 };
 #[doc = "\n Implement this structure to receive string values asynchronously.\n"]
 pub type cef_string_visitor_t = _cef_string_visitor_t;
@@ -6258,53 +6257,53 @@ pub struct _cef_frame_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_frame_t"][::std::mem::size_of::<_cef_frame_t>() - 240usize];
-    ["Alignment of _cef_frame_t"][::std::mem::align_of::<_cef_frame_t>() - 8usize];
+    ["Size of _cef_frame_t"][::std::mem::size_of::<_cef_frame_t>() - 120usize];
+    ["Alignment of _cef_frame_t"][::std::mem::align_of::<_cef_frame_t>() - 4usize];
     ["Offset of field: _cef_frame_t::base"][::std::mem::offset_of!(_cef_frame_t, base) - 0usize];
     ["Offset of field: _cef_frame_t::is_valid"]
-        [::std::mem::offset_of!(_cef_frame_t, is_valid) - 40usize];
-    ["Offset of field: _cef_frame_t::undo"][::std::mem::offset_of!(_cef_frame_t, undo) - 48usize];
-    ["Offset of field: _cef_frame_t::redo"][::std::mem::offset_of!(_cef_frame_t, redo) - 56usize];
-    ["Offset of field: _cef_frame_t::cut"][::std::mem::offset_of!(_cef_frame_t, cut) - 64usize];
-    ["Offset of field: _cef_frame_t::copy"][::std::mem::offset_of!(_cef_frame_t, copy) - 72usize];
-    ["Offset of field: _cef_frame_t::paste"][::std::mem::offset_of!(_cef_frame_t, paste) - 80usize];
-    ["Offset of field: _cef_frame_t::del"][::std::mem::offset_of!(_cef_frame_t, del) - 88usize];
+        [::std::mem::offset_of!(_cef_frame_t, is_valid) - 20usize];
+    ["Offset of field: _cef_frame_t::undo"][::std::mem::offset_of!(_cef_frame_t, undo) - 24usize];
+    ["Offset of field: _cef_frame_t::redo"][::std::mem::offset_of!(_cef_frame_t, redo) - 28usize];
+    ["Offset of field: _cef_frame_t::cut"][::std::mem::offset_of!(_cef_frame_t, cut) - 32usize];
+    ["Offset of field: _cef_frame_t::copy"][::std::mem::offset_of!(_cef_frame_t, copy) - 36usize];
+    ["Offset of field: _cef_frame_t::paste"][::std::mem::offset_of!(_cef_frame_t, paste) - 40usize];
+    ["Offset of field: _cef_frame_t::del"][::std::mem::offset_of!(_cef_frame_t, del) - 44usize];
     ["Offset of field: _cef_frame_t::select_all"]
-        [::std::mem::offset_of!(_cef_frame_t, select_all) - 96usize];
+        [::std::mem::offset_of!(_cef_frame_t, select_all) - 48usize];
     ["Offset of field: _cef_frame_t::view_source"]
-        [::std::mem::offset_of!(_cef_frame_t, view_source) - 104usize];
+        [::std::mem::offset_of!(_cef_frame_t, view_source) - 52usize];
     ["Offset of field: _cef_frame_t::get_source"]
-        [::std::mem::offset_of!(_cef_frame_t, get_source) - 112usize];
+        [::std::mem::offset_of!(_cef_frame_t, get_source) - 56usize];
     ["Offset of field: _cef_frame_t::get_text"]
-        [::std::mem::offset_of!(_cef_frame_t, get_text) - 120usize];
+        [::std::mem::offset_of!(_cef_frame_t, get_text) - 60usize];
     ["Offset of field: _cef_frame_t::load_request"]
-        [::std::mem::offset_of!(_cef_frame_t, load_request) - 128usize];
+        [::std::mem::offset_of!(_cef_frame_t, load_request) - 64usize];
     ["Offset of field: _cef_frame_t::load_url"]
-        [::std::mem::offset_of!(_cef_frame_t, load_url) - 136usize];
+        [::std::mem::offset_of!(_cef_frame_t, load_url) - 68usize];
     ["Offset of field: _cef_frame_t::execute_java_script"]
-        [::std::mem::offset_of!(_cef_frame_t, execute_java_script) - 144usize];
+        [::std::mem::offset_of!(_cef_frame_t, execute_java_script) - 72usize];
     ["Offset of field: _cef_frame_t::is_main"]
-        [::std::mem::offset_of!(_cef_frame_t, is_main) - 152usize];
+        [::std::mem::offset_of!(_cef_frame_t, is_main) - 76usize];
     ["Offset of field: _cef_frame_t::is_focused"]
-        [::std::mem::offset_of!(_cef_frame_t, is_focused) - 160usize];
+        [::std::mem::offset_of!(_cef_frame_t, is_focused) - 80usize];
     ["Offset of field: _cef_frame_t::get_name"]
-        [::std::mem::offset_of!(_cef_frame_t, get_name) - 168usize];
+        [::std::mem::offset_of!(_cef_frame_t, get_name) - 84usize];
     ["Offset of field: _cef_frame_t::get_identifier"]
-        [::std::mem::offset_of!(_cef_frame_t, get_identifier) - 176usize];
+        [::std::mem::offset_of!(_cef_frame_t, get_identifier) - 88usize];
     ["Offset of field: _cef_frame_t::get_parent"]
-        [::std::mem::offset_of!(_cef_frame_t, get_parent) - 184usize];
+        [::std::mem::offset_of!(_cef_frame_t, get_parent) - 92usize];
     ["Offset of field: _cef_frame_t::get_url"]
-        [::std::mem::offset_of!(_cef_frame_t, get_url) - 192usize];
+        [::std::mem::offset_of!(_cef_frame_t, get_url) - 96usize];
     ["Offset of field: _cef_frame_t::get_browser"]
-        [::std::mem::offset_of!(_cef_frame_t, get_browser) - 200usize];
+        [::std::mem::offset_of!(_cef_frame_t, get_browser) - 100usize];
     ["Offset of field: _cef_frame_t::get_v8context"]
-        [::std::mem::offset_of!(_cef_frame_t, get_v8context) - 208usize];
+        [::std::mem::offset_of!(_cef_frame_t, get_v8context) - 104usize];
     ["Offset of field: _cef_frame_t::visit_dom"]
-        [::std::mem::offset_of!(_cef_frame_t, visit_dom) - 216usize];
+        [::std::mem::offset_of!(_cef_frame_t, visit_dom) - 108usize];
     ["Offset of field: _cef_frame_t::create_urlrequest"]
-        [::std::mem::offset_of!(_cef_frame_t, create_urlrequest) - 224usize];
+        [::std::mem::offset_of!(_cef_frame_t, create_urlrequest) - 112usize];
     ["Offset of field: _cef_frame_t::send_process_message"]
-        [::std::mem::offset_of!(_cef_frame_t, send_process_message) - 232usize];
+        [::std::mem::offset_of!(_cef_frame_t, send_process_message) - 116usize];
 };
 #[doc = "\n Structure used to represent a frame in the browser window. When used in the\n browser process the functions of this structure may be called on any thread\n unless otherwise indicated in the comments. When used in the render process\n the functions of this structure may only be called on the main thread.\n"]
 pub type cef_frame_t = _cef_frame_t;
@@ -6346,25 +6345,25 @@ pub struct _cef_x509cert_principal_t {
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
     ["Size of _cef_x509cert_principal_t"]
-        [::std::mem::size_of::<_cef_x509cert_principal_t>() - 96usize];
+        [::std::mem::size_of::<_cef_x509cert_principal_t>() - 48usize];
     ["Alignment of _cef_x509cert_principal_t"]
-        [::std::mem::align_of::<_cef_x509cert_principal_t>() - 8usize];
+        [::std::mem::align_of::<_cef_x509cert_principal_t>() - 4usize];
     ["Offset of field: _cef_x509cert_principal_t::base"]
         [::std::mem::offset_of!(_cef_x509cert_principal_t, base) - 0usize];
     ["Offset of field: _cef_x509cert_principal_t::get_display_name"]
-        [::std::mem::offset_of!(_cef_x509cert_principal_t, get_display_name) - 40usize];
+        [::std::mem::offset_of!(_cef_x509cert_principal_t, get_display_name) - 20usize];
     ["Offset of field: _cef_x509cert_principal_t::get_common_name"]
-        [::std::mem::offset_of!(_cef_x509cert_principal_t, get_common_name) - 48usize];
+        [::std::mem::offset_of!(_cef_x509cert_principal_t, get_common_name) - 24usize];
     ["Offset of field: _cef_x509cert_principal_t::get_locality_name"]
-        [::std::mem::offset_of!(_cef_x509cert_principal_t, get_locality_name) - 56usize];
+        [::std::mem::offset_of!(_cef_x509cert_principal_t, get_locality_name) - 28usize];
     ["Offset of field: _cef_x509cert_principal_t::get_state_or_province_name"]
-        [::std::mem::offset_of!(_cef_x509cert_principal_t, get_state_or_province_name) - 64usize];
+        [::std::mem::offset_of!(_cef_x509cert_principal_t, get_state_or_province_name) - 32usize];
     ["Offset of field: _cef_x509cert_principal_t::get_country_name"]
-        [::std::mem::offset_of!(_cef_x509cert_principal_t, get_country_name) - 72usize];
+        [::std::mem::offset_of!(_cef_x509cert_principal_t, get_country_name) - 36usize];
     ["Offset of field: _cef_x509cert_principal_t::get_organization_names"]
-        [::std::mem::offset_of!(_cef_x509cert_principal_t, get_organization_names) - 80usize];
+        [::std::mem::offset_of!(_cef_x509cert_principal_t, get_organization_names) - 40usize];
     ["Offset of field: _cef_x509cert_principal_t::get_organization_unit_names"]
-        [::std::mem::offset_of!(_cef_x509cert_principal_t, get_organization_unit_names) - 88usize];
+        [::std::mem::offset_of!(_cef_x509cert_principal_t, get_organization_unit_names) - 44usize];
 };
 #[doc = "\n Structure representing the issuer or subject field of an X.509 certificate.\n"]
 pub type cef_x509cert_principal_t = _cef_x509cert_principal_t;
@@ -6424,31 +6423,31 @@ pub struct _cef_x509certificate_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_x509certificate_t"][::std::mem::size_of::<_cef_x509certificate_t>() - 120usize];
+    ["Size of _cef_x509certificate_t"][::std::mem::size_of::<_cef_x509certificate_t>() - 60usize];
     ["Alignment of _cef_x509certificate_t"]
-        [::std::mem::align_of::<_cef_x509certificate_t>() - 8usize];
+        [::std::mem::align_of::<_cef_x509certificate_t>() - 4usize];
     ["Offset of field: _cef_x509certificate_t::base"]
         [::std::mem::offset_of!(_cef_x509certificate_t, base) - 0usize];
     ["Offset of field: _cef_x509certificate_t::get_subject"]
-        [::std::mem::offset_of!(_cef_x509certificate_t, get_subject) - 40usize];
+        [::std::mem::offset_of!(_cef_x509certificate_t, get_subject) - 20usize];
     ["Offset of field: _cef_x509certificate_t::get_issuer"]
-        [::std::mem::offset_of!(_cef_x509certificate_t, get_issuer) - 48usize];
+        [::std::mem::offset_of!(_cef_x509certificate_t, get_issuer) - 24usize];
     ["Offset of field: _cef_x509certificate_t::get_serial_number"]
-        [::std::mem::offset_of!(_cef_x509certificate_t, get_serial_number) - 56usize];
+        [::std::mem::offset_of!(_cef_x509certificate_t, get_serial_number) - 28usize];
     ["Offset of field: _cef_x509certificate_t::get_valid_start"]
-        [::std::mem::offset_of!(_cef_x509certificate_t, get_valid_start) - 64usize];
+        [::std::mem::offset_of!(_cef_x509certificate_t, get_valid_start) - 32usize];
     ["Offset of field: _cef_x509certificate_t::get_valid_expiry"]
-        [::std::mem::offset_of!(_cef_x509certificate_t, get_valid_expiry) - 72usize];
+        [::std::mem::offset_of!(_cef_x509certificate_t, get_valid_expiry) - 36usize];
     ["Offset of field: _cef_x509certificate_t::get_derencoded"]
-        [::std::mem::offset_of!(_cef_x509certificate_t, get_derencoded) - 80usize];
+        [::std::mem::offset_of!(_cef_x509certificate_t, get_derencoded) - 40usize];
     ["Offset of field: _cef_x509certificate_t::get_pemencoded"]
-        [::std::mem::offset_of!(_cef_x509certificate_t, get_pemencoded) - 88usize];
+        [::std::mem::offset_of!(_cef_x509certificate_t, get_pemencoded) - 44usize];
     ["Offset of field: _cef_x509certificate_t::get_issuer_chain_size"]
-        [::std::mem::offset_of!(_cef_x509certificate_t, get_issuer_chain_size) - 96usize];
+        [::std::mem::offset_of!(_cef_x509certificate_t, get_issuer_chain_size) - 48usize];
     ["Offset of field: _cef_x509certificate_t::get_derencoded_issuer_chain"]
-        [::std::mem::offset_of!(_cef_x509certificate_t, get_derencoded_issuer_chain) - 104usize];
+        [::std::mem::offset_of!(_cef_x509certificate_t, get_derencoded_issuer_chain) - 52usize];
     ["Offset of field: _cef_x509certificate_t::get_pemencoded_issuer_chain"]
-        [::std::mem::offset_of!(_cef_x509certificate_t, get_pemencoded_issuer_chain) - 112usize];
+        [::std::mem::offset_of!(_cef_x509certificate_t, get_pemencoded_issuer_chain) - 56usize];
 };
 #[doc = "\n Structure representing a X.509 certificate.\n"]
 pub type cef_x509certificate_t = _cef_x509certificate_t;
@@ -6481,20 +6480,20 @@ pub struct _cef_sslstatus_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_sslstatus_t"][::std::mem::size_of::<_cef_sslstatus_t>() - 80usize];
-    ["Alignment of _cef_sslstatus_t"][::std::mem::align_of::<_cef_sslstatus_t>() - 8usize];
+    ["Size of _cef_sslstatus_t"][::std::mem::size_of::<_cef_sslstatus_t>() - 40usize];
+    ["Alignment of _cef_sslstatus_t"][::std::mem::align_of::<_cef_sslstatus_t>() - 4usize];
     ["Offset of field: _cef_sslstatus_t::base"]
         [::std::mem::offset_of!(_cef_sslstatus_t, base) - 0usize];
     ["Offset of field: _cef_sslstatus_t::is_secure_connection"]
-        [::std::mem::offset_of!(_cef_sslstatus_t, is_secure_connection) - 40usize];
+        [::std::mem::offset_of!(_cef_sslstatus_t, is_secure_connection) - 20usize];
     ["Offset of field: _cef_sslstatus_t::get_cert_status"]
-        [::std::mem::offset_of!(_cef_sslstatus_t, get_cert_status) - 48usize];
+        [::std::mem::offset_of!(_cef_sslstatus_t, get_cert_status) - 24usize];
     ["Offset of field: _cef_sslstatus_t::get_sslversion"]
-        [::std::mem::offset_of!(_cef_sslstatus_t, get_sslversion) - 56usize];
+        [::std::mem::offset_of!(_cef_sslstatus_t, get_sslversion) - 28usize];
     ["Offset of field: _cef_sslstatus_t::get_content_status"]
-        [::std::mem::offset_of!(_cef_sslstatus_t, get_content_status) - 64usize];
+        [::std::mem::offset_of!(_cef_sslstatus_t, get_content_status) - 32usize];
     ["Offset of field: _cef_sslstatus_t::get_x509certificate"]
-        [::std::mem::offset_of!(_cef_sslstatus_t, get_x509certificate) - 72usize];
+        [::std::mem::offset_of!(_cef_sslstatus_t, get_x509certificate) - 36usize];
 };
 #[doc = "\n Structure representing the SSL information for a navigation entry.\n"]
 pub type cef_sslstatus_t = _cef_sslstatus_t;
@@ -6547,32 +6546,31 @@ pub struct _cef_navigation_entry_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_navigation_entry_t"]
-        [::std::mem::size_of::<_cef_navigation_entry_t>() - 120usize];
+    ["Size of _cef_navigation_entry_t"][::std::mem::size_of::<_cef_navigation_entry_t>() - 60usize];
     ["Alignment of _cef_navigation_entry_t"]
-        [::std::mem::align_of::<_cef_navigation_entry_t>() - 8usize];
+        [::std::mem::align_of::<_cef_navigation_entry_t>() - 4usize];
     ["Offset of field: _cef_navigation_entry_t::base"]
         [::std::mem::offset_of!(_cef_navigation_entry_t, base) - 0usize];
     ["Offset of field: _cef_navigation_entry_t::is_valid"]
-        [::std::mem::offset_of!(_cef_navigation_entry_t, is_valid) - 40usize];
+        [::std::mem::offset_of!(_cef_navigation_entry_t, is_valid) - 20usize];
     ["Offset of field: _cef_navigation_entry_t::get_url"]
-        [::std::mem::offset_of!(_cef_navigation_entry_t, get_url) - 48usize];
+        [::std::mem::offset_of!(_cef_navigation_entry_t, get_url) - 24usize];
     ["Offset of field: _cef_navigation_entry_t::get_display_url"]
-        [::std::mem::offset_of!(_cef_navigation_entry_t, get_display_url) - 56usize];
+        [::std::mem::offset_of!(_cef_navigation_entry_t, get_display_url) - 28usize];
     ["Offset of field: _cef_navigation_entry_t::get_original_url"]
-        [::std::mem::offset_of!(_cef_navigation_entry_t, get_original_url) - 64usize];
+        [::std::mem::offset_of!(_cef_navigation_entry_t, get_original_url) - 32usize];
     ["Offset of field: _cef_navigation_entry_t::get_title"]
-        [::std::mem::offset_of!(_cef_navigation_entry_t, get_title) - 72usize];
+        [::std::mem::offset_of!(_cef_navigation_entry_t, get_title) - 36usize];
     ["Offset of field: _cef_navigation_entry_t::get_transition_type"]
-        [::std::mem::offset_of!(_cef_navigation_entry_t, get_transition_type) - 80usize];
+        [::std::mem::offset_of!(_cef_navigation_entry_t, get_transition_type) - 40usize];
     ["Offset of field: _cef_navigation_entry_t::has_post_data"]
-        [::std::mem::offset_of!(_cef_navigation_entry_t, has_post_data) - 88usize];
+        [::std::mem::offset_of!(_cef_navigation_entry_t, has_post_data) - 44usize];
     ["Offset of field: _cef_navigation_entry_t::get_completion_time"]
-        [::std::mem::offset_of!(_cef_navigation_entry_t, get_completion_time) - 96usize];
+        [::std::mem::offset_of!(_cef_navigation_entry_t, get_completion_time) - 48usize];
     ["Offset of field: _cef_navigation_entry_t::get_http_status_code"]
-        [::std::mem::offset_of!(_cef_navigation_entry_t, get_http_status_code) - 104usize];
+        [::std::mem::offset_of!(_cef_navigation_entry_t, get_http_status_code) - 52usize];
     ["Offset of field: _cef_navigation_entry_t::get_sslstatus"]
-        [::std::mem::offset_of!(_cef_navigation_entry_t, get_sslstatus) - 112usize];
+        [::std::mem::offset_of!(_cef_navigation_entry_t, get_sslstatus) - 56usize];
 };
 #[doc = "\n Structure used to represent an entry in navigation history.\n"]
 pub type cef_navigation_entry_t = _cef_navigation_entry_t;
@@ -6585,8 +6583,8 @@ pub struct _cef_registration_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_registration_t"][::std::mem::size_of::<_cef_registration_t>() - 40usize];
-    ["Alignment of _cef_registration_t"][::std::mem::align_of::<_cef_registration_t>() - 8usize];
+    ["Size of _cef_registration_t"][::std::mem::size_of::<_cef_registration_t>() - 20usize];
+    ["Alignment of _cef_registration_t"][::std::mem::align_of::<_cef_registration_t>() - 4usize];
     ["Offset of field: _cef_registration_t::base"]
         [::std::mem::offset_of!(_cef_registration_t, base) - 0usize];
 };
@@ -6605,14 +6603,14 @@ pub struct _cef_callback_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_callback_t"][::std::mem::size_of::<_cef_callback_t>() - 56usize];
-    ["Alignment of _cef_callback_t"][::std::mem::align_of::<_cef_callback_t>() - 8usize];
+    ["Size of _cef_callback_t"][::std::mem::size_of::<_cef_callback_t>() - 28usize];
+    ["Alignment of _cef_callback_t"][::std::mem::align_of::<_cef_callback_t>() - 4usize];
     ["Offset of field: _cef_callback_t::base"]
         [::std::mem::offset_of!(_cef_callback_t, base) - 0usize];
     ["Offset of field: _cef_callback_t::cont"]
-        [::std::mem::offset_of!(_cef_callback_t, cont) - 40usize];
+        [::std::mem::offset_of!(_cef_callback_t, cont) - 20usize];
     ["Offset of field: _cef_callback_t::cancel"]
-        [::std::mem::offset_of!(_cef_callback_t, cancel) - 48usize];
+        [::std::mem::offset_of!(_cef_callback_t, cancel) - 24usize];
 };
 #[doc = "\n Generic callback structure used for asynchronous continuation.\n"]
 pub type cef_callback_t = _cef_callback_t;
@@ -6629,13 +6627,13 @@ pub struct _cef_completion_callback_t {
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
     ["Size of _cef_completion_callback_t"]
-        [::std::mem::size_of::<_cef_completion_callback_t>() - 48usize];
+        [::std::mem::size_of::<_cef_completion_callback_t>() - 24usize];
     ["Alignment of _cef_completion_callback_t"]
-        [::std::mem::align_of::<_cef_completion_callback_t>() - 8usize];
+        [::std::mem::align_of::<_cef_completion_callback_t>() - 4usize];
     ["Offset of field: _cef_completion_callback_t::base"]
         [::std::mem::offset_of!(_cef_completion_callback_t, base) - 0usize];
     ["Offset of field: _cef_completion_callback_t::on_complete"]
-        [::std::mem::offset_of!(_cef_completion_callback_t, on_complete) - 40usize];
+        [::std::mem::offset_of!(_cef_completion_callback_t, on_complete) - 20usize];
 };
 #[doc = "\n Generic callback structure used for asynchronous completion.\n"]
 pub type cef_completion_callback_t = _cef_completion_callback_t;
@@ -6689,21 +6687,21 @@ pub struct _cef_cookie_manager_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_cookie_manager_t"][::std::mem::size_of::<_cef_cookie_manager_t>() - 80usize];
+    ["Size of _cef_cookie_manager_t"][::std::mem::size_of::<_cef_cookie_manager_t>() - 40usize];
     ["Alignment of _cef_cookie_manager_t"]
-        [::std::mem::align_of::<_cef_cookie_manager_t>() - 8usize];
+        [::std::mem::align_of::<_cef_cookie_manager_t>() - 4usize];
     ["Offset of field: _cef_cookie_manager_t::base"]
         [::std::mem::offset_of!(_cef_cookie_manager_t, base) - 0usize];
     ["Offset of field: _cef_cookie_manager_t::visit_all_cookies"]
-        [::std::mem::offset_of!(_cef_cookie_manager_t, visit_all_cookies) - 40usize];
+        [::std::mem::offset_of!(_cef_cookie_manager_t, visit_all_cookies) - 20usize];
     ["Offset of field: _cef_cookie_manager_t::visit_url_cookies"]
-        [::std::mem::offset_of!(_cef_cookie_manager_t, visit_url_cookies) - 48usize];
+        [::std::mem::offset_of!(_cef_cookie_manager_t, visit_url_cookies) - 24usize];
     ["Offset of field: _cef_cookie_manager_t::set_cookie"]
-        [::std::mem::offset_of!(_cef_cookie_manager_t, set_cookie) - 56usize];
+        [::std::mem::offset_of!(_cef_cookie_manager_t, set_cookie) - 28usize];
     ["Offset of field: _cef_cookie_manager_t::delete_cookies"]
-        [::std::mem::offset_of!(_cef_cookie_manager_t, delete_cookies) - 64usize];
+        [::std::mem::offset_of!(_cef_cookie_manager_t, delete_cookies) - 32usize];
     ["Offset of field: _cef_cookie_manager_t::flush_store"]
-        [::std::mem::offset_of!(_cef_cookie_manager_t, flush_store) - 72usize];
+        [::std::mem::offset_of!(_cef_cookie_manager_t, flush_store) - 36usize];
 };
 #[doc = "\n Structure used for managing cookies. The functions of this structure may be\n called on any thread unless otherwise indicated.\n"]
 pub type cef_cookie_manager_t = _cef_cookie_manager_t;
@@ -6732,13 +6730,13 @@ pub struct _cef_cookie_visitor_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_cookie_visitor_t"][::std::mem::size_of::<_cef_cookie_visitor_t>() - 48usize];
+    ["Size of _cef_cookie_visitor_t"][::std::mem::size_of::<_cef_cookie_visitor_t>() - 24usize];
     ["Alignment of _cef_cookie_visitor_t"]
-        [::std::mem::align_of::<_cef_cookie_visitor_t>() - 8usize];
+        [::std::mem::align_of::<_cef_cookie_visitor_t>() - 4usize];
     ["Offset of field: _cef_cookie_visitor_t::base"]
         [::std::mem::offset_of!(_cef_cookie_visitor_t, base) - 0usize];
     ["Offset of field: _cef_cookie_visitor_t::visit"]
-        [::std::mem::offset_of!(_cef_cookie_visitor_t, visit) - 40usize];
+        [::std::mem::offset_of!(_cef_cookie_visitor_t, visit) - 20usize];
 };
 #[doc = "\n Structure to implement for visiting cookie values. The functions of this\n structure will always be called on the UI thread.\n"]
 pub type cef_cookie_visitor_t = _cef_cookie_visitor_t;
@@ -6759,13 +6757,13 @@ pub struct _cef_set_cookie_callback_t {
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
     ["Size of _cef_set_cookie_callback_t"]
-        [::std::mem::size_of::<_cef_set_cookie_callback_t>() - 48usize];
+        [::std::mem::size_of::<_cef_set_cookie_callback_t>() - 24usize];
     ["Alignment of _cef_set_cookie_callback_t"]
-        [::std::mem::align_of::<_cef_set_cookie_callback_t>() - 8usize];
+        [::std::mem::align_of::<_cef_set_cookie_callback_t>() - 4usize];
     ["Offset of field: _cef_set_cookie_callback_t::base"]
         [::std::mem::offset_of!(_cef_set_cookie_callback_t, base) - 0usize];
     ["Offset of field: _cef_set_cookie_callback_t::on_complete"]
-        [::std::mem::offset_of!(_cef_set_cookie_callback_t, on_complete) - 40usize];
+        [::std::mem::offset_of!(_cef_set_cookie_callback_t, on_complete) - 20usize];
 };
 #[doc = "\n Structure to implement to be notified of asynchronous completion via\n cef_cookie_manager_t::set_cookie().\n"]
 pub type cef_set_cookie_callback_t = _cef_set_cookie_callback_t;
@@ -6786,13 +6784,13 @@ pub struct _cef_delete_cookies_callback_t {
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
     ["Size of _cef_delete_cookies_callback_t"]
-        [::std::mem::size_of::<_cef_delete_cookies_callback_t>() - 48usize];
+        [::std::mem::size_of::<_cef_delete_cookies_callback_t>() - 24usize];
     ["Alignment of _cef_delete_cookies_callback_t"]
-        [::std::mem::align_of::<_cef_delete_cookies_callback_t>() - 8usize];
+        [::std::mem::align_of::<_cef_delete_cookies_callback_t>() - 4usize];
     ["Offset of field: _cef_delete_cookies_callback_t::base"]
         [::std::mem::offset_of!(_cef_delete_cookies_callback_t, base) - 0usize];
     ["Offset of field: _cef_delete_cookies_callback_t::on_complete"]
-        [::std::mem::offset_of!(_cef_delete_cookies_callback_t, on_complete) - 40usize];
+        [::std::mem::offset_of!(_cef_delete_cookies_callback_t, on_complete) - 20usize];
 };
 #[doc = "\n Structure to implement to be notified of asynchronous completion via\n cef_cookie_manager_t::delete_cookies().\n"]
 pub type cef_delete_cookies_callback_t = _cef_delete_cookies_callback_t;
@@ -6834,20 +6832,20 @@ pub struct _cef_media_router_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_media_router_t"][::std::mem::size_of::<_cef_media_router_t>() - 80usize];
-    ["Alignment of _cef_media_router_t"][::std::mem::align_of::<_cef_media_router_t>() - 8usize];
+    ["Size of _cef_media_router_t"][::std::mem::size_of::<_cef_media_router_t>() - 40usize];
+    ["Alignment of _cef_media_router_t"][::std::mem::align_of::<_cef_media_router_t>() - 4usize];
     ["Offset of field: _cef_media_router_t::base"]
         [::std::mem::offset_of!(_cef_media_router_t, base) - 0usize];
     ["Offset of field: _cef_media_router_t::add_observer"]
-        [::std::mem::offset_of!(_cef_media_router_t, add_observer) - 40usize];
+        [::std::mem::offset_of!(_cef_media_router_t, add_observer) - 20usize];
     ["Offset of field: _cef_media_router_t::get_source"]
-        [::std::mem::offset_of!(_cef_media_router_t, get_source) - 48usize];
+        [::std::mem::offset_of!(_cef_media_router_t, get_source) - 24usize];
     ["Offset of field: _cef_media_router_t::notify_current_sinks"]
-        [::std::mem::offset_of!(_cef_media_router_t, notify_current_sinks) - 56usize];
+        [::std::mem::offset_of!(_cef_media_router_t, notify_current_sinks) - 28usize];
     ["Offset of field: _cef_media_router_t::create_route"]
-        [::std::mem::offset_of!(_cef_media_router_t, create_route) - 64usize];
+        [::std::mem::offset_of!(_cef_media_router_t, create_route) - 32usize];
     ["Offset of field: _cef_media_router_t::notify_current_routes"]
-        [::std::mem::offset_of!(_cef_media_router_t, notify_current_routes) - 72usize];
+        [::std::mem::offset_of!(_cef_media_router_t, notify_current_routes) - 36usize];
 };
 #[doc = "\n Supports discovery of and communication with media devices on the local\n network via the Cast and DIAL protocols. The functions of this structure may\n be called on any browser process thread unless otherwise indicated.\n"]
 pub type cef_media_router_t = _cef_media_router_t;
@@ -6899,19 +6897,19 @@ pub struct _cef_media_observer_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_media_observer_t"][::std::mem::size_of::<_cef_media_observer_t>() - 72usize];
+    ["Size of _cef_media_observer_t"][::std::mem::size_of::<_cef_media_observer_t>() - 36usize];
     ["Alignment of _cef_media_observer_t"]
-        [::std::mem::align_of::<_cef_media_observer_t>() - 8usize];
+        [::std::mem::align_of::<_cef_media_observer_t>() - 4usize];
     ["Offset of field: _cef_media_observer_t::base"]
         [::std::mem::offset_of!(_cef_media_observer_t, base) - 0usize];
     ["Offset of field: _cef_media_observer_t::on_sinks"]
-        [::std::mem::offset_of!(_cef_media_observer_t, on_sinks) - 40usize];
+        [::std::mem::offset_of!(_cef_media_observer_t, on_sinks) - 20usize];
     ["Offset of field: _cef_media_observer_t::on_routes"]
-        [::std::mem::offset_of!(_cef_media_observer_t, on_routes) - 48usize];
+        [::std::mem::offset_of!(_cef_media_observer_t, on_routes) - 24usize];
     ["Offset of field: _cef_media_observer_t::on_route_state_changed"]
-        [::std::mem::offset_of!(_cef_media_observer_t, on_route_state_changed) - 56usize];
+        [::std::mem::offset_of!(_cef_media_observer_t, on_route_state_changed) - 28usize];
     ["Offset of field: _cef_media_observer_t::on_route_message_received"]
-        [::std::mem::offset_of!(_cef_media_observer_t, on_route_message_received) - 64usize];
+        [::std::mem::offset_of!(_cef_media_observer_t, on_route_message_received) - 32usize];
 };
 #[doc = "\n Implemented by the client to observe MediaRouter events and registered via\n cef_media_router_t::AddObserver. The functions of this structure will be\n called on the browser process UI thread.\n"]
 pub type cef_media_observer_t = _cef_media_observer_t;
@@ -6946,20 +6944,20 @@ pub struct _cef_media_route_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_media_route_t"][::std::mem::size_of::<_cef_media_route_t>() - 80usize];
-    ["Alignment of _cef_media_route_t"][::std::mem::align_of::<_cef_media_route_t>() - 8usize];
+    ["Size of _cef_media_route_t"][::std::mem::size_of::<_cef_media_route_t>() - 40usize];
+    ["Alignment of _cef_media_route_t"][::std::mem::align_of::<_cef_media_route_t>() - 4usize];
     ["Offset of field: _cef_media_route_t::base"]
         [::std::mem::offset_of!(_cef_media_route_t, base) - 0usize];
     ["Offset of field: _cef_media_route_t::get_id"]
-        [::std::mem::offset_of!(_cef_media_route_t, get_id) - 40usize];
+        [::std::mem::offset_of!(_cef_media_route_t, get_id) - 20usize];
     ["Offset of field: _cef_media_route_t::get_source"]
-        [::std::mem::offset_of!(_cef_media_route_t, get_source) - 48usize];
+        [::std::mem::offset_of!(_cef_media_route_t, get_source) - 24usize];
     ["Offset of field: _cef_media_route_t::get_sink"]
-        [::std::mem::offset_of!(_cef_media_route_t, get_sink) - 56usize];
+        [::std::mem::offset_of!(_cef_media_route_t, get_sink) - 28usize];
     ["Offset of field: _cef_media_route_t::send_route_message"]
-        [::std::mem::offset_of!(_cef_media_route_t, send_route_message) - 64usize];
+        [::std::mem::offset_of!(_cef_media_route_t, send_route_message) - 32usize];
     ["Offset of field: _cef_media_route_t::terminate"]
-        [::std::mem::offset_of!(_cef_media_route_t, terminate) - 72usize];
+        [::std::mem::offset_of!(_cef_media_route_t, terminate) - 36usize];
 };
 #[doc = "\n Represents the route between a media source and sink. Instances of this\n object are created via cef_media_router_t::CreateRoute and retrieved via\n cef_media_observer_t::OnRoutes. Contains the status and metadata of a\n routing operation. The functions of this structure may be called on any\n browser process thread unless otherwise indicated.\n"]
 pub type cef_media_route_t = _cef_media_route_t;
@@ -6982,16 +6980,16 @@ pub struct _cef_media_route_create_callback_t {
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
     ["Size of _cef_media_route_create_callback_t"]
-        [::std::mem::size_of::<_cef_media_route_create_callback_t>() - 48usize];
+        [::std::mem::size_of::<_cef_media_route_create_callback_t>() - 24usize];
     ["Alignment of _cef_media_route_create_callback_t"]
-        [::std::mem::align_of::<_cef_media_route_create_callback_t>() - 8usize];
+        [::std::mem::align_of::<_cef_media_route_create_callback_t>() - 4usize];
     ["Offset of field: _cef_media_route_create_callback_t::base"]
         [::std::mem::offset_of!(_cef_media_route_create_callback_t, base) - 0usize];
     ["Offset of field: _cef_media_route_create_callback_t::on_media_route_create_finished"][::std::mem::offset_of!(
         _cef_media_route_create_callback_t,
         on_media_route_create_finished
     )
-        - 40usize];
+        - 20usize];
 };
 #[doc = "\n Callback structure for cef_media_router_t::CreateRoute. The functions of\n this structure will be called on the browser process UI thread.\n"]
 pub type cef_media_route_create_callback_t = _cef_media_route_create_callback_t;
@@ -7038,24 +7036,24 @@ pub struct _cef_media_sink_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_media_sink_t"][::std::mem::size_of::<_cef_media_sink_t>() - 96usize];
-    ["Alignment of _cef_media_sink_t"][::std::mem::align_of::<_cef_media_sink_t>() - 8usize];
+    ["Size of _cef_media_sink_t"][::std::mem::size_of::<_cef_media_sink_t>() - 48usize];
+    ["Alignment of _cef_media_sink_t"][::std::mem::align_of::<_cef_media_sink_t>() - 4usize];
     ["Offset of field: _cef_media_sink_t::base"]
         [::std::mem::offset_of!(_cef_media_sink_t, base) - 0usize];
     ["Offset of field: _cef_media_sink_t::get_id"]
-        [::std::mem::offset_of!(_cef_media_sink_t, get_id) - 40usize];
+        [::std::mem::offset_of!(_cef_media_sink_t, get_id) - 20usize];
     ["Offset of field: _cef_media_sink_t::get_name"]
-        [::std::mem::offset_of!(_cef_media_sink_t, get_name) - 48usize];
+        [::std::mem::offset_of!(_cef_media_sink_t, get_name) - 24usize];
     ["Offset of field: _cef_media_sink_t::get_icon_type"]
-        [::std::mem::offset_of!(_cef_media_sink_t, get_icon_type) - 56usize];
+        [::std::mem::offset_of!(_cef_media_sink_t, get_icon_type) - 28usize];
     ["Offset of field: _cef_media_sink_t::get_device_info"]
-        [::std::mem::offset_of!(_cef_media_sink_t, get_device_info) - 64usize];
+        [::std::mem::offset_of!(_cef_media_sink_t, get_device_info) - 32usize];
     ["Offset of field: _cef_media_sink_t::is_cast_sink"]
-        [::std::mem::offset_of!(_cef_media_sink_t, is_cast_sink) - 72usize];
+        [::std::mem::offset_of!(_cef_media_sink_t, is_cast_sink) - 36usize];
     ["Offset of field: _cef_media_sink_t::is_dial_sink"]
-        [::std::mem::offset_of!(_cef_media_sink_t, is_dial_sink) - 80usize];
+        [::std::mem::offset_of!(_cef_media_sink_t, is_dial_sink) - 40usize];
     ["Offset of field: _cef_media_sink_t::is_compatible_with"]
-        [::std::mem::offset_of!(_cef_media_sink_t, is_compatible_with) - 88usize];
+        [::std::mem::offset_of!(_cef_media_sink_t, is_compatible_with) - 44usize];
 };
 #[doc = "\n Represents a sink to which media can be routed. Instances of this object are\n retrieved via cef_media_observer_t::OnSinks. The functions of this structure\n may be called on any browser process thread unless otherwise indicated.\n"]
 pub type cef_media_sink_t = _cef_media_sink_t;
@@ -7076,16 +7074,16 @@ pub struct _cef_media_sink_device_info_callback_t {
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
     ["Size of _cef_media_sink_device_info_callback_t"]
-        [::std::mem::size_of::<_cef_media_sink_device_info_callback_t>() - 48usize];
+        [::std::mem::size_of::<_cef_media_sink_device_info_callback_t>() - 24usize];
     ["Alignment of _cef_media_sink_device_info_callback_t"]
-        [::std::mem::align_of::<_cef_media_sink_device_info_callback_t>() - 8usize];
+        [::std::mem::align_of::<_cef_media_sink_device_info_callback_t>() - 4usize];
     ["Offset of field: _cef_media_sink_device_info_callback_t::base"]
         [::std::mem::offset_of!(_cef_media_sink_device_info_callback_t, base) - 0usize];
     ["Offset of field: _cef_media_sink_device_info_callback_t::on_media_sink_device_info"][::std::mem::offset_of!(
         _cef_media_sink_device_info_callback_t,
         on_media_sink_device_info
     )
-        - 40usize];
+        - 20usize];
 };
 #[doc = "\n Callback structure for cef_media_sink_t::GetDeviceInfo. The functions of\n this structure will be called on the browser process UI thread.\n"]
 pub type cef_media_sink_device_info_callback_t = _cef_media_sink_device_info_callback_t;
@@ -7110,16 +7108,16 @@ pub struct _cef_media_source_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_media_source_t"][::std::mem::size_of::<_cef_media_source_t>() - 64usize];
-    ["Alignment of _cef_media_source_t"][::std::mem::align_of::<_cef_media_source_t>() - 8usize];
+    ["Size of _cef_media_source_t"][::std::mem::size_of::<_cef_media_source_t>() - 32usize];
+    ["Alignment of _cef_media_source_t"][::std::mem::align_of::<_cef_media_source_t>() - 4usize];
     ["Offset of field: _cef_media_source_t::base"]
         [::std::mem::offset_of!(_cef_media_source_t, base) - 0usize];
     ["Offset of field: _cef_media_source_t::get_id"]
-        [::std::mem::offset_of!(_cef_media_source_t, get_id) - 40usize];
+        [::std::mem::offset_of!(_cef_media_source_t, get_id) - 20usize];
     ["Offset of field: _cef_media_source_t::is_cast_source"]
-        [::std::mem::offset_of!(_cef_media_source_t, is_cast_source) - 48usize];
+        [::std::mem::offset_of!(_cef_media_source_t, is_cast_source) - 24usize];
     ["Offset of field: _cef_media_source_t::is_dial_source"]
-        [::std::mem::offset_of!(_cef_media_source_t, is_dial_source) - 56usize];
+        [::std::mem::offset_of!(_cef_media_source_t, is_dial_source) - 28usize];
 };
 #[doc = "\n Represents a source from which media can be routed. Instances of this object\n are retrieved via cef_media_router_t::GetSource. The functions of this\n structure may be called on any browser process thread unless otherwise\n indicated.\n"]
 pub type cef_media_source_t = _cef_media_source_t;
@@ -7141,13 +7139,13 @@ pub struct _cef_preference_registrar_t {
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
     ["Size of _cef_preference_registrar_t"]
-        [::std::mem::size_of::<_cef_preference_registrar_t>() - 24usize];
+        [::std::mem::size_of::<_cef_preference_registrar_t>() - 12usize];
     ["Alignment of _cef_preference_registrar_t"]
-        [::std::mem::align_of::<_cef_preference_registrar_t>() - 8usize];
+        [::std::mem::align_of::<_cef_preference_registrar_t>() - 4usize];
     ["Offset of field: _cef_preference_registrar_t::base"]
         [::std::mem::offset_of!(_cef_preference_registrar_t, base) - 0usize];
     ["Offset of field: _cef_preference_registrar_t::add_preference"]
-        [::std::mem::offset_of!(_cef_preference_registrar_t, add_preference) - 16usize];
+        [::std::mem::offset_of!(_cef_preference_registrar_t, add_preference) - 8usize];
 };
 #[doc = "\n Structure that manages custom preference registrations.\n"]
 pub type cef_preference_registrar_t = _cef_preference_registrar_t;
@@ -7198,21 +7196,21 @@ pub struct _cef_preference_manager_t {
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
     ["Size of _cef_preference_manager_t"]
-        [::std::mem::size_of::<_cef_preference_manager_t>() - 80usize];
+        [::std::mem::size_of::<_cef_preference_manager_t>() - 40usize];
     ["Alignment of _cef_preference_manager_t"]
-        [::std::mem::align_of::<_cef_preference_manager_t>() - 8usize];
+        [::std::mem::align_of::<_cef_preference_manager_t>() - 4usize];
     ["Offset of field: _cef_preference_manager_t::base"]
         [::std::mem::offset_of!(_cef_preference_manager_t, base) - 0usize];
     ["Offset of field: _cef_preference_manager_t::has_preference"]
-        [::std::mem::offset_of!(_cef_preference_manager_t, has_preference) - 40usize];
+        [::std::mem::offset_of!(_cef_preference_manager_t, has_preference) - 20usize];
     ["Offset of field: _cef_preference_manager_t::get_preference"]
-        [::std::mem::offset_of!(_cef_preference_manager_t, get_preference) - 48usize];
+        [::std::mem::offset_of!(_cef_preference_manager_t, get_preference) - 24usize];
     ["Offset of field: _cef_preference_manager_t::get_all_preferences"]
-        [::std::mem::offset_of!(_cef_preference_manager_t, get_all_preferences) - 56usize];
+        [::std::mem::offset_of!(_cef_preference_manager_t, get_all_preferences) - 28usize];
     ["Offset of field: _cef_preference_manager_t::can_set_preference"]
-        [::std::mem::offset_of!(_cef_preference_manager_t, can_set_preference) - 64usize];
+        [::std::mem::offset_of!(_cef_preference_manager_t, can_set_preference) - 32usize];
     ["Offset of field: _cef_preference_manager_t::set_preference"]
-        [::std::mem::offset_of!(_cef_preference_manager_t, set_preference) - 72usize];
+        [::std::mem::offset_of!(_cef_preference_manager_t, set_preference) - 36usize];
 };
 #[doc = "\n Manage access to preferences. Many built-in preferences are registered by\n Chromium. Custom preferences can be registered in\n cef_browser_process_handler_t::OnRegisterCustomPreferences.\n"]
 pub type cef_preference_manager_t = _cef_preference_manager_t;
@@ -7237,13 +7235,13 @@ pub struct _cef_resolve_callback_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_resolve_callback_t"][::std::mem::size_of::<_cef_resolve_callback_t>() - 48usize];
+    ["Size of _cef_resolve_callback_t"][::std::mem::size_of::<_cef_resolve_callback_t>() - 24usize];
     ["Alignment of _cef_resolve_callback_t"]
-        [::std::mem::align_of::<_cef_resolve_callback_t>() - 8usize];
+        [::std::mem::align_of::<_cef_resolve_callback_t>() - 4usize];
     ["Offset of field: _cef_resolve_callback_t::base"]
         [::std::mem::offset_of!(_cef_resolve_callback_t, base) - 0usize];
     ["Offset of field: _cef_resolve_callback_t::on_resolve_completed"]
-        [::std::mem::offset_of!(_cef_resolve_callback_t, on_resolve_completed) - 40usize];
+        [::std::mem::offset_of!(_cef_resolve_callback_t, on_resolve_completed) - 20usize];
 };
 #[doc = "\n Callback structure for cef_request_context_t::ResolveHost.\n"]
 pub type cef_resolve_callback_t = _cef_resolve_callback_t;
@@ -7398,57 +7396,55 @@ pub struct _cef_request_context_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_request_context_t"][::std::mem::size_of::<_cef_request_context_t>() - 248usize];
+    ["Size of _cef_request_context_t"][::std::mem::size_of::<_cef_request_context_t>() - 124usize];
     ["Alignment of _cef_request_context_t"]
-        [::std::mem::align_of::<_cef_request_context_t>() - 8usize];
+        [::std::mem::align_of::<_cef_request_context_t>() - 4usize];
     ["Offset of field: _cef_request_context_t::base"]
         [::std::mem::offset_of!(_cef_request_context_t, base) - 0usize];
     ["Offset of field: _cef_request_context_t::is_same"]
-        [::std::mem::offset_of!(_cef_request_context_t, is_same) - 80usize];
+        [::std::mem::offset_of!(_cef_request_context_t, is_same) - 40usize];
     ["Offset of field: _cef_request_context_t::is_sharing_with"]
-        [::std::mem::offset_of!(_cef_request_context_t, is_sharing_with) - 88usize];
+        [::std::mem::offset_of!(_cef_request_context_t, is_sharing_with) - 44usize];
     ["Offset of field: _cef_request_context_t::is_global"]
-        [::std::mem::offset_of!(_cef_request_context_t, is_global) - 96usize];
+        [::std::mem::offset_of!(_cef_request_context_t, is_global) - 48usize];
     ["Offset of field: _cef_request_context_t::get_handler"]
-        [::std::mem::offset_of!(_cef_request_context_t, get_handler) - 104usize];
+        [::std::mem::offset_of!(_cef_request_context_t, get_handler) - 52usize];
     ["Offset of field: _cef_request_context_t::get_cache_path"]
-        [::std::mem::offset_of!(_cef_request_context_t, get_cache_path) - 112usize];
+        [::std::mem::offset_of!(_cef_request_context_t, get_cache_path) - 56usize];
     ["Offset of field: _cef_request_context_t::get_cookie_manager"]
-        [::std::mem::offset_of!(_cef_request_context_t, get_cookie_manager) - 120usize];
-    ["Offset of field: _cef_request_context_t::register_scheme_handler_factory"][::std::mem::offset_of!(
-        _cef_request_context_t,
-        register_scheme_handler_factory
-    ) - 128usize];
+        [::std::mem::offset_of!(_cef_request_context_t, get_cookie_manager) - 60usize];
+    ["Offset of field: _cef_request_context_t::register_scheme_handler_factory"]
+        [::std::mem::offset_of!(_cef_request_context_t, register_scheme_handler_factory) - 64usize];
     ["Offset of field: _cef_request_context_t::clear_scheme_handler_factories"]
-        [::std::mem::offset_of!(_cef_request_context_t, clear_scheme_handler_factories) - 136usize];
+        [::std::mem::offset_of!(_cef_request_context_t, clear_scheme_handler_factories) - 68usize];
     ["Offset of field: _cef_request_context_t::clear_certificate_exceptions"]
-        [::std::mem::offset_of!(_cef_request_context_t, clear_certificate_exceptions) - 144usize];
+        [::std::mem::offset_of!(_cef_request_context_t, clear_certificate_exceptions) - 72usize];
     ["Offset of field: _cef_request_context_t::clear_http_auth_credentials"]
-        [::std::mem::offset_of!(_cef_request_context_t, clear_http_auth_credentials) - 152usize];
+        [::std::mem::offset_of!(_cef_request_context_t, clear_http_auth_credentials) - 76usize];
     ["Offset of field: _cef_request_context_t::close_all_connections"]
-        [::std::mem::offset_of!(_cef_request_context_t, close_all_connections) - 160usize];
+        [::std::mem::offset_of!(_cef_request_context_t, close_all_connections) - 80usize];
     ["Offset of field: _cef_request_context_t::resolve_host"]
-        [::std::mem::offset_of!(_cef_request_context_t, resolve_host) - 168usize];
+        [::std::mem::offset_of!(_cef_request_context_t, resolve_host) - 84usize];
     ["Offset of field: _cef_request_context_t::get_media_router"]
-        [::std::mem::offset_of!(_cef_request_context_t, get_media_router) - 176usize];
+        [::std::mem::offset_of!(_cef_request_context_t, get_media_router) - 88usize];
     ["Offset of field: _cef_request_context_t::get_website_setting"]
-        [::std::mem::offset_of!(_cef_request_context_t, get_website_setting) - 184usize];
+        [::std::mem::offset_of!(_cef_request_context_t, get_website_setting) - 92usize];
     ["Offset of field: _cef_request_context_t::set_website_setting"]
-        [::std::mem::offset_of!(_cef_request_context_t, set_website_setting) - 192usize];
+        [::std::mem::offset_of!(_cef_request_context_t, set_website_setting) - 96usize];
     ["Offset of field: _cef_request_context_t::get_content_setting"]
-        [::std::mem::offset_of!(_cef_request_context_t, get_content_setting) - 200usize];
+        [::std::mem::offset_of!(_cef_request_context_t, get_content_setting) - 100usize];
     ["Offset of field: _cef_request_context_t::set_content_setting"]
-        [::std::mem::offset_of!(_cef_request_context_t, set_content_setting) - 208usize];
+        [::std::mem::offset_of!(_cef_request_context_t, set_content_setting) - 104usize];
     ["Offset of field: _cef_request_context_t::set_chrome_color_scheme"]
-        [::std::mem::offset_of!(_cef_request_context_t, set_chrome_color_scheme) - 216usize];
+        [::std::mem::offset_of!(_cef_request_context_t, set_chrome_color_scheme) - 108usize];
     ["Offset of field: _cef_request_context_t::get_chrome_color_scheme_mode"]
-        [::std::mem::offset_of!(_cef_request_context_t, get_chrome_color_scheme_mode) - 224usize];
+        [::std::mem::offset_of!(_cef_request_context_t, get_chrome_color_scheme_mode) - 112usize];
     ["Offset of field: _cef_request_context_t::get_chrome_color_scheme_color"]
-        [::std::mem::offset_of!(_cef_request_context_t, get_chrome_color_scheme_color) - 232usize];
+        [::std::mem::offset_of!(_cef_request_context_t, get_chrome_color_scheme_color) - 116usize];
     ["Offset of field: _cef_request_context_t::get_chrome_color_scheme_variant"][::std::mem::offset_of!(
         _cef_request_context_t,
         get_chrome_color_scheme_variant
-    ) - 240usize];
+    ) - 120usize];
 };
 #[doc = "\n A request context provides request handling for a set of related browser or\n URL request objects. A request context can be specified when creating a new\n browser via the cef_browser_host_t static factory functions or when creating\n a new URL request via the cef_urlrequest_t static factory functions. Browser\n objects with different request contexts will never be hosted in the same\n render process. Browser objects with the same request context may or may not\n be hosted in the same render process depending on the process model. Browser\n objects created indirectly via the JavaScript window.open function or\n targeted links will share the same render process and the same request\n context as the source browser. When running in single-process mode there is\n only a single render process (the main process) and so all browsers created\n in single-process mode will share the same request context. This will be the\n first request context passed into a cef_browser_host_t static factory\n function and all other request context objects will be ignored.\n"]
 pub type cef_request_context_t = _cef_request_context_t;
@@ -7562,52 +7558,52 @@ pub struct _cef_browser_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_browser_t"][::std::mem::size_of::<_cef_browser_t>() - 208usize];
-    ["Alignment of _cef_browser_t"][::std::mem::align_of::<_cef_browser_t>() - 8usize];
+    ["Size of _cef_browser_t"][::std::mem::size_of::<_cef_browser_t>() - 104usize];
+    ["Alignment of _cef_browser_t"][::std::mem::align_of::<_cef_browser_t>() - 4usize];
     ["Offset of field: _cef_browser_t::base"]
         [::std::mem::offset_of!(_cef_browser_t, base) - 0usize];
     ["Offset of field: _cef_browser_t::is_valid"]
-        [::std::mem::offset_of!(_cef_browser_t, is_valid) - 40usize];
+        [::std::mem::offset_of!(_cef_browser_t, is_valid) - 20usize];
     ["Offset of field: _cef_browser_t::get_host"]
-        [::std::mem::offset_of!(_cef_browser_t, get_host) - 48usize];
+        [::std::mem::offset_of!(_cef_browser_t, get_host) - 24usize];
     ["Offset of field: _cef_browser_t::can_go_back"]
-        [::std::mem::offset_of!(_cef_browser_t, can_go_back) - 56usize];
+        [::std::mem::offset_of!(_cef_browser_t, can_go_back) - 28usize];
     ["Offset of field: _cef_browser_t::go_back"]
-        [::std::mem::offset_of!(_cef_browser_t, go_back) - 64usize];
+        [::std::mem::offset_of!(_cef_browser_t, go_back) - 32usize];
     ["Offset of field: _cef_browser_t::can_go_forward"]
-        [::std::mem::offset_of!(_cef_browser_t, can_go_forward) - 72usize];
+        [::std::mem::offset_of!(_cef_browser_t, can_go_forward) - 36usize];
     ["Offset of field: _cef_browser_t::go_forward"]
-        [::std::mem::offset_of!(_cef_browser_t, go_forward) - 80usize];
+        [::std::mem::offset_of!(_cef_browser_t, go_forward) - 40usize];
     ["Offset of field: _cef_browser_t::is_loading"]
-        [::std::mem::offset_of!(_cef_browser_t, is_loading) - 88usize];
+        [::std::mem::offset_of!(_cef_browser_t, is_loading) - 44usize];
     ["Offset of field: _cef_browser_t::reload"]
-        [::std::mem::offset_of!(_cef_browser_t, reload) - 96usize];
+        [::std::mem::offset_of!(_cef_browser_t, reload) - 48usize];
     ["Offset of field: _cef_browser_t::reload_ignore_cache"]
-        [::std::mem::offset_of!(_cef_browser_t, reload_ignore_cache) - 104usize];
+        [::std::mem::offset_of!(_cef_browser_t, reload_ignore_cache) - 52usize];
     ["Offset of field: _cef_browser_t::stop_load"]
-        [::std::mem::offset_of!(_cef_browser_t, stop_load) - 112usize];
+        [::std::mem::offset_of!(_cef_browser_t, stop_load) - 56usize];
     ["Offset of field: _cef_browser_t::get_identifier"]
-        [::std::mem::offset_of!(_cef_browser_t, get_identifier) - 120usize];
+        [::std::mem::offset_of!(_cef_browser_t, get_identifier) - 60usize];
     ["Offset of field: _cef_browser_t::is_same"]
-        [::std::mem::offset_of!(_cef_browser_t, is_same) - 128usize];
+        [::std::mem::offset_of!(_cef_browser_t, is_same) - 64usize];
     ["Offset of field: _cef_browser_t::is_popup"]
-        [::std::mem::offset_of!(_cef_browser_t, is_popup) - 136usize];
+        [::std::mem::offset_of!(_cef_browser_t, is_popup) - 68usize];
     ["Offset of field: _cef_browser_t::has_document"]
-        [::std::mem::offset_of!(_cef_browser_t, has_document) - 144usize];
+        [::std::mem::offset_of!(_cef_browser_t, has_document) - 72usize];
     ["Offset of field: _cef_browser_t::get_main_frame"]
-        [::std::mem::offset_of!(_cef_browser_t, get_main_frame) - 152usize];
+        [::std::mem::offset_of!(_cef_browser_t, get_main_frame) - 76usize];
     ["Offset of field: _cef_browser_t::get_focused_frame"]
-        [::std::mem::offset_of!(_cef_browser_t, get_focused_frame) - 160usize];
+        [::std::mem::offset_of!(_cef_browser_t, get_focused_frame) - 80usize];
     ["Offset of field: _cef_browser_t::get_frame_by_identifier"]
-        [::std::mem::offset_of!(_cef_browser_t, get_frame_by_identifier) - 168usize];
+        [::std::mem::offset_of!(_cef_browser_t, get_frame_by_identifier) - 84usize];
     ["Offset of field: _cef_browser_t::get_frame_by_name"]
-        [::std::mem::offset_of!(_cef_browser_t, get_frame_by_name) - 176usize];
+        [::std::mem::offset_of!(_cef_browser_t, get_frame_by_name) - 88usize];
     ["Offset of field: _cef_browser_t::get_frame_count"]
-        [::std::mem::offset_of!(_cef_browser_t, get_frame_count) - 184usize];
+        [::std::mem::offset_of!(_cef_browser_t, get_frame_count) - 92usize];
     ["Offset of field: _cef_browser_t::get_frame_identifiers"]
-        [::std::mem::offset_of!(_cef_browser_t, get_frame_identifiers) - 192usize];
+        [::std::mem::offset_of!(_cef_browser_t, get_frame_identifiers) - 96usize];
     ["Offset of field: _cef_browser_t::get_frame_names"]
-        [::std::mem::offset_of!(_cef_browser_t, get_frame_names) - 200usize];
+        [::std::mem::offset_of!(_cef_browser_t, get_frame_names) - 100usize];
 };
 #[doc = "\n Structure used to represent a browser. When used in the browser process the\n functions of this structure may be called on any thread unless otherwise\n indicated in the comments. When used in the render process the functions of\n this structure may only be called on the main thread.\n"]
 pub type cef_browser_t = _cef_browser_t;
@@ -7628,15 +7624,15 @@ pub struct _cef_run_file_dialog_callback_t {
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
     ["Size of _cef_run_file_dialog_callback_t"]
-        [::std::mem::size_of::<_cef_run_file_dialog_callback_t>() - 48usize];
+        [::std::mem::size_of::<_cef_run_file_dialog_callback_t>() - 24usize];
     ["Alignment of _cef_run_file_dialog_callback_t"]
-        [::std::mem::align_of::<_cef_run_file_dialog_callback_t>() - 8usize];
+        [::std::mem::align_of::<_cef_run_file_dialog_callback_t>() - 4usize];
     ["Offset of field: _cef_run_file_dialog_callback_t::base"]
         [::std::mem::offset_of!(_cef_run_file_dialog_callback_t, base) - 0usize];
     ["Offset of field: _cef_run_file_dialog_callback_t::on_file_dialog_dismissed"][::std::mem::offset_of!(
         _cef_run_file_dialog_callback_t,
         on_file_dialog_dismissed
-    ) - 40usize];
+    ) - 20usize];
 };
 #[doc = "\n Callback structure for cef_browser_host_t::RunFileDialog. The functions of\n this structure will be called on the browser process UI thread.\n"]
 pub type cef_run_file_dialog_callback_t = _cef_run_file_dialog_callback_t;
@@ -7660,13 +7656,13 @@ pub struct _cef_navigation_entry_visitor_t {
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
     ["Size of _cef_navigation_entry_visitor_t"]
-        [::std::mem::size_of::<_cef_navigation_entry_visitor_t>() - 48usize];
+        [::std::mem::size_of::<_cef_navigation_entry_visitor_t>() - 24usize];
     ["Alignment of _cef_navigation_entry_visitor_t"]
-        [::std::mem::align_of::<_cef_navigation_entry_visitor_t>() - 8usize];
+        [::std::mem::align_of::<_cef_navigation_entry_visitor_t>() - 4usize];
     ["Offset of field: _cef_navigation_entry_visitor_t::base"]
         [::std::mem::offset_of!(_cef_navigation_entry_visitor_t, base) - 0usize];
     ["Offset of field: _cef_navigation_entry_visitor_t::visit"]
-        [::std::mem::offset_of!(_cef_navigation_entry_visitor_t, visit) - 40usize];
+        [::std::mem::offset_of!(_cef_navigation_entry_visitor_t, visit) - 20usize];
 };
 #[doc = "\n Callback structure for cef_browser_host_t::GetNavigationEntries. The\n functions of this structure will be called on the browser process UI thread.\n"]
 pub type cef_navigation_entry_visitor_t = _cef_navigation_entry_visitor_t;
@@ -7688,13 +7684,13 @@ pub struct _cef_pdf_print_callback_t {
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
     ["Size of _cef_pdf_print_callback_t"]
-        [::std::mem::size_of::<_cef_pdf_print_callback_t>() - 48usize];
+        [::std::mem::size_of::<_cef_pdf_print_callback_t>() - 24usize];
     ["Alignment of _cef_pdf_print_callback_t"]
-        [::std::mem::align_of::<_cef_pdf_print_callback_t>() - 8usize];
+        [::std::mem::align_of::<_cef_pdf_print_callback_t>() - 4usize];
     ["Offset of field: _cef_pdf_print_callback_t::base"]
         [::std::mem::offset_of!(_cef_pdf_print_callback_t, base) - 0usize];
     ["Offset of field: _cef_pdf_print_callback_t::on_pdf_print_finished"]
-        [::std::mem::offset_of!(_cef_pdf_print_callback_t, on_pdf_print_finished) - 40usize];
+        [::std::mem::offset_of!(_cef_pdf_print_callback_t, on_pdf_print_finished) - 20usize];
 };
 #[doc = "\n Callback structure for cef_browser_host_t::PrintToPDF. The functions of this\n structure will be called on the browser process UI thread.\n"]
 pub type cef_pdf_print_callback_t = _cef_pdf_print_callback_t;
@@ -7717,15 +7713,15 @@ pub struct _cef_download_image_callback_t {
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
     ["Size of _cef_download_image_callback_t"]
-        [::std::mem::size_of::<_cef_download_image_callback_t>() - 48usize];
+        [::std::mem::size_of::<_cef_download_image_callback_t>() - 24usize];
     ["Alignment of _cef_download_image_callback_t"]
-        [::std::mem::align_of::<_cef_download_image_callback_t>() - 8usize];
+        [::std::mem::align_of::<_cef_download_image_callback_t>() - 4usize];
     ["Offset of field: _cef_download_image_callback_t::base"]
         [::std::mem::offset_of!(_cef_download_image_callback_t, base) - 0usize];
     ["Offset of field: _cef_download_image_callback_t::on_download_image_finished"][::std::mem::offset_of!(
         _cef_download_image_callback_t,
         on_download_image_finished
-    ) - 40usize];
+    ) - 20usize];
 };
 #[doc = "\n Callback structure for cef_browser_host_t::DownloadImage. The functions of\n this structure will be called on the browser process UI thread.\n"]
 pub type cef_download_image_callback_t = _cef_download_image_callback_t;
@@ -8104,144 +8100,144 @@ pub struct _cef_browser_host_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_browser_host_t"][::std::mem::size_of::<_cef_browser_host_t>() - 576usize];
-    ["Alignment of _cef_browser_host_t"][::std::mem::align_of::<_cef_browser_host_t>() - 8usize];
+    ["Size of _cef_browser_host_t"][::std::mem::size_of::<_cef_browser_host_t>() - 288usize];
+    ["Alignment of _cef_browser_host_t"][::std::mem::align_of::<_cef_browser_host_t>() - 4usize];
     ["Offset of field: _cef_browser_host_t::base"]
         [::std::mem::offset_of!(_cef_browser_host_t, base) - 0usize];
     ["Offset of field: _cef_browser_host_t::get_browser"]
-        [::std::mem::offset_of!(_cef_browser_host_t, get_browser) - 40usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, get_browser) - 20usize];
     ["Offset of field: _cef_browser_host_t::close_browser"]
-        [::std::mem::offset_of!(_cef_browser_host_t, close_browser) - 48usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, close_browser) - 24usize];
     ["Offset of field: _cef_browser_host_t::try_close_browser"]
-        [::std::mem::offset_of!(_cef_browser_host_t, try_close_browser) - 56usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, try_close_browser) - 28usize];
     ["Offset of field: _cef_browser_host_t::is_ready_to_be_closed"]
-        [::std::mem::offset_of!(_cef_browser_host_t, is_ready_to_be_closed) - 64usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, is_ready_to_be_closed) - 32usize];
     ["Offset of field: _cef_browser_host_t::set_focus"]
-        [::std::mem::offset_of!(_cef_browser_host_t, set_focus) - 72usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, set_focus) - 36usize];
     ["Offset of field: _cef_browser_host_t::get_window_handle"]
-        [::std::mem::offset_of!(_cef_browser_host_t, get_window_handle) - 80usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, get_window_handle) - 40usize];
     ["Offset of field: _cef_browser_host_t::get_opener_window_handle"]
-        [::std::mem::offset_of!(_cef_browser_host_t, get_opener_window_handle) - 88usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, get_opener_window_handle) - 44usize];
     ["Offset of field: _cef_browser_host_t::has_view"]
-        [::std::mem::offset_of!(_cef_browser_host_t, has_view) - 96usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, has_view) - 48usize];
     ["Offset of field: _cef_browser_host_t::get_client"]
-        [::std::mem::offset_of!(_cef_browser_host_t, get_client) - 104usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, get_client) - 52usize];
     ["Offset of field: _cef_browser_host_t::get_request_context"]
-        [::std::mem::offset_of!(_cef_browser_host_t, get_request_context) - 112usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, get_request_context) - 56usize];
     ["Offset of field: _cef_browser_host_t::can_zoom"]
-        [::std::mem::offset_of!(_cef_browser_host_t, can_zoom) - 120usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, can_zoom) - 60usize];
     ["Offset of field: _cef_browser_host_t::zoom"]
-        [::std::mem::offset_of!(_cef_browser_host_t, zoom) - 128usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, zoom) - 64usize];
     ["Offset of field: _cef_browser_host_t::get_default_zoom_level"]
-        [::std::mem::offset_of!(_cef_browser_host_t, get_default_zoom_level) - 136usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, get_default_zoom_level) - 68usize];
     ["Offset of field: _cef_browser_host_t::get_zoom_level"]
-        [::std::mem::offset_of!(_cef_browser_host_t, get_zoom_level) - 144usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, get_zoom_level) - 72usize];
     ["Offset of field: _cef_browser_host_t::set_zoom_level"]
-        [::std::mem::offset_of!(_cef_browser_host_t, set_zoom_level) - 152usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, set_zoom_level) - 76usize];
     ["Offset of field: _cef_browser_host_t::run_file_dialog"]
-        [::std::mem::offset_of!(_cef_browser_host_t, run_file_dialog) - 160usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, run_file_dialog) - 80usize];
     ["Offset of field: _cef_browser_host_t::start_download"]
-        [::std::mem::offset_of!(_cef_browser_host_t, start_download) - 168usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, start_download) - 84usize];
     ["Offset of field: _cef_browser_host_t::download_image"]
-        [::std::mem::offset_of!(_cef_browser_host_t, download_image) - 176usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, download_image) - 88usize];
     ["Offset of field: _cef_browser_host_t::print"]
-        [::std::mem::offset_of!(_cef_browser_host_t, print) - 184usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, print) - 92usize];
     ["Offset of field: _cef_browser_host_t::print_to_pdf"]
-        [::std::mem::offset_of!(_cef_browser_host_t, print_to_pdf) - 192usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, print_to_pdf) - 96usize];
     ["Offset of field: _cef_browser_host_t::find"]
-        [::std::mem::offset_of!(_cef_browser_host_t, find) - 200usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, find) - 100usize];
     ["Offset of field: _cef_browser_host_t::stop_finding"]
-        [::std::mem::offset_of!(_cef_browser_host_t, stop_finding) - 208usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, stop_finding) - 104usize];
     ["Offset of field: _cef_browser_host_t::show_dev_tools"]
-        [::std::mem::offset_of!(_cef_browser_host_t, show_dev_tools) - 216usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, show_dev_tools) - 108usize];
     ["Offset of field: _cef_browser_host_t::close_dev_tools"]
-        [::std::mem::offset_of!(_cef_browser_host_t, close_dev_tools) - 224usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, close_dev_tools) - 112usize];
     ["Offset of field: _cef_browser_host_t::has_dev_tools"]
-        [::std::mem::offset_of!(_cef_browser_host_t, has_dev_tools) - 232usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, has_dev_tools) - 116usize];
     ["Offset of field: _cef_browser_host_t::send_dev_tools_message"]
-        [::std::mem::offset_of!(_cef_browser_host_t, send_dev_tools_message) - 240usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, send_dev_tools_message) - 120usize];
     ["Offset of field: _cef_browser_host_t::execute_dev_tools_method"]
-        [::std::mem::offset_of!(_cef_browser_host_t, execute_dev_tools_method) - 248usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, execute_dev_tools_method) - 124usize];
     ["Offset of field: _cef_browser_host_t::add_dev_tools_message_observer"]
-        [::std::mem::offset_of!(_cef_browser_host_t, add_dev_tools_message_observer) - 256usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, add_dev_tools_message_observer) - 128usize];
     ["Offset of field: _cef_browser_host_t::get_navigation_entries"]
-        [::std::mem::offset_of!(_cef_browser_host_t, get_navigation_entries) - 264usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, get_navigation_entries) - 132usize];
     ["Offset of field: _cef_browser_host_t::replace_misspelling"]
-        [::std::mem::offset_of!(_cef_browser_host_t, replace_misspelling) - 272usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, replace_misspelling) - 136usize];
     ["Offset of field: _cef_browser_host_t::add_word_to_dictionary"]
-        [::std::mem::offset_of!(_cef_browser_host_t, add_word_to_dictionary) - 280usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, add_word_to_dictionary) - 140usize];
     ["Offset of field: _cef_browser_host_t::is_window_rendering_disabled"]
-        [::std::mem::offset_of!(_cef_browser_host_t, is_window_rendering_disabled) - 288usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, is_window_rendering_disabled) - 144usize];
     ["Offset of field: _cef_browser_host_t::was_resized"]
-        [::std::mem::offset_of!(_cef_browser_host_t, was_resized) - 296usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, was_resized) - 148usize];
     ["Offset of field: _cef_browser_host_t::was_hidden"]
-        [::std::mem::offset_of!(_cef_browser_host_t, was_hidden) - 304usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, was_hidden) - 152usize];
     ["Offset of field: _cef_browser_host_t::notify_screen_info_changed"]
-        [::std::mem::offset_of!(_cef_browser_host_t, notify_screen_info_changed) - 312usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, notify_screen_info_changed) - 156usize];
     ["Offset of field: _cef_browser_host_t::invalidate"]
-        [::std::mem::offset_of!(_cef_browser_host_t, invalidate) - 320usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, invalidate) - 160usize];
     ["Offset of field: _cef_browser_host_t::send_external_begin_frame"]
-        [::std::mem::offset_of!(_cef_browser_host_t, send_external_begin_frame) - 328usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, send_external_begin_frame) - 164usize];
     ["Offset of field: _cef_browser_host_t::send_key_event"]
-        [::std::mem::offset_of!(_cef_browser_host_t, send_key_event) - 336usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, send_key_event) - 168usize];
     ["Offset of field: _cef_browser_host_t::send_mouse_click_event"]
-        [::std::mem::offset_of!(_cef_browser_host_t, send_mouse_click_event) - 344usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, send_mouse_click_event) - 172usize];
     ["Offset of field: _cef_browser_host_t::send_mouse_move_event"]
-        [::std::mem::offset_of!(_cef_browser_host_t, send_mouse_move_event) - 352usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, send_mouse_move_event) - 176usize];
     ["Offset of field: _cef_browser_host_t::send_mouse_wheel_event"]
-        [::std::mem::offset_of!(_cef_browser_host_t, send_mouse_wheel_event) - 360usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, send_mouse_wheel_event) - 180usize];
     ["Offset of field: _cef_browser_host_t::send_touch_event"]
-        [::std::mem::offset_of!(_cef_browser_host_t, send_touch_event) - 368usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, send_touch_event) - 184usize];
     ["Offset of field: _cef_browser_host_t::send_capture_lost_event"]
-        [::std::mem::offset_of!(_cef_browser_host_t, send_capture_lost_event) - 376usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, send_capture_lost_event) - 188usize];
     ["Offset of field: _cef_browser_host_t::notify_move_or_resize_started"]
-        [::std::mem::offset_of!(_cef_browser_host_t, notify_move_or_resize_started) - 384usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, notify_move_or_resize_started) - 192usize];
     ["Offset of field: _cef_browser_host_t::get_windowless_frame_rate"]
-        [::std::mem::offset_of!(_cef_browser_host_t, get_windowless_frame_rate) - 392usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, get_windowless_frame_rate) - 196usize];
     ["Offset of field: _cef_browser_host_t::set_windowless_frame_rate"]
-        [::std::mem::offset_of!(_cef_browser_host_t, set_windowless_frame_rate) - 400usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, set_windowless_frame_rate) - 200usize];
     ["Offset of field: _cef_browser_host_t::ime_set_composition"]
-        [::std::mem::offset_of!(_cef_browser_host_t, ime_set_composition) - 408usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, ime_set_composition) - 204usize];
     ["Offset of field: _cef_browser_host_t::ime_commit_text"]
-        [::std::mem::offset_of!(_cef_browser_host_t, ime_commit_text) - 416usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, ime_commit_text) - 208usize];
     ["Offset of field: _cef_browser_host_t::ime_finish_composing_text"]
-        [::std::mem::offset_of!(_cef_browser_host_t, ime_finish_composing_text) - 424usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, ime_finish_composing_text) - 212usize];
     ["Offset of field: _cef_browser_host_t::ime_cancel_composition"]
-        [::std::mem::offset_of!(_cef_browser_host_t, ime_cancel_composition) - 432usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, ime_cancel_composition) - 216usize];
     ["Offset of field: _cef_browser_host_t::drag_target_drag_enter"]
-        [::std::mem::offset_of!(_cef_browser_host_t, drag_target_drag_enter) - 440usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, drag_target_drag_enter) - 220usize];
     ["Offset of field: _cef_browser_host_t::drag_target_drag_over"]
-        [::std::mem::offset_of!(_cef_browser_host_t, drag_target_drag_over) - 448usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, drag_target_drag_over) - 224usize];
     ["Offset of field: _cef_browser_host_t::drag_target_drag_leave"]
-        [::std::mem::offset_of!(_cef_browser_host_t, drag_target_drag_leave) - 456usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, drag_target_drag_leave) - 228usize];
     ["Offset of field: _cef_browser_host_t::drag_target_drop"]
-        [::std::mem::offset_of!(_cef_browser_host_t, drag_target_drop) - 464usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, drag_target_drop) - 232usize];
     ["Offset of field: _cef_browser_host_t::drag_source_ended_at"]
-        [::std::mem::offset_of!(_cef_browser_host_t, drag_source_ended_at) - 472usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, drag_source_ended_at) - 236usize];
     ["Offset of field: _cef_browser_host_t::drag_source_system_drag_ended"]
-        [::std::mem::offset_of!(_cef_browser_host_t, drag_source_system_drag_ended) - 480usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, drag_source_system_drag_ended) - 240usize];
     ["Offset of field: _cef_browser_host_t::get_visible_navigation_entry"]
-        [::std::mem::offset_of!(_cef_browser_host_t, get_visible_navigation_entry) - 488usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, get_visible_navigation_entry) - 244usize];
     ["Offset of field: _cef_browser_host_t::set_accessibility_state"]
-        [::std::mem::offset_of!(_cef_browser_host_t, set_accessibility_state) - 496usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, set_accessibility_state) - 248usize];
     ["Offset of field: _cef_browser_host_t::set_auto_resize_enabled"]
-        [::std::mem::offset_of!(_cef_browser_host_t, set_auto_resize_enabled) - 504usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, set_auto_resize_enabled) - 252usize];
     ["Offset of field: _cef_browser_host_t::set_audio_muted"]
-        [::std::mem::offset_of!(_cef_browser_host_t, set_audio_muted) - 512usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, set_audio_muted) - 256usize];
     ["Offset of field: _cef_browser_host_t::is_audio_muted"]
-        [::std::mem::offset_of!(_cef_browser_host_t, is_audio_muted) - 520usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, is_audio_muted) - 260usize];
     ["Offset of field: _cef_browser_host_t::is_fullscreen"]
-        [::std::mem::offset_of!(_cef_browser_host_t, is_fullscreen) - 528usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, is_fullscreen) - 264usize];
     ["Offset of field: _cef_browser_host_t::exit_fullscreen"]
-        [::std::mem::offset_of!(_cef_browser_host_t, exit_fullscreen) - 536usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, exit_fullscreen) - 268usize];
     ["Offset of field: _cef_browser_host_t::can_execute_chrome_command"]
-        [::std::mem::offset_of!(_cef_browser_host_t, can_execute_chrome_command) - 544usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, can_execute_chrome_command) - 272usize];
     ["Offset of field: _cef_browser_host_t::execute_chrome_command"]
-        [::std::mem::offset_of!(_cef_browser_host_t, execute_chrome_command) - 552usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, execute_chrome_command) - 276usize];
     ["Offset of field: _cef_browser_host_t::is_render_process_unresponsive"]
-        [::std::mem::offset_of!(_cef_browser_host_t, is_render_process_unresponsive) - 560usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, is_render_process_unresponsive) - 280usize];
     ["Offset of field: _cef_browser_host_t::get_runtime_style"]
-        [::std::mem::offset_of!(_cef_browser_host_t, get_runtime_style) - 568usize];
+        [::std::mem::offset_of!(_cef_browser_host_t, get_runtime_style) - 284usize];
 };
 #[doc = "\n Structure used to represent the browser process aspects of a browser. The\n functions of this structure can only be called in the browser process. They\n may be called on any thread in that process unless otherwise indicated in\n the comments.\n"]
 pub type cef_browser_host_t = _cef_browser_host_t;
@@ -8315,20 +8311,20 @@ pub struct _cef_audio_handler_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_audio_handler_t"][::std::mem::size_of::<_cef_audio_handler_t>() - 80usize];
-    ["Alignment of _cef_audio_handler_t"][::std::mem::align_of::<_cef_audio_handler_t>() - 8usize];
+    ["Size of _cef_audio_handler_t"][::std::mem::size_of::<_cef_audio_handler_t>() - 40usize];
+    ["Alignment of _cef_audio_handler_t"][::std::mem::align_of::<_cef_audio_handler_t>() - 4usize];
     ["Offset of field: _cef_audio_handler_t::base"]
         [::std::mem::offset_of!(_cef_audio_handler_t, base) - 0usize];
     ["Offset of field: _cef_audio_handler_t::get_audio_parameters"]
-        [::std::mem::offset_of!(_cef_audio_handler_t, get_audio_parameters) - 40usize];
+        [::std::mem::offset_of!(_cef_audio_handler_t, get_audio_parameters) - 20usize];
     ["Offset of field: _cef_audio_handler_t::on_audio_stream_started"]
-        [::std::mem::offset_of!(_cef_audio_handler_t, on_audio_stream_started) - 48usize];
+        [::std::mem::offset_of!(_cef_audio_handler_t, on_audio_stream_started) - 24usize];
     ["Offset of field: _cef_audio_handler_t::on_audio_stream_packet"]
-        [::std::mem::offset_of!(_cef_audio_handler_t, on_audio_stream_packet) - 56usize];
+        [::std::mem::offset_of!(_cef_audio_handler_t, on_audio_stream_packet) - 28usize];
     ["Offset of field: _cef_audio_handler_t::on_audio_stream_stopped"]
-        [::std::mem::offset_of!(_cef_audio_handler_t, on_audio_stream_stopped) - 64usize];
+        [::std::mem::offset_of!(_cef_audio_handler_t, on_audio_stream_stopped) - 32usize];
     ["Offset of field: _cef_audio_handler_t::on_audio_stream_error"]
-        [::std::mem::offset_of!(_cef_audio_handler_t, on_audio_stream_error) - 72usize];
+        [::std::mem::offset_of!(_cef_audio_handler_t, on_audio_stream_error) - 36usize];
 };
 #[doc = "\n Implement this structure to handle audio events.\n"]
 pub type cef_audio_handler_t = _cef_audio_handler_t;
@@ -8380,25 +8376,25 @@ pub struct _cef_command_handler_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_command_handler_t"][::std::mem::size_of::<_cef_command_handler_t>() - 80usize];
+    ["Size of _cef_command_handler_t"][::std::mem::size_of::<_cef_command_handler_t>() - 40usize];
     ["Alignment of _cef_command_handler_t"]
-        [::std::mem::align_of::<_cef_command_handler_t>() - 8usize];
+        [::std::mem::align_of::<_cef_command_handler_t>() - 4usize];
     ["Offset of field: _cef_command_handler_t::base"]
         [::std::mem::offset_of!(_cef_command_handler_t, base) - 0usize];
     ["Offset of field: _cef_command_handler_t::on_chrome_command"]
-        [::std::mem::offset_of!(_cef_command_handler_t, on_chrome_command) - 40usize];
+        [::std::mem::offset_of!(_cef_command_handler_t, on_chrome_command) - 20usize];
     ["Offset of field: _cef_command_handler_t::is_chrome_app_menu_item_visible"]
-        [::std::mem::offset_of!(_cef_command_handler_t, is_chrome_app_menu_item_visible) - 48usize];
+        [::std::mem::offset_of!(_cef_command_handler_t, is_chrome_app_menu_item_visible) - 24usize];
     ["Offset of field: _cef_command_handler_t::is_chrome_app_menu_item_enabled"]
-        [::std::mem::offset_of!(_cef_command_handler_t, is_chrome_app_menu_item_enabled) - 56usize];
+        [::std::mem::offset_of!(_cef_command_handler_t, is_chrome_app_menu_item_enabled) - 28usize];
     ["Offset of field: _cef_command_handler_t::is_chrome_page_action_icon_visible"][::std::mem::offset_of!(
         _cef_command_handler_t,
         is_chrome_page_action_icon_visible
-    ) - 64usize];
+    ) - 32usize];
     ["Offset of field: _cef_command_handler_t::is_chrome_toolbar_button_visible"][::std::mem::offset_of!(
         _cef_command_handler_t,
         is_chrome_toolbar_button_visible
-    ) - 72usize];
+    ) - 36usize];
 };
 #[doc = "\n Implement this structure to handle events related to commands. The functions\n of this structure will be called on the UI thread.\n"]
 pub type cef_command_handler_t = _cef_command_handler_t;
@@ -8467,25 +8463,25 @@ pub struct _cef_menu_model_delegate_t {
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
     ["Size of _cef_menu_model_delegate_t"]
-        [::std::mem::size_of::<_cef_menu_model_delegate_t>() - 96usize];
+        [::std::mem::size_of::<_cef_menu_model_delegate_t>() - 48usize];
     ["Alignment of _cef_menu_model_delegate_t"]
-        [::std::mem::align_of::<_cef_menu_model_delegate_t>() - 8usize];
+        [::std::mem::align_of::<_cef_menu_model_delegate_t>() - 4usize];
     ["Offset of field: _cef_menu_model_delegate_t::base"]
         [::std::mem::offset_of!(_cef_menu_model_delegate_t, base) - 0usize];
     ["Offset of field: _cef_menu_model_delegate_t::execute_command"]
-        [::std::mem::offset_of!(_cef_menu_model_delegate_t, execute_command) - 40usize];
+        [::std::mem::offset_of!(_cef_menu_model_delegate_t, execute_command) - 20usize];
     ["Offset of field: _cef_menu_model_delegate_t::mouse_outside_menu"]
-        [::std::mem::offset_of!(_cef_menu_model_delegate_t, mouse_outside_menu) - 48usize];
+        [::std::mem::offset_of!(_cef_menu_model_delegate_t, mouse_outside_menu) - 24usize];
     ["Offset of field: _cef_menu_model_delegate_t::unhandled_open_submenu"]
-        [::std::mem::offset_of!(_cef_menu_model_delegate_t, unhandled_open_submenu) - 56usize];
+        [::std::mem::offset_of!(_cef_menu_model_delegate_t, unhandled_open_submenu) - 28usize];
     ["Offset of field: _cef_menu_model_delegate_t::unhandled_close_submenu"]
-        [::std::mem::offset_of!(_cef_menu_model_delegate_t, unhandled_close_submenu) - 64usize];
+        [::std::mem::offset_of!(_cef_menu_model_delegate_t, unhandled_close_submenu) - 32usize];
     ["Offset of field: _cef_menu_model_delegate_t::menu_will_show"]
-        [::std::mem::offset_of!(_cef_menu_model_delegate_t, menu_will_show) - 72usize];
+        [::std::mem::offset_of!(_cef_menu_model_delegate_t, menu_will_show) - 36usize];
     ["Offset of field: _cef_menu_model_delegate_t::menu_closed"]
-        [::std::mem::offset_of!(_cef_menu_model_delegate_t, menu_closed) - 80usize];
+        [::std::mem::offset_of!(_cef_menu_model_delegate_t, menu_closed) - 40usize];
     ["Offset of field: _cef_menu_model_delegate_t::format_label"]
-        [::std::mem::offset_of!(_cef_menu_model_delegate_t, format_label) - 88usize];
+        [::std::mem::offset_of!(_cef_menu_model_delegate_t, format_label) - 44usize];
 };
 #[doc = "\n Implement this structure to handle menu model events. The functions of this\n structure will be called on the browser process UI thread unless otherwise\n indicated.\n"]
 pub type cef_menu_model_delegate_t = _cef_menu_model_delegate_t;
@@ -8892,122 +8888,122 @@ pub struct _cef_menu_model_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_menu_model_t"][::std::mem::size_of::<_cef_menu_model_t>() - 488usize];
-    ["Alignment of _cef_menu_model_t"][::std::mem::align_of::<_cef_menu_model_t>() - 8usize];
+    ["Size of _cef_menu_model_t"][::std::mem::size_of::<_cef_menu_model_t>() - 244usize];
+    ["Alignment of _cef_menu_model_t"][::std::mem::align_of::<_cef_menu_model_t>() - 4usize];
     ["Offset of field: _cef_menu_model_t::base"]
         [::std::mem::offset_of!(_cef_menu_model_t, base) - 0usize];
     ["Offset of field: _cef_menu_model_t::is_sub_menu"]
-        [::std::mem::offset_of!(_cef_menu_model_t, is_sub_menu) - 40usize];
+        [::std::mem::offset_of!(_cef_menu_model_t, is_sub_menu) - 20usize];
     ["Offset of field: _cef_menu_model_t::clear"]
-        [::std::mem::offset_of!(_cef_menu_model_t, clear) - 48usize];
+        [::std::mem::offset_of!(_cef_menu_model_t, clear) - 24usize];
     ["Offset of field: _cef_menu_model_t::get_count"]
-        [::std::mem::offset_of!(_cef_menu_model_t, get_count) - 56usize];
+        [::std::mem::offset_of!(_cef_menu_model_t, get_count) - 28usize];
     ["Offset of field: _cef_menu_model_t::add_separator"]
-        [::std::mem::offset_of!(_cef_menu_model_t, add_separator) - 64usize];
+        [::std::mem::offset_of!(_cef_menu_model_t, add_separator) - 32usize];
     ["Offset of field: _cef_menu_model_t::add_item"]
-        [::std::mem::offset_of!(_cef_menu_model_t, add_item) - 72usize];
+        [::std::mem::offset_of!(_cef_menu_model_t, add_item) - 36usize];
     ["Offset of field: _cef_menu_model_t::add_check_item"]
-        [::std::mem::offset_of!(_cef_menu_model_t, add_check_item) - 80usize];
+        [::std::mem::offset_of!(_cef_menu_model_t, add_check_item) - 40usize];
     ["Offset of field: _cef_menu_model_t::add_radio_item"]
-        [::std::mem::offset_of!(_cef_menu_model_t, add_radio_item) - 88usize];
+        [::std::mem::offset_of!(_cef_menu_model_t, add_radio_item) - 44usize];
     ["Offset of field: _cef_menu_model_t::add_sub_menu"]
-        [::std::mem::offset_of!(_cef_menu_model_t, add_sub_menu) - 96usize];
+        [::std::mem::offset_of!(_cef_menu_model_t, add_sub_menu) - 48usize];
     ["Offset of field: _cef_menu_model_t::insert_separator_at"]
-        [::std::mem::offset_of!(_cef_menu_model_t, insert_separator_at) - 104usize];
+        [::std::mem::offset_of!(_cef_menu_model_t, insert_separator_at) - 52usize];
     ["Offset of field: _cef_menu_model_t::insert_item_at"]
-        [::std::mem::offset_of!(_cef_menu_model_t, insert_item_at) - 112usize];
+        [::std::mem::offset_of!(_cef_menu_model_t, insert_item_at) - 56usize];
     ["Offset of field: _cef_menu_model_t::insert_check_item_at"]
-        [::std::mem::offset_of!(_cef_menu_model_t, insert_check_item_at) - 120usize];
+        [::std::mem::offset_of!(_cef_menu_model_t, insert_check_item_at) - 60usize];
     ["Offset of field: _cef_menu_model_t::insert_radio_item_at"]
-        [::std::mem::offset_of!(_cef_menu_model_t, insert_radio_item_at) - 128usize];
+        [::std::mem::offset_of!(_cef_menu_model_t, insert_radio_item_at) - 64usize];
     ["Offset of field: _cef_menu_model_t::insert_sub_menu_at"]
-        [::std::mem::offset_of!(_cef_menu_model_t, insert_sub_menu_at) - 136usize];
+        [::std::mem::offset_of!(_cef_menu_model_t, insert_sub_menu_at) - 68usize];
     ["Offset of field: _cef_menu_model_t::remove"]
-        [::std::mem::offset_of!(_cef_menu_model_t, remove) - 144usize];
+        [::std::mem::offset_of!(_cef_menu_model_t, remove) - 72usize];
     ["Offset of field: _cef_menu_model_t::remove_at"]
-        [::std::mem::offset_of!(_cef_menu_model_t, remove_at) - 152usize];
+        [::std::mem::offset_of!(_cef_menu_model_t, remove_at) - 76usize];
     ["Offset of field: _cef_menu_model_t::get_index_of"]
-        [::std::mem::offset_of!(_cef_menu_model_t, get_index_of) - 160usize];
+        [::std::mem::offset_of!(_cef_menu_model_t, get_index_of) - 80usize];
     ["Offset of field: _cef_menu_model_t::get_command_id_at"]
-        [::std::mem::offset_of!(_cef_menu_model_t, get_command_id_at) - 168usize];
+        [::std::mem::offset_of!(_cef_menu_model_t, get_command_id_at) - 84usize];
     ["Offset of field: _cef_menu_model_t::set_command_id_at"]
-        [::std::mem::offset_of!(_cef_menu_model_t, set_command_id_at) - 176usize];
+        [::std::mem::offset_of!(_cef_menu_model_t, set_command_id_at) - 88usize];
     ["Offset of field: _cef_menu_model_t::get_label"]
-        [::std::mem::offset_of!(_cef_menu_model_t, get_label) - 184usize];
+        [::std::mem::offset_of!(_cef_menu_model_t, get_label) - 92usize];
     ["Offset of field: _cef_menu_model_t::get_label_at"]
-        [::std::mem::offset_of!(_cef_menu_model_t, get_label_at) - 192usize];
+        [::std::mem::offset_of!(_cef_menu_model_t, get_label_at) - 96usize];
     ["Offset of field: _cef_menu_model_t::set_label"]
-        [::std::mem::offset_of!(_cef_menu_model_t, set_label) - 200usize];
+        [::std::mem::offset_of!(_cef_menu_model_t, set_label) - 100usize];
     ["Offset of field: _cef_menu_model_t::set_label_at"]
-        [::std::mem::offset_of!(_cef_menu_model_t, set_label_at) - 208usize];
+        [::std::mem::offset_of!(_cef_menu_model_t, set_label_at) - 104usize];
     ["Offset of field: _cef_menu_model_t::get_type"]
-        [::std::mem::offset_of!(_cef_menu_model_t, get_type) - 216usize];
+        [::std::mem::offset_of!(_cef_menu_model_t, get_type) - 108usize];
     ["Offset of field: _cef_menu_model_t::get_type_at"]
-        [::std::mem::offset_of!(_cef_menu_model_t, get_type_at) - 224usize];
+        [::std::mem::offset_of!(_cef_menu_model_t, get_type_at) - 112usize];
     ["Offset of field: _cef_menu_model_t::get_group_id"]
-        [::std::mem::offset_of!(_cef_menu_model_t, get_group_id) - 232usize];
+        [::std::mem::offset_of!(_cef_menu_model_t, get_group_id) - 116usize];
     ["Offset of field: _cef_menu_model_t::get_group_id_at"]
-        [::std::mem::offset_of!(_cef_menu_model_t, get_group_id_at) - 240usize];
+        [::std::mem::offset_of!(_cef_menu_model_t, get_group_id_at) - 120usize];
     ["Offset of field: _cef_menu_model_t::set_group_id"]
-        [::std::mem::offset_of!(_cef_menu_model_t, set_group_id) - 248usize];
+        [::std::mem::offset_of!(_cef_menu_model_t, set_group_id) - 124usize];
     ["Offset of field: _cef_menu_model_t::set_group_id_at"]
-        [::std::mem::offset_of!(_cef_menu_model_t, set_group_id_at) - 256usize];
+        [::std::mem::offset_of!(_cef_menu_model_t, set_group_id_at) - 128usize];
     ["Offset of field: _cef_menu_model_t::get_sub_menu"]
-        [::std::mem::offset_of!(_cef_menu_model_t, get_sub_menu) - 264usize];
+        [::std::mem::offset_of!(_cef_menu_model_t, get_sub_menu) - 132usize];
     ["Offset of field: _cef_menu_model_t::get_sub_menu_at"]
-        [::std::mem::offset_of!(_cef_menu_model_t, get_sub_menu_at) - 272usize];
+        [::std::mem::offset_of!(_cef_menu_model_t, get_sub_menu_at) - 136usize];
     ["Offset of field: _cef_menu_model_t::is_visible"]
-        [::std::mem::offset_of!(_cef_menu_model_t, is_visible) - 280usize];
+        [::std::mem::offset_of!(_cef_menu_model_t, is_visible) - 140usize];
     ["Offset of field: _cef_menu_model_t::is_visible_at"]
-        [::std::mem::offset_of!(_cef_menu_model_t, is_visible_at) - 288usize];
+        [::std::mem::offset_of!(_cef_menu_model_t, is_visible_at) - 144usize];
     ["Offset of field: _cef_menu_model_t::set_visible"]
-        [::std::mem::offset_of!(_cef_menu_model_t, set_visible) - 296usize];
+        [::std::mem::offset_of!(_cef_menu_model_t, set_visible) - 148usize];
     ["Offset of field: _cef_menu_model_t::set_visible_at"]
-        [::std::mem::offset_of!(_cef_menu_model_t, set_visible_at) - 304usize];
+        [::std::mem::offset_of!(_cef_menu_model_t, set_visible_at) - 152usize];
     ["Offset of field: _cef_menu_model_t::is_enabled"]
-        [::std::mem::offset_of!(_cef_menu_model_t, is_enabled) - 312usize];
+        [::std::mem::offset_of!(_cef_menu_model_t, is_enabled) - 156usize];
     ["Offset of field: _cef_menu_model_t::is_enabled_at"]
-        [::std::mem::offset_of!(_cef_menu_model_t, is_enabled_at) - 320usize];
+        [::std::mem::offset_of!(_cef_menu_model_t, is_enabled_at) - 160usize];
     ["Offset of field: _cef_menu_model_t::set_enabled"]
-        [::std::mem::offset_of!(_cef_menu_model_t, set_enabled) - 328usize];
+        [::std::mem::offset_of!(_cef_menu_model_t, set_enabled) - 164usize];
     ["Offset of field: _cef_menu_model_t::set_enabled_at"]
-        [::std::mem::offset_of!(_cef_menu_model_t, set_enabled_at) - 336usize];
+        [::std::mem::offset_of!(_cef_menu_model_t, set_enabled_at) - 168usize];
     ["Offset of field: _cef_menu_model_t::is_checked"]
-        [::std::mem::offset_of!(_cef_menu_model_t, is_checked) - 344usize];
+        [::std::mem::offset_of!(_cef_menu_model_t, is_checked) - 172usize];
     ["Offset of field: _cef_menu_model_t::is_checked_at"]
-        [::std::mem::offset_of!(_cef_menu_model_t, is_checked_at) - 352usize];
+        [::std::mem::offset_of!(_cef_menu_model_t, is_checked_at) - 176usize];
     ["Offset of field: _cef_menu_model_t::set_checked"]
-        [::std::mem::offset_of!(_cef_menu_model_t, set_checked) - 360usize];
+        [::std::mem::offset_of!(_cef_menu_model_t, set_checked) - 180usize];
     ["Offset of field: _cef_menu_model_t::set_checked_at"]
-        [::std::mem::offset_of!(_cef_menu_model_t, set_checked_at) - 368usize];
+        [::std::mem::offset_of!(_cef_menu_model_t, set_checked_at) - 184usize];
     ["Offset of field: _cef_menu_model_t::has_accelerator"]
-        [::std::mem::offset_of!(_cef_menu_model_t, has_accelerator) - 376usize];
+        [::std::mem::offset_of!(_cef_menu_model_t, has_accelerator) - 188usize];
     ["Offset of field: _cef_menu_model_t::has_accelerator_at"]
-        [::std::mem::offset_of!(_cef_menu_model_t, has_accelerator_at) - 384usize];
+        [::std::mem::offset_of!(_cef_menu_model_t, has_accelerator_at) - 192usize];
     ["Offset of field: _cef_menu_model_t::set_accelerator"]
-        [::std::mem::offset_of!(_cef_menu_model_t, set_accelerator) - 392usize];
+        [::std::mem::offset_of!(_cef_menu_model_t, set_accelerator) - 196usize];
     ["Offset of field: _cef_menu_model_t::set_accelerator_at"]
-        [::std::mem::offset_of!(_cef_menu_model_t, set_accelerator_at) - 400usize];
+        [::std::mem::offset_of!(_cef_menu_model_t, set_accelerator_at) - 200usize];
     ["Offset of field: _cef_menu_model_t::remove_accelerator"]
-        [::std::mem::offset_of!(_cef_menu_model_t, remove_accelerator) - 408usize];
+        [::std::mem::offset_of!(_cef_menu_model_t, remove_accelerator) - 204usize];
     ["Offset of field: _cef_menu_model_t::remove_accelerator_at"]
-        [::std::mem::offset_of!(_cef_menu_model_t, remove_accelerator_at) - 416usize];
+        [::std::mem::offset_of!(_cef_menu_model_t, remove_accelerator_at) - 208usize];
     ["Offset of field: _cef_menu_model_t::get_accelerator"]
-        [::std::mem::offset_of!(_cef_menu_model_t, get_accelerator) - 424usize];
+        [::std::mem::offset_of!(_cef_menu_model_t, get_accelerator) - 212usize];
     ["Offset of field: _cef_menu_model_t::get_accelerator_at"]
-        [::std::mem::offset_of!(_cef_menu_model_t, get_accelerator_at) - 432usize];
+        [::std::mem::offset_of!(_cef_menu_model_t, get_accelerator_at) - 216usize];
     ["Offset of field: _cef_menu_model_t::set_color"]
-        [::std::mem::offset_of!(_cef_menu_model_t, set_color) - 440usize];
+        [::std::mem::offset_of!(_cef_menu_model_t, set_color) - 220usize];
     ["Offset of field: _cef_menu_model_t::set_color_at"]
-        [::std::mem::offset_of!(_cef_menu_model_t, set_color_at) - 448usize];
+        [::std::mem::offset_of!(_cef_menu_model_t, set_color_at) - 224usize];
     ["Offset of field: _cef_menu_model_t::get_color"]
-        [::std::mem::offset_of!(_cef_menu_model_t, get_color) - 456usize];
+        [::std::mem::offset_of!(_cef_menu_model_t, get_color) - 228usize];
     ["Offset of field: _cef_menu_model_t::get_color_at"]
-        [::std::mem::offset_of!(_cef_menu_model_t, get_color_at) - 464usize];
+        [::std::mem::offset_of!(_cef_menu_model_t, get_color_at) - 232usize];
     ["Offset of field: _cef_menu_model_t::set_font_list"]
-        [::std::mem::offset_of!(_cef_menu_model_t, set_font_list) - 472usize];
+        [::std::mem::offset_of!(_cef_menu_model_t, set_font_list) - 236usize];
     ["Offset of field: _cef_menu_model_t::set_font_list_at"]
-        [::std::mem::offset_of!(_cef_menu_model_t, set_font_list_at) - 480usize];
+        [::std::mem::offset_of!(_cef_menu_model_t, set_font_list_at) - 240usize];
 };
 #[doc = "\n Supports creation and modification of menus. See cef_menu_id_t for the\n command ids that have default implementations. All user-defined command ids\n should be between MENU_ID_USER_FIRST and MENU_ID_USER_LAST. The functions of\n this structure can only be accessed on the browser process the UI thread.\n"]
 pub type cef_menu_model_t = _cef_menu_model_t;
@@ -9038,15 +9034,15 @@ pub struct _cef_run_context_menu_callback_t {
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
     ["Size of _cef_run_context_menu_callback_t"]
-        [::std::mem::size_of::<_cef_run_context_menu_callback_t>() - 56usize];
+        [::std::mem::size_of::<_cef_run_context_menu_callback_t>() - 28usize];
     ["Alignment of _cef_run_context_menu_callback_t"]
-        [::std::mem::align_of::<_cef_run_context_menu_callback_t>() - 8usize];
+        [::std::mem::align_of::<_cef_run_context_menu_callback_t>() - 4usize];
     ["Offset of field: _cef_run_context_menu_callback_t::base"]
         [::std::mem::offset_of!(_cef_run_context_menu_callback_t, base) - 0usize];
     ["Offset of field: _cef_run_context_menu_callback_t::cont"]
-        [::std::mem::offset_of!(_cef_run_context_menu_callback_t, cont) - 40usize];
+        [::std::mem::offset_of!(_cef_run_context_menu_callback_t, cont) - 20usize];
     ["Offset of field: _cef_run_context_menu_callback_t::cancel"]
-        [::std::mem::offset_of!(_cef_run_context_menu_callback_t, cancel) - 48usize];
+        [::std::mem::offset_of!(_cef_run_context_menu_callback_t, cancel) - 24usize];
 };
 #[doc = "\n Callback structure used for continuation of custom context menu display.\n"]
 pub type cef_run_context_menu_callback_t = _cef_run_context_menu_callback_t;
@@ -9071,15 +9067,15 @@ pub struct _cef_run_quick_menu_callback_t {
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
     ["Size of _cef_run_quick_menu_callback_t"]
-        [::std::mem::size_of::<_cef_run_quick_menu_callback_t>() - 56usize];
+        [::std::mem::size_of::<_cef_run_quick_menu_callback_t>() - 28usize];
     ["Alignment of _cef_run_quick_menu_callback_t"]
-        [::std::mem::align_of::<_cef_run_quick_menu_callback_t>() - 8usize];
+        [::std::mem::align_of::<_cef_run_quick_menu_callback_t>() - 4usize];
     ["Offset of field: _cef_run_quick_menu_callback_t::base"]
         [::std::mem::offset_of!(_cef_run_quick_menu_callback_t, base) - 0usize];
     ["Offset of field: _cef_run_quick_menu_callback_t::cont"]
-        [::std::mem::offset_of!(_cef_run_quick_menu_callback_t, cont) - 40usize];
+        [::std::mem::offset_of!(_cef_run_quick_menu_callback_t, cont) - 20usize];
     ["Offset of field: _cef_run_quick_menu_callback_t::cancel"]
-        [::std::mem::offset_of!(_cef_run_quick_menu_callback_t, cancel) - 48usize];
+        [::std::mem::offset_of!(_cef_run_quick_menu_callback_t, cancel) - 24usize];
 };
 #[doc = "\n Callback structure used for continuation of custom quick menu display.\n"]
 pub type cef_run_quick_menu_callback_t = _cef_run_quick_menu_callback_t;
@@ -9163,25 +9159,25 @@ pub struct _cef_context_menu_handler_t {
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
     ["Size of _cef_context_menu_handler_t"]
-        [::std::mem::size_of::<_cef_context_menu_handler_t>() - 96usize];
+        [::std::mem::size_of::<_cef_context_menu_handler_t>() - 48usize];
     ["Alignment of _cef_context_menu_handler_t"]
-        [::std::mem::align_of::<_cef_context_menu_handler_t>() - 8usize];
+        [::std::mem::align_of::<_cef_context_menu_handler_t>() - 4usize];
     ["Offset of field: _cef_context_menu_handler_t::base"]
         [::std::mem::offset_of!(_cef_context_menu_handler_t, base) - 0usize];
     ["Offset of field: _cef_context_menu_handler_t::on_before_context_menu"]
-        [::std::mem::offset_of!(_cef_context_menu_handler_t, on_before_context_menu) - 40usize];
+        [::std::mem::offset_of!(_cef_context_menu_handler_t, on_before_context_menu) - 20usize];
     ["Offset of field: _cef_context_menu_handler_t::run_context_menu"]
-        [::std::mem::offset_of!(_cef_context_menu_handler_t, run_context_menu) - 48usize];
+        [::std::mem::offset_of!(_cef_context_menu_handler_t, run_context_menu) - 24usize];
     ["Offset of field: _cef_context_menu_handler_t::on_context_menu_command"]
-        [::std::mem::offset_of!(_cef_context_menu_handler_t, on_context_menu_command) - 56usize];
+        [::std::mem::offset_of!(_cef_context_menu_handler_t, on_context_menu_command) - 28usize];
     ["Offset of field: _cef_context_menu_handler_t::on_context_menu_dismissed"]
-        [::std::mem::offset_of!(_cef_context_menu_handler_t, on_context_menu_dismissed) - 64usize];
+        [::std::mem::offset_of!(_cef_context_menu_handler_t, on_context_menu_dismissed) - 32usize];
     ["Offset of field: _cef_context_menu_handler_t::run_quick_menu"]
-        [::std::mem::offset_of!(_cef_context_menu_handler_t, run_quick_menu) - 72usize];
+        [::std::mem::offset_of!(_cef_context_menu_handler_t, run_quick_menu) - 36usize];
     ["Offset of field: _cef_context_menu_handler_t::on_quick_menu_command"]
-        [::std::mem::offset_of!(_cef_context_menu_handler_t, on_quick_menu_command) - 80usize];
+        [::std::mem::offset_of!(_cef_context_menu_handler_t, on_quick_menu_command) - 40usize];
     ["Offset of field: _cef_context_menu_handler_t::on_quick_menu_dismissed"]
-        [::std::mem::offset_of!(_cef_context_menu_handler_t, on_quick_menu_dismissed) - 88usize];
+        [::std::mem::offset_of!(_cef_context_menu_handler_t, on_quick_menu_dismissed) - 44usize];
 };
 #[doc = "\n Implement this structure to handle context menu events. The functions of\n this structure will be called on the UI thread.\n"]
 pub type cef_context_menu_handler_t = _cef_context_menu_handler_t;
@@ -9286,51 +9282,51 @@ pub struct _cef_context_menu_params_t {
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
     ["Size of _cef_context_menu_params_t"]
-        [::std::mem::size_of::<_cef_context_menu_params_t>() - 200usize];
+        [::std::mem::size_of::<_cef_context_menu_params_t>() - 100usize];
     ["Alignment of _cef_context_menu_params_t"]
-        [::std::mem::align_of::<_cef_context_menu_params_t>() - 8usize];
+        [::std::mem::align_of::<_cef_context_menu_params_t>() - 4usize];
     ["Offset of field: _cef_context_menu_params_t::base"]
         [::std::mem::offset_of!(_cef_context_menu_params_t, base) - 0usize];
     ["Offset of field: _cef_context_menu_params_t::get_xcoord"]
-        [::std::mem::offset_of!(_cef_context_menu_params_t, get_xcoord) - 40usize];
+        [::std::mem::offset_of!(_cef_context_menu_params_t, get_xcoord) - 20usize];
     ["Offset of field: _cef_context_menu_params_t::get_ycoord"]
-        [::std::mem::offset_of!(_cef_context_menu_params_t, get_ycoord) - 48usize];
+        [::std::mem::offset_of!(_cef_context_menu_params_t, get_ycoord) - 24usize];
     ["Offset of field: _cef_context_menu_params_t::get_type_flags"]
-        [::std::mem::offset_of!(_cef_context_menu_params_t, get_type_flags) - 56usize];
+        [::std::mem::offset_of!(_cef_context_menu_params_t, get_type_flags) - 28usize];
     ["Offset of field: _cef_context_menu_params_t::get_link_url"]
-        [::std::mem::offset_of!(_cef_context_menu_params_t, get_link_url) - 64usize];
+        [::std::mem::offset_of!(_cef_context_menu_params_t, get_link_url) - 32usize];
     ["Offset of field: _cef_context_menu_params_t::get_unfiltered_link_url"]
-        [::std::mem::offset_of!(_cef_context_menu_params_t, get_unfiltered_link_url) - 72usize];
+        [::std::mem::offset_of!(_cef_context_menu_params_t, get_unfiltered_link_url) - 36usize];
     ["Offset of field: _cef_context_menu_params_t::get_source_url"]
-        [::std::mem::offset_of!(_cef_context_menu_params_t, get_source_url) - 80usize];
+        [::std::mem::offset_of!(_cef_context_menu_params_t, get_source_url) - 40usize];
     ["Offset of field: _cef_context_menu_params_t::has_image_contents"]
-        [::std::mem::offset_of!(_cef_context_menu_params_t, has_image_contents) - 88usize];
+        [::std::mem::offset_of!(_cef_context_menu_params_t, has_image_contents) - 44usize];
     ["Offset of field: _cef_context_menu_params_t::get_title_text"]
-        [::std::mem::offset_of!(_cef_context_menu_params_t, get_title_text) - 96usize];
+        [::std::mem::offset_of!(_cef_context_menu_params_t, get_title_text) - 48usize];
     ["Offset of field: _cef_context_menu_params_t::get_page_url"]
-        [::std::mem::offset_of!(_cef_context_menu_params_t, get_page_url) - 104usize];
+        [::std::mem::offset_of!(_cef_context_menu_params_t, get_page_url) - 52usize];
     ["Offset of field: _cef_context_menu_params_t::get_frame_url"]
-        [::std::mem::offset_of!(_cef_context_menu_params_t, get_frame_url) - 112usize];
+        [::std::mem::offset_of!(_cef_context_menu_params_t, get_frame_url) - 56usize];
     ["Offset of field: _cef_context_menu_params_t::get_frame_charset"]
-        [::std::mem::offset_of!(_cef_context_menu_params_t, get_frame_charset) - 120usize];
+        [::std::mem::offset_of!(_cef_context_menu_params_t, get_frame_charset) - 60usize];
     ["Offset of field: _cef_context_menu_params_t::get_media_type"]
-        [::std::mem::offset_of!(_cef_context_menu_params_t, get_media_type) - 128usize];
+        [::std::mem::offset_of!(_cef_context_menu_params_t, get_media_type) - 64usize];
     ["Offset of field: _cef_context_menu_params_t::get_media_state_flags"]
-        [::std::mem::offset_of!(_cef_context_menu_params_t, get_media_state_flags) - 136usize];
+        [::std::mem::offset_of!(_cef_context_menu_params_t, get_media_state_flags) - 68usize];
     ["Offset of field: _cef_context_menu_params_t::get_selection_text"]
-        [::std::mem::offset_of!(_cef_context_menu_params_t, get_selection_text) - 144usize];
+        [::std::mem::offset_of!(_cef_context_menu_params_t, get_selection_text) - 72usize];
     ["Offset of field: _cef_context_menu_params_t::get_misspelled_word"]
-        [::std::mem::offset_of!(_cef_context_menu_params_t, get_misspelled_word) - 152usize];
+        [::std::mem::offset_of!(_cef_context_menu_params_t, get_misspelled_word) - 76usize];
     ["Offset of field: _cef_context_menu_params_t::get_dictionary_suggestions"]
-        [::std::mem::offset_of!(_cef_context_menu_params_t, get_dictionary_suggestions) - 160usize];
+        [::std::mem::offset_of!(_cef_context_menu_params_t, get_dictionary_suggestions) - 80usize];
     ["Offset of field: _cef_context_menu_params_t::is_editable"]
-        [::std::mem::offset_of!(_cef_context_menu_params_t, is_editable) - 168usize];
+        [::std::mem::offset_of!(_cef_context_menu_params_t, is_editable) - 84usize];
     ["Offset of field: _cef_context_menu_params_t::is_spell_check_enabled"]
-        [::std::mem::offset_of!(_cef_context_menu_params_t, is_spell_check_enabled) - 176usize];
+        [::std::mem::offset_of!(_cef_context_menu_params_t, is_spell_check_enabled) - 88usize];
     ["Offset of field: _cef_context_menu_params_t::get_edit_state_flags"]
-        [::std::mem::offset_of!(_cef_context_menu_params_t, get_edit_state_flags) - 184usize];
+        [::std::mem::offset_of!(_cef_context_menu_params_t, get_edit_state_flags) - 92usize];
     ["Offset of field: _cef_context_menu_params_t::is_custom_menu"]
-        [::std::mem::offset_of!(_cef_context_menu_params_t, is_custom_menu) - 192usize];
+        [::std::mem::offset_of!(_cef_context_menu_params_t, is_custom_menu) - 96usize];
 };
 #[doc = "\n Provides information about the context menu state. The functions of this\n structure can only be accessed on browser process the UI thread.\n"]
 pub type cef_context_menu_params_t = _cef_context_menu_params_t;
@@ -9354,15 +9350,15 @@ pub struct _cef_file_dialog_callback_t {
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
     ["Size of _cef_file_dialog_callback_t"]
-        [::std::mem::size_of::<_cef_file_dialog_callback_t>() - 56usize];
+        [::std::mem::size_of::<_cef_file_dialog_callback_t>() - 28usize];
     ["Alignment of _cef_file_dialog_callback_t"]
-        [::std::mem::align_of::<_cef_file_dialog_callback_t>() - 8usize];
+        [::std::mem::align_of::<_cef_file_dialog_callback_t>() - 4usize];
     ["Offset of field: _cef_file_dialog_callback_t::base"]
         [::std::mem::offset_of!(_cef_file_dialog_callback_t, base) - 0usize];
     ["Offset of field: _cef_file_dialog_callback_t::cont"]
-        [::std::mem::offset_of!(_cef_file_dialog_callback_t, cont) - 40usize];
+        [::std::mem::offset_of!(_cef_file_dialog_callback_t, cont) - 20usize];
     ["Offset of field: _cef_file_dialog_callback_t::cancel"]
-        [::std::mem::offset_of!(_cef_file_dialog_callback_t, cancel) - 48usize];
+        [::std::mem::offset_of!(_cef_file_dialog_callback_t, cancel) - 24usize];
 };
 #[doc = "\n Callback structure for asynchronous continuation of file dialog requests.\n"]
 pub type cef_file_dialog_callback_t = _cef_file_dialog_callback_t;
@@ -9389,13 +9385,13 @@ pub struct _cef_dialog_handler_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_dialog_handler_t"][::std::mem::size_of::<_cef_dialog_handler_t>() - 48usize];
+    ["Size of _cef_dialog_handler_t"][::std::mem::size_of::<_cef_dialog_handler_t>() - 24usize];
     ["Alignment of _cef_dialog_handler_t"]
-        [::std::mem::align_of::<_cef_dialog_handler_t>() - 8usize];
+        [::std::mem::align_of::<_cef_dialog_handler_t>() - 4usize];
     ["Offset of field: _cef_dialog_handler_t::base"]
         [::std::mem::offset_of!(_cef_dialog_handler_t, base) - 0usize];
     ["Offset of field: _cef_dialog_handler_t::on_file_dialog"]
-        [::std::mem::offset_of!(_cef_dialog_handler_t, on_file_dialog) - 40usize];
+        [::std::mem::offset_of!(_cef_dialog_handler_t, on_file_dialog) - 20usize];
 };
 #[doc = "\n Implement this structure to handle dialog events. The functions of this\n structure will be called on the browser process UI thread.\n"]
 pub type cef_dialog_handler_t = _cef_dialog_handler_t;
@@ -9503,33 +9499,33 @@ pub struct _cef_display_handler_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_display_handler_t"][::std::mem::size_of::<_cef_display_handler_t>() - 128usize];
+    ["Size of _cef_display_handler_t"][::std::mem::size_of::<_cef_display_handler_t>() - 64usize];
     ["Alignment of _cef_display_handler_t"]
-        [::std::mem::align_of::<_cef_display_handler_t>() - 8usize];
+        [::std::mem::align_of::<_cef_display_handler_t>() - 4usize];
     ["Offset of field: _cef_display_handler_t::base"]
         [::std::mem::offset_of!(_cef_display_handler_t, base) - 0usize];
     ["Offset of field: _cef_display_handler_t::on_address_change"]
-        [::std::mem::offset_of!(_cef_display_handler_t, on_address_change) - 40usize];
+        [::std::mem::offset_of!(_cef_display_handler_t, on_address_change) - 20usize];
     ["Offset of field: _cef_display_handler_t::on_title_change"]
-        [::std::mem::offset_of!(_cef_display_handler_t, on_title_change) - 48usize];
+        [::std::mem::offset_of!(_cef_display_handler_t, on_title_change) - 24usize];
     ["Offset of field: _cef_display_handler_t::on_favicon_urlchange"]
-        [::std::mem::offset_of!(_cef_display_handler_t, on_favicon_urlchange) - 56usize];
+        [::std::mem::offset_of!(_cef_display_handler_t, on_favicon_urlchange) - 28usize];
     ["Offset of field: _cef_display_handler_t::on_fullscreen_mode_change"]
-        [::std::mem::offset_of!(_cef_display_handler_t, on_fullscreen_mode_change) - 64usize];
+        [::std::mem::offset_of!(_cef_display_handler_t, on_fullscreen_mode_change) - 32usize];
     ["Offset of field: _cef_display_handler_t::on_tooltip"]
-        [::std::mem::offset_of!(_cef_display_handler_t, on_tooltip) - 72usize];
+        [::std::mem::offset_of!(_cef_display_handler_t, on_tooltip) - 36usize];
     ["Offset of field: _cef_display_handler_t::on_status_message"]
-        [::std::mem::offset_of!(_cef_display_handler_t, on_status_message) - 80usize];
+        [::std::mem::offset_of!(_cef_display_handler_t, on_status_message) - 40usize];
     ["Offset of field: _cef_display_handler_t::on_console_message"]
-        [::std::mem::offset_of!(_cef_display_handler_t, on_console_message) - 88usize];
+        [::std::mem::offset_of!(_cef_display_handler_t, on_console_message) - 44usize];
     ["Offset of field: _cef_display_handler_t::on_auto_resize"]
-        [::std::mem::offset_of!(_cef_display_handler_t, on_auto_resize) - 96usize];
+        [::std::mem::offset_of!(_cef_display_handler_t, on_auto_resize) - 48usize];
     ["Offset of field: _cef_display_handler_t::on_loading_progress_change"]
-        [::std::mem::offset_of!(_cef_display_handler_t, on_loading_progress_change) - 104usize];
+        [::std::mem::offset_of!(_cef_display_handler_t, on_loading_progress_change) - 52usize];
     ["Offset of field: _cef_display_handler_t::on_cursor_change"]
-        [::std::mem::offset_of!(_cef_display_handler_t, on_cursor_change) - 112usize];
+        [::std::mem::offset_of!(_cef_display_handler_t, on_cursor_change) - 56usize];
     ["Offset of field: _cef_display_handler_t::on_media_access_change"]
-        [::std::mem::offset_of!(_cef_display_handler_t, on_media_access_change) - 120usize];
+        [::std::mem::offset_of!(_cef_display_handler_t, on_media_access_change) - 60usize];
 };
 #[doc = "\n Implement this structure to handle events related to browser display state.\n The functions of this structure will be called on the UI thread.\n"]
 pub type cef_display_handler_t = _cef_display_handler_t;
@@ -9614,48 +9610,48 @@ pub struct _cef_download_item_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_download_item_t"][::std::mem::size_of::<_cef_download_item_t>() - 192usize];
-    ["Alignment of _cef_download_item_t"][::std::mem::align_of::<_cef_download_item_t>() - 8usize];
+    ["Size of _cef_download_item_t"][::std::mem::size_of::<_cef_download_item_t>() - 96usize];
+    ["Alignment of _cef_download_item_t"][::std::mem::align_of::<_cef_download_item_t>() - 4usize];
     ["Offset of field: _cef_download_item_t::base"]
         [::std::mem::offset_of!(_cef_download_item_t, base) - 0usize];
     ["Offset of field: _cef_download_item_t::is_valid"]
-        [::std::mem::offset_of!(_cef_download_item_t, is_valid) - 40usize];
+        [::std::mem::offset_of!(_cef_download_item_t, is_valid) - 20usize];
     ["Offset of field: _cef_download_item_t::is_in_progress"]
-        [::std::mem::offset_of!(_cef_download_item_t, is_in_progress) - 48usize];
+        [::std::mem::offset_of!(_cef_download_item_t, is_in_progress) - 24usize];
     ["Offset of field: _cef_download_item_t::is_complete"]
-        [::std::mem::offset_of!(_cef_download_item_t, is_complete) - 56usize];
+        [::std::mem::offset_of!(_cef_download_item_t, is_complete) - 28usize];
     ["Offset of field: _cef_download_item_t::is_canceled"]
-        [::std::mem::offset_of!(_cef_download_item_t, is_canceled) - 64usize];
+        [::std::mem::offset_of!(_cef_download_item_t, is_canceled) - 32usize];
     ["Offset of field: _cef_download_item_t::is_interrupted"]
-        [::std::mem::offset_of!(_cef_download_item_t, is_interrupted) - 72usize];
+        [::std::mem::offset_of!(_cef_download_item_t, is_interrupted) - 36usize];
     ["Offset of field: _cef_download_item_t::get_interrupt_reason"]
-        [::std::mem::offset_of!(_cef_download_item_t, get_interrupt_reason) - 80usize];
+        [::std::mem::offset_of!(_cef_download_item_t, get_interrupt_reason) - 40usize];
     ["Offset of field: _cef_download_item_t::get_current_speed"]
-        [::std::mem::offset_of!(_cef_download_item_t, get_current_speed) - 88usize];
+        [::std::mem::offset_of!(_cef_download_item_t, get_current_speed) - 44usize];
     ["Offset of field: _cef_download_item_t::get_percent_complete"]
-        [::std::mem::offset_of!(_cef_download_item_t, get_percent_complete) - 96usize];
+        [::std::mem::offset_of!(_cef_download_item_t, get_percent_complete) - 48usize];
     ["Offset of field: _cef_download_item_t::get_total_bytes"]
-        [::std::mem::offset_of!(_cef_download_item_t, get_total_bytes) - 104usize];
+        [::std::mem::offset_of!(_cef_download_item_t, get_total_bytes) - 52usize];
     ["Offset of field: _cef_download_item_t::get_received_bytes"]
-        [::std::mem::offset_of!(_cef_download_item_t, get_received_bytes) - 112usize];
+        [::std::mem::offset_of!(_cef_download_item_t, get_received_bytes) - 56usize];
     ["Offset of field: _cef_download_item_t::get_start_time"]
-        [::std::mem::offset_of!(_cef_download_item_t, get_start_time) - 120usize];
+        [::std::mem::offset_of!(_cef_download_item_t, get_start_time) - 60usize];
     ["Offset of field: _cef_download_item_t::get_end_time"]
-        [::std::mem::offset_of!(_cef_download_item_t, get_end_time) - 128usize];
+        [::std::mem::offset_of!(_cef_download_item_t, get_end_time) - 64usize];
     ["Offset of field: _cef_download_item_t::get_full_path"]
-        [::std::mem::offset_of!(_cef_download_item_t, get_full_path) - 136usize];
+        [::std::mem::offset_of!(_cef_download_item_t, get_full_path) - 68usize];
     ["Offset of field: _cef_download_item_t::get_id"]
-        [::std::mem::offset_of!(_cef_download_item_t, get_id) - 144usize];
+        [::std::mem::offset_of!(_cef_download_item_t, get_id) - 72usize];
     ["Offset of field: _cef_download_item_t::get_url"]
-        [::std::mem::offset_of!(_cef_download_item_t, get_url) - 152usize];
+        [::std::mem::offset_of!(_cef_download_item_t, get_url) - 76usize];
     ["Offset of field: _cef_download_item_t::get_original_url"]
-        [::std::mem::offset_of!(_cef_download_item_t, get_original_url) - 160usize];
+        [::std::mem::offset_of!(_cef_download_item_t, get_original_url) - 80usize];
     ["Offset of field: _cef_download_item_t::get_suggested_file_name"]
-        [::std::mem::offset_of!(_cef_download_item_t, get_suggested_file_name) - 168usize];
+        [::std::mem::offset_of!(_cef_download_item_t, get_suggested_file_name) - 84usize];
     ["Offset of field: _cef_download_item_t::get_content_disposition"]
-        [::std::mem::offset_of!(_cef_download_item_t, get_content_disposition) - 176usize];
+        [::std::mem::offset_of!(_cef_download_item_t, get_content_disposition) - 88usize];
     ["Offset of field: _cef_download_item_t::get_mime_type"]
-        [::std::mem::offset_of!(_cef_download_item_t, get_mime_type) - 184usize];
+        [::std::mem::offset_of!(_cef_download_item_t, get_mime_type) - 92usize];
 };
 #[doc = "\n Structure used to represent a download item.\n"]
 pub type cef_download_item_t = _cef_download_item_t;
@@ -9677,13 +9673,13 @@ pub struct _cef_before_download_callback_t {
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
     ["Size of _cef_before_download_callback_t"]
-        [::std::mem::size_of::<_cef_before_download_callback_t>() - 48usize];
+        [::std::mem::size_of::<_cef_before_download_callback_t>() - 24usize];
     ["Alignment of _cef_before_download_callback_t"]
-        [::std::mem::align_of::<_cef_before_download_callback_t>() - 8usize];
+        [::std::mem::align_of::<_cef_before_download_callback_t>() - 4usize];
     ["Offset of field: _cef_before_download_callback_t::base"]
         [::std::mem::offset_of!(_cef_before_download_callback_t, base) - 0usize];
     ["Offset of field: _cef_before_download_callback_t::cont"]
-        [::std::mem::offset_of!(_cef_before_download_callback_t, cont) - 40usize];
+        [::std::mem::offset_of!(_cef_before_download_callback_t, cont) - 20usize];
 };
 #[doc = "\n Callback structure used to asynchronously continue a download.\n"]
 pub type cef_before_download_callback_t = _cef_before_download_callback_t;
@@ -9706,17 +9702,17 @@ pub struct _cef_download_item_callback_t {
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
     ["Size of _cef_download_item_callback_t"]
-        [::std::mem::size_of::<_cef_download_item_callback_t>() - 64usize];
+        [::std::mem::size_of::<_cef_download_item_callback_t>() - 32usize];
     ["Alignment of _cef_download_item_callback_t"]
-        [::std::mem::align_of::<_cef_download_item_callback_t>() - 8usize];
+        [::std::mem::align_of::<_cef_download_item_callback_t>() - 4usize];
     ["Offset of field: _cef_download_item_callback_t::base"]
         [::std::mem::offset_of!(_cef_download_item_callback_t, base) - 0usize];
     ["Offset of field: _cef_download_item_callback_t::cancel"]
-        [::std::mem::offset_of!(_cef_download_item_callback_t, cancel) - 40usize];
+        [::std::mem::offset_of!(_cef_download_item_callback_t, cancel) - 20usize];
     ["Offset of field: _cef_download_item_callback_t::pause"]
-        [::std::mem::offset_of!(_cef_download_item_callback_t, pause) - 48usize];
+        [::std::mem::offset_of!(_cef_download_item_callback_t, pause) - 24usize];
     ["Offset of field: _cef_download_item_callback_t::resume"]
-        [::std::mem::offset_of!(_cef_download_item_callback_t, resume) - 56usize];
+        [::std::mem::offset_of!(_cef_download_item_callback_t, resume) - 28usize];
 };
 #[doc = "\n Callback structure used to asynchronously cancel a download.\n"]
 pub type cef_download_item_callback_t = _cef_download_item_callback_t;
@@ -9757,17 +9753,17 @@ pub struct _cef_download_handler_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_download_handler_t"][::std::mem::size_of::<_cef_download_handler_t>() - 64usize];
+    ["Size of _cef_download_handler_t"][::std::mem::size_of::<_cef_download_handler_t>() - 32usize];
     ["Alignment of _cef_download_handler_t"]
-        [::std::mem::align_of::<_cef_download_handler_t>() - 8usize];
+        [::std::mem::align_of::<_cef_download_handler_t>() - 4usize];
     ["Offset of field: _cef_download_handler_t::base"]
         [::std::mem::offset_of!(_cef_download_handler_t, base) - 0usize];
     ["Offset of field: _cef_download_handler_t::can_download"]
-        [::std::mem::offset_of!(_cef_download_handler_t, can_download) - 40usize];
+        [::std::mem::offset_of!(_cef_download_handler_t, can_download) - 20usize];
     ["Offset of field: _cef_download_handler_t::on_before_download"]
-        [::std::mem::offset_of!(_cef_download_handler_t, on_before_download) - 48usize];
+        [::std::mem::offset_of!(_cef_download_handler_t, on_before_download) - 24usize];
     ["Offset of field: _cef_download_handler_t::on_download_updated"]
-        [::std::mem::offset_of!(_cef_download_handler_t, on_download_updated) - 56usize];
+        [::std::mem::offset_of!(_cef_download_handler_t, on_download_updated) - 28usize];
 };
 #[doc = "\n Structure used to handle file downloads. The functions of this structure\n will called on the browser process UI thread.\n"]
 pub type cef_download_handler_t = _cef_download_handler_t;
@@ -9799,14 +9795,14 @@ pub struct _cef_drag_handler_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_drag_handler_t"][::std::mem::size_of::<_cef_drag_handler_t>() - 56usize];
-    ["Alignment of _cef_drag_handler_t"][::std::mem::align_of::<_cef_drag_handler_t>() - 8usize];
+    ["Size of _cef_drag_handler_t"][::std::mem::size_of::<_cef_drag_handler_t>() - 28usize];
+    ["Alignment of _cef_drag_handler_t"][::std::mem::align_of::<_cef_drag_handler_t>() - 4usize];
     ["Offset of field: _cef_drag_handler_t::base"]
         [::std::mem::offset_of!(_cef_drag_handler_t, base) - 0usize];
     ["Offset of field: _cef_drag_handler_t::on_drag_enter"]
-        [::std::mem::offset_of!(_cef_drag_handler_t, on_drag_enter) - 40usize];
+        [::std::mem::offset_of!(_cef_drag_handler_t, on_drag_enter) - 20usize];
     ["Offset of field: _cef_drag_handler_t::on_draggable_regions_changed"]
-        [::std::mem::offset_of!(_cef_drag_handler_t, on_draggable_regions_changed) - 48usize];
+        [::std::mem::offset_of!(_cef_drag_handler_t, on_draggable_regions_changed) - 24usize];
 };
 #[doc = "\n Implement this structure to handle events related to dragging. The functions\n of this structure will be called on the UI thread.\n"]
 pub type cef_drag_handler_t = _cef_drag_handler_t;
@@ -9831,12 +9827,12 @@ pub struct _cef_find_handler_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_find_handler_t"][::std::mem::size_of::<_cef_find_handler_t>() - 48usize];
-    ["Alignment of _cef_find_handler_t"][::std::mem::align_of::<_cef_find_handler_t>() - 8usize];
+    ["Size of _cef_find_handler_t"][::std::mem::size_of::<_cef_find_handler_t>() - 24usize];
+    ["Alignment of _cef_find_handler_t"][::std::mem::align_of::<_cef_find_handler_t>() - 4usize];
     ["Offset of field: _cef_find_handler_t::base"]
         [::std::mem::offset_of!(_cef_find_handler_t, base) - 0usize];
     ["Offset of field: _cef_find_handler_t::on_find_result"]
-        [::std::mem::offset_of!(_cef_find_handler_t, on_find_result) - 40usize];
+        [::std::mem::offset_of!(_cef_find_handler_t, on_find_result) - 20usize];
 };
 #[doc = "\n Implement this structure to handle events related to find results. The\n functions of this structure will be called on the UI thread.\n"]
 pub type cef_find_handler_t = _cef_find_handler_t;
@@ -9869,16 +9865,16 @@ pub struct _cef_focus_handler_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_focus_handler_t"][::std::mem::size_of::<_cef_focus_handler_t>() - 64usize];
-    ["Alignment of _cef_focus_handler_t"][::std::mem::align_of::<_cef_focus_handler_t>() - 8usize];
+    ["Size of _cef_focus_handler_t"][::std::mem::size_of::<_cef_focus_handler_t>() - 32usize];
+    ["Alignment of _cef_focus_handler_t"][::std::mem::align_of::<_cef_focus_handler_t>() - 4usize];
     ["Offset of field: _cef_focus_handler_t::base"]
         [::std::mem::offset_of!(_cef_focus_handler_t, base) - 0usize];
     ["Offset of field: _cef_focus_handler_t::on_take_focus"]
-        [::std::mem::offset_of!(_cef_focus_handler_t, on_take_focus) - 40usize];
+        [::std::mem::offset_of!(_cef_focus_handler_t, on_take_focus) - 20usize];
     ["Offset of field: _cef_focus_handler_t::on_set_focus"]
-        [::std::mem::offset_of!(_cef_focus_handler_t, on_set_focus) - 48usize];
+        [::std::mem::offset_of!(_cef_focus_handler_t, on_set_focus) - 24usize];
     ["Offset of field: _cef_focus_handler_t::on_got_focus"]
-        [::std::mem::offset_of!(_cef_focus_handler_t, on_got_focus) - 56usize];
+        [::std::mem::offset_of!(_cef_focus_handler_t, on_got_focus) - 28usize];
 };
 #[doc = "\n Implement this structure to handle events related to focus. The functions of\n this structure will be called on the UI thread.\n"]
 pub type cef_focus_handler_t = _cef_focus_handler_t;
@@ -9925,18 +9921,18 @@ pub struct _cef_frame_handler_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_frame_handler_t"][::std::mem::size_of::<_cef_frame_handler_t>() - 72usize];
-    ["Alignment of _cef_frame_handler_t"][::std::mem::align_of::<_cef_frame_handler_t>() - 8usize];
+    ["Size of _cef_frame_handler_t"][::std::mem::size_of::<_cef_frame_handler_t>() - 36usize];
+    ["Alignment of _cef_frame_handler_t"][::std::mem::align_of::<_cef_frame_handler_t>() - 4usize];
     ["Offset of field: _cef_frame_handler_t::base"]
         [::std::mem::offset_of!(_cef_frame_handler_t, base) - 0usize];
     ["Offset of field: _cef_frame_handler_t::on_frame_created"]
-        [::std::mem::offset_of!(_cef_frame_handler_t, on_frame_created) - 40usize];
+        [::std::mem::offset_of!(_cef_frame_handler_t, on_frame_created) - 20usize];
     ["Offset of field: _cef_frame_handler_t::on_frame_attached"]
-        [::std::mem::offset_of!(_cef_frame_handler_t, on_frame_attached) - 48usize];
+        [::std::mem::offset_of!(_cef_frame_handler_t, on_frame_attached) - 24usize];
     ["Offset of field: _cef_frame_handler_t::on_frame_detached"]
-        [::std::mem::offset_of!(_cef_frame_handler_t, on_frame_detached) - 56usize];
+        [::std::mem::offset_of!(_cef_frame_handler_t, on_frame_detached) - 28usize];
     ["Offset of field: _cef_frame_handler_t::on_main_frame_changed"]
-        [::std::mem::offset_of!(_cef_frame_handler_t, on_main_frame_changed) - 64usize];
+        [::std::mem::offset_of!(_cef_frame_handler_t, on_main_frame_changed) - 32usize];
 };
 #[doc = "\n Implement this structure to handle events related to cef_frame_t life span.\n The order of callbacks is:\n\n (1) During initial cef_browser_host_t creation and navigation of the main\n frame:\n - cef_frame_handler_t::OnFrameCreated => The initial main frame object has\n   been created. Any commands will be queued until the frame is attached.\n - cef_frame_handler_t::OnMainFrameChanged => The initial main frame object\n   has been assigned to the browser.\n - cef_life_span_handler_t::OnAfterCreated => The browser is now valid and\n   can be used.\n - cef_frame_handler_t::OnFrameAttached => The initial main frame object is\n   now connected to its peer in the renderer process. Commands can be routed.\n\n (2) During further cef_browser_host_t navigation/loading of the main frame\n     and/or sub-frames:\n - cef_frame_handler_t::OnFrameCreated => A new main frame or sub-frame\n   object has been created. Any commands will be queued until the frame is\n   attached.\n - cef_frame_handler_t::OnFrameAttached => A new main frame or sub-frame\n   object is now connected to its peer in the renderer process. Commands can\n   be routed.\n - cef_frame_handler_t::OnFrameDetached => An existing main frame or sub-\n   frame object has lost its connection to the renderer process. If multiple\n   objects are detached at the same time then notifications will be sent for\n   any sub-frame objects before the main frame object. Commands can no longer\n   be routed and will be discarded.\n - cef_frame_handler_t::OnMainFrameChanged => A new main frame object has\n   been assigned to the browser. This will only occur with cross-origin\n   navigation or re-navigation after renderer process termination (due to\n   crashes, etc).\n\n (3) During final cef_browser_host_t destruction of the main frame:\n - cef_frame_handler_t::OnFrameDetached => Any sub-frame objects have lost\n   their connection to the renderer process. Commands can no longer be routed\n   and will be discarded.\n - cef_life_span_handler_t::OnBeforeClose => The browser has been destroyed.\n - cef_frame_handler_t::OnFrameDetached => The main frame object have lost\n   its connection to the renderer process. Notifications will be sent for any\n   sub-frame objects before the main frame object. Commands can no longer be\n   routed and will be discarded.\n - cef_frame_handler_t::OnMainFrameChanged => The final main frame object has\n   been removed from the browser.\n\n Cross-origin navigation and/or loading receives special handling.\n\n When the main frame navigates to a different origin the OnMainFrameChanged\n callback (2) will be executed with the old and new main frame objects.\n\n When a new sub-frame is loaded in, or an existing sub-frame is navigated to,\n a different origin from the parent frame, a temporary sub-frame object will\n first be created in the parent's renderer process. That temporary sub-frame\n will then be discarded after the real cross-origin sub-frame is created in\n the new/target renderer process. The client will receive cross-origin\n navigation callbacks (2) for the transition from the temporary sub-frame to\n the real sub-frame. The temporary sub-frame will not receive or execute\n commands during this transitional period (any sent commands will be\n discarded).\n\n When a new popup browser is created in a different origin from the parent\n browser, a temporary main frame object for the popup will first be created\n in the parent's renderer process. That temporary main frame will then be\n discarded after the real cross-origin main frame is created in the\n new/target renderer process. The client will receive creation and initial\n navigation callbacks (1) for the temporary main frame, followed by cross-\n origin navigation callbacks (2) for the transition from the temporary main\n frame to the real main frame. The temporary main frame may receive and\n execute commands during this transitional period (any sent commands may be\n executed, but the behavior is potentially undesirable since they execute in\n the parent browser's renderer process and not the new/target renderer\n process).\n\n Callbacks will not be executed for placeholders that may be created during\n pre-commit navigation for sub-frames that do not yet exist in the renderer\n process. Placeholders will have cef_frame_t::get_identifier() == -4.\n\n The functions of this structure will be called on the UI thread unless\n otherwise indicated.\n"]
 pub type cef_frame_handler_t = _cef_frame_handler_t;
@@ -9958,13 +9954,13 @@ pub struct _cef_jsdialog_callback_t {
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
     ["Size of _cef_jsdialog_callback_t"]
-        [::std::mem::size_of::<_cef_jsdialog_callback_t>() - 48usize];
+        [::std::mem::size_of::<_cef_jsdialog_callback_t>() - 24usize];
     ["Alignment of _cef_jsdialog_callback_t"]
-        [::std::mem::align_of::<_cef_jsdialog_callback_t>() - 8usize];
+        [::std::mem::align_of::<_cef_jsdialog_callback_t>() - 4usize];
     ["Offset of field: _cef_jsdialog_callback_t::base"]
         [::std::mem::offset_of!(_cef_jsdialog_callback_t, base) - 0usize];
     ["Offset of field: _cef_jsdialog_callback_t::cont"]
-        [::std::mem::offset_of!(_cef_jsdialog_callback_t, cont) - 40usize];
+        [::std::mem::offset_of!(_cef_jsdialog_callback_t, cont) - 20usize];
 };
 #[doc = "\n Callback structure used for asynchronous continuation of JavaScript dialog\n requests.\n"]
 pub type cef_jsdialog_callback_t = _cef_jsdialog_callback_t;
@@ -10008,19 +10004,19 @@ pub struct _cef_jsdialog_handler_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_jsdialog_handler_t"][::std::mem::size_of::<_cef_jsdialog_handler_t>() - 72usize];
+    ["Size of _cef_jsdialog_handler_t"][::std::mem::size_of::<_cef_jsdialog_handler_t>() - 36usize];
     ["Alignment of _cef_jsdialog_handler_t"]
-        [::std::mem::align_of::<_cef_jsdialog_handler_t>() - 8usize];
+        [::std::mem::align_of::<_cef_jsdialog_handler_t>() - 4usize];
     ["Offset of field: _cef_jsdialog_handler_t::base"]
         [::std::mem::offset_of!(_cef_jsdialog_handler_t, base) - 0usize];
     ["Offset of field: _cef_jsdialog_handler_t::on_jsdialog"]
-        [::std::mem::offset_of!(_cef_jsdialog_handler_t, on_jsdialog) - 40usize];
+        [::std::mem::offset_of!(_cef_jsdialog_handler_t, on_jsdialog) - 20usize];
     ["Offset of field: _cef_jsdialog_handler_t::on_before_unload_dialog"]
-        [::std::mem::offset_of!(_cef_jsdialog_handler_t, on_before_unload_dialog) - 48usize];
+        [::std::mem::offset_of!(_cef_jsdialog_handler_t, on_before_unload_dialog) - 24usize];
     ["Offset of field: _cef_jsdialog_handler_t::on_reset_dialog_state"]
-        [::std::mem::offset_of!(_cef_jsdialog_handler_t, on_reset_dialog_state) - 56usize];
+        [::std::mem::offset_of!(_cef_jsdialog_handler_t, on_reset_dialog_state) - 28usize];
     ["Offset of field: _cef_jsdialog_handler_t::on_dialog_closed"]
-        [::std::mem::offset_of!(_cef_jsdialog_handler_t, on_dialog_closed) - 64usize];
+        [::std::mem::offset_of!(_cef_jsdialog_handler_t, on_dialog_closed) - 32usize];
 };
 #[doc = "\n Implement this structure to handle events related to JavaScript dialogs. The\n functions of this structure will be called on the UI thread.\n"]
 pub type cef_jsdialog_handler_t = _cef_jsdialog_handler_t;
@@ -10052,15 +10048,15 @@ pub struct _cef_keyboard_handler_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_keyboard_handler_t"][::std::mem::size_of::<_cef_keyboard_handler_t>() - 56usize];
+    ["Size of _cef_keyboard_handler_t"][::std::mem::size_of::<_cef_keyboard_handler_t>() - 28usize];
     ["Alignment of _cef_keyboard_handler_t"]
-        [::std::mem::align_of::<_cef_keyboard_handler_t>() - 8usize];
+        [::std::mem::align_of::<_cef_keyboard_handler_t>() - 4usize];
     ["Offset of field: _cef_keyboard_handler_t::base"]
         [::std::mem::offset_of!(_cef_keyboard_handler_t, base) - 0usize];
     ["Offset of field: _cef_keyboard_handler_t::on_pre_key_event"]
-        [::std::mem::offset_of!(_cef_keyboard_handler_t, on_pre_key_event) - 40usize];
+        [::std::mem::offset_of!(_cef_keyboard_handler_t, on_pre_key_event) - 20usize];
     ["Offset of field: _cef_keyboard_handler_t::on_key_event"]
-        [::std::mem::offset_of!(_cef_keyboard_handler_t, on_key_event) - 48usize];
+        [::std::mem::offset_of!(_cef_keyboard_handler_t, on_key_event) - 24usize];
 };
 #[doc = "\n Implement this structure to handle events related to keyboard input. The\n functions of this structure will be called on the UI thread.\n"]
 pub type cef_keyboard_handler_t = _cef_keyboard_handler_t;
@@ -10119,21 +10115,21 @@ pub struct _cef_life_span_handler_t {
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
     ["Size of _cef_life_span_handler_t"]
-        [::std::mem::size_of::<_cef_life_span_handler_t>() - 80usize];
+        [::std::mem::size_of::<_cef_life_span_handler_t>() - 40usize];
     ["Alignment of _cef_life_span_handler_t"]
-        [::std::mem::align_of::<_cef_life_span_handler_t>() - 8usize];
+        [::std::mem::align_of::<_cef_life_span_handler_t>() - 4usize];
     ["Offset of field: _cef_life_span_handler_t::base"]
         [::std::mem::offset_of!(_cef_life_span_handler_t, base) - 0usize];
     ["Offset of field: _cef_life_span_handler_t::on_before_popup"]
-        [::std::mem::offset_of!(_cef_life_span_handler_t, on_before_popup) - 40usize];
+        [::std::mem::offset_of!(_cef_life_span_handler_t, on_before_popup) - 20usize];
     ["Offset of field: _cef_life_span_handler_t::on_before_dev_tools_popup"]
-        [::std::mem::offset_of!(_cef_life_span_handler_t, on_before_dev_tools_popup) - 48usize];
+        [::std::mem::offset_of!(_cef_life_span_handler_t, on_before_dev_tools_popup) - 24usize];
     ["Offset of field: _cef_life_span_handler_t::on_after_created"]
-        [::std::mem::offset_of!(_cef_life_span_handler_t, on_after_created) - 56usize];
+        [::std::mem::offset_of!(_cef_life_span_handler_t, on_after_created) - 28usize];
     ["Offset of field: _cef_life_span_handler_t::do_close"]
-        [::std::mem::offset_of!(_cef_life_span_handler_t, do_close) - 64usize];
+        [::std::mem::offset_of!(_cef_life_span_handler_t, do_close) - 32usize];
     ["Offset of field: _cef_life_span_handler_t::on_before_close"]
-        [::std::mem::offset_of!(_cef_life_span_handler_t, on_before_close) - 72usize];
+        [::std::mem::offset_of!(_cef_life_span_handler_t, on_before_close) - 36usize];
 };
 #[doc = "\n Implement this structure to handle events related to browser life span. The\n functions of this structure will be called on the UI thread unless otherwise\n indicated.\n"]
 pub type cef_life_span_handler_t = _cef_life_span_handler_t;
@@ -10185,18 +10181,18 @@ pub struct _cef_load_handler_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_load_handler_t"][::std::mem::size_of::<_cef_load_handler_t>() - 72usize];
-    ["Alignment of _cef_load_handler_t"][::std::mem::align_of::<_cef_load_handler_t>() - 8usize];
+    ["Size of _cef_load_handler_t"][::std::mem::size_of::<_cef_load_handler_t>() - 36usize];
+    ["Alignment of _cef_load_handler_t"][::std::mem::align_of::<_cef_load_handler_t>() - 4usize];
     ["Offset of field: _cef_load_handler_t::base"]
         [::std::mem::offset_of!(_cef_load_handler_t, base) - 0usize];
     ["Offset of field: _cef_load_handler_t::on_loading_state_change"]
-        [::std::mem::offset_of!(_cef_load_handler_t, on_loading_state_change) - 40usize];
+        [::std::mem::offset_of!(_cef_load_handler_t, on_loading_state_change) - 20usize];
     ["Offset of field: _cef_load_handler_t::on_load_start"]
-        [::std::mem::offset_of!(_cef_load_handler_t, on_load_start) - 48usize];
+        [::std::mem::offset_of!(_cef_load_handler_t, on_load_start) - 24usize];
     ["Offset of field: _cef_load_handler_t::on_load_end"]
-        [::std::mem::offset_of!(_cef_load_handler_t, on_load_end) - 56usize];
+        [::std::mem::offset_of!(_cef_load_handler_t, on_load_end) - 28usize];
     ["Offset of field: _cef_load_handler_t::on_load_error"]
-        [::std::mem::offset_of!(_cef_load_handler_t, on_load_error) - 64usize];
+        [::std::mem::offset_of!(_cef_load_handler_t, on_load_error) - 32usize];
 };
 #[doc = "\n Implement this structure to handle events related to browser load status.\n The functions of this structure will be called on the browser process UI\n thread or render process main thread (TID_RENDERER).\n"]
 pub type cef_load_handler_t = _cef_load_handler_t;
@@ -10217,15 +10213,15 @@ pub struct _cef_media_access_callback_t {
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
     ["Size of _cef_media_access_callback_t"]
-        [::std::mem::size_of::<_cef_media_access_callback_t>() - 56usize];
+        [::std::mem::size_of::<_cef_media_access_callback_t>() - 28usize];
     ["Alignment of _cef_media_access_callback_t"]
-        [::std::mem::align_of::<_cef_media_access_callback_t>() - 8usize];
+        [::std::mem::align_of::<_cef_media_access_callback_t>() - 4usize];
     ["Offset of field: _cef_media_access_callback_t::base"]
         [::std::mem::offset_of!(_cef_media_access_callback_t, base) - 0usize];
     ["Offset of field: _cef_media_access_callback_t::cont"]
-        [::std::mem::offset_of!(_cef_media_access_callback_t, cont) - 40usize];
+        [::std::mem::offset_of!(_cef_media_access_callback_t, cont) - 20usize];
     ["Offset of field: _cef_media_access_callback_t::cancel"]
-        [::std::mem::offset_of!(_cef_media_access_callback_t, cancel) - 48usize];
+        [::std::mem::offset_of!(_cef_media_access_callback_t, cancel) - 24usize];
 };
 #[doc = "\n Callback structure used for asynchronous continuation of media access\n permission requests.\n"]
 pub type cef_media_access_callback_t = _cef_media_access_callback_t;
@@ -10246,13 +10242,13 @@ pub struct _cef_permission_prompt_callback_t {
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
     ["Size of _cef_permission_prompt_callback_t"]
-        [::std::mem::size_of::<_cef_permission_prompt_callback_t>() - 48usize];
+        [::std::mem::size_of::<_cef_permission_prompt_callback_t>() - 24usize];
     ["Alignment of _cef_permission_prompt_callback_t"]
-        [::std::mem::align_of::<_cef_permission_prompt_callback_t>() - 8usize];
+        [::std::mem::align_of::<_cef_permission_prompt_callback_t>() - 4usize];
     ["Offset of field: _cef_permission_prompt_callback_t::base"]
         [::std::mem::offset_of!(_cef_permission_prompt_callback_t, base) - 0usize];
     ["Offset of field: _cef_permission_prompt_callback_t::cont"]
-        [::std::mem::offset_of!(_cef_permission_prompt_callback_t, cont) - 40usize];
+        [::std::mem::offset_of!(_cef_permission_prompt_callback_t, cont) - 20usize];
 };
 #[doc = "\n Callback structure used for asynchronous continuation of permission prompts.\n"]
 pub type cef_permission_prompt_callback_t = _cef_permission_prompt_callback_t;
@@ -10297,19 +10293,19 @@ pub struct _cef_permission_handler_t {
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
     ["Size of _cef_permission_handler_t"]
-        [::std::mem::size_of::<_cef_permission_handler_t>() - 64usize];
+        [::std::mem::size_of::<_cef_permission_handler_t>() - 32usize];
     ["Alignment of _cef_permission_handler_t"]
-        [::std::mem::align_of::<_cef_permission_handler_t>() - 8usize];
+        [::std::mem::align_of::<_cef_permission_handler_t>() - 4usize];
     ["Offset of field: _cef_permission_handler_t::base"]
         [::std::mem::offset_of!(_cef_permission_handler_t, base) - 0usize];
     ["Offset of field: _cef_permission_handler_t::on_request_media_access_permission"][::std::mem::offset_of!(
         _cef_permission_handler_t,
         on_request_media_access_permission
-    ) - 40usize];
+    ) - 20usize];
     ["Offset of field: _cef_permission_handler_t::on_show_permission_prompt"]
-        [::std::mem::offset_of!(_cef_permission_handler_t, on_show_permission_prompt) - 48usize];
+        [::std::mem::offset_of!(_cef_permission_handler_t, on_show_permission_prompt) - 24usize];
     ["Offset of field: _cef_permission_handler_t::on_dismiss_permission_prompt"]
-        [::std::mem::offset_of!(_cef_permission_handler_t, on_dismiss_permission_prompt) - 56usize];
+        [::std::mem::offset_of!(_cef_permission_handler_t, on_dismiss_permission_prompt) - 28usize];
 };
 #[doc = "\n Implement this structure to handle events related to permission requests.\n The functions of this structure will be called on the browser process UI\n thread.\n"]
 pub type cef_permission_handler_t = _cef_permission_handler_t;
@@ -10425,55 +10421,55 @@ pub struct _cef_print_settings_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_print_settings_t"][::std::mem::size_of::<_cef_print_settings_t>() - 216usize];
+    ["Size of _cef_print_settings_t"][::std::mem::size_of::<_cef_print_settings_t>() - 108usize];
     ["Alignment of _cef_print_settings_t"]
-        [::std::mem::align_of::<_cef_print_settings_t>() - 8usize];
+        [::std::mem::align_of::<_cef_print_settings_t>() - 4usize];
     ["Offset of field: _cef_print_settings_t::base"]
         [::std::mem::offset_of!(_cef_print_settings_t, base) - 0usize];
     ["Offset of field: _cef_print_settings_t::is_valid"]
-        [::std::mem::offset_of!(_cef_print_settings_t, is_valid) - 40usize];
+        [::std::mem::offset_of!(_cef_print_settings_t, is_valid) - 20usize];
     ["Offset of field: _cef_print_settings_t::is_read_only"]
-        [::std::mem::offset_of!(_cef_print_settings_t, is_read_only) - 48usize];
+        [::std::mem::offset_of!(_cef_print_settings_t, is_read_only) - 24usize];
     ["Offset of field: _cef_print_settings_t::set_orientation"]
-        [::std::mem::offset_of!(_cef_print_settings_t, set_orientation) - 56usize];
+        [::std::mem::offset_of!(_cef_print_settings_t, set_orientation) - 28usize];
     ["Offset of field: _cef_print_settings_t::is_landscape"]
-        [::std::mem::offset_of!(_cef_print_settings_t, is_landscape) - 64usize];
+        [::std::mem::offset_of!(_cef_print_settings_t, is_landscape) - 32usize];
     ["Offset of field: _cef_print_settings_t::set_printer_printable_area"]
-        [::std::mem::offset_of!(_cef_print_settings_t, set_printer_printable_area) - 72usize];
+        [::std::mem::offset_of!(_cef_print_settings_t, set_printer_printable_area) - 36usize];
     ["Offset of field: _cef_print_settings_t::set_device_name"]
-        [::std::mem::offset_of!(_cef_print_settings_t, set_device_name) - 80usize];
+        [::std::mem::offset_of!(_cef_print_settings_t, set_device_name) - 40usize];
     ["Offset of field: _cef_print_settings_t::get_device_name"]
-        [::std::mem::offset_of!(_cef_print_settings_t, get_device_name) - 88usize];
+        [::std::mem::offset_of!(_cef_print_settings_t, get_device_name) - 44usize];
     ["Offset of field: _cef_print_settings_t::set_dpi"]
-        [::std::mem::offset_of!(_cef_print_settings_t, set_dpi) - 96usize];
+        [::std::mem::offset_of!(_cef_print_settings_t, set_dpi) - 48usize];
     ["Offset of field: _cef_print_settings_t::get_dpi"]
-        [::std::mem::offset_of!(_cef_print_settings_t, get_dpi) - 104usize];
+        [::std::mem::offset_of!(_cef_print_settings_t, get_dpi) - 52usize];
     ["Offset of field: _cef_print_settings_t::set_page_ranges"]
-        [::std::mem::offset_of!(_cef_print_settings_t, set_page_ranges) - 112usize];
+        [::std::mem::offset_of!(_cef_print_settings_t, set_page_ranges) - 56usize];
     ["Offset of field: _cef_print_settings_t::get_page_ranges_count"]
-        [::std::mem::offset_of!(_cef_print_settings_t, get_page_ranges_count) - 120usize];
+        [::std::mem::offset_of!(_cef_print_settings_t, get_page_ranges_count) - 60usize];
     ["Offset of field: _cef_print_settings_t::get_page_ranges"]
-        [::std::mem::offset_of!(_cef_print_settings_t, get_page_ranges) - 128usize];
+        [::std::mem::offset_of!(_cef_print_settings_t, get_page_ranges) - 64usize];
     ["Offset of field: _cef_print_settings_t::set_selection_only"]
-        [::std::mem::offset_of!(_cef_print_settings_t, set_selection_only) - 136usize];
+        [::std::mem::offset_of!(_cef_print_settings_t, set_selection_only) - 68usize];
     ["Offset of field: _cef_print_settings_t::is_selection_only"]
-        [::std::mem::offset_of!(_cef_print_settings_t, is_selection_only) - 144usize];
+        [::std::mem::offset_of!(_cef_print_settings_t, is_selection_only) - 72usize];
     ["Offset of field: _cef_print_settings_t::set_collate"]
-        [::std::mem::offset_of!(_cef_print_settings_t, set_collate) - 152usize];
+        [::std::mem::offset_of!(_cef_print_settings_t, set_collate) - 76usize];
     ["Offset of field: _cef_print_settings_t::will_collate"]
-        [::std::mem::offset_of!(_cef_print_settings_t, will_collate) - 160usize];
+        [::std::mem::offset_of!(_cef_print_settings_t, will_collate) - 80usize];
     ["Offset of field: _cef_print_settings_t::set_color_model"]
-        [::std::mem::offset_of!(_cef_print_settings_t, set_color_model) - 168usize];
+        [::std::mem::offset_of!(_cef_print_settings_t, set_color_model) - 84usize];
     ["Offset of field: _cef_print_settings_t::get_color_model"]
-        [::std::mem::offset_of!(_cef_print_settings_t, get_color_model) - 176usize];
+        [::std::mem::offset_of!(_cef_print_settings_t, get_color_model) - 88usize];
     ["Offset of field: _cef_print_settings_t::set_copies"]
-        [::std::mem::offset_of!(_cef_print_settings_t, set_copies) - 184usize];
+        [::std::mem::offset_of!(_cef_print_settings_t, set_copies) - 92usize];
     ["Offset of field: _cef_print_settings_t::get_copies"]
-        [::std::mem::offset_of!(_cef_print_settings_t, get_copies) - 192usize];
+        [::std::mem::offset_of!(_cef_print_settings_t, get_copies) - 96usize];
     ["Offset of field: _cef_print_settings_t::set_duplex_mode"]
-        [::std::mem::offset_of!(_cef_print_settings_t, set_duplex_mode) - 200usize];
+        [::std::mem::offset_of!(_cef_print_settings_t, set_duplex_mode) - 100usize];
     ["Offset of field: _cef_print_settings_t::get_duplex_mode"]
-        [::std::mem::offset_of!(_cef_print_settings_t, get_duplex_mode) - 208usize];
+        [::std::mem::offset_of!(_cef_print_settings_t, get_duplex_mode) - 104usize];
 };
 #[doc = "\n Structure representing print settings.\n"]
 pub type cef_print_settings_t = _cef_print_settings_t;
@@ -10501,15 +10497,15 @@ pub struct _cef_print_dialog_callback_t {
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
     ["Size of _cef_print_dialog_callback_t"]
-        [::std::mem::size_of::<_cef_print_dialog_callback_t>() - 56usize];
+        [::std::mem::size_of::<_cef_print_dialog_callback_t>() - 28usize];
     ["Alignment of _cef_print_dialog_callback_t"]
-        [::std::mem::align_of::<_cef_print_dialog_callback_t>() - 8usize];
+        [::std::mem::align_of::<_cef_print_dialog_callback_t>() - 4usize];
     ["Offset of field: _cef_print_dialog_callback_t::base"]
         [::std::mem::offset_of!(_cef_print_dialog_callback_t, base) - 0usize];
     ["Offset of field: _cef_print_dialog_callback_t::cont"]
-        [::std::mem::offset_of!(_cef_print_dialog_callback_t, cont) - 40usize];
+        [::std::mem::offset_of!(_cef_print_dialog_callback_t, cont) - 20usize];
     ["Offset of field: _cef_print_dialog_callback_t::cancel"]
-        [::std::mem::offset_of!(_cef_print_dialog_callback_t, cancel) - 48usize];
+        [::std::mem::offset_of!(_cef_print_dialog_callback_t, cancel) - 24usize];
 };
 #[doc = "\n Callback structure for asynchronous continuation of print dialog requests.\n"]
 pub type cef_print_dialog_callback_t = _cef_print_dialog_callback_t;
@@ -10525,13 +10521,13 @@ pub struct _cef_print_job_callback_t {
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
     ["Size of _cef_print_job_callback_t"]
-        [::std::mem::size_of::<_cef_print_job_callback_t>() - 48usize];
+        [::std::mem::size_of::<_cef_print_job_callback_t>() - 24usize];
     ["Alignment of _cef_print_job_callback_t"]
-        [::std::mem::align_of::<_cef_print_job_callback_t>() - 8usize];
+        [::std::mem::align_of::<_cef_print_job_callback_t>() - 4usize];
     ["Offset of field: _cef_print_job_callback_t::base"]
         [::std::mem::offset_of!(_cef_print_job_callback_t, base) - 0usize];
     ["Offset of field: _cef_print_job_callback_t::cont"]
-        [::std::mem::offset_of!(_cef_print_job_callback_t, cont) - 40usize];
+        [::std::mem::offset_of!(_cef_print_job_callback_t, cont) - 20usize];
 };
 #[doc = "\n Callback structure for asynchronous continuation of print job requests.\n"]
 pub type cef_print_job_callback_t = _cef_print_job_callback_t;
@@ -10588,22 +10584,22 @@ pub struct _cef_print_handler_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_print_handler_t"][::std::mem::size_of::<_cef_print_handler_t>() - 88usize];
-    ["Alignment of _cef_print_handler_t"][::std::mem::align_of::<_cef_print_handler_t>() - 8usize];
+    ["Size of _cef_print_handler_t"][::std::mem::size_of::<_cef_print_handler_t>() - 44usize];
+    ["Alignment of _cef_print_handler_t"][::std::mem::align_of::<_cef_print_handler_t>() - 4usize];
     ["Offset of field: _cef_print_handler_t::base"]
         [::std::mem::offset_of!(_cef_print_handler_t, base) - 0usize];
     ["Offset of field: _cef_print_handler_t::on_print_start"]
-        [::std::mem::offset_of!(_cef_print_handler_t, on_print_start) - 40usize];
+        [::std::mem::offset_of!(_cef_print_handler_t, on_print_start) - 20usize];
     ["Offset of field: _cef_print_handler_t::on_print_settings"]
-        [::std::mem::offset_of!(_cef_print_handler_t, on_print_settings) - 48usize];
+        [::std::mem::offset_of!(_cef_print_handler_t, on_print_settings) - 24usize];
     ["Offset of field: _cef_print_handler_t::on_print_dialog"]
-        [::std::mem::offset_of!(_cef_print_handler_t, on_print_dialog) - 56usize];
+        [::std::mem::offset_of!(_cef_print_handler_t, on_print_dialog) - 28usize];
     ["Offset of field: _cef_print_handler_t::on_print_job"]
-        [::std::mem::offset_of!(_cef_print_handler_t, on_print_job) - 64usize];
+        [::std::mem::offset_of!(_cef_print_handler_t, on_print_job) - 32usize];
     ["Offset of field: _cef_print_handler_t::on_print_reset"]
-        [::std::mem::offset_of!(_cef_print_handler_t, on_print_reset) - 72usize];
+        [::std::mem::offset_of!(_cef_print_handler_t, on_print_reset) - 36usize];
     ["Offset of field: _cef_print_handler_t::get_pdf_paper_size"]
-        [::std::mem::offset_of!(_cef_print_handler_t, get_pdf_paper_size) - 80usize];
+        [::std::mem::offset_of!(_cef_print_handler_t, get_pdf_paper_size) - 40usize];
 };
 #[doc = "\n Implement this structure to handle printing on Linux. Each browser will have\n only one print job in progress at a time. The functions of this structure\n will be called on the browser process UI thread.\n"]
 pub type cef_print_handler_t = _cef_print_handler_t;
@@ -10625,20 +10621,20 @@ pub struct _cef_accessibility_handler_t {
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
     ["Size of _cef_accessibility_handler_t"]
-        [::std::mem::size_of::<_cef_accessibility_handler_t>() - 56usize];
+        [::std::mem::size_of::<_cef_accessibility_handler_t>() - 28usize];
     ["Alignment of _cef_accessibility_handler_t"]
-        [::std::mem::align_of::<_cef_accessibility_handler_t>() - 8usize];
+        [::std::mem::align_of::<_cef_accessibility_handler_t>() - 4usize];
     ["Offset of field: _cef_accessibility_handler_t::base"]
         [::std::mem::offset_of!(_cef_accessibility_handler_t, base) - 0usize];
     ["Offset of field: _cef_accessibility_handler_t::on_accessibility_tree_change"][::std::mem::offset_of!(
         _cef_accessibility_handler_t,
         on_accessibility_tree_change
-    ) - 40usize];
+    ) - 20usize];
     ["Offset of field: _cef_accessibility_handler_t::on_accessibility_location_change"][::std::mem::offset_of!(
         _cef_accessibility_handler_t,
         on_accessibility_location_change
     )
-        - 48usize];
+        - 24usize];
 };
 #[doc = "\n Implement this structure to receive accessibility notification when\n accessibility events have been registered. The functions of this structure\n will be called on the UI thread.\n"]
 pub type cef_accessibility_handler_t = _cef_accessibility_handler_t;
@@ -10804,47 +10800,45 @@ pub struct _cef_render_handler_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_render_handler_t"][::std::mem::size_of::<_cef_render_handler_t>() - 176usize];
+    ["Size of _cef_render_handler_t"][::std::mem::size_of::<_cef_render_handler_t>() - 88usize];
     ["Alignment of _cef_render_handler_t"]
-        [::std::mem::align_of::<_cef_render_handler_t>() - 8usize];
+        [::std::mem::align_of::<_cef_render_handler_t>() - 4usize];
     ["Offset of field: _cef_render_handler_t::base"]
         [::std::mem::offset_of!(_cef_render_handler_t, base) - 0usize];
     ["Offset of field: _cef_render_handler_t::get_accessibility_handler"]
-        [::std::mem::offset_of!(_cef_render_handler_t, get_accessibility_handler) - 40usize];
+        [::std::mem::offset_of!(_cef_render_handler_t, get_accessibility_handler) - 20usize];
     ["Offset of field: _cef_render_handler_t::get_root_screen_rect"]
-        [::std::mem::offset_of!(_cef_render_handler_t, get_root_screen_rect) - 48usize];
+        [::std::mem::offset_of!(_cef_render_handler_t, get_root_screen_rect) - 24usize];
     ["Offset of field: _cef_render_handler_t::get_view_rect"]
-        [::std::mem::offset_of!(_cef_render_handler_t, get_view_rect) - 56usize];
+        [::std::mem::offset_of!(_cef_render_handler_t, get_view_rect) - 28usize];
     ["Offset of field: _cef_render_handler_t::get_screen_point"]
-        [::std::mem::offset_of!(_cef_render_handler_t, get_screen_point) - 64usize];
+        [::std::mem::offset_of!(_cef_render_handler_t, get_screen_point) - 32usize];
     ["Offset of field: _cef_render_handler_t::get_screen_info"]
-        [::std::mem::offset_of!(_cef_render_handler_t, get_screen_info) - 72usize];
+        [::std::mem::offset_of!(_cef_render_handler_t, get_screen_info) - 36usize];
     ["Offset of field: _cef_render_handler_t::on_popup_show"]
-        [::std::mem::offset_of!(_cef_render_handler_t, on_popup_show) - 80usize];
+        [::std::mem::offset_of!(_cef_render_handler_t, on_popup_show) - 40usize];
     ["Offset of field: _cef_render_handler_t::on_popup_size"]
-        [::std::mem::offset_of!(_cef_render_handler_t, on_popup_size) - 88usize];
+        [::std::mem::offset_of!(_cef_render_handler_t, on_popup_size) - 44usize];
     ["Offset of field: _cef_render_handler_t::on_paint"]
-        [::std::mem::offset_of!(_cef_render_handler_t, on_paint) - 96usize];
+        [::std::mem::offset_of!(_cef_render_handler_t, on_paint) - 48usize];
     ["Offset of field: _cef_render_handler_t::on_accelerated_paint"]
-        [::std::mem::offset_of!(_cef_render_handler_t, on_accelerated_paint) - 104usize];
+        [::std::mem::offset_of!(_cef_render_handler_t, on_accelerated_paint) - 52usize];
     ["Offset of field: _cef_render_handler_t::get_touch_handle_size"]
-        [::std::mem::offset_of!(_cef_render_handler_t, get_touch_handle_size) - 112usize];
+        [::std::mem::offset_of!(_cef_render_handler_t, get_touch_handle_size) - 56usize];
     ["Offset of field: _cef_render_handler_t::on_touch_handle_state_changed"]
-        [::std::mem::offset_of!(_cef_render_handler_t, on_touch_handle_state_changed) - 120usize];
+        [::std::mem::offset_of!(_cef_render_handler_t, on_touch_handle_state_changed) - 60usize];
     ["Offset of field: _cef_render_handler_t::start_dragging"]
-        [::std::mem::offset_of!(_cef_render_handler_t, start_dragging) - 128usize];
+        [::std::mem::offset_of!(_cef_render_handler_t, start_dragging) - 64usize];
     ["Offset of field: _cef_render_handler_t::update_drag_cursor"]
-        [::std::mem::offset_of!(_cef_render_handler_t, update_drag_cursor) - 136usize];
+        [::std::mem::offset_of!(_cef_render_handler_t, update_drag_cursor) - 68usize];
     ["Offset of field: _cef_render_handler_t::on_scroll_offset_changed"]
-        [::std::mem::offset_of!(_cef_render_handler_t, on_scroll_offset_changed) - 144usize];
-    ["Offset of field: _cef_render_handler_t::on_ime_composition_range_changed"][::std::mem::offset_of!(
-        _cef_render_handler_t,
-        on_ime_composition_range_changed
-    ) - 152usize];
+        [::std::mem::offset_of!(_cef_render_handler_t, on_scroll_offset_changed) - 72usize];
+    ["Offset of field: _cef_render_handler_t::on_ime_composition_range_changed"]
+        [::std::mem::offset_of!(_cef_render_handler_t, on_ime_composition_range_changed) - 76usize];
     ["Offset of field: _cef_render_handler_t::on_text_selection_changed"]
-        [::std::mem::offset_of!(_cef_render_handler_t, on_text_selection_changed) - 160usize];
+        [::std::mem::offset_of!(_cef_render_handler_t, on_text_selection_changed) - 80usize];
     ["Offset of field: _cef_render_handler_t::on_virtual_keyboard_requested"]
-        [::std::mem::offset_of!(_cef_render_handler_t, on_virtual_keyboard_requested) - 168usize];
+        [::std::mem::offset_of!(_cef_render_handler_t, on_virtual_keyboard_requested) - 84usize];
 };
 #[doc = "\n Implement this structure to handle events when window rendering is disabled.\n The functions of this structure will be called on the UI thread.\n"]
 pub type cef_render_handler_t = _cef_render_handler_t;
@@ -10867,14 +10861,14 @@ pub struct _cef_auth_callback_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_auth_callback_t"][::std::mem::size_of::<_cef_auth_callback_t>() - 56usize];
-    ["Alignment of _cef_auth_callback_t"][::std::mem::align_of::<_cef_auth_callback_t>() - 8usize];
+    ["Size of _cef_auth_callback_t"][::std::mem::size_of::<_cef_auth_callback_t>() - 28usize];
+    ["Alignment of _cef_auth_callback_t"][::std::mem::align_of::<_cef_auth_callback_t>() - 4usize];
     ["Offset of field: _cef_auth_callback_t::base"]
         [::std::mem::offset_of!(_cef_auth_callback_t, base) - 0usize];
     ["Offset of field: _cef_auth_callback_t::cont"]
-        [::std::mem::offset_of!(_cef_auth_callback_t, cont) - 40usize];
+        [::std::mem::offset_of!(_cef_auth_callback_t, cont) - 20usize];
     ["Offset of field: _cef_auth_callback_t::cancel"]
-        [::std::mem::offset_of!(_cef_auth_callback_t, cancel) - 48usize];
+        [::std::mem::offset_of!(_cef_auth_callback_t, cancel) - 24usize];
 };
 #[doc = "\n Callback structure used for asynchronous continuation of authentication\n requests.\n"]
 pub type cef_auth_callback_t = _cef_auth_callback_t;
@@ -10962,44 +10956,44 @@ pub struct _cef_response_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_response_t"][::std::mem::size_of::<_cef_response_t>() - 176usize];
-    ["Alignment of _cef_response_t"][::std::mem::align_of::<_cef_response_t>() - 8usize];
+    ["Size of _cef_response_t"][::std::mem::size_of::<_cef_response_t>() - 88usize];
+    ["Alignment of _cef_response_t"][::std::mem::align_of::<_cef_response_t>() - 4usize];
     ["Offset of field: _cef_response_t::base"]
         [::std::mem::offset_of!(_cef_response_t, base) - 0usize];
     ["Offset of field: _cef_response_t::is_read_only"]
-        [::std::mem::offset_of!(_cef_response_t, is_read_only) - 40usize];
+        [::std::mem::offset_of!(_cef_response_t, is_read_only) - 20usize];
     ["Offset of field: _cef_response_t::get_error"]
-        [::std::mem::offset_of!(_cef_response_t, get_error) - 48usize];
+        [::std::mem::offset_of!(_cef_response_t, get_error) - 24usize];
     ["Offset of field: _cef_response_t::set_error"]
-        [::std::mem::offset_of!(_cef_response_t, set_error) - 56usize];
+        [::std::mem::offset_of!(_cef_response_t, set_error) - 28usize];
     ["Offset of field: _cef_response_t::get_status"]
-        [::std::mem::offset_of!(_cef_response_t, get_status) - 64usize];
+        [::std::mem::offset_of!(_cef_response_t, get_status) - 32usize];
     ["Offset of field: _cef_response_t::set_status"]
-        [::std::mem::offset_of!(_cef_response_t, set_status) - 72usize];
+        [::std::mem::offset_of!(_cef_response_t, set_status) - 36usize];
     ["Offset of field: _cef_response_t::get_status_text"]
-        [::std::mem::offset_of!(_cef_response_t, get_status_text) - 80usize];
+        [::std::mem::offset_of!(_cef_response_t, get_status_text) - 40usize];
     ["Offset of field: _cef_response_t::set_status_text"]
-        [::std::mem::offset_of!(_cef_response_t, set_status_text) - 88usize];
+        [::std::mem::offset_of!(_cef_response_t, set_status_text) - 44usize];
     ["Offset of field: _cef_response_t::get_mime_type"]
-        [::std::mem::offset_of!(_cef_response_t, get_mime_type) - 96usize];
+        [::std::mem::offset_of!(_cef_response_t, get_mime_type) - 48usize];
     ["Offset of field: _cef_response_t::set_mime_type"]
-        [::std::mem::offset_of!(_cef_response_t, set_mime_type) - 104usize];
+        [::std::mem::offset_of!(_cef_response_t, set_mime_type) - 52usize];
     ["Offset of field: _cef_response_t::get_charset"]
-        [::std::mem::offset_of!(_cef_response_t, get_charset) - 112usize];
+        [::std::mem::offset_of!(_cef_response_t, get_charset) - 56usize];
     ["Offset of field: _cef_response_t::set_charset"]
-        [::std::mem::offset_of!(_cef_response_t, set_charset) - 120usize];
+        [::std::mem::offset_of!(_cef_response_t, set_charset) - 60usize];
     ["Offset of field: _cef_response_t::get_header_by_name"]
-        [::std::mem::offset_of!(_cef_response_t, get_header_by_name) - 128usize];
+        [::std::mem::offset_of!(_cef_response_t, get_header_by_name) - 64usize];
     ["Offset of field: _cef_response_t::set_header_by_name"]
-        [::std::mem::offset_of!(_cef_response_t, set_header_by_name) - 136usize];
+        [::std::mem::offset_of!(_cef_response_t, set_header_by_name) - 68usize];
     ["Offset of field: _cef_response_t::get_header_map"]
-        [::std::mem::offset_of!(_cef_response_t, get_header_map) - 144usize];
+        [::std::mem::offset_of!(_cef_response_t, get_header_map) - 72usize];
     ["Offset of field: _cef_response_t::set_header_map"]
-        [::std::mem::offset_of!(_cef_response_t, set_header_map) - 152usize];
+        [::std::mem::offset_of!(_cef_response_t, set_header_map) - 76usize];
     ["Offset of field: _cef_response_t::get_url"]
-        [::std::mem::offset_of!(_cef_response_t, get_url) - 160usize];
+        [::std::mem::offset_of!(_cef_response_t, get_url) - 80usize];
     ["Offset of field: _cef_response_t::set_url"]
-        [::std::mem::offset_of!(_cef_response_t, set_url) - 168usize];
+        [::std::mem::offset_of!(_cef_response_t, set_url) - 84usize];
 };
 #[doc = "\n Structure used to represent a web response. The functions of this structure\n may be called on any thread.\n"]
 pub type cef_response_t = _cef_response_t;
@@ -11021,13 +11015,13 @@ pub struct _cef_resource_skip_callback_t {
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
     ["Size of _cef_resource_skip_callback_t"]
-        [::std::mem::size_of::<_cef_resource_skip_callback_t>() - 48usize];
+        [::std::mem::size_of::<_cef_resource_skip_callback_t>() - 24usize];
     ["Alignment of _cef_resource_skip_callback_t"]
-        [::std::mem::align_of::<_cef_resource_skip_callback_t>() - 8usize];
+        [::std::mem::align_of::<_cef_resource_skip_callback_t>() - 4usize];
     ["Offset of field: _cef_resource_skip_callback_t::base"]
         [::std::mem::offset_of!(_cef_resource_skip_callback_t, base) - 0usize];
     ["Offset of field: _cef_resource_skip_callback_t::cont"]
-        [::std::mem::offset_of!(_cef_resource_skip_callback_t, cont) - 40usize];
+        [::std::mem::offset_of!(_cef_resource_skip_callback_t, cont) - 20usize];
 };
 #[doc = "\n Callback for asynchronous continuation of cef_resource_handler_t::skip().\n"]
 pub type cef_resource_skip_callback_t = _cef_resource_skip_callback_t;
@@ -11048,13 +11042,13 @@ pub struct _cef_resource_read_callback_t {
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
     ["Size of _cef_resource_read_callback_t"]
-        [::std::mem::size_of::<_cef_resource_read_callback_t>() - 48usize];
+        [::std::mem::size_of::<_cef_resource_read_callback_t>() - 24usize];
     ["Alignment of _cef_resource_read_callback_t"]
-        [::std::mem::align_of::<_cef_resource_read_callback_t>() - 8usize];
+        [::std::mem::align_of::<_cef_resource_read_callback_t>() - 4usize];
     ["Offset of field: _cef_resource_read_callback_t::base"]
         [::std::mem::offset_of!(_cef_resource_read_callback_t, base) - 0usize];
     ["Offset of field: _cef_resource_read_callback_t::cont"]
-        [::std::mem::offset_of!(_cef_resource_read_callback_t, cont) - 40usize];
+        [::std::mem::offset_of!(_cef_resource_read_callback_t, cont) - 20usize];
 };
 #[doc = "\n Callback for asynchronous continuation of cef_resource_handler_t::read().\n"]
 pub type cef_resource_read_callback_t = _cef_resource_read_callback_t;
@@ -11124,25 +11118,25 @@ pub struct _cef_resource_handler_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_resource_handler_t"][::std::mem::size_of::<_cef_resource_handler_t>() - 96usize];
+    ["Size of _cef_resource_handler_t"][::std::mem::size_of::<_cef_resource_handler_t>() - 48usize];
     ["Alignment of _cef_resource_handler_t"]
-        [::std::mem::align_of::<_cef_resource_handler_t>() - 8usize];
+        [::std::mem::align_of::<_cef_resource_handler_t>() - 4usize];
     ["Offset of field: _cef_resource_handler_t::base"]
         [::std::mem::offset_of!(_cef_resource_handler_t, base) - 0usize];
     ["Offset of field: _cef_resource_handler_t::open"]
-        [::std::mem::offset_of!(_cef_resource_handler_t, open) - 40usize];
+        [::std::mem::offset_of!(_cef_resource_handler_t, open) - 20usize];
     ["Offset of field: _cef_resource_handler_t::process_request"]
-        [::std::mem::offset_of!(_cef_resource_handler_t, process_request) - 48usize];
+        [::std::mem::offset_of!(_cef_resource_handler_t, process_request) - 24usize];
     ["Offset of field: _cef_resource_handler_t::get_response_headers"]
-        [::std::mem::offset_of!(_cef_resource_handler_t, get_response_headers) - 56usize];
+        [::std::mem::offset_of!(_cef_resource_handler_t, get_response_headers) - 28usize];
     ["Offset of field: _cef_resource_handler_t::skip"]
-        [::std::mem::offset_of!(_cef_resource_handler_t, skip) - 64usize];
+        [::std::mem::offset_of!(_cef_resource_handler_t, skip) - 32usize];
     ["Offset of field: _cef_resource_handler_t::read"]
-        [::std::mem::offset_of!(_cef_resource_handler_t, read) - 72usize];
+        [::std::mem::offset_of!(_cef_resource_handler_t, read) - 36usize];
     ["Offset of field: _cef_resource_handler_t::read_response"]
-        [::std::mem::offset_of!(_cef_resource_handler_t, read_response) - 80usize];
+        [::std::mem::offset_of!(_cef_resource_handler_t, read_response) - 40usize];
     ["Offset of field: _cef_resource_handler_t::cancel"]
-        [::std::mem::offset_of!(_cef_resource_handler_t, cancel) - 88usize];
+        [::std::mem::offset_of!(_cef_resource_handler_t, cancel) - 44usize];
 };
 #[doc = "\n Structure used to implement a custom request handler structure. The\n functions of this structure will be called on the IO thread unless otherwise\n indicated.\n"]
 pub type cef_resource_handler_t = _cef_resource_handler_t;
@@ -11171,15 +11165,15 @@ pub struct _cef_response_filter_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_response_filter_t"][::std::mem::size_of::<_cef_response_filter_t>() - 56usize];
+    ["Size of _cef_response_filter_t"][::std::mem::size_of::<_cef_response_filter_t>() - 28usize];
     ["Alignment of _cef_response_filter_t"]
-        [::std::mem::align_of::<_cef_response_filter_t>() - 8usize];
+        [::std::mem::align_of::<_cef_response_filter_t>() - 4usize];
     ["Offset of field: _cef_response_filter_t::base"]
         [::std::mem::offset_of!(_cef_response_filter_t, base) - 0usize];
     ["Offset of field: _cef_response_filter_t::init_filter"]
-        [::std::mem::offset_of!(_cef_response_filter_t, init_filter) - 40usize];
+        [::std::mem::offset_of!(_cef_response_filter_t, init_filter) - 20usize];
     ["Offset of field: _cef_response_filter_t::filter"]
-        [::std::mem::offset_of!(_cef_response_filter_t, filter) - 48usize];
+        [::std::mem::offset_of!(_cef_response_filter_t, filter) - 24usize];
 };
 #[doc = "\n Implement this structure to filter resource response content. The functions\n of this structure will be called on the browser process IO thread.\n"]
 pub type cef_response_filter_t = _cef_response_filter_t;
@@ -11274,35 +11268,35 @@ pub struct _cef_resource_request_handler_t {
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
     ["Size of _cef_resource_request_handler_t"]
-        [::std::mem::size_of::<_cef_resource_request_handler_t>() - 104usize];
+        [::std::mem::size_of::<_cef_resource_request_handler_t>() - 52usize];
     ["Alignment of _cef_resource_request_handler_t"]
-        [::std::mem::align_of::<_cef_resource_request_handler_t>() - 8usize];
+        [::std::mem::align_of::<_cef_resource_request_handler_t>() - 4usize];
     ["Offset of field: _cef_resource_request_handler_t::base"]
         [::std::mem::offset_of!(_cef_resource_request_handler_t, base) - 0usize];
     ["Offset of field: _cef_resource_request_handler_t::get_cookie_access_filter"][::std::mem::offset_of!(
         _cef_resource_request_handler_t,
         get_cookie_access_filter
-    ) - 40usize];
+    ) - 20usize];
     ["Offset of field: _cef_resource_request_handler_t::on_before_resource_load"][::std::mem::offset_of!(
         _cef_resource_request_handler_t,
         on_before_resource_load
-    ) - 48usize];
+    ) - 24usize];
     ["Offset of field: _cef_resource_request_handler_t::get_resource_handler"]
-        [::std::mem::offset_of!(_cef_resource_request_handler_t, get_resource_handler) - 56usize];
+        [::std::mem::offset_of!(_cef_resource_request_handler_t, get_resource_handler) - 28usize];
     ["Offset of field: _cef_resource_request_handler_t::on_resource_redirect"]
-        [::std::mem::offset_of!(_cef_resource_request_handler_t, on_resource_redirect) - 64usize];
+        [::std::mem::offset_of!(_cef_resource_request_handler_t, on_resource_redirect) - 32usize];
     ["Offset of field: _cef_resource_request_handler_t::on_resource_response"]
-        [::std::mem::offset_of!(_cef_resource_request_handler_t, on_resource_response) - 72usize];
+        [::std::mem::offset_of!(_cef_resource_request_handler_t, on_resource_response) - 36usize];
     ["Offset of field: _cef_resource_request_handler_t::get_resource_response_filter"][::std::mem::offset_of!(
         _cef_resource_request_handler_t,
         get_resource_response_filter
-    ) - 80usize];
+    ) - 40usize];
     ["Offset of field: _cef_resource_request_handler_t::on_resource_load_complete"][::std::mem::offset_of!(
         _cef_resource_request_handler_t,
         on_resource_load_complete
-    ) - 88usize];
+    ) - 44usize];
     ["Offset of field: _cef_resource_request_handler_t::on_protocol_execution"]
-        [::std::mem::offset_of!(_cef_resource_request_handler_t, on_protocol_execution) - 96usize];
+        [::std::mem::offset_of!(_cef_resource_request_handler_t, on_protocol_execution) - 48usize];
 };
 #[doc = "\n Implement this structure to handle events related to browser requests. The\n functions of this structure will be called on the IO thread unless otherwise\n indicated.\n"]
 pub type cef_resource_request_handler_t = _cef_resource_request_handler_t;
@@ -11337,15 +11331,15 @@ pub struct _cef_cookie_access_filter_t {
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
     ["Size of _cef_cookie_access_filter_t"]
-        [::std::mem::size_of::<_cef_cookie_access_filter_t>() - 56usize];
+        [::std::mem::size_of::<_cef_cookie_access_filter_t>() - 28usize];
     ["Alignment of _cef_cookie_access_filter_t"]
-        [::std::mem::align_of::<_cef_cookie_access_filter_t>() - 8usize];
+        [::std::mem::align_of::<_cef_cookie_access_filter_t>() - 4usize];
     ["Offset of field: _cef_cookie_access_filter_t::base"]
         [::std::mem::offset_of!(_cef_cookie_access_filter_t, base) - 0usize];
     ["Offset of field: _cef_cookie_access_filter_t::can_send_cookie"]
-        [::std::mem::offset_of!(_cef_cookie_access_filter_t, can_send_cookie) - 40usize];
+        [::std::mem::offset_of!(_cef_cookie_access_filter_t, can_send_cookie) - 20usize];
     ["Offset of field: _cef_cookie_access_filter_t::can_save_cookie"]
-        [::std::mem::offset_of!(_cef_cookie_access_filter_t, can_save_cookie) - 48usize];
+        [::std::mem::offset_of!(_cef_cookie_access_filter_t, can_save_cookie) - 24usize];
 };
 #[doc = "\n Implement this structure to filter cookies that may be sent or received from\n resource requests. The functions of this structure will be called on the IO\n thread unless otherwise indicated.\n"]
 pub type cef_cookie_access_filter_t = _cef_cookie_access_filter_t;
@@ -11366,14 +11360,14 @@ pub struct _cef_sslinfo_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_sslinfo_t"][::std::mem::size_of::<_cef_sslinfo_t>() - 56usize];
-    ["Alignment of _cef_sslinfo_t"][::std::mem::align_of::<_cef_sslinfo_t>() - 8usize];
+    ["Size of _cef_sslinfo_t"][::std::mem::size_of::<_cef_sslinfo_t>() - 28usize];
+    ["Alignment of _cef_sslinfo_t"][::std::mem::align_of::<_cef_sslinfo_t>() - 4usize];
     ["Offset of field: _cef_sslinfo_t::base"]
         [::std::mem::offset_of!(_cef_sslinfo_t, base) - 0usize];
     ["Offset of field: _cef_sslinfo_t::get_cert_status"]
-        [::std::mem::offset_of!(_cef_sslinfo_t, get_cert_status) - 40usize];
+        [::std::mem::offset_of!(_cef_sslinfo_t, get_cert_status) - 20usize];
     ["Offset of field: _cef_sslinfo_t::get_x509certificate"]
-        [::std::mem::offset_of!(_cef_sslinfo_t, get_x509certificate) - 48usize];
+        [::std::mem::offset_of!(_cef_sslinfo_t, get_x509certificate) - 24usize];
 };
 #[doc = "\n Structure representing SSL information.\n"]
 pub type cef_sslinfo_t = _cef_sslinfo_t;
@@ -11399,15 +11393,15 @@ pub struct _cef_unresponsive_process_callback_t {
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
     ["Size of _cef_unresponsive_process_callback_t"]
-        [::std::mem::size_of::<_cef_unresponsive_process_callback_t>() - 56usize];
+        [::std::mem::size_of::<_cef_unresponsive_process_callback_t>() - 28usize];
     ["Alignment of _cef_unresponsive_process_callback_t"]
-        [::std::mem::align_of::<_cef_unresponsive_process_callback_t>() - 8usize];
+        [::std::mem::align_of::<_cef_unresponsive_process_callback_t>() - 4usize];
     ["Offset of field: _cef_unresponsive_process_callback_t::base"]
         [::std::mem::offset_of!(_cef_unresponsive_process_callback_t, base) - 0usize];
     ["Offset of field: _cef_unresponsive_process_callback_t::wait"]
-        [::std::mem::offset_of!(_cef_unresponsive_process_callback_t, wait) - 40usize];
+        [::std::mem::offset_of!(_cef_unresponsive_process_callback_t, wait) - 20usize];
     ["Offset of field: _cef_unresponsive_process_callback_t::terminate"]
-        [::std::mem::offset_of!(_cef_unresponsive_process_callback_t, terminate) - 48usize];
+        [::std::mem::offset_of!(_cef_unresponsive_process_callback_t, terminate) - 24usize];
 };
 #[doc = "\n Callback structure for asynchronous handling of an unresponsive process.\n"]
 pub type cef_unresponsive_process_callback_t = _cef_unresponsive_process_callback_t;
@@ -11428,13 +11422,13 @@ pub struct _cef_select_client_certificate_callback_t {
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
     ["Size of _cef_select_client_certificate_callback_t"]
-        [::std::mem::size_of::<_cef_select_client_certificate_callback_t>() - 48usize];
+        [::std::mem::size_of::<_cef_select_client_certificate_callback_t>() - 24usize];
     ["Alignment of _cef_select_client_certificate_callback_t"]
-        [::std::mem::align_of::<_cef_select_client_certificate_callback_t>() - 8usize];
+        [::std::mem::align_of::<_cef_select_client_certificate_callback_t>() - 4usize];
     ["Offset of field: _cef_select_client_certificate_callback_t::base"]
         [::std::mem::offset_of!(_cef_select_client_certificate_callback_t, base) - 0usize];
     ["Offset of field: _cef_select_client_certificate_callback_t::select"]
-        [::std::mem::offset_of!(_cef_select_client_certificate_callback_t, select) - 40usize];
+        [::std::mem::offset_of!(_cef_select_client_certificate_callback_t, select) - 20usize];
 };
 #[doc = "\n Callback structure used to select a client certificate for authentication.\n"]
 pub type cef_select_client_certificate_callback_t = _cef_select_client_certificate_callback_t;
@@ -11550,35 +11544,35 @@ pub struct _cef_request_handler_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_request_handler_t"][::std::mem::size_of::<_cef_request_handler_t>() - 128usize];
+    ["Size of _cef_request_handler_t"][::std::mem::size_of::<_cef_request_handler_t>() - 64usize];
     ["Alignment of _cef_request_handler_t"]
-        [::std::mem::align_of::<_cef_request_handler_t>() - 8usize];
+        [::std::mem::align_of::<_cef_request_handler_t>() - 4usize];
     ["Offset of field: _cef_request_handler_t::base"]
         [::std::mem::offset_of!(_cef_request_handler_t, base) - 0usize];
     ["Offset of field: _cef_request_handler_t::on_before_browse"]
-        [::std::mem::offset_of!(_cef_request_handler_t, on_before_browse) - 40usize];
+        [::std::mem::offset_of!(_cef_request_handler_t, on_before_browse) - 20usize];
     ["Offset of field: _cef_request_handler_t::on_open_urlfrom_tab"]
-        [::std::mem::offset_of!(_cef_request_handler_t, on_open_urlfrom_tab) - 48usize];
+        [::std::mem::offset_of!(_cef_request_handler_t, on_open_urlfrom_tab) - 24usize];
     ["Offset of field: _cef_request_handler_t::get_resource_request_handler"]
-        [::std::mem::offset_of!(_cef_request_handler_t, get_resource_request_handler) - 56usize];
+        [::std::mem::offset_of!(_cef_request_handler_t, get_resource_request_handler) - 28usize];
     ["Offset of field: _cef_request_handler_t::get_auth_credentials"]
-        [::std::mem::offset_of!(_cef_request_handler_t, get_auth_credentials) - 64usize];
+        [::std::mem::offset_of!(_cef_request_handler_t, get_auth_credentials) - 32usize];
     ["Offset of field: _cef_request_handler_t::on_certificate_error"]
-        [::std::mem::offset_of!(_cef_request_handler_t, on_certificate_error) - 72usize];
+        [::std::mem::offset_of!(_cef_request_handler_t, on_certificate_error) - 36usize];
     ["Offset of field: _cef_request_handler_t::on_select_client_certificate"]
-        [::std::mem::offset_of!(_cef_request_handler_t, on_select_client_certificate) - 80usize];
+        [::std::mem::offset_of!(_cef_request_handler_t, on_select_client_certificate) - 40usize];
     ["Offset of field: _cef_request_handler_t::on_render_view_ready"]
-        [::std::mem::offset_of!(_cef_request_handler_t, on_render_view_ready) - 88usize];
+        [::std::mem::offset_of!(_cef_request_handler_t, on_render_view_ready) - 44usize];
     ["Offset of field: _cef_request_handler_t::on_render_process_unresponsive"]
-        [::std::mem::offset_of!(_cef_request_handler_t, on_render_process_unresponsive) - 96usize];
+        [::std::mem::offset_of!(_cef_request_handler_t, on_render_process_unresponsive) - 48usize];
     ["Offset of field: _cef_request_handler_t::on_render_process_responsive"]
-        [::std::mem::offset_of!(_cef_request_handler_t, on_render_process_responsive) - 104usize];
+        [::std::mem::offset_of!(_cef_request_handler_t, on_render_process_responsive) - 52usize];
     ["Offset of field: _cef_request_handler_t::on_render_process_terminated"]
-        [::std::mem::offset_of!(_cef_request_handler_t, on_render_process_terminated) - 112usize];
+        [::std::mem::offset_of!(_cef_request_handler_t, on_render_process_terminated) - 56usize];
     ["Offset of field: _cef_request_handler_t::on_document_available_in_main_frame"][::std::mem::offset_of!(
         _cef_request_handler_t,
         on_document_available_in_main_frame
-    ) - 120usize];
+    ) - 60usize];
 };
 #[doc = "\n Implement this structure to handle events related to browser requests. The\n functions of this structure will be called on the thread indicated.\n"]
 pub type cef_request_handler_t = _cef_request_handler_t;
@@ -11673,47 +11667,47 @@ pub struct _cef_client_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_client_t"][::std::mem::size_of::<_cef_client_t>() - 192usize];
-    ["Alignment of _cef_client_t"][::std::mem::align_of::<_cef_client_t>() - 8usize];
+    ["Size of _cef_client_t"][::std::mem::size_of::<_cef_client_t>() - 96usize];
+    ["Alignment of _cef_client_t"][::std::mem::align_of::<_cef_client_t>() - 4usize];
     ["Offset of field: _cef_client_t::base"][::std::mem::offset_of!(_cef_client_t, base) - 0usize];
     ["Offset of field: _cef_client_t::get_audio_handler"]
-        [::std::mem::offset_of!(_cef_client_t, get_audio_handler) - 40usize];
+        [::std::mem::offset_of!(_cef_client_t, get_audio_handler) - 20usize];
     ["Offset of field: _cef_client_t::get_command_handler"]
-        [::std::mem::offset_of!(_cef_client_t, get_command_handler) - 48usize];
+        [::std::mem::offset_of!(_cef_client_t, get_command_handler) - 24usize];
     ["Offset of field: _cef_client_t::get_context_menu_handler"]
-        [::std::mem::offset_of!(_cef_client_t, get_context_menu_handler) - 56usize];
+        [::std::mem::offset_of!(_cef_client_t, get_context_menu_handler) - 28usize];
     ["Offset of field: _cef_client_t::get_dialog_handler"]
-        [::std::mem::offset_of!(_cef_client_t, get_dialog_handler) - 64usize];
+        [::std::mem::offset_of!(_cef_client_t, get_dialog_handler) - 32usize];
     ["Offset of field: _cef_client_t::get_display_handler"]
-        [::std::mem::offset_of!(_cef_client_t, get_display_handler) - 72usize];
+        [::std::mem::offset_of!(_cef_client_t, get_display_handler) - 36usize];
     ["Offset of field: _cef_client_t::get_download_handler"]
-        [::std::mem::offset_of!(_cef_client_t, get_download_handler) - 80usize];
+        [::std::mem::offset_of!(_cef_client_t, get_download_handler) - 40usize];
     ["Offset of field: _cef_client_t::get_drag_handler"]
-        [::std::mem::offset_of!(_cef_client_t, get_drag_handler) - 88usize];
+        [::std::mem::offset_of!(_cef_client_t, get_drag_handler) - 44usize];
     ["Offset of field: _cef_client_t::get_find_handler"]
-        [::std::mem::offset_of!(_cef_client_t, get_find_handler) - 96usize];
+        [::std::mem::offset_of!(_cef_client_t, get_find_handler) - 48usize];
     ["Offset of field: _cef_client_t::get_focus_handler"]
-        [::std::mem::offset_of!(_cef_client_t, get_focus_handler) - 104usize];
+        [::std::mem::offset_of!(_cef_client_t, get_focus_handler) - 52usize];
     ["Offset of field: _cef_client_t::get_frame_handler"]
-        [::std::mem::offset_of!(_cef_client_t, get_frame_handler) - 112usize];
+        [::std::mem::offset_of!(_cef_client_t, get_frame_handler) - 56usize];
     ["Offset of field: _cef_client_t::get_permission_handler"]
-        [::std::mem::offset_of!(_cef_client_t, get_permission_handler) - 120usize];
+        [::std::mem::offset_of!(_cef_client_t, get_permission_handler) - 60usize];
     ["Offset of field: _cef_client_t::get_jsdialog_handler"]
-        [::std::mem::offset_of!(_cef_client_t, get_jsdialog_handler) - 128usize];
+        [::std::mem::offset_of!(_cef_client_t, get_jsdialog_handler) - 64usize];
     ["Offset of field: _cef_client_t::get_keyboard_handler"]
-        [::std::mem::offset_of!(_cef_client_t, get_keyboard_handler) - 136usize];
+        [::std::mem::offset_of!(_cef_client_t, get_keyboard_handler) - 68usize];
     ["Offset of field: _cef_client_t::get_life_span_handler"]
-        [::std::mem::offset_of!(_cef_client_t, get_life_span_handler) - 144usize];
+        [::std::mem::offset_of!(_cef_client_t, get_life_span_handler) - 72usize];
     ["Offset of field: _cef_client_t::get_load_handler"]
-        [::std::mem::offset_of!(_cef_client_t, get_load_handler) - 152usize];
+        [::std::mem::offset_of!(_cef_client_t, get_load_handler) - 76usize];
     ["Offset of field: _cef_client_t::get_print_handler"]
-        [::std::mem::offset_of!(_cef_client_t, get_print_handler) - 160usize];
+        [::std::mem::offset_of!(_cef_client_t, get_print_handler) - 80usize];
     ["Offset of field: _cef_client_t::get_render_handler"]
-        [::std::mem::offset_of!(_cef_client_t, get_render_handler) - 168usize];
+        [::std::mem::offset_of!(_cef_client_t, get_render_handler) - 84usize];
     ["Offset of field: _cef_client_t::get_request_handler"]
-        [::std::mem::offset_of!(_cef_client_t, get_request_handler) - 176usize];
+        [::std::mem::offset_of!(_cef_client_t, get_request_handler) - 88usize];
     ["Offset of field: _cef_client_t::on_process_message_received"]
-        [::std::mem::offset_of!(_cef_client_t, on_process_message_received) - 184usize];
+        [::std::mem::offset_of!(_cef_client_t, on_process_message_received) - 92usize];
 };
 #[doc = "\n Implement this structure to provide handler implementations.\n"]
 pub type cef_client_t = _cef_client_t;
@@ -11818,50 +11812,50 @@ pub struct _cef_command_line_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_command_line_t"][::std::mem::size_of::<_cef_command_line_t>() - 200usize];
-    ["Alignment of _cef_command_line_t"][::std::mem::align_of::<_cef_command_line_t>() - 8usize];
+    ["Size of _cef_command_line_t"][::std::mem::size_of::<_cef_command_line_t>() - 100usize];
+    ["Alignment of _cef_command_line_t"][::std::mem::align_of::<_cef_command_line_t>() - 4usize];
     ["Offset of field: _cef_command_line_t::base"]
         [::std::mem::offset_of!(_cef_command_line_t, base) - 0usize];
     ["Offset of field: _cef_command_line_t::is_valid"]
-        [::std::mem::offset_of!(_cef_command_line_t, is_valid) - 40usize];
+        [::std::mem::offset_of!(_cef_command_line_t, is_valid) - 20usize];
     ["Offset of field: _cef_command_line_t::is_read_only"]
-        [::std::mem::offset_of!(_cef_command_line_t, is_read_only) - 48usize];
+        [::std::mem::offset_of!(_cef_command_line_t, is_read_only) - 24usize];
     ["Offset of field: _cef_command_line_t::copy"]
-        [::std::mem::offset_of!(_cef_command_line_t, copy) - 56usize];
+        [::std::mem::offset_of!(_cef_command_line_t, copy) - 28usize];
     ["Offset of field: _cef_command_line_t::init_from_argv"]
-        [::std::mem::offset_of!(_cef_command_line_t, init_from_argv) - 64usize];
+        [::std::mem::offset_of!(_cef_command_line_t, init_from_argv) - 32usize];
     ["Offset of field: _cef_command_line_t::init_from_string"]
-        [::std::mem::offset_of!(_cef_command_line_t, init_from_string) - 72usize];
+        [::std::mem::offset_of!(_cef_command_line_t, init_from_string) - 36usize];
     ["Offset of field: _cef_command_line_t::reset"]
-        [::std::mem::offset_of!(_cef_command_line_t, reset) - 80usize];
+        [::std::mem::offset_of!(_cef_command_line_t, reset) - 40usize];
     ["Offset of field: _cef_command_line_t::get_argv"]
-        [::std::mem::offset_of!(_cef_command_line_t, get_argv) - 88usize];
+        [::std::mem::offset_of!(_cef_command_line_t, get_argv) - 44usize];
     ["Offset of field: _cef_command_line_t::get_command_line_string"]
-        [::std::mem::offset_of!(_cef_command_line_t, get_command_line_string) - 96usize];
+        [::std::mem::offset_of!(_cef_command_line_t, get_command_line_string) - 48usize];
     ["Offset of field: _cef_command_line_t::get_program"]
-        [::std::mem::offset_of!(_cef_command_line_t, get_program) - 104usize];
+        [::std::mem::offset_of!(_cef_command_line_t, get_program) - 52usize];
     ["Offset of field: _cef_command_line_t::set_program"]
-        [::std::mem::offset_of!(_cef_command_line_t, set_program) - 112usize];
+        [::std::mem::offset_of!(_cef_command_line_t, set_program) - 56usize];
     ["Offset of field: _cef_command_line_t::has_switches"]
-        [::std::mem::offset_of!(_cef_command_line_t, has_switches) - 120usize];
+        [::std::mem::offset_of!(_cef_command_line_t, has_switches) - 60usize];
     ["Offset of field: _cef_command_line_t::has_switch"]
-        [::std::mem::offset_of!(_cef_command_line_t, has_switch) - 128usize];
+        [::std::mem::offset_of!(_cef_command_line_t, has_switch) - 64usize];
     ["Offset of field: _cef_command_line_t::get_switch_value"]
-        [::std::mem::offset_of!(_cef_command_line_t, get_switch_value) - 136usize];
+        [::std::mem::offset_of!(_cef_command_line_t, get_switch_value) - 68usize];
     ["Offset of field: _cef_command_line_t::get_switches"]
-        [::std::mem::offset_of!(_cef_command_line_t, get_switches) - 144usize];
+        [::std::mem::offset_of!(_cef_command_line_t, get_switches) - 72usize];
     ["Offset of field: _cef_command_line_t::append_switch"]
-        [::std::mem::offset_of!(_cef_command_line_t, append_switch) - 152usize];
+        [::std::mem::offset_of!(_cef_command_line_t, append_switch) - 76usize];
     ["Offset of field: _cef_command_line_t::append_switch_with_value"]
-        [::std::mem::offset_of!(_cef_command_line_t, append_switch_with_value) - 160usize];
+        [::std::mem::offset_of!(_cef_command_line_t, append_switch_with_value) - 80usize];
     ["Offset of field: _cef_command_line_t::has_arguments"]
-        [::std::mem::offset_of!(_cef_command_line_t, has_arguments) - 168usize];
+        [::std::mem::offset_of!(_cef_command_line_t, has_arguments) - 84usize];
     ["Offset of field: _cef_command_line_t::get_arguments"]
-        [::std::mem::offset_of!(_cef_command_line_t, get_arguments) - 176usize];
+        [::std::mem::offset_of!(_cef_command_line_t, get_arguments) - 88usize];
     ["Offset of field: _cef_command_line_t::append_argument"]
-        [::std::mem::offset_of!(_cef_command_line_t, append_argument) - 184usize];
+        [::std::mem::offset_of!(_cef_command_line_t, append_argument) - 92usize];
     ["Offset of field: _cef_command_line_t::prepend_wrapper"]
-        [::std::mem::offset_of!(_cef_command_line_t, prepend_wrapper) - 192usize];
+        [::std::mem::offset_of!(_cef_command_line_t, prepend_wrapper) - 96usize];
 };
 #[doc = "\n Structure used to create and/or parse command line arguments. Arguments with\n \"--\", \"-\" and, on Windows, \"/\" prefixes are considered switches. Switches\n will always precede any arguments without switch prefixes. Switches can\n optionally have a value specified using the \"=\" delimiter (e.g.\n \"-switch=value\"). An argument of \"--\" will terminate switch parsing with all\n subsequent tokens, regardless of prefix, being interpreted as non-switch\n arguments. Switch names should be lowercase ASCII and will be converted to\n such if necessary. Switch values will retain the original case and UTF8\n encoding. This structure can be used before cef_initialize() is called.\n"]
 pub type cef_command_line_t = _cef_command_line_t;
@@ -11903,20 +11897,20 @@ pub struct _cef_request_context_handler_t {
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
     ["Size of _cef_request_context_handler_t"]
-        [::std::mem::size_of::<_cef_request_context_handler_t>() - 56usize];
+        [::std::mem::size_of::<_cef_request_context_handler_t>() - 28usize];
     ["Alignment of _cef_request_context_handler_t"]
-        [::std::mem::align_of::<_cef_request_context_handler_t>() - 8usize];
+        [::std::mem::align_of::<_cef_request_context_handler_t>() - 4usize];
     ["Offset of field: _cef_request_context_handler_t::base"]
         [::std::mem::offset_of!(_cef_request_context_handler_t, base) - 0usize];
     ["Offset of field: _cef_request_context_handler_t::on_request_context_initialized"][::std::mem::offset_of!(
         _cef_request_context_handler_t,
         on_request_context_initialized
     )
-        - 40usize];
+        - 20usize];
     ["Offset of field: _cef_request_context_handler_t::get_resource_request_handler"][::std::mem::offset_of!(
         _cef_request_context_handler_t,
         get_resource_request_handler
-    ) - 48usize];
+    ) - 24usize];
 };
 #[doc = "\n Implement this structure to provide handler implementations. The handler\n instance will not be released until all objects related to the context have\n been destroyed.\n"]
 pub type cef_request_context_handler_t = _cef_request_context_handler_t;
@@ -11970,39 +11964,39 @@ pub struct _cef_browser_process_handler_t {
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
     ["Size of _cef_browser_process_handler_t"]
-        [::std::mem::size_of::<_cef_browser_process_handler_t>() - 96usize];
+        [::std::mem::size_of::<_cef_browser_process_handler_t>() - 48usize];
     ["Alignment of _cef_browser_process_handler_t"]
-        [::std::mem::align_of::<_cef_browser_process_handler_t>() - 8usize];
+        [::std::mem::align_of::<_cef_browser_process_handler_t>() - 4usize];
     ["Offset of field: _cef_browser_process_handler_t::base"]
         [::std::mem::offset_of!(_cef_browser_process_handler_t, base) - 0usize];
     ["Offset of field: _cef_browser_process_handler_t::on_register_custom_preferences"][::std::mem::offset_of!(
         _cef_browser_process_handler_t,
         on_register_custom_preferences
     )
-        - 40usize];
+        - 20usize];
     ["Offset of field: _cef_browser_process_handler_t::on_context_initialized"]
-        [::std::mem::offset_of!(_cef_browser_process_handler_t, on_context_initialized) - 48usize];
+        [::std::mem::offset_of!(_cef_browser_process_handler_t, on_context_initialized) - 24usize];
     ["Offset of field: _cef_browser_process_handler_t::on_before_child_process_launch"][::std::mem::offset_of!(
         _cef_browser_process_handler_t,
         on_before_child_process_launch
     )
-        - 56usize];
+        - 28usize];
     ["Offset of field: _cef_browser_process_handler_t::on_already_running_app_relaunch"][::std::mem::offset_of!(
         _cef_browser_process_handler_t,
         on_already_running_app_relaunch
     )
-        - 64usize];
+        - 32usize];
     ["Offset of field: _cef_browser_process_handler_t::on_schedule_message_pump_work"][::std::mem::offset_of!(
         _cef_browser_process_handler_t,
         on_schedule_message_pump_work
-    ) - 72usize];
+    ) - 36usize];
     ["Offset of field: _cef_browser_process_handler_t::get_default_client"]
-        [::std::mem::offset_of!(_cef_browser_process_handler_t, get_default_client) - 80usize];
+        [::std::mem::offset_of!(_cef_browser_process_handler_t, get_default_client) - 40usize];
     ["Offset of field: _cef_browser_process_handler_t::get_default_request_context_handler"][::std::mem::offset_of!(
         _cef_browser_process_handler_t,
         get_default_request_context_handler
     )
-        - 88usize];
+        - 44usize];
 };
 #[doc = "\n Structure used to implement browser process callbacks. The functions of this\n structure will be called on the browser process main thread unless otherwise\n indicated.\n"]
 pub type cef_browser_process_handler_t = _cef_browser_process_handler_t;
@@ -12017,11 +12011,11 @@ pub struct _cef_task_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_task_t"][::std::mem::size_of::<_cef_task_t>() - 48usize];
-    ["Alignment of _cef_task_t"][::std::mem::align_of::<_cef_task_t>() - 8usize];
+    ["Size of _cef_task_t"][::std::mem::size_of::<_cef_task_t>() - 24usize];
+    ["Alignment of _cef_task_t"][::std::mem::align_of::<_cef_task_t>() - 4usize];
     ["Offset of field: _cef_task_t::base"][::std::mem::offset_of!(_cef_task_t, base) - 0usize];
     ["Offset of field: _cef_task_t::execute"]
-        [::std::mem::offset_of!(_cef_task_t, execute) - 40usize];
+        [::std::mem::offset_of!(_cef_task_t, execute) - 20usize];
 };
 #[doc = "\n Implement this structure for asynchronous task execution. If the task is\n posted successfully and if the associated message loop is still running then\n the execute() function will be called on the target thread. If the task\n fails to post then the task object may be destroyed on the source thread\n instead of the target thread. For this reason be cautious when performing\n work in the task object destructor.\n"]
 pub type cef_task_t = _cef_task_t;
@@ -12067,20 +12061,20 @@ pub struct _cef_task_runner_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_task_runner_t"][::std::mem::size_of::<_cef_task_runner_t>() - 80usize];
-    ["Alignment of _cef_task_runner_t"][::std::mem::align_of::<_cef_task_runner_t>() - 8usize];
+    ["Size of _cef_task_runner_t"][::std::mem::size_of::<_cef_task_runner_t>() - 40usize];
+    ["Alignment of _cef_task_runner_t"][::std::mem::align_of::<_cef_task_runner_t>() - 4usize];
     ["Offset of field: _cef_task_runner_t::base"]
         [::std::mem::offset_of!(_cef_task_runner_t, base) - 0usize];
     ["Offset of field: _cef_task_runner_t::is_same"]
-        [::std::mem::offset_of!(_cef_task_runner_t, is_same) - 40usize];
+        [::std::mem::offset_of!(_cef_task_runner_t, is_same) - 20usize];
     ["Offset of field: _cef_task_runner_t::belongs_to_current_thread"]
-        [::std::mem::offset_of!(_cef_task_runner_t, belongs_to_current_thread) - 48usize];
+        [::std::mem::offset_of!(_cef_task_runner_t, belongs_to_current_thread) - 24usize];
     ["Offset of field: _cef_task_runner_t::belongs_to_thread"]
-        [::std::mem::offset_of!(_cef_task_runner_t, belongs_to_thread) - 56usize];
+        [::std::mem::offset_of!(_cef_task_runner_t, belongs_to_thread) - 28usize];
     ["Offset of field: _cef_task_runner_t::post_task"]
-        [::std::mem::offset_of!(_cef_task_runner_t, post_task) - 64usize];
+        [::std::mem::offset_of!(_cef_task_runner_t, post_task) - 32usize];
     ["Offset of field: _cef_task_runner_t::post_delayed_task"]
-        [::std::mem::offset_of!(_cef_task_runner_t, post_delayed_task) - 72usize];
+        [::std::mem::offset_of!(_cef_task_runner_t, post_delayed_task) - 36usize];
 };
 #[doc = "\n Structure that asynchronously executes tasks on the associated thread. It is\n safe to call the functions of this structure on any thread.\n\n CEF maintains multiple internal threads that are used for handling different\n types of tasks in different processes. The cef_thread_id_t definitions in\n cef_types.h list the common CEF threads. Task runners are also available for\n other CEF threads as appropriate (for example, V8 WebWorker threads).\n"]
 pub type cef_task_runner_t = _cef_task_runner_t;
@@ -12164,28 +12158,28 @@ pub struct _cef_v8context_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_v8context_t"][::std::mem::size_of::<_cef_v8context_t>() - 112usize];
-    ["Alignment of _cef_v8context_t"][::std::mem::align_of::<_cef_v8context_t>() - 8usize];
+    ["Size of _cef_v8context_t"][::std::mem::size_of::<_cef_v8context_t>() - 56usize];
+    ["Alignment of _cef_v8context_t"][::std::mem::align_of::<_cef_v8context_t>() - 4usize];
     ["Offset of field: _cef_v8context_t::base"]
         [::std::mem::offset_of!(_cef_v8context_t, base) - 0usize];
     ["Offset of field: _cef_v8context_t::get_task_runner"]
-        [::std::mem::offset_of!(_cef_v8context_t, get_task_runner) - 40usize];
+        [::std::mem::offset_of!(_cef_v8context_t, get_task_runner) - 20usize];
     ["Offset of field: _cef_v8context_t::is_valid"]
-        [::std::mem::offset_of!(_cef_v8context_t, is_valid) - 48usize];
+        [::std::mem::offset_of!(_cef_v8context_t, is_valid) - 24usize];
     ["Offset of field: _cef_v8context_t::get_browser"]
-        [::std::mem::offset_of!(_cef_v8context_t, get_browser) - 56usize];
+        [::std::mem::offset_of!(_cef_v8context_t, get_browser) - 28usize];
     ["Offset of field: _cef_v8context_t::get_frame"]
-        [::std::mem::offset_of!(_cef_v8context_t, get_frame) - 64usize];
+        [::std::mem::offset_of!(_cef_v8context_t, get_frame) - 32usize];
     ["Offset of field: _cef_v8context_t::get_global"]
-        [::std::mem::offset_of!(_cef_v8context_t, get_global) - 72usize];
+        [::std::mem::offset_of!(_cef_v8context_t, get_global) - 36usize];
     ["Offset of field: _cef_v8context_t::enter"]
-        [::std::mem::offset_of!(_cef_v8context_t, enter) - 80usize];
+        [::std::mem::offset_of!(_cef_v8context_t, enter) - 40usize];
     ["Offset of field: _cef_v8context_t::exit"]
-        [::std::mem::offset_of!(_cef_v8context_t, exit) - 88usize];
+        [::std::mem::offset_of!(_cef_v8context_t, exit) - 44usize];
     ["Offset of field: _cef_v8context_t::is_same"]
-        [::std::mem::offset_of!(_cef_v8context_t, is_same) - 96usize];
+        [::std::mem::offset_of!(_cef_v8context_t, is_same) - 48usize];
     ["Offset of field: _cef_v8context_t::eval"]
-        [::std::mem::offset_of!(_cef_v8context_t, eval) - 104usize];
+        [::std::mem::offset_of!(_cef_v8context_t, eval) - 52usize];
 };
 #[doc = "\n Structure representing a V8 context handle. V8 handles can only be accessed\n from the thread on which they are created. Valid threads for creating a V8\n handle include the render process main thread (TID_RENDERER) and WebWorker\n threads. A task runner for posting tasks on the associated thread can be\n retrieved via the cef_v8context_t::get_task_runner() function.\n"]
 pub type cef_v8context_t = _cef_v8context_t;
@@ -12222,12 +12216,12 @@ pub struct _cef_v8handler_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_v8handler_t"][::std::mem::size_of::<_cef_v8handler_t>() - 48usize];
-    ["Alignment of _cef_v8handler_t"][::std::mem::align_of::<_cef_v8handler_t>() - 8usize];
+    ["Size of _cef_v8handler_t"][::std::mem::size_of::<_cef_v8handler_t>() - 24usize];
+    ["Alignment of _cef_v8handler_t"][::std::mem::align_of::<_cef_v8handler_t>() - 4usize];
     ["Offset of field: _cef_v8handler_t::base"]
         [::std::mem::offset_of!(_cef_v8handler_t, base) - 0usize];
     ["Offset of field: _cef_v8handler_t::execute"]
-        [::std::mem::offset_of!(_cef_v8handler_t, execute) - 40usize];
+        [::std::mem::offset_of!(_cef_v8handler_t, execute) - 20usize];
 };
 #[doc = "\n Structure that should be implemented to handle V8 function calls. The\n functions of this structure will be called on the thread associated with the\n V8 function.\n"]
 pub type cef_v8handler_t = _cef_v8handler_t;
@@ -12260,14 +12254,14 @@ pub struct _cef_v8accessor_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_v8accessor_t"][::std::mem::size_of::<_cef_v8accessor_t>() - 56usize];
-    ["Alignment of _cef_v8accessor_t"][::std::mem::align_of::<_cef_v8accessor_t>() - 8usize];
+    ["Size of _cef_v8accessor_t"][::std::mem::size_of::<_cef_v8accessor_t>() - 28usize];
+    ["Alignment of _cef_v8accessor_t"][::std::mem::align_of::<_cef_v8accessor_t>() - 4usize];
     ["Offset of field: _cef_v8accessor_t::base"]
         [::std::mem::offset_of!(_cef_v8accessor_t, base) - 0usize];
     ["Offset of field: _cef_v8accessor_t::get"]
-        [::std::mem::offset_of!(_cef_v8accessor_t, get) - 40usize];
+        [::std::mem::offset_of!(_cef_v8accessor_t, get) - 20usize];
     ["Offset of field: _cef_v8accessor_t::set"]
-        [::std::mem::offset_of!(_cef_v8accessor_t, set) - 48usize];
+        [::std::mem::offset_of!(_cef_v8accessor_t, set) - 24usize];
 };
 #[doc = "\n Structure that should be implemented to handle V8 accessor calls. Accessor\n identifiers are registered by calling cef_v8value_t::set_value(). The\n functions of this structure will be called on the thread associated with the\n V8 accessor.\n"]
 pub type cef_v8accessor_t = _cef_v8accessor_t;
@@ -12320,18 +12314,18 @@ pub struct _cef_v8interceptor_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_v8interceptor_t"][::std::mem::size_of::<_cef_v8interceptor_t>() - 72usize];
-    ["Alignment of _cef_v8interceptor_t"][::std::mem::align_of::<_cef_v8interceptor_t>() - 8usize];
+    ["Size of _cef_v8interceptor_t"][::std::mem::size_of::<_cef_v8interceptor_t>() - 36usize];
+    ["Alignment of _cef_v8interceptor_t"][::std::mem::align_of::<_cef_v8interceptor_t>() - 4usize];
     ["Offset of field: _cef_v8interceptor_t::base"]
         [::std::mem::offset_of!(_cef_v8interceptor_t, base) - 0usize];
     ["Offset of field: _cef_v8interceptor_t::get_byname"]
-        [::std::mem::offset_of!(_cef_v8interceptor_t, get_byname) - 40usize];
+        [::std::mem::offset_of!(_cef_v8interceptor_t, get_byname) - 20usize];
     ["Offset of field: _cef_v8interceptor_t::get_byindex"]
-        [::std::mem::offset_of!(_cef_v8interceptor_t, get_byindex) - 48usize];
+        [::std::mem::offset_of!(_cef_v8interceptor_t, get_byindex) - 24usize];
     ["Offset of field: _cef_v8interceptor_t::set_byname"]
-        [::std::mem::offset_of!(_cef_v8interceptor_t, set_byname) - 56usize];
+        [::std::mem::offset_of!(_cef_v8interceptor_t, set_byname) - 28usize];
     ["Offset of field: _cef_v8interceptor_t::set_byindex"]
-        [::std::mem::offset_of!(_cef_v8interceptor_t, set_byindex) - 64usize];
+        [::std::mem::offset_of!(_cef_v8interceptor_t, set_byindex) - 32usize];
 };
 #[doc = "\n Structure that should be implemented to handle V8 interceptor calls. The\n functions of this structure will be called on the thread associated with the\n V8 interceptor. Interceptor's named property handlers (with first argument\n of type CefString) are called when object is indexed by string. Indexed\n property handlers (with first argument of type int) are called when object\n is indexed by integer.\n"]
 pub type cef_v8interceptor_t = _cef_v8interceptor_t;
@@ -12376,26 +12370,26 @@ pub struct _cef_v8exception_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_v8exception_t"][::std::mem::size_of::<_cef_v8exception_t>() - 104usize];
-    ["Alignment of _cef_v8exception_t"][::std::mem::align_of::<_cef_v8exception_t>() - 8usize];
+    ["Size of _cef_v8exception_t"][::std::mem::size_of::<_cef_v8exception_t>() - 52usize];
+    ["Alignment of _cef_v8exception_t"][::std::mem::align_of::<_cef_v8exception_t>() - 4usize];
     ["Offset of field: _cef_v8exception_t::base"]
         [::std::mem::offset_of!(_cef_v8exception_t, base) - 0usize];
     ["Offset of field: _cef_v8exception_t::get_message"]
-        [::std::mem::offset_of!(_cef_v8exception_t, get_message) - 40usize];
+        [::std::mem::offset_of!(_cef_v8exception_t, get_message) - 20usize];
     ["Offset of field: _cef_v8exception_t::get_source_line"]
-        [::std::mem::offset_of!(_cef_v8exception_t, get_source_line) - 48usize];
+        [::std::mem::offset_of!(_cef_v8exception_t, get_source_line) - 24usize];
     ["Offset of field: _cef_v8exception_t::get_script_resource_name"]
-        [::std::mem::offset_of!(_cef_v8exception_t, get_script_resource_name) - 56usize];
+        [::std::mem::offset_of!(_cef_v8exception_t, get_script_resource_name) - 28usize];
     ["Offset of field: _cef_v8exception_t::get_line_number"]
-        [::std::mem::offset_of!(_cef_v8exception_t, get_line_number) - 64usize];
+        [::std::mem::offset_of!(_cef_v8exception_t, get_line_number) - 32usize];
     ["Offset of field: _cef_v8exception_t::get_start_position"]
-        [::std::mem::offset_of!(_cef_v8exception_t, get_start_position) - 72usize];
+        [::std::mem::offset_of!(_cef_v8exception_t, get_start_position) - 36usize];
     ["Offset of field: _cef_v8exception_t::get_end_position"]
-        [::std::mem::offset_of!(_cef_v8exception_t, get_end_position) - 80usize];
+        [::std::mem::offset_of!(_cef_v8exception_t, get_end_position) - 40usize];
     ["Offset of field: _cef_v8exception_t::get_start_column"]
-        [::std::mem::offset_of!(_cef_v8exception_t, get_start_column) - 88usize];
+        [::std::mem::offset_of!(_cef_v8exception_t, get_start_column) - 44usize];
     ["Offset of field: _cef_v8exception_t::get_end_column"]
-        [::std::mem::offset_of!(_cef_v8exception_t, get_end_column) - 96usize];
+        [::std::mem::offset_of!(_cef_v8exception_t, get_end_column) - 48usize];
 };
 #[doc = "\n Structure representing a V8 exception. The functions of this structure may\n be called on any render process thread.\n"]
 pub type cef_v8exception_t = _cef_v8exception_t;
@@ -12416,13 +12410,13 @@ pub struct _cef_v8array_buffer_release_callback_t {
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
     ["Size of _cef_v8array_buffer_release_callback_t"]
-        [::std::mem::size_of::<_cef_v8array_buffer_release_callback_t>() - 48usize];
+        [::std::mem::size_of::<_cef_v8array_buffer_release_callback_t>() - 24usize];
     ["Alignment of _cef_v8array_buffer_release_callback_t"]
-        [::std::mem::align_of::<_cef_v8array_buffer_release_callback_t>() - 8usize];
+        [::std::mem::align_of::<_cef_v8array_buffer_release_callback_t>() - 4usize];
     ["Offset of field: _cef_v8array_buffer_release_callback_t::base"]
         [::std::mem::offset_of!(_cef_v8array_buffer_release_callback_t, base) - 0usize];
     ["Offset of field: _cef_v8array_buffer_release_callback_t::release_buffer"]
-        [::std::mem::offset_of!(_cef_v8array_buffer_release_callback_t, release_buffer) - 40usize];
+        [::std::mem::offset_of!(_cef_v8array_buffer_release_callback_t, release_buffer) - 20usize];
 };
 #[doc = "\n Callback structure that is passed to cef_v8value_t::CreateArrayBuffer.\n"]
 pub type cef_v8array_buffer_release_callback_t = _cef_v8array_buffer_release_callback_t;
@@ -12703,114 +12697,114 @@ pub struct _cef_v8value_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_v8value_t"][::std::mem::size_of::<_cef_v8value_t>() - 456usize];
-    ["Alignment of _cef_v8value_t"][::std::mem::align_of::<_cef_v8value_t>() - 8usize];
+    ["Size of _cef_v8value_t"][::std::mem::size_of::<_cef_v8value_t>() - 228usize];
+    ["Alignment of _cef_v8value_t"][::std::mem::align_of::<_cef_v8value_t>() - 4usize];
     ["Offset of field: _cef_v8value_t::base"]
         [::std::mem::offset_of!(_cef_v8value_t, base) - 0usize];
     ["Offset of field: _cef_v8value_t::is_valid"]
-        [::std::mem::offset_of!(_cef_v8value_t, is_valid) - 40usize];
+        [::std::mem::offset_of!(_cef_v8value_t, is_valid) - 20usize];
     ["Offset of field: _cef_v8value_t::is_undefined"]
-        [::std::mem::offset_of!(_cef_v8value_t, is_undefined) - 48usize];
+        [::std::mem::offset_of!(_cef_v8value_t, is_undefined) - 24usize];
     ["Offset of field: _cef_v8value_t::is_null"]
-        [::std::mem::offset_of!(_cef_v8value_t, is_null) - 56usize];
+        [::std::mem::offset_of!(_cef_v8value_t, is_null) - 28usize];
     ["Offset of field: _cef_v8value_t::is_bool"]
-        [::std::mem::offset_of!(_cef_v8value_t, is_bool) - 64usize];
+        [::std::mem::offset_of!(_cef_v8value_t, is_bool) - 32usize];
     ["Offset of field: _cef_v8value_t::is_int"]
-        [::std::mem::offset_of!(_cef_v8value_t, is_int) - 72usize];
+        [::std::mem::offset_of!(_cef_v8value_t, is_int) - 36usize];
     ["Offset of field: _cef_v8value_t::is_uint"]
-        [::std::mem::offset_of!(_cef_v8value_t, is_uint) - 80usize];
+        [::std::mem::offset_of!(_cef_v8value_t, is_uint) - 40usize];
     ["Offset of field: _cef_v8value_t::is_double"]
-        [::std::mem::offset_of!(_cef_v8value_t, is_double) - 88usize];
+        [::std::mem::offset_of!(_cef_v8value_t, is_double) - 44usize];
     ["Offset of field: _cef_v8value_t::is_date"]
-        [::std::mem::offset_of!(_cef_v8value_t, is_date) - 96usize];
+        [::std::mem::offset_of!(_cef_v8value_t, is_date) - 48usize];
     ["Offset of field: _cef_v8value_t::is_string"]
-        [::std::mem::offset_of!(_cef_v8value_t, is_string) - 104usize];
+        [::std::mem::offset_of!(_cef_v8value_t, is_string) - 52usize];
     ["Offset of field: _cef_v8value_t::is_object"]
-        [::std::mem::offset_of!(_cef_v8value_t, is_object) - 112usize];
+        [::std::mem::offset_of!(_cef_v8value_t, is_object) - 56usize];
     ["Offset of field: _cef_v8value_t::is_array"]
-        [::std::mem::offset_of!(_cef_v8value_t, is_array) - 120usize];
+        [::std::mem::offset_of!(_cef_v8value_t, is_array) - 60usize];
     ["Offset of field: _cef_v8value_t::is_array_buffer"]
-        [::std::mem::offset_of!(_cef_v8value_t, is_array_buffer) - 128usize];
+        [::std::mem::offset_of!(_cef_v8value_t, is_array_buffer) - 64usize];
     ["Offset of field: _cef_v8value_t::is_function"]
-        [::std::mem::offset_of!(_cef_v8value_t, is_function) - 136usize];
+        [::std::mem::offset_of!(_cef_v8value_t, is_function) - 68usize];
     ["Offset of field: _cef_v8value_t::is_promise"]
-        [::std::mem::offset_of!(_cef_v8value_t, is_promise) - 144usize];
+        [::std::mem::offset_of!(_cef_v8value_t, is_promise) - 72usize];
     ["Offset of field: _cef_v8value_t::is_same"]
-        [::std::mem::offset_of!(_cef_v8value_t, is_same) - 152usize];
+        [::std::mem::offset_of!(_cef_v8value_t, is_same) - 76usize];
     ["Offset of field: _cef_v8value_t::get_bool_value"]
-        [::std::mem::offset_of!(_cef_v8value_t, get_bool_value) - 160usize];
+        [::std::mem::offset_of!(_cef_v8value_t, get_bool_value) - 80usize];
     ["Offset of field: _cef_v8value_t::get_int_value"]
-        [::std::mem::offset_of!(_cef_v8value_t, get_int_value) - 168usize];
+        [::std::mem::offset_of!(_cef_v8value_t, get_int_value) - 84usize];
     ["Offset of field: _cef_v8value_t::get_uint_value"]
-        [::std::mem::offset_of!(_cef_v8value_t, get_uint_value) - 176usize];
+        [::std::mem::offset_of!(_cef_v8value_t, get_uint_value) - 88usize];
     ["Offset of field: _cef_v8value_t::get_double_value"]
-        [::std::mem::offset_of!(_cef_v8value_t, get_double_value) - 184usize];
+        [::std::mem::offset_of!(_cef_v8value_t, get_double_value) - 92usize];
     ["Offset of field: _cef_v8value_t::get_date_value"]
-        [::std::mem::offset_of!(_cef_v8value_t, get_date_value) - 192usize];
+        [::std::mem::offset_of!(_cef_v8value_t, get_date_value) - 96usize];
     ["Offset of field: _cef_v8value_t::get_string_value"]
-        [::std::mem::offset_of!(_cef_v8value_t, get_string_value) - 200usize];
+        [::std::mem::offset_of!(_cef_v8value_t, get_string_value) - 100usize];
     ["Offset of field: _cef_v8value_t::is_user_created"]
-        [::std::mem::offset_of!(_cef_v8value_t, is_user_created) - 208usize];
+        [::std::mem::offset_of!(_cef_v8value_t, is_user_created) - 104usize];
     ["Offset of field: _cef_v8value_t::has_exception"]
-        [::std::mem::offset_of!(_cef_v8value_t, has_exception) - 216usize];
+        [::std::mem::offset_of!(_cef_v8value_t, has_exception) - 108usize];
     ["Offset of field: _cef_v8value_t::get_exception"]
-        [::std::mem::offset_of!(_cef_v8value_t, get_exception) - 224usize];
+        [::std::mem::offset_of!(_cef_v8value_t, get_exception) - 112usize];
     ["Offset of field: _cef_v8value_t::clear_exception"]
-        [::std::mem::offset_of!(_cef_v8value_t, clear_exception) - 232usize];
+        [::std::mem::offset_of!(_cef_v8value_t, clear_exception) - 116usize];
     ["Offset of field: _cef_v8value_t::will_rethrow_exceptions"]
-        [::std::mem::offset_of!(_cef_v8value_t, will_rethrow_exceptions) - 240usize];
+        [::std::mem::offset_of!(_cef_v8value_t, will_rethrow_exceptions) - 120usize];
     ["Offset of field: _cef_v8value_t::set_rethrow_exceptions"]
-        [::std::mem::offset_of!(_cef_v8value_t, set_rethrow_exceptions) - 248usize];
+        [::std::mem::offset_of!(_cef_v8value_t, set_rethrow_exceptions) - 124usize];
     ["Offset of field: _cef_v8value_t::has_value_bykey"]
-        [::std::mem::offset_of!(_cef_v8value_t, has_value_bykey) - 256usize];
+        [::std::mem::offset_of!(_cef_v8value_t, has_value_bykey) - 128usize];
     ["Offset of field: _cef_v8value_t::has_value_byindex"]
-        [::std::mem::offset_of!(_cef_v8value_t, has_value_byindex) - 264usize];
+        [::std::mem::offset_of!(_cef_v8value_t, has_value_byindex) - 132usize];
     ["Offset of field: _cef_v8value_t::delete_value_bykey"]
-        [::std::mem::offset_of!(_cef_v8value_t, delete_value_bykey) - 272usize];
+        [::std::mem::offset_of!(_cef_v8value_t, delete_value_bykey) - 136usize];
     ["Offset of field: _cef_v8value_t::delete_value_byindex"]
-        [::std::mem::offset_of!(_cef_v8value_t, delete_value_byindex) - 280usize];
+        [::std::mem::offset_of!(_cef_v8value_t, delete_value_byindex) - 140usize];
     ["Offset of field: _cef_v8value_t::get_value_bykey"]
-        [::std::mem::offset_of!(_cef_v8value_t, get_value_bykey) - 288usize];
+        [::std::mem::offset_of!(_cef_v8value_t, get_value_bykey) - 144usize];
     ["Offset of field: _cef_v8value_t::get_value_byindex"]
-        [::std::mem::offset_of!(_cef_v8value_t, get_value_byindex) - 296usize];
+        [::std::mem::offset_of!(_cef_v8value_t, get_value_byindex) - 148usize];
     ["Offset of field: _cef_v8value_t::set_value_bykey"]
-        [::std::mem::offset_of!(_cef_v8value_t, set_value_bykey) - 304usize];
+        [::std::mem::offset_of!(_cef_v8value_t, set_value_bykey) - 152usize];
     ["Offset of field: _cef_v8value_t::set_value_byindex"]
-        [::std::mem::offset_of!(_cef_v8value_t, set_value_byindex) - 312usize];
+        [::std::mem::offset_of!(_cef_v8value_t, set_value_byindex) - 156usize];
     ["Offset of field: _cef_v8value_t::set_value_byaccessor"]
-        [::std::mem::offset_of!(_cef_v8value_t, set_value_byaccessor) - 320usize];
+        [::std::mem::offset_of!(_cef_v8value_t, set_value_byaccessor) - 160usize];
     ["Offset of field: _cef_v8value_t::get_keys"]
-        [::std::mem::offset_of!(_cef_v8value_t, get_keys) - 328usize];
+        [::std::mem::offset_of!(_cef_v8value_t, get_keys) - 164usize];
     ["Offset of field: _cef_v8value_t::set_user_data"]
-        [::std::mem::offset_of!(_cef_v8value_t, set_user_data) - 336usize];
+        [::std::mem::offset_of!(_cef_v8value_t, set_user_data) - 168usize];
     ["Offset of field: _cef_v8value_t::get_user_data"]
-        [::std::mem::offset_of!(_cef_v8value_t, get_user_data) - 344usize];
+        [::std::mem::offset_of!(_cef_v8value_t, get_user_data) - 172usize];
     ["Offset of field: _cef_v8value_t::get_externally_allocated_memory"]
-        [::std::mem::offset_of!(_cef_v8value_t, get_externally_allocated_memory) - 352usize];
+        [::std::mem::offset_of!(_cef_v8value_t, get_externally_allocated_memory) - 176usize];
     ["Offset of field: _cef_v8value_t::adjust_externally_allocated_memory"]
-        [::std::mem::offset_of!(_cef_v8value_t, adjust_externally_allocated_memory) - 360usize];
+        [::std::mem::offset_of!(_cef_v8value_t, adjust_externally_allocated_memory) - 180usize];
     ["Offset of field: _cef_v8value_t::get_array_length"]
-        [::std::mem::offset_of!(_cef_v8value_t, get_array_length) - 368usize];
+        [::std::mem::offset_of!(_cef_v8value_t, get_array_length) - 184usize];
     ["Offset of field: _cef_v8value_t::get_array_buffer_release_callback"]
-        [::std::mem::offset_of!(_cef_v8value_t, get_array_buffer_release_callback) - 376usize];
+        [::std::mem::offset_of!(_cef_v8value_t, get_array_buffer_release_callback) - 188usize];
     ["Offset of field: _cef_v8value_t::neuter_array_buffer"]
-        [::std::mem::offset_of!(_cef_v8value_t, neuter_array_buffer) - 384usize];
+        [::std::mem::offset_of!(_cef_v8value_t, neuter_array_buffer) - 192usize];
     ["Offset of field: _cef_v8value_t::get_array_buffer_byte_length"]
-        [::std::mem::offset_of!(_cef_v8value_t, get_array_buffer_byte_length) - 392usize];
+        [::std::mem::offset_of!(_cef_v8value_t, get_array_buffer_byte_length) - 196usize];
     ["Offset of field: _cef_v8value_t::get_array_buffer_data"]
-        [::std::mem::offset_of!(_cef_v8value_t, get_array_buffer_data) - 400usize];
+        [::std::mem::offset_of!(_cef_v8value_t, get_array_buffer_data) - 200usize];
     ["Offset of field: _cef_v8value_t::get_function_name"]
-        [::std::mem::offset_of!(_cef_v8value_t, get_function_name) - 408usize];
+        [::std::mem::offset_of!(_cef_v8value_t, get_function_name) - 204usize];
     ["Offset of field: _cef_v8value_t::get_function_handler"]
-        [::std::mem::offset_of!(_cef_v8value_t, get_function_handler) - 416usize];
+        [::std::mem::offset_of!(_cef_v8value_t, get_function_handler) - 208usize];
     ["Offset of field: _cef_v8value_t::execute_function"]
-        [::std::mem::offset_of!(_cef_v8value_t, execute_function) - 424usize];
+        [::std::mem::offset_of!(_cef_v8value_t, execute_function) - 212usize];
     ["Offset of field: _cef_v8value_t::execute_function_with_context"]
-        [::std::mem::offset_of!(_cef_v8value_t, execute_function_with_context) - 432usize];
+        [::std::mem::offset_of!(_cef_v8value_t, execute_function_with_context) - 216usize];
     ["Offset of field: _cef_v8value_t::resolve_promise"]
-        [::std::mem::offset_of!(_cef_v8value_t, resolve_promise) - 440usize];
+        [::std::mem::offset_of!(_cef_v8value_t, resolve_promise) - 220usize];
     ["Offset of field: _cef_v8value_t::reject_promise"]
-        [::std::mem::offset_of!(_cef_v8value_t, reject_promise) - 448usize];
+        [::std::mem::offset_of!(_cef_v8value_t, reject_promise) - 224usize];
 };
 #[doc = "\n Structure representing a V8 value handle. V8 handles can only be accessed\n from the thread on which they are created. Valid threads for creating a V8\n handle include the render process main thread (TID_RENDERER) and WebWorker\n threads. A task runner for posting tasks on the associated thread can be\n retrieved via the cef_v8context_t::get_task_runner() function.\n"]
 pub type cef_v8value_t = _cef_v8value_t;
@@ -12907,16 +12901,16 @@ pub struct _cef_v8stack_trace_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_v8stack_trace_t"][::std::mem::size_of::<_cef_v8stack_trace_t>() - 64usize];
-    ["Alignment of _cef_v8stack_trace_t"][::std::mem::align_of::<_cef_v8stack_trace_t>() - 8usize];
+    ["Size of _cef_v8stack_trace_t"][::std::mem::size_of::<_cef_v8stack_trace_t>() - 32usize];
+    ["Alignment of _cef_v8stack_trace_t"][::std::mem::align_of::<_cef_v8stack_trace_t>() - 4usize];
     ["Offset of field: _cef_v8stack_trace_t::base"]
         [::std::mem::offset_of!(_cef_v8stack_trace_t, base) - 0usize];
     ["Offset of field: _cef_v8stack_trace_t::is_valid"]
-        [::std::mem::offset_of!(_cef_v8stack_trace_t, is_valid) - 40usize];
+        [::std::mem::offset_of!(_cef_v8stack_trace_t, is_valid) - 20usize];
     ["Offset of field: _cef_v8stack_trace_t::get_frame_count"]
-        [::std::mem::offset_of!(_cef_v8stack_trace_t, get_frame_count) - 48usize];
+        [::std::mem::offset_of!(_cef_v8stack_trace_t, get_frame_count) - 24usize];
     ["Offset of field: _cef_v8stack_trace_t::get_frame"]
-        [::std::mem::offset_of!(_cef_v8stack_trace_t, get_frame) - 56usize];
+        [::std::mem::offset_of!(_cef_v8stack_trace_t, get_frame) - 28usize];
 };
 #[doc = "\n Structure representing a V8 stack trace handle. V8 handles can only be\n accessed from the thread on which they are created. Valid threads for\n creating a V8 handle include the render process main thread (TID_RENDERER)\n and WebWorker threads. A task runner for posting tasks on the associated\n thread can be retrieved via the cef_v8context_t::get_task_runner() function.\n"]
 pub type cef_v8stack_trace_t = _cef_v8stack_trace_t;
@@ -12967,26 +12961,26 @@ pub struct _cef_v8stack_frame_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_v8stack_frame_t"][::std::mem::size_of::<_cef_v8stack_frame_t>() - 104usize];
-    ["Alignment of _cef_v8stack_frame_t"][::std::mem::align_of::<_cef_v8stack_frame_t>() - 8usize];
+    ["Size of _cef_v8stack_frame_t"][::std::mem::size_of::<_cef_v8stack_frame_t>() - 52usize];
+    ["Alignment of _cef_v8stack_frame_t"][::std::mem::align_of::<_cef_v8stack_frame_t>() - 4usize];
     ["Offset of field: _cef_v8stack_frame_t::base"]
         [::std::mem::offset_of!(_cef_v8stack_frame_t, base) - 0usize];
     ["Offset of field: _cef_v8stack_frame_t::is_valid"]
-        [::std::mem::offset_of!(_cef_v8stack_frame_t, is_valid) - 40usize];
+        [::std::mem::offset_of!(_cef_v8stack_frame_t, is_valid) - 20usize];
     ["Offset of field: _cef_v8stack_frame_t::get_script_name"]
-        [::std::mem::offset_of!(_cef_v8stack_frame_t, get_script_name) - 48usize];
+        [::std::mem::offset_of!(_cef_v8stack_frame_t, get_script_name) - 24usize];
     ["Offset of field: _cef_v8stack_frame_t::get_script_name_or_source_url"]
-        [::std::mem::offset_of!(_cef_v8stack_frame_t, get_script_name_or_source_url) - 56usize];
+        [::std::mem::offset_of!(_cef_v8stack_frame_t, get_script_name_or_source_url) - 28usize];
     ["Offset of field: _cef_v8stack_frame_t::get_function_name"]
-        [::std::mem::offset_of!(_cef_v8stack_frame_t, get_function_name) - 64usize];
+        [::std::mem::offset_of!(_cef_v8stack_frame_t, get_function_name) - 32usize];
     ["Offset of field: _cef_v8stack_frame_t::get_line_number"]
-        [::std::mem::offset_of!(_cef_v8stack_frame_t, get_line_number) - 72usize];
+        [::std::mem::offset_of!(_cef_v8stack_frame_t, get_line_number) - 36usize];
     ["Offset of field: _cef_v8stack_frame_t::get_column"]
-        [::std::mem::offset_of!(_cef_v8stack_frame_t, get_column) - 80usize];
+        [::std::mem::offset_of!(_cef_v8stack_frame_t, get_column) - 40usize];
     ["Offset of field: _cef_v8stack_frame_t::is_eval"]
-        [::std::mem::offset_of!(_cef_v8stack_frame_t, is_eval) - 88usize];
+        [::std::mem::offset_of!(_cef_v8stack_frame_t, is_eval) - 44usize];
     ["Offset of field: _cef_v8stack_frame_t::is_constructor"]
-        [::std::mem::offset_of!(_cef_v8stack_frame_t, is_constructor) - 96usize];
+        [::std::mem::offset_of!(_cef_v8stack_frame_t, is_constructor) - 48usize];
 };
 #[doc = "\n Structure representing a V8 stack frame handle. V8 handles can only be\n accessed from the thread on which they are created. Valid threads for\n creating a V8 handle include the render process main thread (TID_RENDERER)\n and WebWorker threads. A task runner for posting tasks on the associated\n thread can be retrieved via the cef_v8context_t::get_task_runner() function.\n"]
 pub type cef_v8stack_frame_t = _cef_v8stack_frame_t;
@@ -13078,31 +13072,31 @@ pub struct _cef_render_process_handler_t {
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
     ["Size of _cef_render_process_handler_t"]
-        [::std::mem::size_of::<_cef_render_process_handler_t>() - 112usize];
+        [::std::mem::size_of::<_cef_render_process_handler_t>() - 56usize];
     ["Alignment of _cef_render_process_handler_t"]
-        [::std::mem::align_of::<_cef_render_process_handler_t>() - 8usize];
+        [::std::mem::align_of::<_cef_render_process_handler_t>() - 4usize];
     ["Offset of field: _cef_render_process_handler_t::base"]
         [::std::mem::offset_of!(_cef_render_process_handler_t, base) - 0usize];
     ["Offset of field: _cef_render_process_handler_t::on_web_kit_initialized"]
-        [::std::mem::offset_of!(_cef_render_process_handler_t, on_web_kit_initialized) - 40usize];
+        [::std::mem::offset_of!(_cef_render_process_handler_t, on_web_kit_initialized) - 20usize];
     ["Offset of field: _cef_render_process_handler_t::on_browser_created"]
-        [::std::mem::offset_of!(_cef_render_process_handler_t, on_browser_created) - 48usize];
+        [::std::mem::offset_of!(_cef_render_process_handler_t, on_browser_created) - 24usize];
     ["Offset of field: _cef_render_process_handler_t::on_browser_destroyed"]
-        [::std::mem::offset_of!(_cef_render_process_handler_t, on_browser_destroyed) - 56usize];
+        [::std::mem::offset_of!(_cef_render_process_handler_t, on_browser_destroyed) - 28usize];
     ["Offset of field: _cef_render_process_handler_t::get_load_handler"]
-        [::std::mem::offset_of!(_cef_render_process_handler_t, get_load_handler) - 64usize];
+        [::std::mem::offset_of!(_cef_render_process_handler_t, get_load_handler) - 32usize];
     ["Offset of field: _cef_render_process_handler_t::on_context_created"]
-        [::std::mem::offset_of!(_cef_render_process_handler_t, on_context_created) - 72usize];
+        [::std::mem::offset_of!(_cef_render_process_handler_t, on_context_created) - 36usize];
     ["Offset of field: _cef_render_process_handler_t::on_context_released"]
-        [::std::mem::offset_of!(_cef_render_process_handler_t, on_context_released) - 80usize];
+        [::std::mem::offset_of!(_cef_render_process_handler_t, on_context_released) - 40usize];
     ["Offset of field: _cef_render_process_handler_t::on_uncaught_exception"]
-        [::std::mem::offset_of!(_cef_render_process_handler_t, on_uncaught_exception) - 88usize];
+        [::std::mem::offset_of!(_cef_render_process_handler_t, on_uncaught_exception) - 44usize];
     ["Offset of field: _cef_render_process_handler_t::on_focused_node_changed"]
-        [::std::mem::offset_of!(_cef_render_process_handler_t, on_focused_node_changed) - 96usize];
+        [::std::mem::offset_of!(_cef_render_process_handler_t, on_focused_node_changed) - 48usize];
     ["Offset of field: _cef_render_process_handler_t::on_process_message_received"][::std::mem::offset_of!(
         _cef_render_process_handler_t,
         on_process_message_received
-    ) - 104usize];
+    ) - 52usize];
 };
 #[doc = "\n Structure used to implement render process callbacks. The functions of this\n structure will be called on the render process main thread (TID_RENDERER)\n unless otherwise indicated.\n"]
 pub type cef_render_process_handler_t = _cef_render_process_handler_t;
@@ -13143,19 +13137,19 @@ pub struct _cef_resource_bundle_handler_t {
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
     ["Size of _cef_resource_bundle_handler_t"]
-        [::std::mem::size_of::<_cef_resource_bundle_handler_t>() - 64usize];
+        [::std::mem::size_of::<_cef_resource_bundle_handler_t>() - 32usize];
     ["Alignment of _cef_resource_bundle_handler_t"]
-        [::std::mem::align_of::<_cef_resource_bundle_handler_t>() - 8usize];
+        [::std::mem::align_of::<_cef_resource_bundle_handler_t>() - 4usize];
     ["Offset of field: _cef_resource_bundle_handler_t::base"]
         [::std::mem::offset_of!(_cef_resource_bundle_handler_t, base) - 0usize];
     ["Offset of field: _cef_resource_bundle_handler_t::get_localized_string"]
-        [::std::mem::offset_of!(_cef_resource_bundle_handler_t, get_localized_string) - 40usize];
+        [::std::mem::offset_of!(_cef_resource_bundle_handler_t, get_localized_string) - 20usize];
     ["Offset of field: _cef_resource_bundle_handler_t::get_data_resource"]
-        [::std::mem::offset_of!(_cef_resource_bundle_handler_t, get_data_resource) - 48usize];
+        [::std::mem::offset_of!(_cef_resource_bundle_handler_t, get_data_resource) - 24usize];
     ["Offset of field: _cef_resource_bundle_handler_t::get_data_resource_for_scale"][::std::mem::offset_of!(
         _cef_resource_bundle_handler_t,
         get_data_resource_for_scale
-    ) - 56usize];
+    ) - 28usize];
 };
 #[doc = "\n Structure used to implement a custom resource bundle structure. See\n CefSettings for additional options related to resource bundle loading. The\n functions of this structure may be called on multiple threads.\n"]
 pub type cef_resource_bundle_handler_t = _cef_resource_bundle_handler_t;
@@ -13176,13 +13170,13 @@ pub struct _cef_scheme_registrar_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_scheme_registrar_t"][::std::mem::size_of::<_cef_scheme_registrar_t>() - 24usize];
+    ["Size of _cef_scheme_registrar_t"][::std::mem::size_of::<_cef_scheme_registrar_t>() - 12usize];
     ["Alignment of _cef_scheme_registrar_t"]
-        [::std::mem::align_of::<_cef_scheme_registrar_t>() - 8usize];
+        [::std::mem::align_of::<_cef_scheme_registrar_t>() - 4usize];
     ["Offset of field: _cef_scheme_registrar_t::base"]
         [::std::mem::offset_of!(_cef_scheme_registrar_t, base) - 0usize];
     ["Offset of field: _cef_scheme_registrar_t::add_custom_scheme"]
-        [::std::mem::offset_of!(_cef_scheme_registrar_t, add_custom_scheme) - 16usize];
+        [::std::mem::offset_of!(_cef_scheme_registrar_t, add_custom_scheme) - 8usize];
 };
 #[doc = "\n Structure that manages custom scheme registrations.\n"]
 pub type cef_scheme_registrar_t = _cef_scheme_registrar_t;
@@ -13206,13 +13200,13 @@ pub struct _cef_scheme_handler_factory_t {
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
     ["Size of _cef_scheme_handler_factory_t"]
-        [::std::mem::size_of::<_cef_scheme_handler_factory_t>() - 48usize];
+        [::std::mem::size_of::<_cef_scheme_handler_factory_t>() - 24usize];
     ["Alignment of _cef_scheme_handler_factory_t"]
-        [::std::mem::align_of::<_cef_scheme_handler_factory_t>() - 8usize];
+        [::std::mem::align_of::<_cef_scheme_handler_factory_t>() - 4usize];
     ["Offset of field: _cef_scheme_handler_factory_t::base"]
         [::std::mem::offset_of!(_cef_scheme_handler_factory_t, base) - 0usize];
     ["Offset of field: _cef_scheme_handler_factory_t::create"]
-        [::std::mem::offset_of!(_cef_scheme_handler_factory_t, create) - 40usize];
+        [::std::mem::offset_of!(_cef_scheme_handler_factory_t, create) - 20usize];
 };
 #[doc = "\n Structure that creates cef_resource_handler_t instances for handling scheme\n requests. The functions of this structure will always be called on the IO\n thread.\n"]
 pub type cef_scheme_handler_factory_t = _cef_scheme_handler_factory_t;
@@ -13261,19 +13255,19 @@ pub struct _cef_app_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_app_t"][::std::mem::size_of::<_cef_app_t>() - 80usize];
-    ["Alignment of _cef_app_t"][::std::mem::align_of::<_cef_app_t>() - 8usize];
+    ["Size of _cef_app_t"][::std::mem::size_of::<_cef_app_t>() - 40usize];
+    ["Alignment of _cef_app_t"][::std::mem::align_of::<_cef_app_t>() - 4usize];
     ["Offset of field: _cef_app_t::base"][::std::mem::offset_of!(_cef_app_t, base) - 0usize];
     ["Offset of field: _cef_app_t::on_before_command_line_processing"]
-        [::std::mem::offset_of!(_cef_app_t, on_before_command_line_processing) - 40usize];
+        [::std::mem::offset_of!(_cef_app_t, on_before_command_line_processing) - 20usize];
     ["Offset of field: _cef_app_t::on_register_custom_schemes"]
-        [::std::mem::offset_of!(_cef_app_t, on_register_custom_schemes) - 48usize];
+        [::std::mem::offset_of!(_cef_app_t, on_register_custom_schemes) - 24usize];
     ["Offset of field: _cef_app_t::get_resource_bundle_handler"]
-        [::std::mem::offset_of!(_cef_app_t, get_resource_bundle_handler) - 56usize];
+        [::std::mem::offset_of!(_cef_app_t, get_resource_bundle_handler) - 28usize];
     ["Offset of field: _cef_app_t::get_browser_process_handler"]
-        [::std::mem::offset_of!(_cef_app_t, get_browser_process_handler) - 64usize];
+        [::std::mem::offset_of!(_cef_app_t, get_browser_process_handler) - 32usize];
     ["Offset of field: _cef_app_t::get_render_process_handler"]
-        [::std::mem::offset_of!(_cef_app_t, get_render_process_handler) - 72usize];
+        [::std::mem::offset_of!(_cef_app_t, get_render_process_handler) - 36usize];
 };
 #[doc = "\n Implement this structure to provide handler implementations. Methods will be\n called by the process and/or thread indicated.\n"]
 pub type cef_app_t = _cef_app_t;
@@ -13398,32 +13392,32 @@ pub struct _cef_view_delegate_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_view_delegate_t"][::std::mem::size_of::<_cef_view_delegate_t>() - 128usize];
-    ["Alignment of _cef_view_delegate_t"][::std::mem::align_of::<_cef_view_delegate_t>() - 8usize];
+    ["Size of _cef_view_delegate_t"][::std::mem::size_of::<_cef_view_delegate_t>() - 64usize];
+    ["Alignment of _cef_view_delegate_t"][::std::mem::align_of::<_cef_view_delegate_t>() - 4usize];
     ["Offset of field: _cef_view_delegate_t::base"]
         [::std::mem::offset_of!(_cef_view_delegate_t, base) - 0usize];
     ["Offset of field: _cef_view_delegate_t::get_preferred_size"]
-        [::std::mem::offset_of!(_cef_view_delegate_t, get_preferred_size) - 40usize];
+        [::std::mem::offset_of!(_cef_view_delegate_t, get_preferred_size) - 20usize];
     ["Offset of field: _cef_view_delegate_t::get_minimum_size"]
-        [::std::mem::offset_of!(_cef_view_delegate_t, get_minimum_size) - 48usize];
+        [::std::mem::offset_of!(_cef_view_delegate_t, get_minimum_size) - 24usize];
     ["Offset of field: _cef_view_delegate_t::get_maximum_size"]
-        [::std::mem::offset_of!(_cef_view_delegate_t, get_maximum_size) - 56usize];
+        [::std::mem::offset_of!(_cef_view_delegate_t, get_maximum_size) - 28usize];
     ["Offset of field: _cef_view_delegate_t::get_height_for_width"]
-        [::std::mem::offset_of!(_cef_view_delegate_t, get_height_for_width) - 64usize];
+        [::std::mem::offset_of!(_cef_view_delegate_t, get_height_for_width) - 32usize];
     ["Offset of field: _cef_view_delegate_t::on_parent_view_changed"]
-        [::std::mem::offset_of!(_cef_view_delegate_t, on_parent_view_changed) - 72usize];
+        [::std::mem::offset_of!(_cef_view_delegate_t, on_parent_view_changed) - 36usize];
     ["Offset of field: _cef_view_delegate_t::on_child_view_changed"]
-        [::std::mem::offset_of!(_cef_view_delegate_t, on_child_view_changed) - 80usize];
+        [::std::mem::offset_of!(_cef_view_delegate_t, on_child_view_changed) - 40usize];
     ["Offset of field: _cef_view_delegate_t::on_window_changed"]
-        [::std::mem::offset_of!(_cef_view_delegate_t, on_window_changed) - 88usize];
+        [::std::mem::offset_of!(_cef_view_delegate_t, on_window_changed) - 44usize];
     ["Offset of field: _cef_view_delegate_t::on_layout_changed"]
-        [::std::mem::offset_of!(_cef_view_delegate_t, on_layout_changed) - 96usize];
+        [::std::mem::offset_of!(_cef_view_delegate_t, on_layout_changed) - 48usize];
     ["Offset of field: _cef_view_delegate_t::on_focus"]
-        [::std::mem::offset_of!(_cef_view_delegate_t, on_focus) - 104usize];
+        [::std::mem::offset_of!(_cef_view_delegate_t, on_focus) - 52usize];
     ["Offset of field: _cef_view_delegate_t::on_blur"]
-        [::std::mem::offset_of!(_cef_view_delegate_t, on_blur) - 112usize];
+        [::std::mem::offset_of!(_cef_view_delegate_t, on_blur) - 56usize];
     ["Offset of field: _cef_view_delegate_t::on_theme_changed"]
-        [::std::mem::offset_of!(_cef_view_delegate_t, on_theme_changed) - 120usize];
+        [::std::mem::offset_of!(_cef_view_delegate_t, on_theme_changed) - 60usize];
 };
 #[doc = "\n Implement this structure to handle view events. All size and position values\n are in density independent pixels (DIP) unless otherwise indicated. The\n functions of this structure will be called on the browser process UI thread\n unless otherwise indicated.\n"]
 pub type cef_view_delegate_t = _cef_view_delegate_t;
@@ -13498,33 +13492,31 @@ pub struct _cef_browser_view_delegate_t {
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
     ["Size of _cef_browser_view_delegate_t"]
-        [::std::mem::size_of::<_cef_browser_view_delegate_t>() - 192usize];
+        [::std::mem::size_of::<_cef_browser_view_delegate_t>() - 96usize];
     ["Alignment of _cef_browser_view_delegate_t"]
-        [::std::mem::align_of::<_cef_browser_view_delegate_t>() - 8usize];
+        [::std::mem::align_of::<_cef_browser_view_delegate_t>() - 4usize];
     ["Offset of field: _cef_browser_view_delegate_t::base"]
         [::std::mem::offset_of!(_cef_browser_view_delegate_t, base) - 0usize];
     ["Offset of field: _cef_browser_view_delegate_t::on_browser_created"]
-        [::std::mem::offset_of!(_cef_browser_view_delegate_t, on_browser_created) - 128usize];
+        [::std::mem::offset_of!(_cef_browser_view_delegate_t, on_browser_created) - 64usize];
     ["Offset of field: _cef_browser_view_delegate_t::on_browser_destroyed"]
-        [::std::mem::offset_of!(_cef_browser_view_delegate_t, on_browser_destroyed) - 136usize];
+        [::std::mem::offset_of!(_cef_browser_view_delegate_t, on_browser_destroyed) - 68usize];
     ["Offset of field: _cef_browser_view_delegate_t::get_delegate_for_popup_browser_view"][::std::mem::offset_of!(
         _cef_browser_view_delegate_t,
         get_delegate_for_popup_browser_view
     )
-        - 144usize];
+        - 72usize];
     ["Offset of field: _cef_browser_view_delegate_t::on_popup_browser_view_created"][::std::mem::offset_of!(
         _cef_browser_view_delegate_t,
         on_popup_browser_view_created
-    ) - 152usize];
+    ) - 76usize];
     ["Offset of field: _cef_browser_view_delegate_t::get_chrome_toolbar_type"]
-        [::std::mem::offset_of!(_cef_browser_view_delegate_t, get_chrome_toolbar_type) - 160usize];
-    ["Offset of field: _cef_browser_view_delegate_t::use_frameless_window_for_picture_in_picture"] [:: std :: mem :: offset_of ! (_cef_browser_view_delegate_t , use_frameless_window_for_picture_in_picture) - 168usize] ;
+        [::std::mem::offset_of!(_cef_browser_view_delegate_t, get_chrome_toolbar_type) - 80usize];
+    ["Offset of field: _cef_browser_view_delegate_t::use_frameless_window_for_picture_in_picture"] [:: std :: mem :: offset_of ! (_cef_browser_view_delegate_t , use_frameless_window_for_picture_in_picture) - 84usize] ;
     ["Offset of field: _cef_browser_view_delegate_t::on_gesture_command"]
-        [::std::mem::offset_of!(_cef_browser_view_delegate_t, on_gesture_command) - 176usize];
-    ["Offset of field: _cef_browser_view_delegate_t::get_browser_runtime_style"][::std::mem::offset_of!(
-        _cef_browser_view_delegate_t,
-        get_browser_runtime_style
-    ) - 184usize];
+        [::std::mem::offset_of!(_cef_browser_view_delegate_t, on_gesture_command) - 88usize];
+    ["Offset of field: _cef_browser_view_delegate_t::get_browser_runtime_style"]
+        [::std::mem::offset_of!(_cef_browser_view_delegate_t, get_browser_runtime_style) - 92usize];
 };
 #[doc = "\n Implement this structure to handle BrowserView events. The functions of this\n structure will be called on the browser process UI thread unless otherwise\n indicated.\n"]
 pub type cef_browser_view_delegate_t = _cef_browser_view_delegate_t;
@@ -13772,111 +13764,109 @@ pub struct _cef_view_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_view_t"][::std::mem::size_of::<_cef_view_t>() - 448usize];
-    ["Alignment of _cef_view_t"][::std::mem::align_of::<_cef_view_t>() - 8usize];
+    ["Size of _cef_view_t"][::std::mem::size_of::<_cef_view_t>() - 224usize];
+    ["Alignment of _cef_view_t"][::std::mem::align_of::<_cef_view_t>() - 4usize];
     ["Offset of field: _cef_view_t::base"][::std::mem::offset_of!(_cef_view_t, base) - 0usize];
     ["Offset of field: _cef_view_t::as_browser_view"]
-        [::std::mem::offset_of!(_cef_view_t, as_browser_view) - 40usize];
+        [::std::mem::offset_of!(_cef_view_t, as_browser_view) - 20usize];
     ["Offset of field: _cef_view_t::as_button"]
-        [::std::mem::offset_of!(_cef_view_t, as_button) - 48usize];
+        [::std::mem::offset_of!(_cef_view_t, as_button) - 24usize];
     ["Offset of field: _cef_view_t::as_panel"]
-        [::std::mem::offset_of!(_cef_view_t, as_panel) - 56usize];
+        [::std::mem::offset_of!(_cef_view_t, as_panel) - 28usize];
     ["Offset of field: _cef_view_t::as_scroll_view"]
-        [::std::mem::offset_of!(_cef_view_t, as_scroll_view) - 64usize];
+        [::std::mem::offset_of!(_cef_view_t, as_scroll_view) - 32usize];
     ["Offset of field: _cef_view_t::as_textfield"]
-        [::std::mem::offset_of!(_cef_view_t, as_textfield) - 72usize];
+        [::std::mem::offset_of!(_cef_view_t, as_textfield) - 36usize];
     ["Offset of field: _cef_view_t::get_type_string"]
-        [::std::mem::offset_of!(_cef_view_t, get_type_string) - 80usize];
+        [::std::mem::offset_of!(_cef_view_t, get_type_string) - 40usize];
     ["Offset of field: _cef_view_t::to_string"]
-        [::std::mem::offset_of!(_cef_view_t, to_string) - 88usize];
+        [::std::mem::offset_of!(_cef_view_t, to_string) - 44usize];
     ["Offset of field: _cef_view_t::is_valid"]
-        [::std::mem::offset_of!(_cef_view_t, is_valid) - 96usize];
+        [::std::mem::offset_of!(_cef_view_t, is_valid) - 48usize];
     ["Offset of field: _cef_view_t::is_attached"]
-        [::std::mem::offset_of!(_cef_view_t, is_attached) - 104usize];
+        [::std::mem::offset_of!(_cef_view_t, is_attached) - 52usize];
     ["Offset of field: _cef_view_t::is_same"]
-        [::std::mem::offset_of!(_cef_view_t, is_same) - 112usize];
+        [::std::mem::offset_of!(_cef_view_t, is_same) - 56usize];
     ["Offset of field: _cef_view_t::get_delegate"]
-        [::std::mem::offset_of!(_cef_view_t, get_delegate) - 120usize];
+        [::std::mem::offset_of!(_cef_view_t, get_delegate) - 60usize];
     ["Offset of field: _cef_view_t::get_window"]
-        [::std::mem::offset_of!(_cef_view_t, get_window) - 128usize];
-    ["Offset of field: _cef_view_t::get_id"]
-        [::std::mem::offset_of!(_cef_view_t, get_id) - 136usize];
-    ["Offset of field: _cef_view_t::set_id"]
-        [::std::mem::offset_of!(_cef_view_t, set_id) - 144usize];
+        [::std::mem::offset_of!(_cef_view_t, get_window) - 64usize];
+    ["Offset of field: _cef_view_t::get_id"][::std::mem::offset_of!(_cef_view_t, get_id) - 68usize];
+    ["Offset of field: _cef_view_t::set_id"][::std::mem::offset_of!(_cef_view_t, set_id) - 72usize];
     ["Offset of field: _cef_view_t::get_group_id"]
-        [::std::mem::offset_of!(_cef_view_t, get_group_id) - 152usize];
+        [::std::mem::offset_of!(_cef_view_t, get_group_id) - 76usize];
     ["Offset of field: _cef_view_t::set_group_id"]
-        [::std::mem::offset_of!(_cef_view_t, set_group_id) - 160usize];
+        [::std::mem::offset_of!(_cef_view_t, set_group_id) - 80usize];
     ["Offset of field: _cef_view_t::get_parent_view"]
-        [::std::mem::offset_of!(_cef_view_t, get_parent_view) - 168usize];
+        [::std::mem::offset_of!(_cef_view_t, get_parent_view) - 84usize];
     ["Offset of field: _cef_view_t::get_view_for_id"]
-        [::std::mem::offset_of!(_cef_view_t, get_view_for_id) - 176usize];
+        [::std::mem::offset_of!(_cef_view_t, get_view_for_id) - 88usize];
     ["Offset of field: _cef_view_t::set_bounds"]
-        [::std::mem::offset_of!(_cef_view_t, set_bounds) - 184usize];
+        [::std::mem::offset_of!(_cef_view_t, set_bounds) - 92usize];
     ["Offset of field: _cef_view_t::get_bounds"]
-        [::std::mem::offset_of!(_cef_view_t, get_bounds) - 192usize];
+        [::std::mem::offset_of!(_cef_view_t, get_bounds) - 96usize];
     ["Offset of field: _cef_view_t::get_bounds_in_screen"]
-        [::std::mem::offset_of!(_cef_view_t, get_bounds_in_screen) - 200usize];
+        [::std::mem::offset_of!(_cef_view_t, get_bounds_in_screen) - 100usize];
     ["Offset of field: _cef_view_t::set_size"]
-        [::std::mem::offset_of!(_cef_view_t, set_size) - 208usize];
+        [::std::mem::offset_of!(_cef_view_t, set_size) - 104usize];
     ["Offset of field: _cef_view_t::get_size"]
-        [::std::mem::offset_of!(_cef_view_t, get_size) - 216usize];
+        [::std::mem::offset_of!(_cef_view_t, get_size) - 108usize];
     ["Offset of field: _cef_view_t::set_position"]
-        [::std::mem::offset_of!(_cef_view_t, set_position) - 224usize];
+        [::std::mem::offset_of!(_cef_view_t, set_position) - 112usize];
     ["Offset of field: _cef_view_t::get_position"]
-        [::std::mem::offset_of!(_cef_view_t, get_position) - 232usize];
+        [::std::mem::offset_of!(_cef_view_t, get_position) - 116usize];
     ["Offset of field: _cef_view_t::set_insets"]
-        [::std::mem::offset_of!(_cef_view_t, set_insets) - 240usize];
+        [::std::mem::offset_of!(_cef_view_t, set_insets) - 120usize];
     ["Offset of field: _cef_view_t::get_insets"]
-        [::std::mem::offset_of!(_cef_view_t, get_insets) - 248usize];
+        [::std::mem::offset_of!(_cef_view_t, get_insets) - 124usize];
     ["Offset of field: _cef_view_t::get_preferred_size"]
-        [::std::mem::offset_of!(_cef_view_t, get_preferred_size) - 256usize];
+        [::std::mem::offset_of!(_cef_view_t, get_preferred_size) - 128usize];
     ["Offset of field: _cef_view_t::size_to_preferred_size"]
-        [::std::mem::offset_of!(_cef_view_t, size_to_preferred_size) - 264usize];
+        [::std::mem::offset_of!(_cef_view_t, size_to_preferred_size) - 132usize];
     ["Offset of field: _cef_view_t::get_minimum_size"]
-        [::std::mem::offset_of!(_cef_view_t, get_minimum_size) - 272usize];
+        [::std::mem::offset_of!(_cef_view_t, get_minimum_size) - 136usize];
     ["Offset of field: _cef_view_t::get_maximum_size"]
-        [::std::mem::offset_of!(_cef_view_t, get_maximum_size) - 280usize];
+        [::std::mem::offset_of!(_cef_view_t, get_maximum_size) - 140usize];
     ["Offset of field: _cef_view_t::get_height_for_width"]
-        [::std::mem::offset_of!(_cef_view_t, get_height_for_width) - 288usize];
+        [::std::mem::offset_of!(_cef_view_t, get_height_for_width) - 144usize];
     ["Offset of field: _cef_view_t::invalidate_layout"]
-        [::std::mem::offset_of!(_cef_view_t, invalidate_layout) - 296usize];
+        [::std::mem::offset_of!(_cef_view_t, invalidate_layout) - 148usize];
     ["Offset of field: _cef_view_t::set_visible"]
-        [::std::mem::offset_of!(_cef_view_t, set_visible) - 304usize];
+        [::std::mem::offset_of!(_cef_view_t, set_visible) - 152usize];
     ["Offset of field: _cef_view_t::is_visible"]
-        [::std::mem::offset_of!(_cef_view_t, is_visible) - 312usize];
+        [::std::mem::offset_of!(_cef_view_t, is_visible) - 156usize];
     ["Offset of field: _cef_view_t::is_drawn"]
-        [::std::mem::offset_of!(_cef_view_t, is_drawn) - 320usize];
+        [::std::mem::offset_of!(_cef_view_t, is_drawn) - 160usize];
     ["Offset of field: _cef_view_t::set_enabled"]
-        [::std::mem::offset_of!(_cef_view_t, set_enabled) - 328usize];
+        [::std::mem::offset_of!(_cef_view_t, set_enabled) - 164usize];
     ["Offset of field: _cef_view_t::is_enabled"]
-        [::std::mem::offset_of!(_cef_view_t, is_enabled) - 336usize];
+        [::std::mem::offset_of!(_cef_view_t, is_enabled) - 168usize];
     ["Offset of field: _cef_view_t::set_focusable"]
-        [::std::mem::offset_of!(_cef_view_t, set_focusable) - 344usize];
+        [::std::mem::offset_of!(_cef_view_t, set_focusable) - 172usize];
     ["Offset of field: _cef_view_t::is_focusable"]
-        [::std::mem::offset_of!(_cef_view_t, is_focusable) - 352usize];
+        [::std::mem::offset_of!(_cef_view_t, is_focusable) - 176usize];
     ["Offset of field: _cef_view_t::is_accessibility_focusable"]
-        [::std::mem::offset_of!(_cef_view_t, is_accessibility_focusable) - 360usize];
+        [::std::mem::offset_of!(_cef_view_t, is_accessibility_focusable) - 180usize];
     ["Offset of field: _cef_view_t::request_focus"]
-        [::std::mem::offset_of!(_cef_view_t, request_focus) - 368usize];
+        [::std::mem::offset_of!(_cef_view_t, request_focus) - 184usize];
     ["Offset of field: _cef_view_t::set_background_color"]
-        [::std::mem::offset_of!(_cef_view_t, set_background_color) - 376usize];
+        [::std::mem::offset_of!(_cef_view_t, set_background_color) - 188usize];
     ["Offset of field: _cef_view_t::get_background_color"]
-        [::std::mem::offset_of!(_cef_view_t, get_background_color) - 384usize];
+        [::std::mem::offset_of!(_cef_view_t, get_background_color) - 192usize];
     ["Offset of field: _cef_view_t::get_theme_color"]
-        [::std::mem::offset_of!(_cef_view_t, get_theme_color) - 392usize];
+        [::std::mem::offset_of!(_cef_view_t, get_theme_color) - 196usize];
     ["Offset of field: _cef_view_t::convert_point_to_screen"]
-        [::std::mem::offset_of!(_cef_view_t, convert_point_to_screen) - 400usize];
+        [::std::mem::offset_of!(_cef_view_t, convert_point_to_screen) - 200usize];
     ["Offset of field: _cef_view_t::convert_point_from_screen"]
-        [::std::mem::offset_of!(_cef_view_t, convert_point_from_screen) - 408usize];
+        [::std::mem::offset_of!(_cef_view_t, convert_point_from_screen) - 204usize];
     ["Offset of field: _cef_view_t::convert_point_to_window"]
-        [::std::mem::offset_of!(_cef_view_t, convert_point_to_window) - 416usize];
+        [::std::mem::offset_of!(_cef_view_t, convert_point_to_window) - 208usize];
     ["Offset of field: _cef_view_t::convert_point_from_window"]
-        [::std::mem::offset_of!(_cef_view_t, convert_point_from_window) - 424usize];
+        [::std::mem::offset_of!(_cef_view_t, convert_point_from_window) - 212usize];
     ["Offset of field: _cef_view_t::convert_point_to_view"]
-        [::std::mem::offset_of!(_cef_view_t, convert_point_to_view) - 432usize];
+        [::std::mem::offset_of!(_cef_view_t, convert_point_to_view) - 216usize];
     ["Offset of field: _cef_view_t::convert_point_from_view"]
-        [::std::mem::offset_of!(_cef_view_t, convert_point_from_view) - 440usize];
+        [::std::mem::offset_of!(_cef_view_t, convert_point_from_view) - 220usize];
 };
 #[doc = "\n A View is a rectangle within the views View hierarchy. It is the base\n structure for all Views. All size and position values are in density\n independent pixels (DIP) unless otherwise indicated. Methods must be called\n on the browser process UI thread unless otherwise indicated.\n"]
 pub type cef_view_t = _cef_view_t;
@@ -13908,18 +13898,18 @@ pub struct _cef_browser_view_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_browser_view_t"][::std::mem::size_of::<_cef_browser_view_t>() - 480usize];
-    ["Alignment of _cef_browser_view_t"][::std::mem::align_of::<_cef_browser_view_t>() - 8usize];
+    ["Size of _cef_browser_view_t"][::std::mem::size_of::<_cef_browser_view_t>() - 240usize];
+    ["Alignment of _cef_browser_view_t"][::std::mem::align_of::<_cef_browser_view_t>() - 4usize];
     ["Offset of field: _cef_browser_view_t::base"]
         [::std::mem::offset_of!(_cef_browser_view_t, base) - 0usize];
     ["Offset of field: _cef_browser_view_t::get_browser"]
-        [::std::mem::offset_of!(_cef_browser_view_t, get_browser) - 448usize];
+        [::std::mem::offset_of!(_cef_browser_view_t, get_browser) - 224usize];
     ["Offset of field: _cef_browser_view_t::get_chrome_toolbar"]
-        [::std::mem::offset_of!(_cef_browser_view_t, get_chrome_toolbar) - 456usize];
+        [::std::mem::offset_of!(_cef_browser_view_t, get_chrome_toolbar) - 228usize];
     ["Offset of field: _cef_browser_view_t::set_prefer_accelerators"]
-        [::std::mem::offset_of!(_cef_browser_view_t, set_prefer_accelerators) - 464usize];
+        [::std::mem::offset_of!(_cef_browser_view_t, set_prefer_accelerators) - 232usize];
     ["Offset of field: _cef_browser_view_t::get_runtime_style"]
-        [::std::mem::offset_of!(_cef_browser_view_t, get_runtime_style) - 472usize];
+        [::std::mem::offset_of!(_cef_browser_view_t, get_runtime_style) - 236usize];
 };
 #[doc = "\n A View hosting a cef_browser_t instance. Methods must be called on the\n browser process UI thread unless otherwise indicated.\n"]
 pub type cef_browser_view_t = _cef_browser_view_t;
@@ -13972,24 +13962,24 @@ pub struct _cef_display_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_display_t"][::std::mem::size_of::<_cef_display_t>() - 96usize];
-    ["Alignment of _cef_display_t"][::std::mem::align_of::<_cef_display_t>() - 8usize];
+    ["Size of _cef_display_t"][::std::mem::size_of::<_cef_display_t>() - 48usize];
+    ["Alignment of _cef_display_t"][::std::mem::align_of::<_cef_display_t>() - 4usize];
     ["Offset of field: _cef_display_t::base"]
         [::std::mem::offset_of!(_cef_display_t, base) - 0usize];
     ["Offset of field: _cef_display_t::get_id"]
-        [::std::mem::offset_of!(_cef_display_t, get_id) - 40usize];
+        [::std::mem::offset_of!(_cef_display_t, get_id) - 20usize];
     ["Offset of field: _cef_display_t::get_device_scale_factor"]
-        [::std::mem::offset_of!(_cef_display_t, get_device_scale_factor) - 48usize];
+        [::std::mem::offset_of!(_cef_display_t, get_device_scale_factor) - 24usize];
     ["Offset of field: _cef_display_t::convert_point_to_pixels"]
-        [::std::mem::offset_of!(_cef_display_t, convert_point_to_pixels) - 56usize];
+        [::std::mem::offset_of!(_cef_display_t, convert_point_to_pixels) - 28usize];
     ["Offset of field: _cef_display_t::convert_point_from_pixels"]
-        [::std::mem::offset_of!(_cef_display_t, convert_point_from_pixels) - 64usize];
+        [::std::mem::offset_of!(_cef_display_t, convert_point_from_pixels) - 32usize];
     ["Offset of field: _cef_display_t::get_bounds"]
-        [::std::mem::offset_of!(_cef_display_t, get_bounds) - 72usize];
+        [::std::mem::offset_of!(_cef_display_t, get_bounds) - 36usize];
     ["Offset of field: _cef_display_t::get_work_area"]
-        [::std::mem::offset_of!(_cef_display_t, get_work_area) - 80usize];
+        [::std::mem::offset_of!(_cef_display_t, get_work_area) - 40usize];
     ["Offset of field: _cef_display_t::get_rotation"]
-        [::std::mem::offset_of!(_cef_display_t, get_rotation) - 88usize];
+        [::std::mem::offset_of!(_cef_display_t, get_rotation) - 44usize];
 };
 #[doc = "\n This structure typically, but not always, corresponds to a physical display\n connected to the system. A fake Display may exist on a headless system, or a\n Display may correspond to a remote, virtual display. All size and position\n values are in density independent pixel (DIP) coordinates unless otherwise\n indicated. Methods must be called on the browser process UI thread unless\n otherwise indicated.\n"]
 pub type cef_display_t = _cef_display_t;
@@ -14121,49 +14111,49 @@ pub struct _cef_overlay_controller_t {
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
     ["Size of _cef_overlay_controller_t"]
-        [::std::mem::size_of::<_cef_overlay_controller_t>() - 192usize];
+        [::std::mem::size_of::<_cef_overlay_controller_t>() - 96usize];
     ["Alignment of _cef_overlay_controller_t"]
-        [::std::mem::align_of::<_cef_overlay_controller_t>() - 8usize];
+        [::std::mem::align_of::<_cef_overlay_controller_t>() - 4usize];
     ["Offset of field: _cef_overlay_controller_t::base"]
         [::std::mem::offset_of!(_cef_overlay_controller_t, base) - 0usize];
     ["Offset of field: _cef_overlay_controller_t::is_valid"]
-        [::std::mem::offset_of!(_cef_overlay_controller_t, is_valid) - 40usize];
+        [::std::mem::offset_of!(_cef_overlay_controller_t, is_valid) - 20usize];
     ["Offset of field: _cef_overlay_controller_t::is_same"]
-        [::std::mem::offset_of!(_cef_overlay_controller_t, is_same) - 48usize];
+        [::std::mem::offset_of!(_cef_overlay_controller_t, is_same) - 24usize];
     ["Offset of field: _cef_overlay_controller_t::get_contents_view"]
-        [::std::mem::offset_of!(_cef_overlay_controller_t, get_contents_view) - 56usize];
+        [::std::mem::offset_of!(_cef_overlay_controller_t, get_contents_view) - 28usize];
     ["Offset of field: _cef_overlay_controller_t::get_window"]
-        [::std::mem::offset_of!(_cef_overlay_controller_t, get_window) - 64usize];
+        [::std::mem::offset_of!(_cef_overlay_controller_t, get_window) - 32usize];
     ["Offset of field: _cef_overlay_controller_t::get_docking_mode"]
-        [::std::mem::offset_of!(_cef_overlay_controller_t, get_docking_mode) - 72usize];
+        [::std::mem::offset_of!(_cef_overlay_controller_t, get_docking_mode) - 36usize];
     ["Offset of field: _cef_overlay_controller_t::destroy"]
-        [::std::mem::offset_of!(_cef_overlay_controller_t, destroy) - 80usize];
+        [::std::mem::offset_of!(_cef_overlay_controller_t, destroy) - 40usize];
     ["Offset of field: _cef_overlay_controller_t::set_bounds"]
-        [::std::mem::offset_of!(_cef_overlay_controller_t, set_bounds) - 88usize];
+        [::std::mem::offset_of!(_cef_overlay_controller_t, set_bounds) - 44usize];
     ["Offset of field: _cef_overlay_controller_t::get_bounds"]
-        [::std::mem::offset_of!(_cef_overlay_controller_t, get_bounds) - 96usize];
+        [::std::mem::offset_of!(_cef_overlay_controller_t, get_bounds) - 48usize];
     ["Offset of field: _cef_overlay_controller_t::get_bounds_in_screen"]
-        [::std::mem::offset_of!(_cef_overlay_controller_t, get_bounds_in_screen) - 104usize];
+        [::std::mem::offset_of!(_cef_overlay_controller_t, get_bounds_in_screen) - 52usize];
     ["Offset of field: _cef_overlay_controller_t::set_size"]
-        [::std::mem::offset_of!(_cef_overlay_controller_t, set_size) - 112usize];
+        [::std::mem::offset_of!(_cef_overlay_controller_t, set_size) - 56usize];
     ["Offset of field: _cef_overlay_controller_t::get_size"]
-        [::std::mem::offset_of!(_cef_overlay_controller_t, get_size) - 120usize];
+        [::std::mem::offset_of!(_cef_overlay_controller_t, get_size) - 60usize];
     ["Offset of field: _cef_overlay_controller_t::set_position"]
-        [::std::mem::offset_of!(_cef_overlay_controller_t, set_position) - 128usize];
+        [::std::mem::offset_of!(_cef_overlay_controller_t, set_position) - 64usize];
     ["Offset of field: _cef_overlay_controller_t::get_position"]
-        [::std::mem::offset_of!(_cef_overlay_controller_t, get_position) - 136usize];
+        [::std::mem::offset_of!(_cef_overlay_controller_t, get_position) - 68usize];
     ["Offset of field: _cef_overlay_controller_t::set_insets"]
-        [::std::mem::offset_of!(_cef_overlay_controller_t, set_insets) - 144usize];
+        [::std::mem::offset_of!(_cef_overlay_controller_t, set_insets) - 72usize];
     ["Offset of field: _cef_overlay_controller_t::get_insets"]
-        [::std::mem::offset_of!(_cef_overlay_controller_t, get_insets) - 152usize];
+        [::std::mem::offset_of!(_cef_overlay_controller_t, get_insets) - 76usize];
     ["Offset of field: _cef_overlay_controller_t::size_to_preferred_size"]
-        [::std::mem::offset_of!(_cef_overlay_controller_t, size_to_preferred_size) - 160usize];
+        [::std::mem::offset_of!(_cef_overlay_controller_t, size_to_preferred_size) - 80usize];
     ["Offset of field: _cef_overlay_controller_t::set_visible"]
-        [::std::mem::offset_of!(_cef_overlay_controller_t, set_visible) - 168usize];
+        [::std::mem::offset_of!(_cef_overlay_controller_t, set_visible) - 84usize];
     ["Offset of field: _cef_overlay_controller_t::is_visible"]
-        [::std::mem::offset_of!(_cef_overlay_controller_t, is_visible) - 176usize];
+        [::std::mem::offset_of!(_cef_overlay_controller_t, is_visible) - 88usize];
     ["Offset of field: _cef_overlay_controller_t::is_drawn"]
-        [::std::mem::offset_of!(_cef_overlay_controller_t, is_drawn) - 184usize];
+        [::std::mem::offset_of!(_cef_overlay_controller_t, is_drawn) - 92usize];
 };
 #[doc = "\n Controller for an overlay that contains a contents View added via\n cef_window_t::AddOverlayView. Methods exposed by this controller should be\n called in preference to functions of the same name exposed by the contents\n View unless otherwise indicated. Methods must be called on the browser\n process UI thread unless otherwise indicated.\n"]
 pub type cef_overlay_controller_t = _cef_overlay_controller_t;
@@ -14176,9 +14166,9 @@ pub struct _cef_panel_delegate_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_panel_delegate_t"][::std::mem::size_of::<_cef_panel_delegate_t>() - 128usize];
+    ["Size of _cef_panel_delegate_t"][::std::mem::size_of::<_cef_panel_delegate_t>() - 64usize];
     ["Alignment of _cef_panel_delegate_t"]
-        [::std::mem::align_of::<_cef_panel_delegate_t>() - 8usize];
+        [::std::mem::align_of::<_cef_panel_delegate_t>() - 4usize];
     ["Offset of field: _cef_panel_delegate_t::base"]
         [::std::mem::offset_of!(_cef_panel_delegate_t, base) - 0usize];
 };
@@ -14264,33 +14254,33 @@ pub struct _cef_panel_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_panel_t"][::std::mem::size_of::<_cef_panel_t>() - 544usize];
-    ["Alignment of _cef_panel_t"][::std::mem::align_of::<_cef_panel_t>() - 8usize];
+    ["Size of _cef_panel_t"][::std::mem::size_of::<_cef_panel_t>() - 272usize];
+    ["Alignment of _cef_panel_t"][::std::mem::align_of::<_cef_panel_t>() - 4usize];
     ["Offset of field: _cef_panel_t::base"][::std::mem::offset_of!(_cef_panel_t, base) - 0usize];
     ["Offset of field: _cef_panel_t::as_window"]
-        [::std::mem::offset_of!(_cef_panel_t, as_window) - 448usize];
+        [::std::mem::offset_of!(_cef_panel_t, as_window) - 224usize];
     ["Offset of field: _cef_panel_t::set_to_fill_layout"]
-        [::std::mem::offset_of!(_cef_panel_t, set_to_fill_layout) - 456usize];
+        [::std::mem::offset_of!(_cef_panel_t, set_to_fill_layout) - 228usize];
     ["Offset of field: _cef_panel_t::set_to_box_layout"]
-        [::std::mem::offset_of!(_cef_panel_t, set_to_box_layout) - 464usize];
+        [::std::mem::offset_of!(_cef_panel_t, set_to_box_layout) - 232usize];
     ["Offset of field: _cef_panel_t::get_layout"]
-        [::std::mem::offset_of!(_cef_panel_t, get_layout) - 472usize];
+        [::std::mem::offset_of!(_cef_panel_t, get_layout) - 236usize];
     ["Offset of field: _cef_panel_t::layout"]
-        [::std::mem::offset_of!(_cef_panel_t, layout) - 480usize];
+        [::std::mem::offset_of!(_cef_panel_t, layout) - 240usize];
     ["Offset of field: _cef_panel_t::add_child_view"]
-        [::std::mem::offset_of!(_cef_panel_t, add_child_view) - 488usize];
+        [::std::mem::offset_of!(_cef_panel_t, add_child_view) - 244usize];
     ["Offset of field: _cef_panel_t::add_child_view_at"]
-        [::std::mem::offset_of!(_cef_panel_t, add_child_view_at) - 496usize];
+        [::std::mem::offset_of!(_cef_panel_t, add_child_view_at) - 248usize];
     ["Offset of field: _cef_panel_t::reorder_child_view"]
-        [::std::mem::offset_of!(_cef_panel_t, reorder_child_view) - 504usize];
+        [::std::mem::offset_of!(_cef_panel_t, reorder_child_view) - 252usize];
     ["Offset of field: _cef_panel_t::remove_child_view"]
-        [::std::mem::offset_of!(_cef_panel_t, remove_child_view) - 512usize];
+        [::std::mem::offset_of!(_cef_panel_t, remove_child_view) - 256usize];
     ["Offset of field: _cef_panel_t::remove_all_child_views"]
-        [::std::mem::offset_of!(_cef_panel_t, remove_all_child_views) - 520usize];
+        [::std::mem::offset_of!(_cef_panel_t, remove_all_child_views) - 260usize];
     ["Offset of field: _cef_panel_t::get_child_view_count"]
-        [::std::mem::offset_of!(_cef_panel_t, get_child_view_count) - 528usize];
+        [::std::mem::offset_of!(_cef_panel_t, get_child_view_count) - 264usize];
     ["Offset of field: _cef_panel_t::get_child_view_at"]
-        [::std::mem::offset_of!(_cef_panel_t, get_child_view_at) - 536usize];
+        [::std::mem::offset_of!(_cef_panel_t, get_child_view_at) - 268usize];
 };
 #[doc = "\n A Panel is a container in the views hierarchy that can contain other Views\n as children. Methods must be called on the browser process UI thread unless\n otherwise indicated.\n"]
 pub type cef_panel_t = _cef_panel_t;
@@ -14466,59 +14456,57 @@ pub struct _cef_window_delegate_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_window_delegate_t"][::std::mem::size_of::<_cef_window_delegate_t>() - 312usize];
+    ["Size of _cef_window_delegate_t"][::std::mem::size_of::<_cef_window_delegate_t>() - 156usize];
     ["Alignment of _cef_window_delegate_t"]
-        [::std::mem::align_of::<_cef_window_delegate_t>() - 8usize];
+        [::std::mem::align_of::<_cef_window_delegate_t>() - 4usize];
     ["Offset of field: _cef_window_delegate_t::base"]
         [::std::mem::offset_of!(_cef_window_delegate_t, base) - 0usize];
     ["Offset of field: _cef_window_delegate_t::on_window_created"]
-        [::std::mem::offset_of!(_cef_window_delegate_t, on_window_created) - 128usize];
+        [::std::mem::offset_of!(_cef_window_delegate_t, on_window_created) - 64usize];
     ["Offset of field: _cef_window_delegate_t::on_window_closing"]
-        [::std::mem::offset_of!(_cef_window_delegate_t, on_window_closing) - 136usize];
+        [::std::mem::offset_of!(_cef_window_delegate_t, on_window_closing) - 68usize];
     ["Offset of field: _cef_window_delegate_t::on_window_destroyed"]
-        [::std::mem::offset_of!(_cef_window_delegate_t, on_window_destroyed) - 144usize];
+        [::std::mem::offset_of!(_cef_window_delegate_t, on_window_destroyed) - 72usize];
     ["Offset of field: _cef_window_delegate_t::on_window_activation_changed"]
-        [::std::mem::offset_of!(_cef_window_delegate_t, on_window_activation_changed) - 152usize];
+        [::std::mem::offset_of!(_cef_window_delegate_t, on_window_activation_changed) - 76usize];
     ["Offset of field: _cef_window_delegate_t::on_window_bounds_changed"]
-        [::std::mem::offset_of!(_cef_window_delegate_t, on_window_bounds_changed) - 160usize];
-    ["Offset of field: _cef_window_delegate_t::on_window_fullscreen_transition"][::std::mem::offset_of!(
-        _cef_window_delegate_t,
-        on_window_fullscreen_transition
-    ) - 168usize];
+        [::std::mem::offset_of!(_cef_window_delegate_t, on_window_bounds_changed) - 80usize];
+    ["Offset of field: _cef_window_delegate_t::on_window_fullscreen_transition"]
+        [::std::mem::offset_of!(_cef_window_delegate_t, on_window_fullscreen_transition) - 84usize];
     ["Offset of field: _cef_window_delegate_t::get_parent_window"]
-        [::std::mem::offset_of!(_cef_window_delegate_t, get_parent_window) - 176usize];
+        [::std::mem::offset_of!(_cef_window_delegate_t, get_parent_window) - 88usize];
     ["Offset of field: _cef_window_delegate_t::is_window_modal_dialog"]
-        [::std::mem::offset_of!(_cef_window_delegate_t, is_window_modal_dialog) - 184usize];
+        [::std::mem::offset_of!(_cef_window_delegate_t, is_window_modal_dialog) - 92usize];
     ["Offset of field: _cef_window_delegate_t::get_initial_bounds"]
-        [::std::mem::offset_of!(_cef_window_delegate_t, get_initial_bounds) - 192usize];
+        [::std::mem::offset_of!(_cef_window_delegate_t, get_initial_bounds) - 96usize];
     ["Offset of field: _cef_window_delegate_t::get_initial_show_state"]
-        [::std::mem::offset_of!(_cef_window_delegate_t, get_initial_show_state) - 200usize];
+        [::std::mem::offset_of!(_cef_window_delegate_t, get_initial_show_state) - 100usize];
     ["Offset of field: _cef_window_delegate_t::is_frameless"]
-        [::std::mem::offset_of!(_cef_window_delegate_t, is_frameless) - 208usize];
+        [::std::mem::offset_of!(_cef_window_delegate_t, is_frameless) - 104usize];
     ["Offset of field: _cef_window_delegate_t::with_standard_window_buttons"]
-        [::std::mem::offset_of!(_cef_window_delegate_t, with_standard_window_buttons) - 216usize];
+        [::std::mem::offset_of!(_cef_window_delegate_t, with_standard_window_buttons) - 108usize];
     ["Offset of field: _cef_window_delegate_t::get_titlebar_height"]
-        [::std::mem::offset_of!(_cef_window_delegate_t, get_titlebar_height) - 224usize];
+        [::std::mem::offset_of!(_cef_window_delegate_t, get_titlebar_height) - 112usize];
     ["Offset of field: _cef_window_delegate_t::accepts_first_mouse"]
-        [::std::mem::offset_of!(_cef_window_delegate_t, accepts_first_mouse) - 232usize];
+        [::std::mem::offset_of!(_cef_window_delegate_t, accepts_first_mouse) - 116usize];
     ["Offset of field: _cef_window_delegate_t::can_resize"]
-        [::std::mem::offset_of!(_cef_window_delegate_t, can_resize) - 240usize];
+        [::std::mem::offset_of!(_cef_window_delegate_t, can_resize) - 120usize];
     ["Offset of field: _cef_window_delegate_t::can_maximize"]
-        [::std::mem::offset_of!(_cef_window_delegate_t, can_maximize) - 248usize];
+        [::std::mem::offset_of!(_cef_window_delegate_t, can_maximize) - 124usize];
     ["Offset of field: _cef_window_delegate_t::can_minimize"]
-        [::std::mem::offset_of!(_cef_window_delegate_t, can_minimize) - 256usize];
+        [::std::mem::offset_of!(_cef_window_delegate_t, can_minimize) - 128usize];
     ["Offset of field: _cef_window_delegate_t::can_close"]
-        [::std::mem::offset_of!(_cef_window_delegate_t, can_close) - 264usize];
+        [::std::mem::offset_of!(_cef_window_delegate_t, can_close) - 132usize];
     ["Offset of field: _cef_window_delegate_t::on_accelerator"]
-        [::std::mem::offset_of!(_cef_window_delegate_t, on_accelerator) - 272usize];
+        [::std::mem::offset_of!(_cef_window_delegate_t, on_accelerator) - 136usize];
     ["Offset of field: _cef_window_delegate_t::on_key_event"]
-        [::std::mem::offset_of!(_cef_window_delegate_t, on_key_event) - 280usize];
+        [::std::mem::offset_of!(_cef_window_delegate_t, on_key_event) - 140usize];
     ["Offset of field: _cef_window_delegate_t::on_theme_colors_changed"]
-        [::std::mem::offset_of!(_cef_window_delegate_t, on_theme_colors_changed) - 288usize];
+        [::std::mem::offset_of!(_cef_window_delegate_t, on_theme_colors_changed) - 144usize];
     ["Offset of field: _cef_window_delegate_t::get_window_runtime_style"]
-        [::std::mem::offset_of!(_cef_window_delegate_t, get_window_runtime_style) - 296usize];
+        [::std::mem::offset_of!(_cef_window_delegate_t, get_window_runtime_style) - 148usize];
     ["Offset of field: _cef_window_delegate_t::get_linux_window_properties"]
-        [::std::mem::offset_of!(_cef_window_delegate_t, get_linux_window_properties) - 304usize];
+        [::std::mem::offset_of!(_cef_window_delegate_t, get_linux_window_properties) - 152usize];
 };
 #[doc = "\n Implement this structure to handle window events. The functions of this\n structure will be called on the browser process UI thread unless otherwise\n indicated.\n"]
 pub type cef_window_delegate_t = _cef_window_delegate_t;
@@ -14708,91 +14696,91 @@ pub struct _cef_window_t {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of _cef_window_t"][::std::mem::size_of::<_cef_window_t>() - 872usize];
-    ["Alignment of _cef_window_t"][::std::mem::align_of::<_cef_window_t>() - 8usize];
+    ["Size of _cef_window_t"][::std::mem::size_of::<_cef_window_t>() - 436usize];
+    ["Alignment of _cef_window_t"][::std::mem::align_of::<_cef_window_t>() - 4usize];
     ["Offset of field: _cef_window_t::base"][::std::mem::offset_of!(_cef_window_t, base) - 0usize];
     ["Offset of field: _cef_window_t::show"]
-        [::std::mem::offset_of!(_cef_window_t, show) - 544usize];
+        [::std::mem::offset_of!(_cef_window_t, show) - 272usize];
     ["Offset of field: _cef_window_t::show_as_browser_modal_dialog"]
-        [::std::mem::offset_of!(_cef_window_t, show_as_browser_modal_dialog) - 552usize];
+        [::std::mem::offset_of!(_cef_window_t, show_as_browser_modal_dialog) - 276usize];
     ["Offset of field: _cef_window_t::hide"]
-        [::std::mem::offset_of!(_cef_window_t, hide) - 560usize];
+        [::std::mem::offset_of!(_cef_window_t, hide) - 280usize];
     ["Offset of field: _cef_window_t::center_window"]
-        [::std::mem::offset_of!(_cef_window_t, center_window) - 568usize];
+        [::std::mem::offset_of!(_cef_window_t, center_window) - 284usize];
     ["Offset of field: _cef_window_t::close"]
-        [::std::mem::offset_of!(_cef_window_t, close) - 576usize];
+        [::std::mem::offset_of!(_cef_window_t, close) - 288usize];
     ["Offset of field: _cef_window_t::is_closed"]
-        [::std::mem::offset_of!(_cef_window_t, is_closed) - 584usize];
+        [::std::mem::offset_of!(_cef_window_t, is_closed) - 292usize];
     ["Offset of field: _cef_window_t::activate"]
-        [::std::mem::offset_of!(_cef_window_t, activate) - 592usize];
+        [::std::mem::offset_of!(_cef_window_t, activate) - 296usize];
     ["Offset of field: _cef_window_t::deactivate"]
-        [::std::mem::offset_of!(_cef_window_t, deactivate) - 600usize];
+        [::std::mem::offset_of!(_cef_window_t, deactivate) - 300usize];
     ["Offset of field: _cef_window_t::is_active"]
-        [::std::mem::offset_of!(_cef_window_t, is_active) - 608usize];
+        [::std::mem::offset_of!(_cef_window_t, is_active) - 304usize];
     ["Offset of field: _cef_window_t::bring_to_top"]
-        [::std::mem::offset_of!(_cef_window_t, bring_to_top) - 616usize];
+        [::std::mem::offset_of!(_cef_window_t, bring_to_top) - 308usize];
     ["Offset of field: _cef_window_t::set_always_on_top"]
-        [::std::mem::offset_of!(_cef_window_t, set_always_on_top) - 624usize];
+        [::std::mem::offset_of!(_cef_window_t, set_always_on_top) - 312usize];
     ["Offset of field: _cef_window_t::is_always_on_top"]
-        [::std::mem::offset_of!(_cef_window_t, is_always_on_top) - 632usize];
+        [::std::mem::offset_of!(_cef_window_t, is_always_on_top) - 316usize];
     ["Offset of field: _cef_window_t::maximize"]
-        [::std::mem::offset_of!(_cef_window_t, maximize) - 640usize];
+        [::std::mem::offset_of!(_cef_window_t, maximize) - 320usize];
     ["Offset of field: _cef_window_t::minimize"]
-        [::std::mem::offset_of!(_cef_window_t, minimize) - 648usize];
+        [::std::mem::offset_of!(_cef_window_t, minimize) - 324usize];
     ["Offset of field: _cef_window_t::restore"]
-        [::std::mem::offset_of!(_cef_window_t, restore) - 656usize];
+        [::std::mem::offset_of!(_cef_window_t, restore) - 328usize];
     ["Offset of field: _cef_window_t::set_fullscreen"]
-        [::std::mem::offset_of!(_cef_window_t, set_fullscreen) - 664usize];
+        [::std::mem::offset_of!(_cef_window_t, set_fullscreen) - 332usize];
     ["Offset of field: _cef_window_t::is_maximized"]
-        [::std::mem::offset_of!(_cef_window_t, is_maximized) - 672usize];
+        [::std::mem::offset_of!(_cef_window_t, is_maximized) - 336usize];
     ["Offset of field: _cef_window_t::is_minimized"]
-        [::std::mem::offset_of!(_cef_window_t, is_minimized) - 680usize];
+        [::std::mem::offset_of!(_cef_window_t, is_minimized) - 340usize];
     ["Offset of field: _cef_window_t::is_fullscreen"]
-        [::std::mem::offset_of!(_cef_window_t, is_fullscreen) - 688usize];
+        [::std::mem::offset_of!(_cef_window_t, is_fullscreen) - 344usize];
     ["Offset of field: _cef_window_t::set_title"]
-        [::std::mem::offset_of!(_cef_window_t, set_title) - 696usize];
+        [::std::mem::offset_of!(_cef_window_t, set_title) - 348usize];
     ["Offset of field: _cef_window_t::get_title"]
-        [::std::mem::offset_of!(_cef_window_t, get_title) - 704usize];
+        [::std::mem::offset_of!(_cef_window_t, get_title) - 352usize];
     ["Offset of field: _cef_window_t::set_window_icon"]
-        [::std::mem::offset_of!(_cef_window_t, set_window_icon) - 712usize];
+        [::std::mem::offset_of!(_cef_window_t, set_window_icon) - 356usize];
     ["Offset of field: _cef_window_t::get_window_icon"]
-        [::std::mem::offset_of!(_cef_window_t, get_window_icon) - 720usize];
+        [::std::mem::offset_of!(_cef_window_t, get_window_icon) - 360usize];
     ["Offset of field: _cef_window_t::set_window_app_icon"]
-        [::std::mem::offset_of!(_cef_window_t, set_window_app_icon) - 728usize];
+        [::std::mem::offset_of!(_cef_window_t, set_window_app_icon) - 364usize];
     ["Offset of field: _cef_window_t::get_window_app_icon"]
-        [::std::mem::offset_of!(_cef_window_t, get_window_app_icon) - 736usize];
+        [::std::mem::offset_of!(_cef_window_t, get_window_app_icon) - 368usize];
     ["Offset of field: _cef_window_t::add_overlay_view"]
-        [::std::mem::offset_of!(_cef_window_t, add_overlay_view) - 744usize];
+        [::std::mem::offset_of!(_cef_window_t, add_overlay_view) - 372usize];
     ["Offset of field: _cef_window_t::show_menu"]
-        [::std::mem::offset_of!(_cef_window_t, show_menu) - 752usize];
+        [::std::mem::offset_of!(_cef_window_t, show_menu) - 376usize];
     ["Offset of field: _cef_window_t::cancel_menu"]
-        [::std::mem::offset_of!(_cef_window_t, cancel_menu) - 760usize];
+        [::std::mem::offset_of!(_cef_window_t, cancel_menu) - 380usize];
     ["Offset of field: _cef_window_t::get_display"]
-        [::std::mem::offset_of!(_cef_window_t, get_display) - 768usize];
+        [::std::mem::offset_of!(_cef_window_t, get_display) - 384usize];
     ["Offset of field: _cef_window_t::get_client_area_bounds_in_screen"]
-        [::std::mem::offset_of!(_cef_window_t, get_client_area_bounds_in_screen) - 776usize];
+        [::std::mem::offset_of!(_cef_window_t, get_client_area_bounds_in_screen) - 388usize];
     ["Offset of field: _cef_window_t::set_draggable_regions"]
-        [::std::mem::offset_of!(_cef_window_t, set_draggable_regions) - 784usize];
+        [::std::mem::offset_of!(_cef_window_t, set_draggable_regions) - 392usize];
     ["Offset of field: _cef_window_t::get_window_handle"]
-        [::std::mem::offset_of!(_cef_window_t, get_window_handle) - 792usize];
+        [::std::mem::offset_of!(_cef_window_t, get_window_handle) - 396usize];
     ["Offset of field: _cef_window_t::send_key_press"]
-        [::std::mem::offset_of!(_cef_window_t, send_key_press) - 800usize];
+        [::std::mem::offset_of!(_cef_window_t, send_key_press) - 400usize];
     ["Offset of field: _cef_window_t::send_mouse_move"]
-        [::std::mem::offset_of!(_cef_window_t, send_mouse_move) - 808usize];
+        [::std::mem::offset_of!(_cef_window_t, send_mouse_move) - 404usize];
     ["Offset of field: _cef_window_t::send_mouse_events"]
-        [::std::mem::offset_of!(_cef_window_t, send_mouse_events) - 816usize];
+        [::std::mem::offset_of!(_cef_window_t, send_mouse_events) - 408usize];
     ["Offset of field: _cef_window_t::set_accelerator"]
-        [::std::mem::offset_of!(_cef_window_t, set_accelerator) - 824usize];
+        [::std::mem::offset_of!(_cef_window_t, set_accelerator) - 412usize];
     ["Offset of field: _cef_window_t::remove_accelerator"]
-        [::std::mem::offset_of!(_cef_window_t, remove_accelerator) - 832usize];
+        [::std::mem::offset_of!(_cef_window_t, remove_accelerator) - 416usize];
     ["Offset of field: _cef_window_t::remove_all_accelerators"]
-        [::std::mem::offset_of!(_cef_window_t, remove_all_accelerators) - 840usize];
+        [::std::mem::offset_of!(_cef_window_t, remove_all_accelerators) - 420usize];
     ["Offset of field: _cef_window_t::set_theme_color"]
-        [::std::mem::offset_of!(_cef_window_t, set_theme_color) - 848usize];
+        [::std::mem::offset_of!(_cef_window_t, set_theme_color) - 424usize];
     ["Offset of field: _cef_window_t::theme_changed"]
-        [::std::mem::offset_of!(_cef_window_t, theme_changed) - 856usize];
+        [::std::mem::offset_of!(_cef_window_t, theme_changed) - 428usize];
     ["Offset of field: _cef_window_t::get_runtime_style"]
-        [::std::mem::offset_of!(_cef_window_t, get_runtime_style) - 864usize];
+        [::std::mem::offset_of!(_cef_window_t, get_runtime_style) - 432usize];
 };
 #[doc = "\n A Window is a top-level Window/widget in the Views hierarchy. By default it\n will have a non-client area with title bar, icon and buttons that supports\n moving and resizing. All size and position values are in density independent\n pixels (DIP) unless otherwise indicated. Methods must be called on the\n browser process UI thread unless otherwise indicated.\n"]
 pub type cef_window_t = _cef_window_t;

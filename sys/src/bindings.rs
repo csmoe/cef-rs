@@ -31,9 +31,9 @@ mod x86_64_unknown_linux_gnu;
 pub use  x86_64_unknown_linux_gnu::*;
 
 #[cfg(all(target_os = "linux", target_arch = "arm"))]
-mod arm_unknown_linux_gnu;
+mod arm_unknown_linux_gnueabi;
 #[cfg(all(target_os = "linux", target_arch = "arm"))]
-pub use  arm_unknown_linux_gnu::*;
+pub use  arm_unknown_linux_gnueabi::*;
 
 #[cfg(all(target_os = "linux", target_arch = "aarch64"))]
 mod aarch64_unknown_linux_gnu;

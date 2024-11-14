@@ -1,4 +1,4 @@
-#!/usr/bin/env -S cargo +nightly -Zscript
+#!/usr/bin/env -S RUSTFLAGS=-Copt-level=3 cargo +nightly --config ../.cargo/config.toml -v -Zscript
 ---cargo
 [dependencies]
 ureq = "2"
@@ -29,7 +29,8 @@ const TARGETS: &[&str] = &[
     "i686-pc-windows-msvc",
     // linux
     "x86_64-unknown-linux-gnu",
-    "arm-unknown-linux-gnu",
+    "i686-unknown-linux-gnu",
+    "arm-unknown-linux-gnueabi",
     "aarch64-unknown-linux-gnu",
 ];
 
@@ -55,6 +56,14 @@ fn main() {
                 if let Ok((target, path)) = t.join() {
                     bindgen(&target, &path);
                 }
+            }
+        }
+        [_, target @ _, "--download", ..] => {
+            if TARGETS.contains(target) {
+                download_prebuilt_cef(target);
+            } else {
+                eprintln!("expected targets: {TARGETS:?}");
+                std::process::exit(1);
             }
         }
         [_, target @ _, ..] => {
@@ -103,8 +112,7 @@ fn download_prebuilt_cef(target: &str) -> std::path::PathBuf {
         "x86_64-pc-windows-msvc" => "windows64",
         "aarch64-pc-windows-msvc" => "windowsarm64",
         "x86_64-unknown-linux-gnu" => "linux64",
-        "i686-unknown-linux-gnu" => "linux32",
-        "arm-unknown-linux-gnu" => "linuxarm",
+        "arm-unknown-linux-gnueabi" => "linuxarm",
         "aarch64-unknown-linux-gnu" => "linuxarm64",
         v @ _ => panic!("unsupported {v:?}"),
     };
