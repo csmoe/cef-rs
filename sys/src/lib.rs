@@ -1,4 +1,4 @@
-#[allow(nonstandard_style,unused,clippy::all, rustfmt::skip)]
+#[allow(nonstandard_style, unused, clippy::all, rustfmt::skip)]
 mod bindings;
 
 pub use bindings::*;

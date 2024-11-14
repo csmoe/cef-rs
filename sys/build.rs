@@ -1,5 +1,7 @@
 fn main() {
-    let cef_path = std::env::var("CEF_PATH").map(std::path::PathBuf::from).unwrap();
+    let cef_path = std::env::var("CEF_PATH")
+        .map(std::path::PathBuf::from)
+        .unwrap();
 
     build::rerun_if_changed("build.rs");
 
@@ -24,4 +26,3 @@ fn main() {
         }
     }
 }
-
