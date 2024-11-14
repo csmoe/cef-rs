@@ -69,7 +69,7 @@ fn main() {
     }
 }
 
-fn download_prebuilt_cef(target: &str, cef_path: &std::path::Path) -> std::path::PathBuf {
+fn download_prebuilt_cef(target: &str, cef_path: &std::path::Path) {
     let metadata = cargo_metadata::MetadataCommand::new()
         .no_deps()
         .manifest_path("./Cargo.toml")
@@ -172,7 +172,6 @@ fn download_prebuilt_cef(target: &str, cef_path: &std::path::Path) -> std::path:
     }
     std::fs::rename(from, &cef_path).unwrap();
     println!("cef: extracted into {:?}", cef_path);
-    cef_path
 }
 
 fn calculate_file_sha1(mut reader: std::io::BufReader<std::fs::File>) -> String {
