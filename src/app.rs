@@ -12,9 +12,10 @@ use crate::{
 pub trait App: Sized {
     fn on_before_command_line_processing(
         &self,
-        _process_type: Option<CefString>,
-        _command_line: CommandLine,
+        process_type: Option<CefString>,
+        command_line: CommandLine,
     ) {
+        dbg!(process_type, command_line);
     }
 
     fn into_raw(self) -> *mut cef_app_t {

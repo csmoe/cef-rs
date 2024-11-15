@@ -15,8 +15,8 @@ const DOWNLOAD_TEMPLATE: &str =
 
 const HELP: &str = r#"
 Usage:
-    on *nix platform: ./upgrade.rs <target>
-    on windows platform: cargo +nightly -Zscript upgrade.rs <target> --release
+    on *nix platform: ./upgrade.rs <target> [ --download | --bindgen ]
+    on windows platform: cargo +nightly --config ../.cargo/.config.toml -Zscript upgrade.rs <target> [ --download | --bindgen ]
 "#;
 
 const TARGETS: &[&str] = &[

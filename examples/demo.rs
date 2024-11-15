@@ -41,8 +41,8 @@ fn main() {
     let mut args = Args::new(std::env::args());
     let app = Application;
     let settings = Settings::new();
-    cef::initialize(&mut args, &settings, Some(app)).unwrap();
     cef::execute_process(&mut args, Some(app)).unwrap();
+    cef::initialize(&mut args, &settings, Some(app)).unwrap();
 
     let window_info = cef::WindowInfo::new();
     let browser_settings = BrowserSettings::new();
