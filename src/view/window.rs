@@ -1,5 +1,6 @@
 use cef_sys::{
-    cef_window_create_top_level, cef_window_delegate_t, cef_window_info_t, cef_window_t,
+    cef_key_event_t, cef_runtime_style_t, cef_show_state_t, cef_window_create_top_level,
+    cef_window_delegate_t, cef_window_info_t, cef_window_t,
 };
 use windows::Win32::Foundation::HWND;
 use windows::Win32::UI::WindowsAndMessaging::HMENU;
@@ -9,7 +10,7 @@ use crate::{
     rc::{RcImpl, RefGuard},
     string::CefString,
     view::{Panel, PanelDelegate},
-    wrapper, Rect,
+    wrapper, Rect, State,
 };
 
 /// See [cef_window_info_t] for more documentation.
@@ -91,8 +92,80 @@ pub trait WindowDelegate: PanelDelegate {
     fn on_window_created(&self, _window: Window) {}
     fn on_window_closing(&self, _window: Window) {}
     fn on_window_destroyed(&self, _window: Window) {}
+
+    fn on_window_activation_changed(&self, _window: Window, _activated: bool) {}
+
+    fn on_window_bounds_changed(&self, _window: Window, _new_bounds: Rect) {}
+
+    fn on_window_fullscreen_transition(&self, _window: Window, _fullscreen: bool) {}
+
+    fn get_parent_window(&self, _window: Window, _is_menu: bool, _can_active_menu: bool) {}
+
+    fn is_window_modal_dialog(&self, _window: Window) -> bool {
+        false
+    }
+
+    fn get_initial_bounds(&self, _window: Window) -> Rect {
+        todo!()
+    }
+
+    fn get_initial_show_state(&self, _window: Window) -> cef_show_state_t {
+        todo!()
+    }
+
+    fn is_frameless(&self, _window: Window) -> bool {
+        todo!()
+    }
+
+    fn with_standard_window_buttons(&self, _window: Window) -> bool {
+        todo!()
+    }
+
+    fn get_titlebar_height(&self, _window: Window) -> i32 {
+        todo!()
+    }
+
+    fn accepts_first_mouse(&self, _window: Window) -> State {
+        todo!()
+    }
+
+    fn can_resize(&self, _window: Window) -> bool {
+        true
+    }
+
+    fn can_minimize(&self, _window: Window) -> bool {
+        true
+    }
+
+    fn can_maximize(&self, _window: Window) -> bool {
+        true
+    }
+
     fn can_close(&mut self, _window: Window) -> bool {
         true
+    }
+
+    fn on_accelerator(&self, _window: Window, _command_id: i32) -> bool {
+        todo!()
+    }
+
+    fn on_key_event(&self, _window: Window, _event: cef_key_event_t) -> bool {
+        false
+    }
+
+    fn on_theme_color_changed(&self, _window: Window, _chrome_theme: i32) {}
+
+    fn get_window_runtime_style(&self) -> cef_runtime_style_t {
+        todo!()
+    }
+
+    #[cfg(target_os = "linux")]
+    fn get_linux_window_properties(
+        &self,
+        _window: Window,
+        _properties: cef_sys::cef_linux_window_properties_t,
+    ) -> bool {
+        false
     }
 
     fn into_raw(self) -> *mut cef_window_delegate_t {

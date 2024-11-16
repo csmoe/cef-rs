@@ -4,7 +4,7 @@ use cef_sys::{cef_view_delegate_t, cef_view_t};
 
 use crate::{
     rc::{RcImpl, RefGuard},
-    wrapper,
+    wrapper, Rect, Size,
 };
 
 mod panel;
@@ -52,6 +52,30 @@ pub trait ViewDelegate: Sized {
     fn on_parent_view_changed(&self, _view: View, _added: bool, _parent: View) {}
     fn on_child_view_changed(&self, _view: View, _added: bool, _child: View) {}
     fn on_window_changed(&self, _view: View, _added: bool) {}
+
+    fn on_layout_changed(&self, _view: View, _new_bounds: Rect) {}
+
+    fn on_focus(&self, _view: View) {}
+
+    fn on_blur(&self, _view: View) {}
+
+    fn on_theme_changed(&self, _view: View) {}
+
+    fn get_preferred_size(&self, _view: View) -> Size {
+        todo!()
+    }
+
+    fn get_minimum_size(&self, _view: View) -> Size {
+        todo!()
+    }
+
+    fn get_maximum_size(&self, _view: View) -> Size {
+        todo!()
+    }
+
+    fn get_height_for_width(&self, _view: View, _width: i32) -> i32 {
+        todo!()
+    }
 
     fn into_raw(self) -> *mut cef_view_delegate_t {
         let mut object: cef_view_delegate_t = unsafe { std::mem::zeroed() };

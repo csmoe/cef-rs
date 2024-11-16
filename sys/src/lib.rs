@@ -24,6 +24,15 @@ impl Default for cef_rect_t {
     }
 }
 
+impl Default for cef_size_t {
+    fn default() -> Self {
+        Self {
+            width: 0,
+            height: 0,
+        }
+    }
+}
+
 macro_rules! impl_default_for_enums {
     ($($type:ty => $default:ident),+ $(,)?) => {
         $(
