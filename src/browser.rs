@@ -1,8 +1,12 @@
 use std::{ffi::c_int, ptr::null_mut};
 
-use cef_sys::{cef_browser_host_create_browser, cef_browser_settings_t};
+use cef_sys::{
+    cef_browser_host_create_browser, cef_browser_settings_t, cef_browser_t,
+    cef_browser_view_delegate_t, cef_chrome_toolbar_type_t, cef_client_t, cef_gesture_command_t,
+    cef_runtime_style_t,
+};
 
-use crate::{client::Client, string::CefString, view::WindowInfo, State};
+use crate::{client::Client, string::CefString, view::WindowInfo, BrowserView, State};
 
 /// See [cef_browser_settings_t] for more documentation.
 #[derive(Debug, Clone)]
@@ -109,6 +113,12 @@ impl BrowserSettings {
     }
 }
 
+crate::wrapper! {
+    #[doc = "see [cef_browser_t] for more documentation."]
+    #[derive(Debug, Clone)]
+    pub struct Browser(cef_browser_t);
+}
+
 /// See [cef_browser_host_create_browser] for more documentation.
 pub fn create_browser<T: Client>(
     window_info: WindowInfo,
@@ -117,7 +127,6 @@ pub fn create_browser<T: Client>(
     settings: BrowserSettings,
 ) -> i32 {
     let client = client.map(|c| c.into_raw()).unwrap_or(null_mut());
-
     unsafe {
         cef_browser_host_create_browser(
             &window_info.as_raw(),
@@ -130,4 +139,46 @@ pub fn create_browser<T: Client>(
     }
 }
 
-pub trait BrowserViewDelegate: Sized {}
+pub trait BrowserViewDelegate: Sized {
+    fn on_browser_created(&self, _browser_view: BrowserView, _browser: Browser) {}
+
+    fn on_browser_destroyed(&self, _browser_view: BrowserView, _browser: Browser) {}
+
+    fn get_delegate_for_popup_browser_view(
+        &self,
+        _browser_view: BrowserView,
+        _settings: BrowserSettings,
+        _client: cef_client_t,
+        _is_devtools: bool,
+    ) -> Option<cef_browser_view_delegate_t> {
+        None
+    }
+
+    fn on_popup_browser_view_created(
+        &self,
+        _browser_view: BrowserView,
+        _popup_browser_view: BrowserView,
+        _is_devtools: bool,
+    ) {
+    }
+
+    fn get_chrome_toolbar_type(&self, _browser_view: BrowserView) -> cef_chrome_toolbar_type_t {
+        todo!()
+    }
+
+    fn use_frameless_window_for_picture_in_picture_view(&self, _browser_view: BrowserView) -> bool {
+        todo!()
+    }
+
+    fn on_gesture_command(
+        &self,
+        _browser_view: BrowserView,
+        _gesture_command: cef_gesture_command_t,
+    ) -> bool {
+        todo!()
+    }
+
+    fn get_browser_runtime_style(&self) -> cef_runtime_style_t {
+        todo!()
+    }
+}

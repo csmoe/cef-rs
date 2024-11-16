@@ -55,12 +55,12 @@ fn main() {
     let client = DemoClient;
     let url = CefString::new("https://www.google.com");
 
-    let browser_view =
-        cef::create_browser_view(Some(client), &url, browser_settings.clone()).unwrap();
-    let delegate = DemoWindow { browser_view };
+    //let browser_view =
+    cef::create_browser_view(Some(client), &url, browser_settings.clone()).unwrap();
+    //let delegate = DemoWindow { browser_view };
 
-    cef::create_top_level_window(delegate);
-    //cef::create_browser(window_info, Some(client), url, browser_settings);
+    //cef::create_top_level_window(delegate);
+    cef::create_browser(window_info, Some(client), url, browser_settings);
 
     cef::run_message_loop();
 

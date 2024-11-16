@@ -1,6 +1,7 @@
 use cef_sys::{
     cef_app_t, cef_command_line_t, cef_execute_process, cef_get_exit_code, cef_initialize,
-    cef_quit_message_loop, cef_run_message_loop, cef_shutdown, cef_string_t,
+    cef_quit_message_loop, cef_run_message_loop, cef_scheme_registrar_t, cef_shutdown,
+    cef_string_t,
 };
 
 use crate::{
@@ -15,7 +16,20 @@ pub trait App: Sized {
         process_type: Option<CefString>,
         command_line: CommandLine,
     ) {
-        dbg!(process_type, command_line);
+    }
+
+    fn on_register_custom_schemes(&self, registrar: cef_scheme_registrar_t) {}
+
+    fn get_resource_bundle_handler(&self) -> Option<cef_sys::cef_resource_bundle_handler_t> {
+        None
+    }
+
+    fn get_browser_process_handler(&self) -> Option<cef_sys::cef_browser_process_handler_t> {
+        None
+    }
+
+    fn get_render_process_handler(&self) -> Option<cef_sys::cef_render_process_handler_t> {
+        None
     }
 
     fn into_raw(self) -> *mut cef_app_t {
