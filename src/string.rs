@@ -17,7 +17,7 @@ use widestring::U16CString;
 
 /// Helper type to deal with Cef string. It's essentially an UTF-16 C string.
 #[derive(Debug, Default, Clone)]
-pub struct CefString(pub U16CString);
+pub struct CefString(U16CString);
 
 impl CefString {
     pub fn new(s: &str) -> Self {
@@ -59,6 +59,12 @@ impl CefString {
             str_: self.0.as_ptr().cast_mut(),
             dtor: None,
         }
+    }
+}
+
+impl<T: AsRef<std::ffi::OsStr>> From<T> for CefString {
+    fn from(value: T) -> Self {
+        Self(U16CString::from_os_str(value.as_ref()).expect("cannot convert OsStr to U16CString"))
     }
 }
 

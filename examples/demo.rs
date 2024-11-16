@@ -1,5 +1,3 @@
-use std::ptr::null_mut;
-
 use cef::{
     args::Args, client::Client, string::CefString, App, BrowserSettings, BrowserView,
     PanelDelegate, Settings, ViewDelegate, WindowDelegate,
@@ -40,9 +38,15 @@ impl WindowDelegate for DemoWindow {
 }
 
 fn main() {
+    let cef_path = std::path::PathBuf::from(std::env::var("CEF_PATH").unwrap())
+        .canonicalize()
+        .unwrap();
     let mut args = Args::new(std::env::args());
     let app = Application;
-    let settings = Settings::new();
+    let mut settings = Settings::new();
+    settings.resources_dir_path = cef_path.join("Resources").into();
+    //settings.locales_dir_path = cef_path.join("Resources").into();
+    //settings.framework_dir_path = cef_path.join("Release").into();
     cef::execute_process(&mut args, Some(app)).unwrap();
     cef::initialize(&mut args, &settings, Some(app)).unwrap();
 
@@ -56,7 +60,7 @@ fn main() {
     let delegate = DemoWindow { browser_view };
 
     cef::create_top_level_window(delegate);
-    cef::create_browser(window_info, Some(client), url, browser_settings);
+    //cef::create_browser(window_info, Some(client), url, browser_settings);
 
     cef::run_message_loop();
 

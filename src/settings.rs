@@ -8,65 +8,35 @@ use crate::{string::CefString, LogItems, LogSeverity};
 #[derive(Debug, Default, Clone)]
 pub struct Settings {
     pub no_sandbox: bool,
-
     pub browser_subprocess_path: CefString,
-
     pub framework_dir_path: CefString,
-
     pub main_bundle_path: CefString,
-
     pub chrome_runtime: bool,
-
     pub multi_threaded_message_loop: bool,
-
     pub external_message_pump: bool,
-
     pub windowless_rendering_enabled: bool,
-
     pub command_line_args_disabled: bool,
-
     pub cache_path: CefString,
-
     pub root_cache_path: CefString,
-
     pub user_data_path: CefString,
-
     pub persist_session_cookies: bool,
-
     pub persist_user_preferences: bool,
-
     pub user_agent: CefString,
-
     pub user_agent_product: CefString,
-
     pub locale: CefString,
-
     pub log_file: CefString,
-
     pub log_severity: LogSeverity,
-
     pub log_items: LogItems,
-
     pub javascript_flags: CefString,
-
     pub resources_dir_path: CefString,
-
     pub locales_dir_path: CefString,
-
     pub pack_loading_disabled: bool,
-
     pub remote_debugging_port: u32,
-
     pub uncaught_exception_stack_size: u32,
-
     pub background_color: u32,
-
     pub accept_language_list: CefString,
-
     pub cookieable_schemes_list: CefString,
-
     pub cookieable_schemes_exclude_defaults: bool,
-
     chrome_app_icon_id: c_int,
     chrome_policy_id: CefString,
     #[cfg(target_family = "unix")]
