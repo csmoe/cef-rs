@@ -1,6 +1,6 @@
 use cef_sys::cef_command_line_t;
 
-use crate::{rc::RefGuard, wrapper};
+use crate::wrapper;
 
 wrapper!(
     #[doc = "See [cef_command_line_t] for more documentation."]

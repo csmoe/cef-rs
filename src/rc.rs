@@ -148,7 +148,7 @@ macro_rules! gen_fn {
 macro_rules! wrapper {
     (
     $(#[$attr:meta])*
-    pub struct $name:ident($sys:ident);
+    pub struct $name:ident($sys:path);
     $($visibility:vis fn $method:ident(
         &self
         $(,$arg:ident: [$ref:ident] $type:ty)*)
@@ -186,8 +186,6 @@ macro_rules! wrapper {
         }
     };
 }
-pub use gen_fn;
-pub use wrapper;
 
 /// A smart pointer for types from cef library.
 #[derive(Debug)]

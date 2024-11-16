@@ -52,7 +52,7 @@ fn main() {
     let url = CefString::new("https://www.google.com");
 
     let browser_view =
-        cef::create_browser_view(Some(client), &url, browser_settings.clone(), null_mut()).unwrap();
+        cef::create_browser_view(Some(client), &url, browser_settings.clone()).unwrap();
     let delegate = DemoWindow { browser_view };
 
     cef::create_top_level_window(delegate);

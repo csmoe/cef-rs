@@ -1,14 +1,8 @@
 use std::{ffi::c_int, ptr::null_mut};
 
-use cef_sys::{
-    cef_browser_host_create_browser, cef_browser_settings_t, cef_browser_view_create,
-    cef_browser_view_t,
-};
+use cef_sys::{cef_browser_host_create_browser, cef_browser_settings_t};
 
-use crate::{
-    client::Client, error::Error, error::Result, rc::RefGuard, string::CefString,
-    window::WindowInfo, wrapper, State, View,
-};
+use crate::{client::Client, string::CefString, view::WindowInfo, State};
 
 /// See [cef_browser_settings_t] for more documentation.
 #[derive(Debug, Clone)]

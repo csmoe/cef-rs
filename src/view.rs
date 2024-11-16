@@ -13,24 +13,20 @@ mod button;
 pub use button::*;
 mod browser;
 pub use browser::*;
+mod window;
+pub use window::*;
 
-wrapper!(
-    #[doc = "See [cef_view_t] for more documentation."]
-    #[derive(Debug, Clone)]
-    pub struct View(cef_view_t);
-);
-
-macro_rules! impl_from_view {
-    ($( ($as_field:ident, $target_type:ident) ),*) => {
+macro_rules! convert_view {
+    ($( ($view:ident, $as_field:ident, $target_type:ident) ),*) => {
         $(
-            impl From<$crate::view::View> for Option<$crate::$target_type> {
-                fn from(value: $crate::view::View) -> Self {
+            impl From<$view> for Option<$crate::$target_type> {
+                fn from(value: $view) -> Self {
                     value.0.$as_field.and_then(|f| {
                         let v = unsafe { f(value.0.get_raw()) };
                         if v.is_null() {
                             None
                         } else {
-                            Some($crate::$target_type(unsafe { $crate::rc::RefGuard::from_raw(v) }))
+                            Some($crate::view::$target_type(unsafe { $crate::rc::RefGuard::from_raw(v) }))
                         }
                     })
                 }
@@ -38,11 +34,18 @@ macro_rules! impl_from_view {
         )*
     };
 }
+pub(crate) use convert_view;
 
-impl_from_view! {
-    (as_browser_view, BrowserView),
-    (as_panel, Panel)
+convert_view! {
+    (View, as_browser_view, BrowserView),
+    (View, as_panel, Panel)
 }
+
+wrapper!(
+    #[doc = "See [cef_view_t] for more documentation."]
+    #[derive(Debug, Clone)]
+    pub struct View(cef_view_t);
+);
 
 /// See [cef_view_delegate_t] for more documentation.
 pub trait ViewDelegate: Sized {

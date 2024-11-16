@@ -25,7 +25,7 @@ pub fn create_browser_view<T: Client>(
     client: Option<T>,
     url: &CefString,
     settings: BrowserSettings,
-    delegate: cef_sys::cef_browser_view_delegate_t,
+    //delegate: cef_sys::cef_browser_view_delegate_t,
 ) -> Result<BrowserView> {
     let client = client.map(|c| c.into_raw()).unwrap_or(null_mut());
 

@@ -10,7 +10,6 @@ pub mod rc;
 mod settings;
 pub mod string;
 mod view;
-mod window;
 
 pub use cef_sys as sys;
 
@@ -19,7 +18,6 @@ pub use browser::*;
 pub use command_line::*;
 pub use settings::*;
 pub use view::*;
-pub use window::*;
 
 pub type LogSeverity = cef_sys::cef_log_severity_t;
 pub type LogItems = cef_sys::cef_log_items_t;

@@ -2,7 +2,7 @@ fn main() {
     let cef_path = std::env::var("CEF_PATH")
         .map(std::path::PathBuf::from)
         .unwrap();
-    let cef_link_path = cef_path.join("Release");
+    let cef_link_path = cef_path;
     build::rerun_if_changed("build.rs");
 
     match build::cargo_cfg_target_os().as_str() {

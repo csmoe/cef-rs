@@ -3,9 +3,9 @@ name = "cef"
 version = "130.1.16"
 edition = "2021"
 license = "Apache-2.0 OR MIT"
-authors = ["Wu Yu Wei <yuweiwu@pm.me>"]
+authors = ["Wu Yu Wei <yuweiwu@pm.me>", "csmoe <csmoe@msn.com>"]
 description = "Use cef in Rust"
-repository = "https://github.com/wusyong/cef-rs"
+repository = "https://github.com/csmoe/cef-rs"
 readme = "README.md"
 
 [package.metadata.bundle.example.demo]
@@ -14,7 +14,7 @@ identifier = "com.cef.demo"
 category = "Utility"
 short_description = "An example of a bundled CEF application"
 long_description = """ CEF application in Rust """
-osx_frameworks = [ "/Users/mac/Downloads/cef/Release/Chromium Embedded Framework.framework" ]
+osx_frameworks = [ "sys/cef/archive/Release/Chromium Embedded Framework.framework" ]
 
 [features]
 dox = ["cef-sys/dox"]

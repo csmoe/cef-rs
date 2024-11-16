@@ -6,8 +6,8 @@ Use CEF in Rust.
 
 | Target | Linux | macOS | Windows |
 | ------ | ----- | ----- | ------- |
-| x86_64 | ✅    | ❎     | ❎      |
-| ARM64  | ✅    | ❎     | ❎      |
+| x86_64 | ✅    | ✅   | ✅      |
+| ARM64  | ✅    | ✅   | ✅      |
 
 ## Usage
 
@@ -15,19 +15,17 @@ Use CEF in Rust.
 
 #### Manual Install
 
-- [Download](https://cef-builds.spotifycdn.com/index.html#linux64) Linux-64bit build.
+- Download Linux-64bit prebuilt with `sys/upgrade.rs`:
 
-- Copy files to `.local`:
-
-```
-cp -r Resources ~/.local/share/cef
-cp -r Release ~/.local/share/cef
+```sh
+cd sys
+./upgrade.rs x86_64-unknown-linux-gnu --download
 ```
 
 - Build and run the application with `LD_LIBRARY_PATH` (or you can also add rpath to your cargo config or build script):
 
-```
-LD_LIBRARY_PATH=~/.local/share/cef cargo r --example demo
+```sh
+LD_LIBRARY_PATH=sys/cef/archive cargo r --example demo
 ```
 
 #### Flatpak

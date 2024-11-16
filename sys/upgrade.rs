@@ -158,7 +158,9 @@ fn download_prebuilt_cef(target: &str, cef_path: &std::path::Path) {
     if cef_path.exists() {
         std::fs::remove_dir_all(&cef_path).unwrap();
     }
-    std::fs::rename(from, &cef_path).unwrap();
+    std::fs::rename(from.join("Release"), &cef_path).unwrap();
+    copy_directory(&from.join("Resources"), &cef_path);
+    std::fs::rename(from.join("include"), &cef_path.join("include")).unwrap();
     println!("cef: extracted into {:?}", cef_path);
 }
 
@@ -212,4 +214,20 @@ fn bindgen(target: &str, cef_path: &std::path::Path) {
     std::io::stdout().write_all(&output.stdout).unwrap();
     std::io::stderr().write_all(&output.stderr).unwrap();
     assert!(output.status.success());
+}
+
+fn copy_directory(src: &std::path::Path, dst: &std::path::Path) {
+    std::fs::create_dir_all(dst).unwrap();
+
+    for entry in std::fs::read_dir(src).unwrap() {
+        let entry = entry.unwrap();
+        let src_path = entry.path();
+        let dst_path = dst.join(entry.file_name());
+
+        if entry.file_type().unwrap().is_dir() {
+            copy_directory(&src_path, &dst_path);
+        } else {
+            std::fs::copy(&src_path, &dst_path).unwrap();
+        }
+    }
 }
