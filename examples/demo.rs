@@ -1,3 +1,5 @@
+use std::ptr::null_mut;
+
 use cef::{
     args::Args, client::Client, string::CefString, App, BrowserSettings, BrowserView,
     PanelDelegate, Settings, ViewDelegate, WindowDelegate,
@@ -50,16 +52,11 @@ fn main() {
     let url = CefString::new("https://www.google.com");
 
     let browser_view =
-        cef::create_browser_view(Some(client), &url, browser_settings.clone()).unwrap();
+        cef::create_browser_view(Some(client), &url, browser_settings.clone(), null_mut()).unwrap();
     let delegate = DemoWindow { browser_view };
 
     cef::create_top_level_window(delegate);
-    cef::create_browser(
-        window_info,
-        Some(client),
-        url,
-        browser_settings
-    );
+    cef::create_browser(window_info, Some(client), url, browser_settings);
 
     cef::run_message_loop();
 

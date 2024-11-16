@@ -6,7 +6,7 @@ use windows::Win32::UI::WindowsAndMessaging::HMENU;
 
 use crate::{
     add_view_delegate_methods,
-    panel::{Panel, PanelDelegate},
+    view::{Panel, PanelDelegate},
     rc::{RcImpl, RefGuard},
     string::CefString,
     wrapper, Rect,

@@ -4,8 +4,15 @@ use cef_sys::{cef_view_delegate_t, cef_view_t};
 
 use crate::{
     rc::{RcImpl, RefGuard},
-    wrapper, BrowserView, Panel,
+    wrapper,
 };
+
+mod panel;
+pub use panel::*;
+mod button;
+pub use button::*;
+mod browser;
+pub use browser::*;
 
 wrapper!(
     #[doc = "See [cef_view_t] for more documentation."]
@@ -13,27 +20,28 @@ wrapper!(
     pub struct View(cef_view_t);
 );
 
-impl View {
-    pub fn as_browser_view(&self) -> Option<BrowserView> {
-        let r = self
-            .0
-            .as_browser_view
-            .map(|f| unsafe { f(self.0.get_raw()) });
-
-        r.filter(|p| p.is_null())
-            .map(|p| BrowserView(unsafe { RefGuard::from_raw(p) }))
-    }
-
-    pub fn as_panel(&self) -> Option<Panel> {
-        self.0.as_panel.and_then(|f| {
-            let p = unsafe { f(self.0.get_raw()) };
-            if p.is_null() {
-                None
-            } else {
-                Some(Panel(unsafe { RefGuard::from_raw(p) }))
+macro_rules! impl_from_view {
+    ($( ($as_field:ident, $target_type:ident) ),*) => {
+        $(
+            impl From<$crate::view::View> for Option<$crate::$target_type> {
+                fn from(value: $crate::view::View) -> Self {
+                    value.0.$as_field.and_then(|f| {
+                        let v = unsafe { f(value.0.get_raw()) };
+                        if v.is_null() {
+                            None
+                        } else {
+                            Some($crate::$target_type(unsafe { $crate::rc::RefGuard::from_raw(v) }))
+                        }
+                    })
+                }
             }
-        })
-    }
+        )*
+    };
+}
+
+impl_from_view! {
+    (as_browser_view, BrowserView),
+    (as_panel, Panel)
 }
 
 /// See [cef_view_delegate_t] for more documentation.

@@ -3,9 +3,9 @@
 [dependencies]
 ureq = "2"
 tar = "0"
+toml = { version = "0.8", features = [ "parse" ] }
 bzip2 = "0"
 serde_json = "1"
-cargo_metadata = "0"
 sha1_smol = "1"
 indicatif = "0"
 ---
@@ -45,7 +45,6 @@ fn main() {
     let args = args.iter().map(|s| s.deref()).collect::<Vec<_>>();
 
     match args.as_slice() {
-
         [_, target @ _, "--download", ..] => {
             if TARGETS.contains(target) {
                 download_prebuilt_cef(target, &cef_path);
@@ -70,21 +69,10 @@ fn main() {
 }
 
 fn download_prebuilt_cef(target: &str, cef_path: &std::path::Path) {
-    let metadata = cargo_metadata::MetadataCommand::new()
-        .no_deps()
-        .manifest_path("./Cargo.toml")
-        .exec()
-        .unwrap();
-    let cef_version = metadata
-        .workspace_packages()
-        .iter()
-        .find_map(|d| {
-            if d.name == "libcef-sys" {
-                d.metadata.pointer("/cef_version").unwrap().as_str()
-            } else {
-                None
-            }
-        })
+    let metadata: toml::Table =
+        toml::from_str(&std::fs::read_to_string("./Cargo.toml").unwrap()).unwrap();
+    let cef_version = metadata["package"]["metadata"]["cef_version"]
+        .as_str()
         .unwrap();
     println!("cef: trying to download {target} {cef_version}");
 

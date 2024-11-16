@@ -13561,11 +13561,6 @@ const _: () = {
 pub type cef_browser_view_delegate_t = _cef_browser_view_delegate_t;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
-pub struct _cef_button_t {
-    _unused: [u8; 0],
-}
-#[repr(C)]
-#[derive(Debug, Copy, Clone)]
 pub struct _cef_scroll_view_t {
     _unused: [u8; 0],
 }
@@ -14829,4 +14824,192 @@ pub type cef_window_t = _cef_window_t;
 extern "C" {
     #[doc = "\n Create a new Window.\n"]
     pub fn cef_window_create_top_level(delegate: *mut _cef_window_delegate_t) -> *mut cef_window_t;
+}
+#[doc = "\n A View representing a button. Depending on the specific type, the button\n could be implemented by a native control or custom rendered. Methods must be\n called on the browser process UI thread unless otherwise indicated.\n"]
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _cef_button_t {
+    #[doc = "\n Base structure.\n"]
+    pub base: cef_view_t,
+    #[doc = "\n Returns this Button as a LabelButton or NULL if this is not a LabelButton.\n"]
+    pub as_label_button: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_button_t) -> *mut _cef_label_button_t,
+    >,
+    #[doc = "\n Sets the current display state of the Button.\n"]
+    pub set_state: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_button_t, state: cef_button_state_t),
+    >,
+    #[doc = "\n Returns the current display state of the Button.\n"]
+    pub get_state: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_button_t) -> cef_button_state_t,
+    >,
+    #[doc = "\n Sets the Button will use an ink drop effect for displaying state changes.\n"]
+    pub set_ink_drop_enabled: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_button_t, enabled: ::std::os::raw::c_int),
+    >,
+    #[doc = "\n Sets the tooltip text that will be displayed when the user hovers the\n mouse cursor over the Button.\n"]
+    pub set_tooltip_text: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_button_t, tooltip_text: *const cef_string_t),
+    >,
+    #[doc = "\n Sets the accessible name that will be exposed to assistive technology\n (AT).\n"]
+    pub set_accessible_name: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_button_t, name: *const cef_string_t),
+    >,
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of _cef_button_t"][::std::mem::size_of::<_cef_button_t>() - 496usize];
+    ["Alignment of _cef_button_t"][::std::mem::align_of::<_cef_button_t>() - 8usize];
+    ["Offset of field: _cef_button_t::base"][::std::mem::offset_of!(_cef_button_t, base) - 0usize];
+    ["Offset of field: _cef_button_t::as_label_button"]
+        [::std::mem::offset_of!(_cef_button_t, as_label_button) - 448usize];
+    ["Offset of field: _cef_button_t::set_state"]
+        [::std::mem::offset_of!(_cef_button_t, set_state) - 456usize];
+    ["Offset of field: _cef_button_t::get_state"]
+        [::std::mem::offset_of!(_cef_button_t, get_state) - 464usize];
+    ["Offset of field: _cef_button_t::set_ink_drop_enabled"]
+        [::std::mem::offset_of!(_cef_button_t, set_ink_drop_enabled) - 472usize];
+    ["Offset of field: _cef_button_t::set_tooltip_text"]
+        [::std::mem::offset_of!(_cef_button_t, set_tooltip_text) - 480usize];
+    ["Offset of field: _cef_button_t::set_accessible_name"]
+        [::std::mem::offset_of!(_cef_button_t, set_accessible_name) - 488usize];
+};
+#[doc = "\n A View representing a button. Depending on the specific type, the button\n could be implemented by a native control or custom rendered. Methods must be\n called on the browser process UI thread unless otherwise indicated.\n"]
+pub type cef_button_t = _cef_button_t;
+#[doc = "\n Implement this structure to handle Button events. The functions of this\n structure will be called on the browser process UI thread unless otherwise\n indicated.\n"]
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _cef_button_delegate_t {
+    #[doc = "\n Base structure.\n"]
+    pub base: cef_view_delegate_t,
+    #[doc = "\n Called when |button| is pressed.\n"]
+    pub on_button_pressed: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_button_delegate_t, button: *mut _cef_button_t),
+    >,
+    #[doc = "\n Called when the state of |button| changes.\n"]
+    pub on_button_state_changed: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_button_delegate_t, button: *mut _cef_button_t),
+    >,
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of _cef_button_delegate_t"][::std::mem::size_of::<_cef_button_delegate_t>() - 144usize];
+    ["Alignment of _cef_button_delegate_t"]
+        [::std::mem::align_of::<_cef_button_delegate_t>() - 8usize];
+    ["Offset of field: _cef_button_delegate_t::base"]
+        [::std::mem::offset_of!(_cef_button_delegate_t, base) - 0usize];
+    ["Offset of field: _cef_button_delegate_t::on_button_pressed"]
+        [::std::mem::offset_of!(_cef_button_delegate_t, on_button_pressed) - 128usize];
+    ["Offset of field: _cef_button_delegate_t::on_button_state_changed"]
+        [::std::mem::offset_of!(_cef_button_delegate_t, on_button_state_changed) - 136usize];
+};
+#[doc = "\n Implement this structure to handle Button events. The functions of this\n structure will be called on the browser process UI thread unless otherwise\n indicated.\n"]
+pub type cef_button_delegate_t = _cef_button_delegate_t;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _cef_menu_button_t {
+    _unused: [u8; 0],
+}
+#[doc = "\n LabelButton is a button with optional text and/or icon. Methods must be\n called on the browser process UI thread unless otherwise indicated.\n"]
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _cef_label_button_t {
+    #[doc = "\n Base structure.\n"]
+    pub base: cef_button_t,
+    #[doc = "\n Returns this LabelButton as a MenuButton or NULL if this is not a\n MenuButton.\n"]
+    pub as_menu_button: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_label_button_t) -> *mut _cef_menu_button_t,
+    >,
+    #[doc = "\n Sets the text shown on the LabelButton. By default |text| will also be\n used as the accessible name.\n"]
+    pub set_text: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_label_button_t, text: *const cef_string_t),
+    >,
+    #[doc = "\n Returns the text shown on the LabelButton.\n"]
+    pub get_text: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_label_button_t) -> cef_string_userfree_t,
+    >,
+    #[doc = "\n Sets the image shown for |button_state|. When this Button is drawn if no\n image exists for the current state then the image for\n CEF_BUTTON_STATE_NORMAL, if any, will be shown.\n"]
+    pub set_image: ::std::option::Option<
+        unsafe extern "C" fn(
+            self_: *mut _cef_label_button_t,
+            button_state: cef_button_state_t,
+            image: *mut _cef_image_t,
+        ),
+    >,
+    #[doc = "\n Returns the image shown for |button_state|. If no image exists for that\n state then the image for CEF_BUTTON_STATE_NORMAL will be returned.\n"]
+    pub get_image: ::std::option::Option<
+        unsafe extern "C" fn(
+            self_: *mut _cef_label_button_t,
+            button_state: cef_button_state_t,
+        ) -> *mut _cef_image_t,
+    >,
+    #[doc = "\n Sets the text color shown for the specified button |for_state| to |color|.\n"]
+    pub set_text_color: ::std::option::Option<
+        unsafe extern "C" fn(
+            self_: *mut _cef_label_button_t,
+            for_state: cef_button_state_t,
+            color: cef_color_t,
+        ),
+    >,
+    #[doc = "\n Sets the text colors shown for the non-disabled states to |color|.\n"]
+    pub set_enabled_text_colors: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_label_button_t, color: cef_color_t),
+    >,
+    #[doc = "\n Sets the font list. The format is \"<FONT_FAMILY_LIST>,[STYLES] <SIZE>\",\n where:\n - FONT_FAMILY_LIST is a comma-separated list of font family names,\n - STYLES is an optional space-separated list of style names (case-\n   sensitive \"Bold\" and \"Italic\" are supported), and\n - SIZE is an integer font size in pixels with the suffix \"px\".\n\n Here are examples of valid font description strings:\n - \"Arial, Helvetica, Bold Italic 14px\"\n - \"Arial, 14px\"\n"]
+    pub set_font_list: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_label_button_t, font_list: *const cef_string_t),
+    >,
+    #[doc = "\n Sets the horizontal alignment; reversed in RTL. Default is\n CEF_HORIZONTAL_ALIGNMENT_CENTER.\n"]
+    pub set_horizontal_alignment: ::std::option::Option<
+        unsafe extern "C" fn(
+            self_: *mut _cef_label_button_t,
+            alignment: cef_horizontal_alignment_t,
+        ),
+    >,
+    #[doc = "\n Reset the minimum size of this LabelButton to |size|.\n"]
+    pub set_minimum_size: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_label_button_t, size: *const cef_size_t),
+    >,
+    #[doc = "\n Reset the maximum size of this LabelButton to |size|.\n"]
+    pub set_maximum_size: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_label_button_t, size: *const cef_size_t),
+    >,
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of _cef_label_button_t"][::std::mem::size_of::<_cef_label_button_t>() - 584usize];
+    ["Alignment of _cef_label_button_t"][::std::mem::align_of::<_cef_label_button_t>() - 8usize];
+    ["Offset of field: _cef_label_button_t::base"]
+        [::std::mem::offset_of!(_cef_label_button_t, base) - 0usize];
+    ["Offset of field: _cef_label_button_t::as_menu_button"]
+        [::std::mem::offset_of!(_cef_label_button_t, as_menu_button) - 496usize];
+    ["Offset of field: _cef_label_button_t::set_text"]
+        [::std::mem::offset_of!(_cef_label_button_t, set_text) - 504usize];
+    ["Offset of field: _cef_label_button_t::get_text"]
+        [::std::mem::offset_of!(_cef_label_button_t, get_text) - 512usize];
+    ["Offset of field: _cef_label_button_t::set_image"]
+        [::std::mem::offset_of!(_cef_label_button_t, set_image) - 520usize];
+    ["Offset of field: _cef_label_button_t::get_image"]
+        [::std::mem::offset_of!(_cef_label_button_t, get_image) - 528usize];
+    ["Offset of field: _cef_label_button_t::set_text_color"]
+        [::std::mem::offset_of!(_cef_label_button_t, set_text_color) - 536usize];
+    ["Offset of field: _cef_label_button_t::set_enabled_text_colors"]
+        [::std::mem::offset_of!(_cef_label_button_t, set_enabled_text_colors) - 544usize];
+    ["Offset of field: _cef_label_button_t::set_font_list"]
+        [::std::mem::offset_of!(_cef_label_button_t, set_font_list) - 552usize];
+    ["Offset of field: _cef_label_button_t::set_horizontal_alignment"]
+        [::std::mem::offset_of!(_cef_label_button_t, set_horizontal_alignment) - 560usize];
+    ["Offset of field: _cef_label_button_t::set_minimum_size"]
+        [::std::mem::offset_of!(_cef_label_button_t, set_minimum_size) - 568usize];
+    ["Offset of field: _cef_label_button_t::set_maximum_size"]
+        [::std::mem::offset_of!(_cef_label_button_t, set_maximum_size) - 576usize];
+};
+#[doc = "\n LabelButton is a button with optional text and/or icon. Methods must be\n called on the browser process UI thread unless otherwise indicated.\n"]
+pub type cef_label_button_t = _cef_label_button_t;
+extern "C" {
+    #[doc = "\n Create a new LabelButton. A |delegate| must be provided to handle the button\n click. |text| will be shown on the LabelButton and used as the default\n accessible name.\n"]
+    pub fn cef_label_button_create(
+        delegate: *mut _cef_button_delegate_t,
+        text: *const cef_string_t,
+    ) -> *mut cef_label_button_t;
 }

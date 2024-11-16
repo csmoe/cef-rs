@@ -172,7 +172,7 @@ macro_rules! wrapper {
         impl $name {
             #[allow(clippy::missing_safety_doc)]
             pub unsafe fn from_raw(ptr: *mut $sys) -> Self {
-                Self(RefGuard::from_raw(ptr))
+                Self($crate::rc::RefGuard::from_raw(ptr))
             }
 
             #[allow(clippy::missing_safety_doc)]

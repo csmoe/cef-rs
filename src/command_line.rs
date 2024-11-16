@@ -7,5 +7,3 @@ wrapper!(
     #[derive(Debug, Clone)]
     pub struct CommandLine(cef_command_line_t);
 );
-
-
