@@ -30,39 +30,53 @@ pub type Size = cef_sys::cef_size_t;
 
 pub type State = cef_sys::cef_state_t;
 
+#[macro_export]
 macro_rules! gen_fn {
-    ($visibility:vis fn $method:ident(
-        $($arg:ident: $t:ty)*)
-    $(-> $($n:ident)?$value:path)?) => {
-        $visibility fn $method(&self $(,$a: $t)*) $(-> $value)? {
+    ($visibility:vis fn $method:ident(&self $(,$arg:ident: $type:ty)*)) => {
+        $visibility fn $method(&self $(,$arg: $type)*) {
             unsafe {
                 let _result = self.0.$method.map(|f|
-                    f(self.0.get_raw() $(,$crate::gen_fn!($c $arg))*)
+                    f(self.0.get_raw() $(,$arg.into_raw())*)
                 );
-
-                $($crate::gen_fn!(return $($n)? _result))?
             }
         }
     };
-    (into $arg:ident) => {
-        $arg.0.into_raw()
+    ($visibility:vis fn $method:ident(&self $(,$arg:ident: $type:ty)*) -> $ret:ty) => {
+        $visibility fn $method(&self $(,$arg: $type)*) -> $ret {
+            unsafe {
+                self.0.$method.map(|f|
+                    f(self.0.get_raw() $(,$arg.into_raw())*)
+                )
+            }
+        }
     };
-    (return $result:ident) => {
-        $result
-            .filter(|p| p.is_null())
-            .map(|p| BrowserView(RefGuard::from_raw(p)))
-    }
+    ($visibility:vis fn $method:ident(&mut self $(,$arg:ident: $type:ty)*)) => {
+        $visibility fn $method(&mut self $(,$arg: $type)*) {
+            unsafe {
+                let _result = self.0.$method.map(|f|
+                    f(self.0.get_raw() $(,$arg.into_raw())*)
+                );
+            }
+        }
+    };
+    ($visibility:vis fn $method:ident(&mut self $(,$arg:ident: $type:ty)*) -> $ret:ty) => {
+        $visibility fn $method(&mut self $(,$arg: $type)*) -> $ret {
+            unsafe {
+                self.0.$method.map(|f|
+                    f(self.0.get_raw() $(,$arg.into_raw())*)
+                )
+            }
+        }
+    };
 }
-pub(crate) use gen_fn;
 
 macro_rules! wrapper {
     (
-    $(#[$attr:meta])*
-    pub struct $name:ident($sys:path);
-    $($visibility:vis fn $method:ident(
-        &self
-        $(,$arg:ident: [$ref:ident] $type:ty)*)
-    $(->$value:path)?;)*
+        $(#[$attr:meta])*
+        pub struct $name:ident($sys:path);
+        $(
+            $visibility:vis fn $method:ident($(&$($mut:tt)?)? self $(, $arg:ident : $type:ty),* ) $(-> $ret:ty)?;
+        )*
     ) => {
         $(#[$attr])*
         pub struct $name(pub(crate) $crate::rc::RefGuard<$sys>);
@@ -90,10 +104,13 @@ macro_rules! wrapper {
                 self.0.into_raw()
             }
 
-            $($crate::gen_fn!($visibility fn $method(
-                $($arg: $ref $type)*
-            )$(-> $value)?);)*
+            $(
+                $crate::gen_fn!(
+                    $visibility fn $method($(&$($mut)?)? self $(, $arg: $type)* ) $(-> $ret)?
+                );
+            )*
         }
     };
 }
+
 pub(crate) use wrapper;

@@ -12,7 +12,7 @@ use crate::{
 };
 
 /// See [cef_window_info_t] for more documentation.
-#[derive(Debug,Default)]
+#[derive(Debug, Default)]
 pub struct WindowInfo {
     window_name: CefString,
     bounds: Rect,
@@ -53,9 +53,17 @@ impl WindowInfo {
             #[cfg(target_os = "macos")]
             hidden: self.hidden.into(),
             #[cfg(target_os = "macos")]
-            parent_view: self.parent_view.as_ref().map(|v| std::ptr::from_ref(v).cast_mut().cast()).unwrap_or(std::ptr::null_mut()),
+            parent_view: self
+                .parent_view
+                .as_ref()
+                .map(|v| std::ptr::from_ref(v).cast_mut().cast())
+                .unwrap_or(std::ptr::null_mut()),
             #[cfg(target_os = "macos")]
-            view: self.view.as_ref().map(|v| std::ptr::from_ref(v).cast_mut().cast()).unwrap_or(std::ptr::null_mut()),
+            view: self
+                .view
+                .as_ref()
+                .map(|v| std::ptr::from_ref(v).cast_mut().cast())
+                .unwrap_or(std::ptr::null_mut()),
             runtime_style: self.runtime_style,
             #[cfg(windows)]
             menu: self.menu.0.cast(),
@@ -75,11 +83,16 @@ wrapper!(
     #[doc = "See [cef_window_t] for more documentation."]
     #[derive(Debug, Clone)]
     pub struct Window(cef_window_t);
-    pub fn close(&self);
-    pub fn show(&self);
+    pub fn close(&mut self);
+    pub fn show(&mut self);
 );
 
 impl Window {
+    pub fn new(delegate: impl WindowDelegate) -> Self {
+        let window = unsafe { cef_window_create_top_level(WindowDelegate::into_raw(delegate)) };
+        Window(unsafe { RefGuard::from_raw(window) })
+    }
+
     pub fn get_panel(&self) -> Panel {
         unsafe { Panel(self.0.convert()) }
     }
@@ -217,9 +230,4 @@ extern "C" fn can_close<I: WindowDelegate>(
     let window = Window(unsafe { RefGuard::from_raw(window) });
     let result = obj.interface.can_close(window);
     result as i32
-}
-
-pub fn create_top_level_window(delegate: impl WindowDelegate) -> Window {
-    let window = unsafe { cef_window_create_top_level(WindowDelegate::into_raw(delegate)) };
-    Window(unsafe { RefGuard::from_raw(window) })
 }
