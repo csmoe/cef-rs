@@ -2,8 +2,6 @@ use cef_sys::{
     cef_key_event_t, cef_runtime_style_t, cef_show_state_t, cef_window_create_top_level,
     cef_window_delegate_t, cef_window_info_t, cef_window_t,
 };
-use windows::Win32::Foundation::HWND;
-use windows::Win32::UI::WindowsAndMessaging::HMENU;
 
 use crate::{
     add_view_delegate_methods,
@@ -14,7 +12,7 @@ use crate::{
 };
 
 /// See [cef_window_info_t] for more documentation.
-#[derive(Debug, Clone, Default)]
+#[derive(Debug,Default)]
 pub struct WindowInfo {
     window_name: CefString,
     bounds: Rect,
@@ -24,20 +22,20 @@ pub struct WindowInfo {
     #[cfg(target_os = "macos")]
     hidden: bool,
     #[cfg(target_os = "macos")]
-    parent_view: *mut std::ffi::c_void,
+    parent_view: Option<objc2_app_kit::NSView>,
     #[cfg(target_os = "macos")]
-    view: *mut std::ffi::c_void,
+    view: Option<objc2_app_kit::NSView>,
     runtime_style: cef_sys::cef_runtime_style_t,
     #[cfg(windows)]
-    menu: HMENU,
+    menu: windows::Win32::UI::WindowsAndMessaging::HMENU,
     #[cfg(windows)]
     ex_style: u32,
     #[cfg(windows)]
     style: u32,
     #[cfg(any(windows, target_os = "linux"))]
-    parent_window: HWND,
+    parent_window: windows::Win32::Foundation::HWND,
     #[cfg(any(windows, target_os = "linux"))]
-    window: HWND,
+    window: windows::Win32::Foundation::HWND,
 }
 
 impl WindowInfo {
@@ -55,9 +53,9 @@ impl WindowInfo {
             #[cfg(target_os = "macos")]
             hidden: self.hidden.into(),
             #[cfg(target_os = "macos")]
-            parent_view: self.view.cast(),
+            parent_view: self.parent_view.as_ref().map(|v| std::ptr::from_ref(v).cast_mut().cast()).unwrap_or(std::ptr::null_mut()),
             #[cfg(target_os = "macos")]
-            view: self.view.cast(),
+            view: self.view.as_ref().map(|v| std::ptr::from_ref(v).cast_mut().cast()).unwrap_or(std::ptr::null_mut()),
             runtime_style: self.runtime_style,
             #[cfg(windows)]
             menu: self.menu.0.cast(),

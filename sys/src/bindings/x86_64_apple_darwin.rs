@@ -13474,21 +13474,6 @@ const _: () = {
 };
 #[doc = "\n Implement this structure to handle BrowserView events. The functions of this\n structure will be called on the browser process UI thread unless otherwise\n indicated.\n"]
 pub type cef_browser_view_delegate_t = _cef_browser_view_delegate_t;
-#[repr(C)]
-#[derive(Debug, Copy, Clone)]
-pub struct _cef_button_t {
-    _unused: [u8; 0],
-}
-#[repr(C)]
-#[derive(Debug, Copy, Clone)]
-pub struct _cef_scroll_view_t {
-    _unused: [u8; 0],
-}
-#[repr(C)]
-#[derive(Debug, Copy, Clone)]
-pub struct _cef_textfield_t {
-    _unused: [u8; 0],
-}
 #[doc = "\n A View is a rectangle within the views View hierarchy. It is the base\n structure for all Views. All size and position values are in density\n independent pixels (DIP) unless otherwise indicated. Methods must be called\n on the browser process UI thread unless otherwise indicated.\n"]
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -14130,21 +14115,6 @@ const _: () = {
 };
 #[doc = "\n Implement this structure to handle Panel events. The functions of this\n structure will be called on the browser process UI thread unless otherwise\n indicated.\n"]
 pub type cef_panel_delegate_t = _cef_panel_delegate_t;
-#[repr(C)]
-#[derive(Debug, Copy, Clone)]
-pub struct _cef_box_layout_t {
-    _unused: [u8; 0],
-}
-#[repr(C)]
-#[derive(Debug, Copy, Clone)]
-pub struct _cef_fill_layout_t {
-    _unused: [u8; 0],
-}
-#[repr(C)]
-#[derive(Debug, Copy, Clone)]
-pub struct _cef_layout_t {
-    _unused: [u8; 0],
-}
 #[doc = "\n A Panel is a container in the views hierarchy that can contain other Views\n as children. Methods must be called on the browser process UI thread unless\n otherwise indicated.\n"]
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -14746,3 +14716,660 @@ extern "C" {
     #[doc = "\n Create a new Window.\n"]
     pub fn cef_window_create_top_level(delegate: *mut _cef_window_delegate_t) -> *mut cef_window_t;
 }
+#[doc = "\n A View representing a button. Depending on the specific type, the button\n could be implemented by a native control or custom rendered. Methods must be\n called on the browser process UI thread unless otherwise indicated.\n"]
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _cef_button_t {
+    #[doc = "\n Base structure.\n"]
+    pub base: cef_view_t,
+    #[doc = "\n Returns this Button as a LabelButton or NULL if this is not a LabelButton.\n"]
+    pub as_label_button: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_button_t) -> *mut _cef_label_button_t,
+    >,
+    #[doc = "\n Sets the current display state of the Button.\n"]
+    pub set_state: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_button_t, state: cef_button_state_t),
+    >,
+    #[doc = "\n Returns the current display state of the Button.\n"]
+    pub get_state: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_button_t) -> cef_button_state_t,
+    >,
+    #[doc = "\n Sets the Button will use an ink drop effect for displaying state changes.\n"]
+    pub set_ink_drop_enabled: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_button_t, enabled: ::std::os::raw::c_int),
+    >,
+    #[doc = "\n Sets the tooltip text that will be displayed when the user hovers the\n mouse cursor over the Button.\n"]
+    pub set_tooltip_text: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_button_t, tooltip_text: *const cef_string_t),
+    >,
+    #[doc = "\n Sets the accessible name that will be exposed to assistive technology\n (AT).\n"]
+    pub set_accessible_name: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_button_t, name: *const cef_string_t),
+    >,
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of _cef_button_t"][::std::mem::size_of::<_cef_button_t>() - 496usize];
+    ["Alignment of _cef_button_t"][::std::mem::align_of::<_cef_button_t>() - 8usize];
+    ["Offset of field: _cef_button_t::base"][::std::mem::offset_of!(_cef_button_t, base) - 0usize];
+    ["Offset of field: _cef_button_t::as_label_button"]
+        [::std::mem::offset_of!(_cef_button_t, as_label_button) - 448usize];
+    ["Offset of field: _cef_button_t::set_state"]
+        [::std::mem::offset_of!(_cef_button_t, set_state) - 456usize];
+    ["Offset of field: _cef_button_t::get_state"]
+        [::std::mem::offset_of!(_cef_button_t, get_state) - 464usize];
+    ["Offset of field: _cef_button_t::set_ink_drop_enabled"]
+        [::std::mem::offset_of!(_cef_button_t, set_ink_drop_enabled) - 472usize];
+    ["Offset of field: _cef_button_t::set_tooltip_text"]
+        [::std::mem::offset_of!(_cef_button_t, set_tooltip_text) - 480usize];
+    ["Offset of field: _cef_button_t::set_accessible_name"]
+        [::std::mem::offset_of!(_cef_button_t, set_accessible_name) - 488usize];
+};
+#[doc = "\n A View representing a button. Depending on the specific type, the button\n could be implemented by a native control or custom rendered. Methods must be\n called on the browser process UI thread unless otherwise indicated.\n"]
+pub type cef_button_t = _cef_button_t;
+#[doc = "\n Implement this structure to handle Button events. The functions of this\n structure will be called on the browser process UI thread unless otherwise\n indicated.\n"]
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _cef_button_delegate_t {
+    #[doc = "\n Base structure.\n"]
+    pub base: cef_view_delegate_t,
+    #[doc = "\n Called when |button| is pressed.\n"]
+    pub on_button_pressed: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_button_delegate_t, button: *mut _cef_button_t),
+    >,
+    #[doc = "\n Called when the state of |button| changes.\n"]
+    pub on_button_state_changed: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_button_delegate_t, button: *mut _cef_button_t),
+    >,
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of _cef_button_delegate_t"][::std::mem::size_of::<_cef_button_delegate_t>() - 144usize];
+    ["Alignment of _cef_button_delegate_t"]
+        [::std::mem::align_of::<_cef_button_delegate_t>() - 8usize];
+    ["Offset of field: _cef_button_delegate_t::base"]
+        [::std::mem::offset_of!(_cef_button_delegate_t, base) - 0usize];
+    ["Offset of field: _cef_button_delegate_t::on_button_pressed"]
+        [::std::mem::offset_of!(_cef_button_delegate_t, on_button_pressed) - 128usize];
+    ["Offset of field: _cef_button_delegate_t::on_button_state_changed"]
+        [::std::mem::offset_of!(_cef_button_delegate_t, on_button_state_changed) - 136usize];
+};
+#[doc = "\n Implement this structure to handle Button events. The functions of this\n structure will be called on the browser process UI thread unless otherwise\n indicated.\n"]
+pub type cef_button_delegate_t = _cef_button_delegate_t;
+#[doc = "\n LabelButton is a button with optional text and/or icon. Methods must be\n called on the browser process UI thread unless otherwise indicated.\n"]
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _cef_label_button_t {
+    #[doc = "\n Base structure.\n"]
+    pub base: cef_button_t,
+    #[doc = "\n Returns this LabelButton as a MenuButton or NULL if this is not a\n MenuButton.\n"]
+    pub as_menu_button: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_label_button_t) -> *mut _cef_menu_button_t,
+    >,
+    #[doc = "\n Sets the text shown on the LabelButton. By default |text| will also be\n used as the accessible name.\n"]
+    pub set_text: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_label_button_t, text: *const cef_string_t),
+    >,
+    #[doc = "\n Returns the text shown on the LabelButton.\n"]
+    pub get_text: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_label_button_t) -> cef_string_userfree_t,
+    >,
+    #[doc = "\n Sets the image shown for |button_state|. When this Button is drawn if no\n image exists for the current state then the image for\n CEF_BUTTON_STATE_NORMAL, if any, will be shown.\n"]
+    pub set_image: ::std::option::Option<
+        unsafe extern "C" fn(
+            self_: *mut _cef_label_button_t,
+            button_state: cef_button_state_t,
+            image: *mut _cef_image_t,
+        ),
+    >,
+    #[doc = "\n Returns the image shown for |button_state|. If no image exists for that\n state then the image for CEF_BUTTON_STATE_NORMAL will be returned.\n"]
+    pub get_image: ::std::option::Option<
+        unsafe extern "C" fn(
+            self_: *mut _cef_label_button_t,
+            button_state: cef_button_state_t,
+        ) -> *mut _cef_image_t,
+    >,
+    #[doc = "\n Sets the text color shown for the specified button |for_state| to |color|.\n"]
+    pub set_text_color: ::std::option::Option<
+        unsafe extern "C" fn(
+            self_: *mut _cef_label_button_t,
+            for_state: cef_button_state_t,
+            color: cef_color_t,
+        ),
+    >,
+    #[doc = "\n Sets the text colors shown for the non-disabled states to |color|.\n"]
+    pub set_enabled_text_colors: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_label_button_t, color: cef_color_t),
+    >,
+    #[doc = "\n Sets the font list. The format is \"<FONT_FAMILY_LIST>,[STYLES] <SIZE>\",\n where:\n - FONT_FAMILY_LIST is a comma-separated list of font family names,\n - STYLES is an optional space-separated list of style names (case-\n   sensitive \"Bold\" and \"Italic\" are supported), and\n - SIZE is an integer font size in pixels with the suffix \"px\".\n\n Here are examples of valid font description strings:\n - \"Arial, Helvetica, Bold Italic 14px\"\n - \"Arial, 14px\"\n"]
+    pub set_font_list: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_label_button_t, font_list: *const cef_string_t),
+    >,
+    #[doc = "\n Sets the horizontal alignment; reversed in RTL. Default is\n CEF_HORIZONTAL_ALIGNMENT_CENTER.\n"]
+    pub set_horizontal_alignment: ::std::option::Option<
+        unsafe extern "C" fn(
+            self_: *mut _cef_label_button_t,
+            alignment: cef_horizontal_alignment_t,
+        ),
+    >,
+    #[doc = "\n Reset the minimum size of this LabelButton to |size|.\n"]
+    pub set_minimum_size: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_label_button_t, size: *const cef_size_t),
+    >,
+    #[doc = "\n Reset the maximum size of this LabelButton to |size|.\n"]
+    pub set_maximum_size: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_label_button_t, size: *const cef_size_t),
+    >,
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of _cef_label_button_t"][::std::mem::size_of::<_cef_label_button_t>() - 584usize];
+    ["Alignment of _cef_label_button_t"][::std::mem::align_of::<_cef_label_button_t>() - 8usize];
+    ["Offset of field: _cef_label_button_t::base"]
+        [::std::mem::offset_of!(_cef_label_button_t, base) - 0usize];
+    ["Offset of field: _cef_label_button_t::as_menu_button"]
+        [::std::mem::offset_of!(_cef_label_button_t, as_menu_button) - 496usize];
+    ["Offset of field: _cef_label_button_t::set_text"]
+        [::std::mem::offset_of!(_cef_label_button_t, set_text) - 504usize];
+    ["Offset of field: _cef_label_button_t::get_text"]
+        [::std::mem::offset_of!(_cef_label_button_t, get_text) - 512usize];
+    ["Offset of field: _cef_label_button_t::set_image"]
+        [::std::mem::offset_of!(_cef_label_button_t, set_image) - 520usize];
+    ["Offset of field: _cef_label_button_t::get_image"]
+        [::std::mem::offset_of!(_cef_label_button_t, get_image) - 528usize];
+    ["Offset of field: _cef_label_button_t::set_text_color"]
+        [::std::mem::offset_of!(_cef_label_button_t, set_text_color) - 536usize];
+    ["Offset of field: _cef_label_button_t::set_enabled_text_colors"]
+        [::std::mem::offset_of!(_cef_label_button_t, set_enabled_text_colors) - 544usize];
+    ["Offset of field: _cef_label_button_t::set_font_list"]
+        [::std::mem::offset_of!(_cef_label_button_t, set_font_list) - 552usize];
+    ["Offset of field: _cef_label_button_t::set_horizontal_alignment"]
+        [::std::mem::offset_of!(_cef_label_button_t, set_horizontal_alignment) - 560usize];
+    ["Offset of field: _cef_label_button_t::set_minimum_size"]
+        [::std::mem::offset_of!(_cef_label_button_t, set_minimum_size) - 568usize];
+    ["Offset of field: _cef_label_button_t::set_maximum_size"]
+        [::std::mem::offset_of!(_cef_label_button_t, set_maximum_size) - 576usize];
+};
+#[doc = "\n LabelButton is a button with optional text and/or icon. Methods must be\n called on the browser process UI thread unless otherwise indicated.\n"]
+pub type cef_label_button_t = _cef_label_button_t;
+extern "C" {
+    #[doc = "\n Create a new LabelButton. A |delegate| must be provided to handle the button\n click. |text| will be shown on the LabelButton and used as the default\n accessible name.\n"]
+    pub fn cef_label_button_create(
+        delegate: *mut _cef_button_delegate_t,
+        text: *const cef_string_t,
+    ) -> *mut cef_label_button_t;
+}
+#[doc = "\n MenuButton pressed lock is released when this object is destroyed.\n"]
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _cef_menu_button_pressed_lock_t {
+    #[doc = "\n Base structure.\n"]
+    pub base: cef_base_ref_counted_t,
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of _cef_menu_button_pressed_lock_t"]
+        [::std::mem::size_of::<_cef_menu_button_pressed_lock_t>() - 40usize];
+    ["Alignment of _cef_menu_button_pressed_lock_t"]
+        [::std::mem::align_of::<_cef_menu_button_pressed_lock_t>() - 8usize];
+    ["Offset of field: _cef_menu_button_pressed_lock_t::base"]
+        [::std::mem::offset_of!(_cef_menu_button_pressed_lock_t, base) - 0usize];
+};
+#[doc = "\n MenuButton pressed lock is released when this object is destroyed.\n"]
+pub type cef_menu_button_pressed_lock_t = _cef_menu_button_pressed_lock_t;
+#[doc = "\n Implement this structure to handle MenuButton events. The functions of this\n structure will be called on the browser process UI thread unless otherwise\n indicated.\n"]
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _cef_menu_button_delegate_t {
+    #[doc = "\n Base structure.\n"]
+    pub base: cef_button_delegate_t,
+    #[doc = "\n Called when |button| is pressed. Call cef_menu_button_t::show_menu() to\n show a popup menu at |screen_point|. When showing a custom popup such as a\n window keep a reference to |button_pressed_lock| until the popup is hidden\n to maintain the pressed button state.\n"]
+    pub on_menu_button_pressed: ::std::option::Option<
+        unsafe extern "C" fn(
+            self_: *mut _cef_menu_button_delegate_t,
+            menu_button: *mut _cef_menu_button_t,
+            screen_point: *const cef_point_t,
+            button_pressed_lock: *mut _cef_menu_button_pressed_lock_t,
+        ),
+    >,
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of _cef_menu_button_delegate_t"]
+        [::std::mem::size_of::<_cef_menu_button_delegate_t>() - 152usize];
+    ["Alignment of _cef_menu_button_delegate_t"]
+        [::std::mem::align_of::<_cef_menu_button_delegate_t>() - 8usize];
+    ["Offset of field: _cef_menu_button_delegate_t::base"]
+        [::std::mem::offset_of!(_cef_menu_button_delegate_t, base) - 0usize];
+    ["Offset of field: _cef_menu_button_delegate_t::on_menu_button_pressed"]
+        [::std::mem::offset_of!(_cef_menu_button_delegate_t, on_menu_button_pressed) - 144usize];
+};
+#[doc = "\n Implement this structure to handle MenuButton events. The functions of this\n structure will be called on the browser process UI thread unless otherwise\n indicated.\n"]
+pub type cef_menu_button_delegate_t = _cef_menu_button_delegate_t;
+#[doc = "\n MenuButton is a button with optional text, icon and/or menu marker that\n shows a menu when clicked with the left mouse button. All size and position\n values are in density independent pixels (DIP) unless otherwise indicated.\n Methods must be called on the browser process UI thread unless otherwise\n indicated.\n"]
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _cef_menu_button_t {
+    #[doc = "\n Base structure.\n"]
+    pub base: cef_label_button_t,
+    #[doc = "\n Show a menu with contents |menu_model|. |screen_point| specifies the menu\n position in screen coordinates. |anchor_position| specifies how the menu\n will be anchored relative to |screen_point|. This function should be\n called from cef_menu_button_delegate_t::on_menu_button_pressed().\n"]
+    pub show_menu: ::std::option::Option<
+        unsafe extern "C" fn(
+            self_: *mut _cef_menu_button_t,
+            menu_model: *mut _cef_menu_model_t,
+            screen_point: *const cef_point_t,
+            anchor_position: cef_menu_anchor_position_t,
+        ),
+    >,
+    #[doc = "\n Show the menu for this button. Results in a call to\n cef_menu_button_delegate_t::on_menu_button_pressed().\n"]
+    pub trigger_menu: ::std::option::Option<unsafe extern "C" fn(self_: *mut _cef_menu_button_t)>,
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of _cef_menu_button_t"][::std::mem::size_of::<_cef_menu_button_t>() - 600usize];
+    ["Alignment of _cef_menu_button_t"][::std::mem::align_of::<_cef_menu_button_t>() - 8usize];
+    ["Offset of field: _cef_menu_button_t::base"]
+        [::std::mem::offset_of!(_cef_menu_button_t, base) - 0usize];
+    ["Offset of field: _cef_menu_button_t::show_menu"]
+        [::std::mem::offset_of!(_cef_menu_button_t, show_menu) - 584usize];
+    ["Offset of field: _cef_menu_button_t::trigger_menu"]
+        [::std::mem::offset_of!(_cef_menu_button_t, trigger_menu) - 592usize];
+};
+#[doc = "\n MenuButton is a button with optional text, icon and/or menu marker that\n shows a menu when clicked with the left mouse button. All size and position\n values are in density independent pixels (DIP) unless otherwise indicated.\n Methods must be called on the browser process UI thread unless otherwise\n indicated.\n"]
+pub type cef_menu_button_t = _cef_menu_button_t;
+extern "C" {
+    #[doc = "\n Create a new MenuButton. A |delegate| must be provided to call show_menu()\n when the button is clicked. |text| will be shown on the MenuButton and used\n as the default accessible name. If |with_frame| is true (1) the button will\n have a visible frame at all times, center alignment, additional padding and\n a default minimum size of 70x33 DIP. If |with_frame| is false (0) the button\n will only have a visible frame on hover/press, left alignment, less padding\n and no default minimum size.\n"]
+    pub fn cef_menu_button_create(
+        delegate: *mut _cef_menu_button_delegate_t,
+        text: *const cef_string_t,
+    ) -> *mut cef_menu_button_t;
+}
+#[doc = "\n A ScrollView will show horizontal and/or vertical scrollbars when necessary\n based on the size of the attached content view. Methods must be called on\n the browser process UI thread unless otherwise indicated.\n"]
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _cef_scroll_view_t {
+    #[doc = "\n Base structure.\n"]
+    pub base: cef_view_t,
+    #[doc = "\n Set the content View. The content View must have a specified size (e.g.\n via cef_view_t::SetBounds or cef_view_delegate_t::GetPreferredSize).\n"]
+    pub set_content_view: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_scroll_view_t, view: *mut _cef_view_t),
+    >,
+    #[doc = "\n Returns the content View.\n"]
+    pub get_content_view: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_scroll_view_t) -> *mut _cef_view_t,
+    >,
+    #[doc = "\n Returns the visible region of the content View.\n"]
+    pub get_visible_content_rect:
+        ::std::option::Option<unsafe extern "C" fn(self_: *mut _cef_scroll_view_t) -> cef_rect_t>,
+    #[doc = "\n Returns true (1) if the horizontal scrollbar is currently showing.\n"]
+    pub has_horizontal_scrollbar: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_scroll_view_t) -> ::std::os::raw::c_int,
+    >,
+    #[doc = "\n Returns the height of the horizontal scrollbar.\n"]
+    pub get_horizontal_scrollbar_height: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_scroll_view_t) -> ::std::os::raw::c_int,
+    >,
+    #[doc = "\n Returns true (1) if the vertical scrollbar is currently showing.\n"]
+    pub has_vertical_scrollbar: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_scroll_view_t) -> ::std::os::raw::c_int,
+    >,
+    #[doc = "\n Returns the width of the vertical scrollbar.\n"]
+    pub get_vertical_scrollbar_width: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_scroll_view_t) -> ::std::os::raw::c_int,
+    >,
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of _cef_scroll_view_t"][::std::mem::size_of::<_cef_scroll_view_t>() - 504usize];
+    ["Alignment of _cef_scroll_view_t"][::std::mem::align_of::<_cef_scroll_view_t>() - 8usize];
+    ["Offset of field: _cef_scroll_view_t::base"]
+        [::std::mem::offset_of!(_cef_scroll_view_t, base) - 0usize];
+    ["Offset of field: _cef_scroll_view_t::set_content_view"]
+        [::std::mem::offset_of!(_cef_scroll_view_t, set_content_view) - 448usize];
+    ["Offset of field: _cef_scroll_view_t::get_content_view"]
+        [::std::mem::offset_of!(_cef_scroll_view_t, get_content_view) - 456usize];
+    ["Offset of field: _cef_scroll_view_t::get_visible_content_rect"]
+        [::std::mem::offset_of!(_cef_scroll_view_t, get_visible_content_rect) - 464usize];
+    ["Offset of field: _cef_scroll_view_t::has_horizontal_scrollbar"]
+        [::std::mem::offset_of!(_cef_scroll_view_t, has_horizontal_scrollbar) - 472usize];
+    ["Offset of field: _cef_scroll_view_t::get_horizontal_scrollbar_height"]
+        [::std::mem::offset_of!(_cef_scroll_view_t, get_horizontal_scrollbar_height) - 480usize];
+    ["Offset of field: _cef_scroll_view_t::has_vertical_scrollbar"]
+        [::std::mem::offset_of!(_cef_scroll_view_t, has_vertical_scrollbar) - 488usize];
+    ["Offset of field: _cef_scroll_view_t::get_vertical_scrollbar_width"]
+        [::std::mem::offset_of!(_cef_scroll_view_t, get_vertical_scrollbar_width) - 496usize];
+};
+#[doc = "\n A ScrollView will show horizontal and/or vertical scrollbars when necessary\n based on the size of the attached content view. Methods must be called on\n the browser process UI thread unless otherwise indicated.\n"]
+pub type cef_scroll_view_t = _cef_scroll_view_t;
+extern "C" {
+    #[doc = "\n Create a new ScrollView.\n"]
+    pub fn cef_scroll_view_create(delegate: *mut _cef_view_delegate_t) -> *mut cef_scroll_view_t;
+}
+#[doc = "\n Implement this structure to handle Textfield events. The functions of this\n structure will be called on the browser process UI thread unless otherwise\n indicated.\n"]
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _cef_textfield_delegate_t {
+    #[doc = "\n Base structure.\n"]
+    pub base: cef_view_delegate_t,
+    #[doc = "\n Called when |textfield| receives a keyboard event. |event| contains\n information about the keyboard event. Return true (1) if the keyboard\n event was handled or false (0) otherwise for default handling.\n"]
+    pub on_key_event: ::std::option::Option<
+        unsafe extern "C" fn(
+            self_: *mut _cef_textfield_delegate_t,
+            textfield: *mut _cef_textfield_t,
+            event: *const cef_key_event_t,
+        ) -> ::std::os::raw::c_int,
+    >,
+    #[doc = "\n Called after performing a user action that may change |textfield|.\n"]
+    pub on_after_user_action: ::std::option::Option<
+        unsafe extern "C" fn(
+            self_: *mut _cef_textfield_delegate_t,
+            textfield: *mut _cef_textfield_t,
+        ),
+    >,
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of _cef_textfield_delegate_t"]
+        [::std::mem::size_of::<_cef_textfield_delegate_t>() - 144usize];
+    ["Alignment of _cef_textfield_delegate_t"]
+        [::std::mem::align_of::<_cef_textfield_delegate_t>() - 8usize];
+    ["Offset of field: _cef_textfield_delegate_t::base"]
+        [::std::mem::offset_of!(_cef_textfield_delegate_t, base) - 0usize];
+    ["Offset of field: _cef_textfield_delegate_t::on_key_event"]
+        [::std::mem::offset_of!(_cef_textfield_delegate_t, on_key_event) - 128usize];
+    ["Offset of field: _cef_textfield_delegate_t::on_after_user_action"]
+        [::std::mem::offset_of!(_cef_textfield_delegate_t, on_after_user_action) - 136usize];
+};
+#[doc = "\n Implement this structure to handle Textfield events. The functions of this\n structure will be called on the browser process UI thread unless otherwise\n indicated.\n"]
+pub type cef_textfield_delegate_t = _cef_textfield_delegate_t;
+#[doc = "\n A Textfield supports editing of text. This control is custom rendered with\n no platform-specific code. Methods must be called on the browser process UI\n thread unless otherwise indicated.\n"]
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _cef_textfield_t {
+    #[doc = "\n Base structure.\n"]
+    pub base: cef_view_t,
+    #[doc = "\n Sets whether the text will be displayed as asterisks.\n"]
+    pub set_password_input: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_textfield_t, password_input: ::std::os::raw::c_int),
+    >,
+    #[doc = "\n Returns true (1) if the text will be displayed as asterisks.\n"]
+    pub is_password_input: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_textfield_t) -> ::std::os::raw::c_int,
+    >,
+    #[doc = "\n Sets whether the text will read-only.\n"]
+    pub set_read_only: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_textfield_t, read_only: ::std::os::raw::c_int),
+    >,
+    #[doc = "\n Returns true (1) if the text is read-only.\n"]
+    pub is_read_only: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_textfield_t) -> ::std::os::raw::c_int,
+    >,
+    #[doc = "\n Returns the currently displayed text.\n"]
+    pub get_text: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_textfield_t) -> cef_string_userfree_t,
+    >,
+    #[doc = "\n Sets the contents to |text|. The cursor will be moved to end of the text\n if the current position is outside of the text range.\n"]
+    pub set_text: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_textfield_t, text: *const cef_string_t),
+    >,
+    #[doc = "\n Appends |text| to the previously-existing text.\n"]
+    pub append_text: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_textfield_t, text: *const cef_string_t),
+    >,
+    #[doc = "\n Inserts |text| at the current cursor position replacing any selected text.\n"]
+    pub insert_or_replace_text: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_textfield_t, text: *const cef_string_t),
+    >,
+    #[doc = "\n Returns true (1) if there is any selected text.\n"]
+    pub has_selection: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_textfield_t) -> ::std::os::raw::c_int,
+    >,
+    #[doc = "\n Returns the currently selected text.\n"]
+    pub get_selected_text: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_textfield_t) -> cef_string_userfree_t,
+    >,
+    #[doc = "\n Selects all text. If |reversed| is true (1) the range will end at the\n logical beginning of the text; this generally shows the leading portion of\n text that overflows its display area.\n"]
+    pub select_all: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_textfield_t, reversed: ::std::os::raw::c_int),
+    >,
+    #[doc = "\n Clears the text selection and sets the caret to the end.\n"]
+    pub clear_selection: ::std::option::Option<unsafe extern "C" fn(self_: *mut _cef_textfield_t)>,
+    #[doc = "\n Returns the selected logical text range.\n"]
+    pub get_selected_range:
+        ::std::option::Option<unsafe extern "C" fn(self_: *mut _cef_textfield_t) -> cef_range_t>,
+    #[doc = "\n Selects the specified logical text range.\n"]
+    pub select_range: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_textfield_t, range: *const cef_range_t),
+    >,
+    #[doc = "\n Returns the current cursor position.\n"]
+    pub get_cursor_position:
+        ::std::option::Option<unsafe extern "C" fn(self_: *mut _cef_textfield_t) -> usize>,
+    #[doc = "\n Sets the text color.\n"]
+    pub set_text_color: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_textfield_t, color: cef_color_t),
+    >,
+    #[doc = "\n Returns the text color.\n"]
+    pub get_text_color:
+        ::std::option::Option<unsafe extern "C" fn(self_: *mut _cef_textfield_t) -> cef_color_t>,
+    #[doc = "\n Sets the selection text color.\n"]
+    pub set_selection_text_color: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_textfield_t, color: cef_color_t),
+    >,
+    #[doc = "\n Returns the selection text color.\n"]
+    pub get_selection_text_color:
+        ::std::option::Option<unsafe extern "C" fn(self_: *mut _cef_textfield_t) -> cef_color_t>,
+    #[doc = "\n Sets the selection background color.\n"]
+    pub set_selection_background_color: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_textfield_t, color: cef_color_t),
+    >,
+    #[doc = "\n Returns the selection background color.\n"]
+    pub get_selection_background_color:
+        ::std::option::Option<unsafe extern "C" fn(self_: *mut _cef_textfield_t) -> cef_color_t>,
+    #[doc = "\n Sets the font list. The format is \"<FONT_FAMILY_LIST>,[STYLES] <SIZE>\",\n where:\n - FONT_FAMILY_LIST is a comma-separated list of font family names,\n - STYLES is an optional space-separated list of style names (case-\n   sensitive \"Bold\" and \"Italic\" are supported), and\n - SIZE is an integer font size in pixels with the suffix \"px\".\n\n Here are examples of valid font description strings:\n - \"Arial, Helvetica, Bold Italic 14px\"\n - \"Arial, 14px\"\n"]
+    pub set_font_list: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_textfield_t, font_list: *const cef_string_t),
+    >,
+    #[doc = "\n Applies |color| to the specified |range| without changing the default\n color. If |range| is NULL the color will be set on the complete text\n contents.\n"]
+    pub apply_text_color: ::std::option::Option<
+        unsafe extern "C" fn(
+            self_: *mut _cef_textfield_t,
+            color: cef_color_t,
+            range: *const cef_range_t,
+        ),
+    >,
+    #[doc = "\n Applies |style| to the specified |range| without changing the default\n style. If |add| is true (1) the style will be added, otherwise the style\n will be removed. If |range| is NULL the style will be set on the complete\n text contents.\n"]
+    pub apply_text_style: ::std::option::Option<
+        unsafe extern "C" fn(
+            self_: *mut _cef_textfield_t,
+            style: cef_text_style_t,
+            add: ::std::os::raw::c_int,
+            range: *const cef_range_t,
+        ),
+    >,
+    #[doc = "\n Returns true (1) if the action associated with the specified command id is\n enabled. See additional comments on execute_command().\n"]
+    pub is_command_enabled: ::std::option::Option<
+        unsafe extern "C" fn(
+            self_: *mut _cef_textfield_t,
+            command_id: cef_text_field_commands_t,
+        ) -> ::std::os::raw::c_int,
+    >,
+    #[doc = "\n Performs the action associated with the specified command id.\n"]
+    pub execute_command: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_textfield_t, command_id: cef_text_field_commands_t),
+    >,
+    #[doc = "\n Clears Edit history.\n"]
+    pub clear_edit_history:
+        ::std::option::Option<unsafe extern "C" fn(self_: *mut _cef_textfield_t)>,
+    #[doc = "\n Sets the placeholder text that will be displayed when the Textfield is\n NULL.\n"]
+    pub set_placeholder_text: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_textfield_t, text: *const cef_string_t),
+    >,
+    #[doc = "\n Returns the placeholder text that will be displayed when the Textfield is\n NULL.\n"]
+    pub get_placeholder_text: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_textfield_t) -> cef_string_userfree_t,
+    >,
+    #[doc = "\n Sets the placeholder text color.\n"]
+    pub set_placeholder_text_color: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_textfield_t, color: cef_color_t),
+    >,
+    #[doc = "\n Set the accessible name that will be exposed to assistive technology (AT).\n"]
+    pub set_accessible_name: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_textfield_t, name: *const cef_string_t),
+    >,
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of _cef_textfield_t"][::std::mem::size_of::<_cef_textfield_t>() - 696usize];
+    ["Alignment of _cef_textfield_t"][::std::mem::align_of::<_cef_textfield_t>() - 8usize];
+    ["Offset of field: _cef_textfield_t::base"]
+        [::std::mem::offset_of!(_cef_textfield_t, base) - 0usize];
+    ["Offset of field: _cef_textfield_t::set_password_input"]
+        [::std::mem::offset_of!(_cef_textfield_t, set_password_input) - 448usize];
+    ["Offset of field: _cef_textfield_t::is_password_input"]
+        [::std::mem::offset_of!(_cef_textfield_t, is_password_input) - 456usize];
+    ["Offset of field: _cef_textfield_t::set_read_only"]
+        [::std::mem::offset_of!(_cef_textfield_t, set_read_only) - 464usize];
+    ["Offset of field: _cef_textfield_t::is_read_only"]
+        [::std::mem::offset_of!(_cef_textfield_t, is_read_only) - 472usize];
+    ["Offset of field: _cef_textfield_t::get_text"]
+        [::std::mem::offset_of!(_cef_textfield_t, get_text) - 480usize];
+    ["Offset of field: _cef_textfield_t::set_text"]
+        [::std::mem::offset_of!(_cef_textfield_t, set_text) - 488usize];
+    ["Offset of field: _cef_textfield_t::append_text"]
+        [::std::mem::offset_of!(_cef_textfield_t, append_text) - 496usize];
+    ["Offset of field: _cef_textfield_t::insert_or_replace_text"]
+        [::std::mem::offset_of!(_cef_textfield_t, insert_or_replace_text) - 504usize];
+    ["Offset of field: _cef_textfield_t::has_selection"]
+        [::std::mem::offset_of!(_cef_textfield_t, has_selection) - 512usize];
+    ["Offset of field: _cef_textfield_t::get_selected_text"]
+        [::std::mem::offset_of!(_cef_textfield_t, get_selected_text) - 520usize];
+    ["Offset of field: _cef_textfield_t::select_all"]
+        [::std::mem::offset_of!(_cef_textfield_t, select_all) - 528usize];
+    ["Offset of field: _cef_textfield_t::clear_selection"]
+        [::std::mem::offset_of!(_cef_textfield_t, clear_selection) - 536usize];
+    ["Offset of field: _cef_textfield_t::get_selected_range"]
+        [::std::mem::offset_of!(_cef_textfield_t, get_selected_range) - 544usize];
+    ["Offset of field: _cef_textfield_t::select_range"]
+        [::std::mem::offset_of!(_cef_textfield_t, select_range) - 552usize];
+    ["Offset of field: _cef_textfield_t::get_cursor_position"]
+        [::std::mem::offset_of!(_cef_textfield_t, get_cursor_position) - 560usize];
+    ["Offset of field: _cef_textfield_t::set_text_color"]
+        [::std::mem::offset_of!(_cef_textfield_t, set_text_color) - 568usize];
+    ["Offset of field: _cef_textfield_t::get_text_color"]
+        [::std::mem::offset_of!(_cef_textfield_t, get_text_color) - 576usize];
+    ["Offset of field: _cef_textfield_t::set_selection_text_color"]
+        [::std::mem::offset_of!(_cef_textfield_t, set_selection_text_color) - 584usize];
+    ["Offset of field: _cef_textfield_t::get_selection_text_color"]
+        [::std::mem::offset_of!(_cef_textfield_t, get_selection_text_color) - 592usize];
+    ["Offset of field: _cef_textfield_t::set_selection_background_color"]
+        [::std::mem::offset_of!(_cef_textfield_t, set_selection_background_color) - 600usize];
+    ["Offset of field: _cef_textfield_t::get_selection_background_color"]
+        [::std::mem::offset_of!(_cef_textfield_t, get_selection_background_color) - 608usize];
+    ["Offset of field: _cef_textfield_t::set_font_list"]
+        [::std::mem::offset_of!(_cef_textfield_t, set_font_list) - 616usize];
+    ["Offset of field: _cef_textfield_t::apply_text_color"]
+        [::std::mem::offset_of!(_cef_textfield_t, apply_text_color) - 624usize];
+    ["Offset of field: _cef_textfield_t::apply_text_style"]
+        [::std::mem::offset_of!(_cef_textfield_t, apply_text_style) - 632usize];
+    ["Offset of field: _cef_textfield_t::is_command_enabled"]
+        [::std::mem::offset_of!(_cef_textfield_t, is_command_enabled) - 640usize];
+    ["Offset of field: _cef_textfield_t::execute_command"]
+        [::std::mem::offset_of!(_cef_textfield_t, execute_command) - 648usize];
+    ["Offset of field: _cef_textfield_t::clear_edit_history"]
+        [::std::mem::offset_of!(_cef_textfield_t, clear_edit_history) - 656usize];
+    ["Offset of field: _cef_textfield_t::set_placeholder_text"]
+        [::std::mem::offset_of!(_cef_textfield_t, set_placeholder_text) - 664usize];
+    ["Offset of field: _cef_textfield_t::get_placeholder_text"]
+        [::std::mem::offset_of!(_cef_textfield_t, get_placeholder_text) - 672usize];
+    ["Offset of field: _cef_textfield_t::set_placeholder_text_color"]
+        [::std::mem::offset_of!(_cef_textfield_t, set_placeholder_text_color) - 680usize];
+    ["Offset of field: _cef_textfield_t::set_accessible_name"]
+        [::std::mem::offset_of!(_cef_textfield_t, set_accessible_name) - 688usize];
+};
+#[doc = "\n A Textfield supports editing of text. This control is custom rendered with\n no platform-specific code. Methods must be called on the browser process UI\n thread unless otherwise indicated.\n"]
+pub type cef_textfield_t = _cef_textfield_t;
+extern "C" {
+    #[doc = "\n Create a new Textfield.\n"]
+    pub fn cef_textfield_create(delegate: *mut _cef_textfield_delegate_t) -> *mut cef_textfield_t;
+}
+#[doc = "\n A Layout handles the sizing of the children of a Panel according to\n implementation-specific heuristics. Methods must be called on the browser\n process UI thread unless otherwise indicated.\n"]
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _cef_layout_t {
+    #[doc = "\n Base structure.\n"]
+    pub base: cef_base_ref_counted_t,
+    #[doc = "\n Returns this Layout as a BoxLayout or NULL if this is not a BoxLayout.\n"]
+    pub as_box_layout: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_layout_t) -> *mut _cef_box_layout_t,
+    >,
+    #[doc = "\n Returns this Layout as a FillLayout or NULL if this is not a FillLayout.\n"]
+    pub as_fill_layout: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_layout_t) -> *mut _cef_fill_layout_t,
+    >,
+    #[doc = "\n Returns true (1) if this Layout is valid.\n"]
+    pub is_valid: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_layout_t) -> ::std::os::raw::c_int,
+    >,
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of _cef_layout_t"][::std::mem::size_of::<_cef_layout_t>() - 64usize];
+    ["Alignment of _cef_layout_t"][::std::mem::align_of::<_cef_layout_t>() - 8usize];
+    ["Offset of field: _cef_layout_t::base"][::std::mem::offset_of!(_cef_layout_t, base) - 0usize];
+    ["Offset of field: _cef_layout_t::as_box_layout"]
+        [::std::mem::offset_of!(_cef_layout_t, as_box_layout) - 40usize];
+    ["Offset of field: _cef_layout_t::as_fill_layout"]
+        [::std::mem::offset_of!(_cef_layout_t, as_fill_layout) - 48usize];
+    ["Offset of field: _cef_layout_t::is_valid"]
+        [::std::mem::offset_of!(_cef_layout_t, is_valid) - 56usize];
+};
+#[doc = "\n A Layout handles the sizing of the children of a Panel according to\n implementation-specific heuristics. Methods must be called on the browser\n process UI thread unless otherwise indicated.\n"]
+pub type cef_layout_t = _cef_layout_t;
+#[doc = "\n A Layout manager that arranges child views vertically or horizontally in a\n side-by-side fashion with spacing around and between the child views. The\n child views are always sized according to their preferred size. If the\n host's bounds provide insufficient space, child views will be clamped.\n Excess space will not be distributed. Methods must be called on the browser\n process UI thread unless otherwise indicated.\n"]
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _cef_box_layout_t {
+    #[doc = "\n Base structure.\n"]
+    pub base: cef_layout_t,
+    #[doc = "\n Set the flex weight for the given |view|. Using the preferred size as the\n basis, free space along the main axis is distributed to views in the ratio\n of their flex weights. Similarly, if the views will overflow the parent,\n space is subtracted in these ratios. A flex of 0 means this view is not\n resized. Flex values must not be negative.\n"]
+    pub set_flex_for_view: ::std::option::Option<
+        unsafe extern "C" fn(
+            self_: *mut _cef_box_layout_t,
+            view: *mut _cef_view_t,
+            flex: ::std::os::raw::c_int,
+        ),
+    >,
+    #[doc = "\n Clears the flex for the given |view|, causing it to use the default flex\n specified via cef_box_layout_tSettings.default_flex.\n"]
+    pub clear_flex_for_view: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_box_layout_t, view: *mut _cef_view_t),
+    >,
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of _cef_box_layout_t"][::std::mem::size_of::<_cef_box_layout_t>() - 80usize];
+    ["Alignment of _cef_box_layout_t"][::std::mem::align_of::<_cef_box_layout_t>() - 8usize];
+    ["Offset of field: _cef_box_layout_t::base"]
+        [::std::mem::offset_of!(_cef_box_layout_t, base) - 0usize];
+    ["Offset of field: _cef_box_layout_t::set_flex_for_view"]
+        [::std::mem::offset_of!(_cef_box_layout_t, set_flex_for_view) - 64usize];
+    ["Offset of field: _cef_box_layout_t::clear_flex_for_view"]
+        [::std::mem::offset_of!(_cef_box_layout_t, clear_flex_for_view) - 72usize];
+};
+#[doc = "\n A Layout manager that arranges child views vertically or horizontally in a\n side-by-side fashion with spacing around and between the child views. The\n child views are always sized according to their preferred size. If the\n host's bounds provide insufficient space, child views will be clamped.\n Excess space will not be distributed. Methods must be called on the browser\n process UI thread unless otherwise indicated.\n"]
+pub type cef_box_layout_t = _cef_box_layout_t;
+#[doc = "\n A simple Layout that causes the associated Panel's one child to be sized to\n match the bounds of its parent. Methods must be called on the browser\n process UI thread unless otherwise indicated.\n"]
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _cef_fill_layout_t {
+    #[doc = "\n Base structure.\n"]
+    pub base: cef_layout_t,
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of _cef_fill_layout_t"][::std::mem::size_of::<_cef_fill_layout_t>() - 64usize];
+    ["Alignment of _cef_fill_layout_t"][::std::mem::align_of::<_cef_fill_layout_t>() - 8usize];
+    ["Offset of field: _cef_fill_layout_t::base"]
+        [::std::mem::offset_of!(_cef_fill_layout_t, base) - 0usize];
+};
+#[doc = "\n A simple Layout that causes the associated Panel's one child to be sized to\n match the bounds of its parent. Methods must be called on the browser\n process UI thread unless otherwise indicated.\n"]
+pub type cef_fill_layout_t = _cef_fill_layout_t;

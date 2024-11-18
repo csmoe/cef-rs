@@ -159,7 +159,9 @@ fn download_prebuilt_cef(target: &str, cef_path: &std::path::Path) {
         std::fs::remove_dir_all(&cef_path).unwrap();
     }
     std::fs::rename(from.join("Release"), &cef_path).unwrap();
-    copy_directory(&from.join("Resources"), &cef_path);
+    if platform.contains("windows") {
+        copy_directory(&from.join("Resources"), &cef_path);
+    }
     std::fs::rename(from.join("include"), &cef_path.join("include")).unwrap();
     println!("cef: extracted into {:?}", cef_path);
 }
