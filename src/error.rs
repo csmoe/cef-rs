@@ -9,6 +9,8 @@ pub enum Error {
     #[cfg(windows)]
     #[error("windows os error: {0}")]
     WinOs(windows::core::Error),
+    #[error("cannot create browser")]
+    CannotCreateBrowser,
 }
 
 pub type Result<T> = std::result::Result<T, Error>;

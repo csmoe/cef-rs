@@ -1,12 +1,15 @@
 use std::{ffi::c_int, ptr::null_mut};
 
 use cef_sys::{
-    cef_browser_host_create_browser, cef_browser_settings_t, cef_browser_t,
+    cef_browser_host_create_browser_sync, cef_browser_settings_t, cef_browser_t,
     cef_browser_view_delegate_t, cef_chrome_toolbar_type_t, cef_client_t, cef_gesture_command_t,
     cef_runtime_style_t,
 };
 
-use crate::{client::Client, string::CefString, view::WindowInfo, BrowserView, State};
+use crate::{
+    client::Client, error::Result, rc::RefGuard, string::CefString, view::WindowInfo, BrowserView,
+    State,
+};
 
 /// See [cef_browser_settings_t] for more documentation.
 #[derive(Debug, Clone)]
@@ -119,23 +122,30 @@ crate::wrapper! {
     pub struct Browser(cef_browser_t);
 }
 
-/// See [cef_browser_host_create_browser] for more documentation.
-pub fn create_browser<T: Client>(
-    window_info: WindowInfo,
-    client: Option<T>,
-    url: CefString,
-    settings: BrowserSettings,
-) -> i32 {
-    let client = client.map(|c| c.into_raw()).unwrap_or(null_mut());
-    unsafe {
-        cef_browser_host_create_browser(
-            &window_info.as_raw(),
-            client,
-            &url.as_raw(),
-            &settings.as_raw(),
-            null_mut(),
-            null_mut(),
-        )
+impl Browser {
+    /// See [cef_browser_host_create_browser] for more documentation.
+    pub fn create<T: Client>(
+        window_info: WindowInfo,
+        client: Option<T>,
+        url: CefString,
+        settings: BrowserSettings,
+    ) -> Result<Browser> {
+        let client = client.map(|c| c.into_raw()).unwrap_or(null_mut());
+        let ret = unsafe {
+            cef_browser_host_create_browser_sync(
+                &window_info.as_raw(),
+                client,
+                &url.as_raw(),
+                &settings.as_raw(),
+                null_mut(),
+                null_mut(),
+            )
+        };
+        if ret.is_null() {
+            return Err(crate::error::Error::CannotCreateBrowser);
+        }
+
+        Ok(Browser(unsafe { RefGuard::from_raw(ret) }))
     }
 }
 

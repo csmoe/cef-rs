@@ -17,6 +17,7 @@ pub use cef_sys as sys;
 pub use app::*;
 pub use browser::*;
 pub use command_line::*;
+use rc::Rc;
 pub use settings::*;
 pub use view::*;
 
@@ -29,6 +30,11 @@ pub type Rect = cef_sys::cef_rect_t;
 pub type Size = cef_sys::cef_size_t;
 
 pub type State = cef_sys::cef_state_t;
+
+pub trait IntoRawCallback: Rc {
+    type RawDelegate;
+    unsafe fn into_raw(&self) -> *mut Self::RawDelegate;
+}
 
 #[macro_export]
 macro_rules! gen_fn {

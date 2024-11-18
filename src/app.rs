@@ -9,16 +9,18 @@ use crate::{
     settings::Settings, string::CefString,
 };
 
+/// Handle process-specific callbacks
+///
 /// See [cef_app_t] for more documentation.
 pub trait App: Sized {
     fn on_before_command_line_processing(
         &self,
-        process_type: Option<CefString>,
-        command_line: CommandLine,
+        _process_type: Option<CefString>,
+        _command_line: CommandLine,
     ) {
     }
 
-    fn on_register_custom_schemes(&self, registrar: cef_scheme_registrar_t) {}
+    fn on_register_custom_schemes(&self, _registrar: cef_scheme_registrar_t) {}
 
     fn get_resource_bundle_handler(&self) -> Option<cef_sys::cef_resource_bundle_handler_t> {
         None
