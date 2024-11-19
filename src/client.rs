@@ -14,75 +14,75 @@ use crate::{rc::RcImpl, Browser};
 ///
 /// See [cef_client_t] for more documentation.
 pub trait Client: Sized {
-    fn get_audio_handler(&self) -> Option<cef_audio_handler_t> {
+    fn get_audio_handler(&self) -> Option<AudioHandler> {
         None
     }
 
-    fn get_command_handler(&self) -> Option<cef_command_handler_t> {
+    fn get_command_handler(&self) -> Option<CommandHandler> {
         None
     }
 
-    fn get_context_menu_handler(&self) -> Option<cef_context_menu_handler_t> {
+    fn get_context_menu_handler(&self) -> Option<ContextMenuHandler> {
         None
     }
 
-    fn get_dialog_handler(&self) -> Option<cef_dialog_handler_t> {
+    fn get_dialog_handler(&self) -> Option<DialogHandler> {
         None
     }
 
-    fn get_display_handler(&self) -> Option<cef_display_handler_t> {
+    fn get_display_handler(&self) -> Option<DisplayHandler> {
         None
     }
 
-    fn get_download_handler(&self) -> Option<cef_download_handler_t> {
+    fn get_download_handler(&self) -> Option<DownloadHandler> {
         None
     }
 
-    fn get_drag_handler(&self) -> Option<cef_drag_handler_t> {
+    fn get_drag_handler(&self) -> Option<DragHandler> {
         None
     }
 
-    fn get_find_handler(&self) -> Option<cef_find_handler_t> {
+    fn get_find_handler(&self) -> Option<FindHandler> {
         None
     }
 
-    fn get_focus_handler(&self) -> Option<cef_focus_handler_t> {
+    fn get_focus_handler(&self) -> Option<FocusHandler> {
         None
     }
 
-    fn get_frame_handler(&self) -> Option<cef_frame_handler_t> {
+    fn get_frame_handler(&self) -> Option<FrameHandler> {
         None
     }
 
-    fn get_permission_handler(&self) -> Option<cef_permission_handler_t> {
+    fn get_permission_handler(&self) -> Option<PermissionHandler> {
         None
     }
 
-    fn get_jsdialog_handler(&self) -> Option<cef_jsdialog_handler_t> {
+    fn get_jsdialog_handler(&self) -> Option<JsDialogHandler> {
         None
     }
 
-    fn get_keyboard_handler(&self) -> Option<cef_keyboard_handler_t> {
+    fn get_keyboard_handler(&self) -> Option<KeyboardHandler> {
         None
     }
 
-    fn get_life_span_handler(&self) -> Option<cef_life_span_handler_t> {
+    fn get_life_span_handler(&self) -> Option<BrowerLifeSpanHandler> {
         None
     }
 
-    fn get_load_handler(&self) -> Option<cef_load_handler_t> {
+    fn get_load_handler(&self) -> Option<LoadHandler> {
         None
     }
 
-    fn get_print_handler(&self) -> Option<cef_print_handler_t> {
+    fn get_print_handler(&self) -> Option<PrintHandler> {
         None
     }
 
-    fn get_request_handler(&self) -> Option<cef_request_handler_t> {
+    fn get_request_handler(&self) -> Option<RequestHandler> {
         None
     }
 
-    fn get_render_handler(&self) -> Option<cef_render_handler_t> {
+    fn get_render_handler(&self) -> Option<RenderHandler> {
         None
     }
 
@@ -258,13 +258,11 @@ impl<
     }
 
     pub fn into_raw(self) -> *mut cef_sys::cef_client_t {
-        let object: *mut cef_client_t = unsafe { std::mem::zeroed() };
-
+        let mut object: cef_client_t = unsafe { std::mem::zeroed() };
         RcImpl::new(object, self).cast()
     }
 }
 
-/*
 pub(crate) unsafe extern "C" fn get_audio_handler<I: Client>(
     self_: *mut cef_sys::cef_client_t,
 ) -> *mut cef_sys::cef_audio_handler_t {
@@ -274,4 +272,153 @@ pub(crate) unsafe extern "C" fn get_audio_handler<I: Client>(
         .map(|h| h.into_raw())
         .unwrap_or(core::ptr::null_mut())
 }
-*/
+
+pub(crate) unsafe extern "C" fn get_render_handler<I: Client>(
+    self_: *mut cef_sys::cef_client_t,
+) -> *mut cef_sys::cef_render_handler_t {
+    let obj: &mut RcImpl<_, I> = RcImpl::get(self_);
+    obj.interface
+        .get_render_handler()
+        .map(|h| h.into_raw())
+        .unwrap_or(core::ptr::null_mut())
+}
+
+pub(crate) unsafe extern "C" fn get_request_handler<I: Client>(
+    self_: *mut cef_sys::cef_client_t,
+) -> *mut cef_sys::cef_request_handler_t {
+    let obj: &mut RcImpl<_, I> = RcImpl::get(self_);
+    obj.interface
+        .get_request_handler()
+        .map(|h| h.into_raw())
+        .unwrap_or(core::ptr::null_mut())
+}
+
+pub(crate) unsafe extern "C" fn get_life_span_handler<I: Client>(
+    self_: *mut cef_sys::cef_client_t,
+) -> *mut cef_sys::cef_life_span_handler_t {
+    let obj: &mut RcImpl<_, I> = RcImpl::get(self_);
+    obj.interface
+        .get_life_span_handler()
+        .map(|h| h.into_raw())
+        .unwrap_or(core::ptr::null_mut())
+}
+
+pub(crate) unsafe extern "C" fn get_keyboard_handler<I: Client>(
+    self_: *mut cef_sys::cef_client_t,
+) -> *mut cef_sys::cef_keyboard_handler_t {
+    let obj: &mut RcImpl<_, I> = RcImpl::get(self_);
+    obj.interface
+        .get_keyboard_handler()
+        .map(|h| h.into_raw())
+        .unwrap_or(core::ptr::null_mut())
+}
+
+pub(crate) unsafe extern "C" fn get_js_dialog_handler<I: Client>(
+    self_: *mut cef_sys::cef_client_t,
+) -> *mut cef_sys::cef_jsdialog_handler_t {
+    let obj: &mut RcImpl<_, I> = RcImpl::get(self_);
+    obj.interface
+        .get_jsdialog_handler()
+        .map(|h| h.into_raw())
+        .unwrap_or(core::ptr::null_mut())
+}
+
+pub(crate) unsafe extern "C" fn get_permission_handler<I: Client>(
+    self_: *mut cef_sys::cef_client_t,
+) -> *mut cef_sys::cef_permission_handler_t {
+    let obj: &mut RcImpl<_, I> = RcImpl::get(self_);
+    obj.interface
+        .get_permission_handler()
+        .map(|h| h.into_raw())
+        .unwrap_or(core::ptr::null_mut())
+}
+
+pub(crate) unsafe extern "C" fn get_frame_handler<I: Client>(
+    self_: *mut cef_sys::cef_client_t,
+) -> *mut cef_sys::cef_frame_handler_t {
+    let obj: &mut RcImpl<_, I> = RcImpl::get(self_);
+    obj.interface
+        .get_frame_handler()
+        .map(|h| h.into_raw())
+        .unwrap_or(core::ptr::null_mut())
+}
+
+pub(crate) unsafe extern "C" fn get_command_handler<I: Client>(
+    self_: *mut cef_sys::cef_client_t,
+) -> *mut cef_sys::cef_command_handler_t {
+    let obj: &mut RcImpl<_, I> = RcImpl::get(self_);
+    obj.interface
+        .get_command_handler()
+        .map(|h| h.into_raw())
+        .unwrap_or(core::ptr::null_mut())
+}
+
+pub(crate) unsafe extern "C" fn get_context_menu_handler<I: Client>(
+    self_: *mut cef_sys::cef_client_t,
+) -> *mut cef_sys::cef_context_menu_handler_t {
+    let obj: &mut RcImpl<_, I> = RcImpl::get(self_);
+    obj.interface
+        .get_context_menu_handler()
+        .map(|h| h.into_raw())
+        .unwrap_or(core::ptr::null_mut())
+}
+
+pub(crate) unsafe extern "C" fn get_dialog_handler<I: Client>(
+    self_: *mut cef_sys::cef_client_t,
+) -> *mut cef_sys::cef_dialog_handler_t {
+    let obj: &mut RcImpl<_, I> = RcImpl::get(self_);
+    obj.interface
+        .get_dialog_handler()
+        .map(|h| h.into_raw())
+        .unwrap_or(core::ptr::null_mut())
+}
+
+pub(crate) unsafe extern "C" fn get_display_handler<I: Client>(
+    self_: *mut cef_sys::cef_client_t,
+) -> *mut cef_sys::cef_display_handler_t {
+    let obj: &mut RcImpl<_, I> = RcImpl::get(self_);
+    obj.interface
+        .get_display_handler()
+        .map(|h| h.into_raw())
+        .unwrap_or(core::ptr::null_mut())
+}
+
+pub(crate) unsafe extern "C" fn get_download_handler<I: Client>(
+    self_: *mut cef_sys::cef_client_t,
+) -> *mut cef_sys::cef_download_handler_t {
+    let obj: &mut RcImpl<_, I> = RcImpl::get(self_);
+    obj.interface
+        .get_download_handler()
+        .map(|h| h.into_raw())
+        .unwrap_or(core::ptr::null_mut())
+}
+
+pub(crate) unsafe extern "C" fn get_drag_handler<I: Client>(
+    self_: *mut cef_sys::cef_client_t,
+) -> *mut cef_sys::cef_drag_handler_t {
+    let obj: &mut RcImpl<_, I> = RcImpl::get(self_);
+    obj.interface
+        .get_drag_handler()
+        .map(|h| h.into_raw())
+        .unwrap_or(core::ptr::null_mut())
+}
+
+pub(crate) unsafe extern "C" fn get_find_handler<I: Client>(
+    self_: *mut cef_sys::cef_client_t,
+) -> *mut cef_sys::cef_find_handler_t {
+    let obj: &mut RcImpl<_, I> = RcImpl::get(self_);
+    obj.interface
+        .get_find_handler()
+        .map(|h| h.into_raw())
+        .unwrap_or(core::ptr::null_mut())
+}
+
+pub(crate) unsafe extern "C" fn get_focus_handler<I: Client>(
+    self_: *mut cef_sys::cef_client_t,
+) -> *mut cef_sys::cef_focus_handler_t {
+    let obj: &mut RcImpl<_, I> = RcImpl::get(self_);
+    obj.interface
+        .get_focus_handler()
+        .map(|h| h.into_raw())
+        .unwrap_or(core::ptr::null_mut())
+}

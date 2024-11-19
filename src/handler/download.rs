@@ -1,5 +1,5 @@
-use cef_sys::cef_download_handler_t;
 use crate::wrapper;
+use cef_sys::cef_download_handler_t;
 
 wrapper! {
     #[doc = "See [cef_download_handler_t] for more docs."]

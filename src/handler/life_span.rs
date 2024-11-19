@@ -1,6 +1,10 @@
-use cef_sys::cef_life_span_handler_t;
-
 use crate::{string::CefString, Browser};
+
+crate::wrapper! {
+    #[doc = ""]
+    #[derive(Clone)]
+    pub struct BrowerLifeSpanHandler(cef_sys::cef_life_span_handler_t);
+}
 
 pub trait BrowserLifeSpanCallback {
     fn on_loading_state_change(
@@ -32,15 +36,4 @@ pub trait BrowserLifeSpanCallback {
     );
     fn do_close(&self, browser: Browser) -> bool;
     fn on_before_close(&self, browser: Browser);
-
-    unsafe fn into_raw(&self) -> *mut cef_sys::cef_life_span_handler_t {
-        let object: *mut cef_life_span_handler_t = unsafe { std::mem::zeroed() };
-        crate::rc::RcImpl::new(object, self).cast()
-    }
-}
-
-crate::wrapper! {
-    #[doc = ""]
-    #[derive(Clone)]
-    pub struct BrowerLifeSpanHandler(cef_sys::cef_life_span_handler_t);
 }
