@@ -1,5 +1,5 @@
 use cef::{
-    args::Args, client::Client, string::CefString, App, BrowserSettings, BrowserView,
+    args::Args, client::Client, string::CefString, App, Browser, BrowserSettings, BrowserView,
     PanelDelegate, Settings, ViewDelegate, WindowDelegate,
 };
 
@@ -26,9 +26,7 @@ impl ViewDelegate for DemoWindow {
 impl PanelDelegate for DemoWindow {}
 impl WindowDelegate for DemoWindow {
     fn on_window_created(&self, mut window: cef::Window) {
-        window
-            .get_panel()
-            .add_child_view(self.browser_view.get_view());
+        window.get_panel().add_child_view(self.browser_view.view());
         window.show();
     }
 
@@ -38,15 +36,14 @@ impl WindowDelegate for DemoWindow {
 }
 
 fn main() {
-    let cef_path = std::path::PathBuf::from(std::env::var("CEF_PATH").unwrap())
-        .canonicalize()
-        .unwrap();
+    //let cef_path = std::path::PathBuf::from(std::env::var("CEF_PATH").unwrap())
+    //    .canonicalize()
+    //    .unwrap();
     let mut args = Args::new(std::env::args());
     let app = Application;
     let mut settings = Settings::new();
-    settings.resources_dir_path = cef_path.join("Resources").into();
-    //settings.locales_dir_path = cef_path.join("Resources").into();
-    //settings.framework_dir_path = cef_path.join("Release").into();
+    settings.root_cache_path = CefString::from("/tmp/demo");
+    settings.no_sandbox = true;
     cef::execute_process(&mut args, Some(app)).unwrap();
     cef::initialize(&mut args, &settings, Some(app)).unwrap();
 
@@ -59,7 +56,7 @@ fn main() {
     //let delegate = DemoWindow { browser_view };
 
     //cef::create_top_level_window(delegate);
-    cef::create_browser(window_info, Some(client), url, browser_settings);
+    Browser::create(window_info, Some(client), url, browser_settings).unwrap();
 
     cef::run_message_loop();
 

@@ -24,6 +24,22 @@ short_description = "An example of a bundled CEF application"
 long_description = """ CEF application in Rust """
 osx_frameworks = [ "sys/cef/archive/Chromium Embedded Framework.framework" ]
 
+[package.metadata.bundle.example.demo_helper_gpu]
+name = "demo Helper(GPU)"
+identifir = "com.cef.demo"
+category = "Utility"
+short_description = "An example of a bundled CEF application"
+long_description = """ CEF application in Rust """
+osx_frameworks = [ "sys/cef/archive/Chromium Embedded Framework.framework" ]
+
+[package.metadata.bundle.example.demo_helper_render]
+name = "demo Helper(Render)"
+identifir = "com.cef.demo"
+category = "Utility"
+short_description = "An example of a bundled CEF application"
+long_description = """ CEF application in Rust """
+osx_frameworks = [ "sys/cef/archive/Chromium Embedded Framework.framework" ]
+
 [features]
 dox = ["cef-sys/dox"]
 

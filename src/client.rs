@@ -1,13 +1,14 @@
+use crate::handler::*;
 use cef_sys::{
-    cef_audio_handler_t, cef_browser_t, cef_client_t, cef_command_handler_t,
-    cef_context_menu_handler_t, cef_dialog_handler_t, cef_display_handler_t,
-    cef_download_handler_t, cef_drag_handler_t, cef_find_handler_t, cef_focus_handler_t,
-    cef_frame_t, cef_jsdialog_handler_t, cef_keyboard_handler_t, cef_life_span_handler_t,
-    cef_load_handler_t, cef_permission_handler_t, cef_print_handler_t, cef_process_id_t,
-    cef_process_message_t, cef_render_handler_t, cef_request_handler_t,
+    cef_audio_handler_t, cef_client_t, cef_command_handler_t, cef_context_menu_handler_t,
+    cef_dialog_handler_t, cef_display_handler_t, cef_download_handler_t, cef_drag_handler_t,
+    cef_find_handler_t, cef_focus_handler_t, cef_frame_handler_t, cef_frame_t,
+    cef_jsdialog_handler_t, cef_keyboard_handler_t, cef_life_span_handler_t, cef_load_handler_t,
+    cef_permission_handler_t, cef_print_handler_t, cef_process_id_t, cef_process_message_t,
+    cef_render_handler_t, cef_request_handler_t,
 };
 
-use crate::rc::RcImpl;
+use crate::{rc::RcImpl, Browser};
 
 /// Handle browser-instance-specific callbacks
 ///
@@ -49,7 +50,7 @@ pub trait Client: Sized {
         None
     }
 
-    fn get_frame_handler(&self) -> Option<cef_frame_t> {
+    fn get_frame_handler(&self) -> Option<cef_frame_handler_t> {
         None
     }
 
@@ -87,7 +88,7 @@ pub trait Client: Sized {
 
     fn on_process_message_received(
         &self,
-        _browser: cef_browser_t,
+        _browser: Browser,
         _frame: cef_frame_t,
         _source_process: cef_process_id_t,
         _message: cef_process_message_t,
@@ -274,8 +275,20 @@ impl<
     }
 
     pub fn into_raw(self) -> *mut cef_sys::cef_client_t {
-        let mut object: *mut cef_client_t = unsafe { std::mem::zeroed() };
+        let object: *mut cef_client_t = unsafe { std::mem::zeroed() };
 
         RcImpl::new(object, self).cast()
     }
 }
+
+/*
+pub(crate) unsafe extern "C" fn get_audio_handler<I: Client>(
+    self_: *mut cef_sys::cef_client_t,
+) -> *mut cef_sys::cef_audio_handler_t {
+    let obj: &mut RcImpl<_, I> = RcImpl::get(self_);
+    obj.interface
+        .get_audio_handler()
+        .map(|h| h.into_raw())
+        .unwrap_or(core::ptr::null_mut())
+}
+*/

@@ -2,7 +2,7 @@ use cef_sys::cef_life_span_handler_t;
 
 use crate::{string::CefString, Browser};
 
-pub trait BrowserLifeSpanCallbacks {
+pub trait BrowserLifeSpanCallback {
     fn on_loading_state_change(
         &self,
         browser: Browser,
@@ -42,5 +42,5 @@ pub trait BrowserLifeSpanCallbacks {
 crate::wrapper! {
     #[doc = ""]
     #[derive(Clone)]
-    pub struct BrowerLifeSpan(cef_sys::cef_life_span_handler_t);
+    pub struct BrowerLifeSpanHandler(cef_sys::cef_life_span_handler_t);
 }

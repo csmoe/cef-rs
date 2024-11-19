@@ -1,9 +1,6 @@
 use std::ptr::null_mut;
 
-use cef::{
-    args::Args, client::Client, App, BrowserView, IntoRaw, PanelDelegate, Settings, ViewDelegate,
-    WindowDelegate,
-};
+use cef::{args::Args, client::Client, App, Settings, ViewDelegate, WindowDelegate};
 
 #[derive(Debug, Clone, Copy)]
 struct Application;

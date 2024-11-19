@@ -11,6 +11,8 @@ use crate::{
     State,
 };
 
+pub mod frame;
+
 /// See [cef_browser_settings_t] for more documentation.
 #[derive(Debug, Clone)]
 pub struct BrowserSettings {
@@ -142,7 +144,7 @@ impl Browser {
             )
         };
         if ret.is_null() {
-            return Err(crate::error::Error::CannotCreateBrowser);
+            return Err(crate::error::Error::NullPtr);
         }
 
         Ok(Browser(unsafe { RefGuard::from_raw(ret) }))
@@ -154,13 +156,13 @@ pub trait BrowserViewDelegate: Sized {
 
     fn on_browser_destroyed(&self, _browser_view: BrowserView, _browser: Browser) {}
 
-    fn get_delegate_for_popup_browser_view(
+    fn get_delegate_for_popup_browser_view<T: BrowserViewDelegate>(
         &self,
         _browser_view: BrowserView,
         _settings: BrowserSettings,
         _client: cef_client_t,
         _is_devtools: bool,
-    ) -> Option<cef_browser_view_delegate_t> {
+    ) -> Option<T> {
         None
     }
 
