@@ -7,3 +7,5 @@ build
 cargo-sources.json
 .DS_Store
 /sys/cef
+.vscode
+/node_modules

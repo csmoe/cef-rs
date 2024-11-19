@@ -162,7 +162,7 @@ fn download_prebuilt_cef(target: &str, cef_path: &std::path::Path) {
     if platform.contains("windows") {
         copy_directory(&from.join("Resources"), &cef_path);
     }
-    std::fs::rename(from.join("include"), &cef_path.join("include")).unwrap();
+    copy_directory(&from.join("include"), &cef_path.join("include"));
     println!("cef: extracted into {:?}", cef_path);
 }
 
