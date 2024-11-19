@@ -15,6 +15,10 @@ mod browser;
 pub use browser::*;
 mod window;
 pub use window::*;
+mod textfield;
+pub use textfield::*;
+mod scroll_view;
+pub use scroll_view::*;
 
 macro_rules! convert_view {
     ($( ($view:ident, $as_field:ident, $target_type:ident) ),*) => {
@@ -38,7 +42,10 @@ pub(crate) use convert_view;
 
 convert_view! {
     (View, as_browser_view, BrowserView),
-    (View, as_panel, Panel)
+    (View, as_panel, Panel),
+    (View, as_textfield, TextField),
+    (View, as_scroll_view, ScrollView),
+    (View, as_button, Button)
 }
 
 wrapper!(
