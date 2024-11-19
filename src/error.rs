@@ -11,6 +11,8 @@ pub enum Error {
     WinOs(windows::core::Error),
     #[error("cannot create browser")]
     CannotCreateBrowser,
+    #[error("null ptr")]
+    NullPtr,
 }
 
 pub type Result<T> = std::result::Result<T, Error>;

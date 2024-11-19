@@ -84,13 +84,13 @@ pub trait Rc {
 impl Rc for cef_base_ref_counted_t {
     unsafe fn add_ref(&self) {
         if let Some(add_ref) = self.add_ref {
-            add_ref(self as *const _ as *mut _);
+            add_ref(core::ptr::from_ref(self).cast_mut());
         }
     }
 
     fn has_one_ref(&self) -> bool {
         if let Some(has_one_ref) = self.has_one_ref {
-            let result = unsafe { has_one_ref(self as *const _ as *mut _) };
+            let result = unsafe { has_one_ref(core::ptr::from_ref(self).cast_mut()) };
             return result == 1;
         }
 
@@ -99,7 +99,7 @@ impl Rc for cef_base_ref_counted_t {
 
     fn has_at_least_one_ref(&self) -> bool {
         if let Some(has_at_least_one_ref) = self.has_at_least_one_ref {
-            let result = unsafe { has_at_least_one_ref(self as *const _ as *mut _) };
+            let result = unsafe { has_at_least_one_ref(core::ptr::from_ref(self).cast_mut()) };
             return result == 1;
         }
 
@@ -108,7 +108,7 @@ impl Rc for cef_base_ref_counted_t {
 
     unsafe fn release(&self) -> bool {
         if let Some(release) = self.release {
-            return release(self as *const _ as *mut _) == 1;
+            return release(core::ptr::from_ref(self).cast_mut()) == 1;
         }
 
         false

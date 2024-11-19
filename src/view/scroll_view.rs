@@ -8,10 +8,13 @@ wrapper! {
 }
 
 impl ScrollView {
-    pub fn create(delegate: impl ViewDelegate) -> Self {
+    pub fn create(delegate: impl ViewDelegate) -> crate::Result<Self> {
         unsafe {
             let view = cef_sys::cef_scroll_view_create(delegate.into_raw());
-            Self(RefGuard::from_raw(view))
+            if view.is_null() {
+                return Err(crate::Error::NullPtr);
+            }
+            Ok(Self(RefGuard::from_raw(view)))
         }
     }
 }

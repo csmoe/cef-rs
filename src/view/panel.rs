@@ -1,5 +1,7 @@
+use cef_sys::cef_panel_create;
 use cef_sys::{cef_panel_delegate_t, cef_panel_t};
 
+use crate::rc::RefGuard;
 use crate::{add_view_delegate_methods, view::View, wrapper, ViewDelegate, Window};
 
 wrapper!(
@@ -13,6 +15,16 @@ crate::convert_view! {
 }
 
 impl Panel {
+    pub fn create(delegate: impl PanelDelegate) -> crate::Result<Self> {
+        unsafe {
+            let view = cef_panel_create(PanelDelegate::into_raw(delegate));
+            if view.is_null() {
+                return Err(crate::Error::NullPtr);
+            }
+            Ok(Self(RefGuard::from_raw(view)))
+        }
+    }
+
     pub fn add_child_view(&self, view: View) {
         if let Some(f) = self.0.add_child_view {
             unsafe { f(self.0.get_raw(), view.0.into_raw()) }

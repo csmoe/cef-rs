@@ -1,14 +1,13 @@
-use cef_sys::{
-    cef_key_event_t, cef_runtime_style_t, cef_show_state_t, cef_window_create_top_level,
-    cef_window_delegate_t, cef_window_info_t, cef_window_t,
-};
-
 use crate::{
     add_view_delegate_methods,
     rc::{RcImpl, RefGuard},
     string::CefString,
     view::{Panel, PanelDelegate},
     wrapper, Rect, State,
+};
+use cef_sys::{
+    cef_key_event_t, cef_runtime_style_t, cef_show_state_t, cef_window_create_top_level,
+    cef_window_delegate_t, cef_window_info_t, cef_window_t,
 };
 
 /// See [cef_window_info_t] for more documentation.
@@ -56,14 +55,14 @@ impl WindowInfo {
             parent_view: self
                 .parent_view
                 .as_ref()
-                .map(|v| std::ptr::from_ref(v).cast_mut().cast())
-                .unwrap_or(std::ptr::null_mut()),
+                .map(|v| core::ptr::from_ref(v).cast_mut().cast())
+                .unwrap_or(core::ptr::null_mut()),
             #[cfg(target_os = "macos")]
             view: self
                 .view
                 .as_ref()
-                .map(|v| std::ptr::from_ref(v).cast_mut().cast())
-                .unwrap_or(std::ptr::null_mut()),
+                .map(|v| core::ptr::from_ref(v).cast_mut().cast())
+                .unwrap_or(core::ptr::null_mut()),
             runtime_style: self.runtime_style,
             #[cfg(windows)]
             menu: self.menu.0.cast(),
@@ -88,9 +87,12 @@ wrapper!(
 );
 
 impl Window {
-    pub fn new(delegate: impl WindowDelegate) -> Self {
+    pub fn create(delegate: impl WindowDelegate) -> crate::Result<Self> {
         let window = unsafe { cef_window_create_top_level(WindowDelegate::into_raw(delegate)) };
-        Window(unsafe { RefGuard::from_raw(window) })
+        if window.is_null() {
+            return Err(crate::Error::NullPtr);
+        }
+        Ok(Window(unsafe { RefGuard::from_raw(window) }))
     }
 
     pub fn get_panel(&self) -> Panel {

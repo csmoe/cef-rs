@@ -25,10 +25,13 @@ pub trait TextFieldDelegate: ViewDelegate {
 }
 
 impl TextField {
-    pub fn create(delegate: impl TextFieldDelegate) -> Self {
+    pub fn create(delegate: impl TextFieldDelegate) -> crate::Result<Self> {
         unsafe {
             let view = cef_sys::cef_textfield_create(<_ as TextFieldDelegate>::into_raw(delegate));
-            Self(RefGuard::from_raw(view))
+            if view.is_null() {
+                return Err(crate::Error::NullPtr);
+            }
+            Ok(Self(RefGuard::from_raw(view)))
         }
     }
 }
