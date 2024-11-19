@@ -6,4 +6,4 @@ crate::wrapper! {
     pub struct CommandHandler(cef_command_handler_t);
 }
 
-pub trait CommandCallbacks {}
+pub trait CommandCallback {}

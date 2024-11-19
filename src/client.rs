@@ -103,30 +103,13 @@ pub trait Client: Sized {
     }
 }
 
-pub trait RenderCallback {}
-pub trait RequestCallback {}
-pub trait LifeSpanCallback {}
-pub trait KeyBoardCallback {}
-pub trait JsDiagCallback {}
-pub trait PermissionCallback {}
-pub trait FrameCallback {}
-pub trait AudioCallback {}
-pub trait CommandCallback {}
-pub trait ContextMenuCallback {}
-pub trait DialogCallback {}
-pub trait DisplayCallback {}
-pub trait DownloadCallback {}
-pub trait DragCallback {}
-pub trait FindCallback {}
-pub trait FocusCallback {}
-
 #[derive(Default)]
 pub struct ClientBuilder<
     Render: RenderCallback,
     Request: RequestCallback,
-    LifeSpan: LifeSpanCallback,
-    KeyBoard: KeyBoardCallback,
-    JsDiag: JsDiagCallback,
+    LifeSpan: BrowserLifeSpanCallback,
+    KeyBoard: KeyboardCallback,
+    JsDiag: JsDialogCallback,
     Permission: PermissionCallback,
     Frame: FrameCallback,
     Audio: AudioCallback,
@@ -160,9 +143,9 @@ pub struct ClientBuilder<
 impl<
         Render: RenderCallback,
         Request: RequestCallback,
-        LifeSpan: LifeSpanCallback,
-        KeyBoard: KeyBoardCallback,
-        JsDiag: JsDiagCallback,
+        LifeSpan: BrowserLifeSpanCallback,
+        KeyBoard: KeyboardCallback,
+        JsDiag: JsDialogCallback,
         Permission: PermissionCallback,
         Frame: FrameCallback,
         Audio: AudioCallback,
