@@ -1,15 +1,12 @@
-use std::{ffi::c_int, ptr::null_mut};
-
-use cef_sys::{
-    cef_browser_host_create_browser_sync, cef_browser_settings_t, cef_browser_t,
-    cef_browser_view_delegate_t, cef_chrome_toolbar_type_t, cef_client_t, cef_gesture_command_t,
-    cef_runtime_style_t,
-};
-
 use crate::{
     client::Client, error::Result, rc::RefGuard, string::CefString, view::WindowInfo, BrowserView,
     State,
 };
+use cef_sys::{
+    cef_browser_host_create_browser_sync, cef_browser_settings_t, cef_browser_t,
+    cef_chrome_toolbar_type_t, cef_client_t, cef_gesture_command_t, cef_runtime_style_t,
+};
+use std::{ffi::c_int, ptr::null_mut};
 
 pub mod frame;
 
@@ -156,6 +153,14 @@ pub trait BrowserViewDelegate: Sized {
 
     fn on_browser_destroyed(&self, _browser_view: BrowserView, _browser: Browser) {}
 
+    fn on_gesture_command(
+        &self,
+        _browser_view: BrowserView,
+        _gesture_command: cef_gesture_command_t,
+    ) -> bool {
+        todo!()
+    }
+
     fn get_delegate_for_popup_browser_view<T: BrowserViewDelegate>(
         &self,
         _browser_view: BrowserView,
@@ -179,14 +184,6 @@ pub trait BrowserViewDelegate: Sized {
     }
 
     fn use_frameless_window_for_picture_in_picture_view(&self, _browser_view: BrowserView) -> bool {
-        todo!()
-    }
-
-    fn on_gesture_command(
-        &self,
-        _browser_view: BrowserView,
-        _gesture_command: cef_gesture_command_t,
-    ) -> bool {
         todo!()
     }
 

@@ -9,3 +9,4 @@ cargo-sources.json
 /sys/cef
 .vscode
 /node_modules
+run.sh
