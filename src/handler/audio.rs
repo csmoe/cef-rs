@@ -1,16 +1,48 @@
 use cef_sys::cef_audio_handler_t;
+use cef_sys::*;
+
+use crate::string::CefString;
+use crate::Browser;
 
 crate::wrapper! {
-    #[doc = "See [cef_audio_handler_t] for more docs."]
+    /// See [cef_audio_handler_t] for more documentation.
     #[derive(Debug,Clone)]
     pub struct AudioHandler(cef_audio_handler_t);
 }
 
+//TODO
 pub trait AudioCallback {
-    //TODO
-    //fn get_audio_parameters( browser: *mut _cef_browser_t, params: *mut cef_audio_parameters_t,) -> ::std::os::raw::c_int;
-    //fn on_audio_stream_started( browser: *mut _cef_browser_t, params: *const cef_audio_parameters_t, channels: ::std::os::raw::c_int,);
-    //fn on_audio_stream_packet( self_: *mut _cef_audio_handler_t, browser: *mut _cef_browser_t, data: *mut *const f32, frames: ::std::os::raw::c_int, pts: i64,);
-    //fn on_audio_stream_stopped(self_: *mut _cef_audio_handler_t, browser: *mut _cef_browser_t);
-    //fn on_audio_stream_error( self_: *mut _cef_audio_handler_t, browser: *mut _cef_browser_t, message: *const cef_string_t,);
+    /// See [cef_audio_handler_t::get_audio_parameters]
+    fn get_audio_parameters(
+        &self,
+        _browser: Browser,
+        _params: *mut cef_audio_parameters_t,
+    ) -> bool {
+        todo!()
+    }
+
+    /// See [cef_audio_handler_t::on_audio_stream_started]
+    fn on_audio_stream_started(
+        &self,
+        _browser: *mut _cef_browser_t,
+        _params: *const cef_audio_parameters_t,
+        _channels: ::std::os::raw::c_int,
+    ) {
+    }
+
+    /// See [cef_audio_handler_t::on_audio_stream_packet]
+    fn on_audio_stream_packet(
+        &self,
+        _browser: Browser,
+        _data: *mut *const f32,
+        _frames: ::std::os::raw::c_int,
+        _pts: i64,
+    ) {
+    }
+
+    /// See [cef_audio_handler_t::on_audio_stream_stopped]
+    fn on_audio_stream_stopped(&self, _browser: Browser) {}
+
+    /// See [cef_audio_handler_t::on_audio_stream_error]
+    fn on_audio_stream_error(&self, _browser: Browser, _message: CefString) {}
 }

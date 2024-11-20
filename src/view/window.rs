@@ -147,77 +147,100 @@ impl Window {
 
 /// See [cef_window_delegate_t] for more documentation.
 pub trait WindowDelegate: PanelDelegate {
+    /// See [cef_window_delegate_t::on_window_created]
     fn on_window_created(&self, _window: Window) {}
+    /// See [cef_window_delegate_t::on_window_closing]
     fn on_window_closing(&self, _window: Window) {}
+    /// See [cef_window_delegate_t::on_window_destroyed]
     fn on_window_destroyed(&self, _window: Window) {}
 
+    /// See [cef_window_delegate_t::on_window_activation_changed]
     fn on_window_activation_changed(&self, _window: Window, _activated: bool) {}
 
+    /// See [cef_window_delegate_t::on_window_bounds_changed]
     fn on_window_bounds_changed(&self, _window: Window, _new_bounds: Rect) {}
 
+    /// See [cef_window_delegate_t::on_window_fullscreen_transition]
     fn on_window_fullscreen_transition(&self, _window: Window, _fullscreen: bool) {}
 
+    /// See [cef_window_delegate_t::get_parent_window]
     fn get_parent_window(&self, _window: Window, _is_menu: bool, _can_active_menu: bool) {}
 
+    /// See [cef_window_delegate_t::is_window_modal_dialog]
     fn is_window_modal_dialog(&self, _window: Window) -> bool {
         false
     }
 
+    /// See [cef_window_delegate_t::get_initial_bounds]
     fn get_initial_bounds(&self, _window: Window) -> Rect {
         todo!()
     }
 
+    /// See [cef_window_delegate_t::get_initial_show_state]
     fn get_initial_show_state(&self, _window: Window) -> cef_show_state_t {
         todo!()
     }
 
+    /// See [cef_window_delegate_t::is_frameless]
     fn is_frameless(&self, _window: Window) -> bool {
         todo!()
     }
 
+    /// See [cef_window_delegate_t::with_standard_window_buttons]
     fn with_standard_window_buttons(&self, _window: Window) -> bool {
         todo!()
     }
 
+    /// See [cef_window_delegate_t::get_titlebar_height]
     fn get_titlebar_height(&self, _window: Window) -> i32 {
         todo!()
     }
 
+    /// See [cef_window_delegate_t::accepts_first_mouse]
     fn accepts_first_mouse(&self, _window: Window) -> State {
         todo!()
     }
 
+    /// See [cef_window_delegate_t::can_resize]
     fn can_resize(&self, _window: Window) -> bool {
         true
     }
 
+    /// See [cef_window_delegate_t::can_minimize]
     fn can_minimize(&self, _window: Window) -> bool {
         true
     }
 
+    /// see [cef_window_delegate_t::can_maximize]
     fn can_maximize(&self, _window: Window) -> bool {
         true
     }
 
+    /// See [cef_window_delegate_t::can_close]
     fn can_close(&mut self, _window: Window) -> bool {
         true
     }
 
+    /// See [cef_window_delegate_t::on_accelerator]
     fn on_accelerator(&self, _window: Window, _command_id: i32) -> bool {
         todo!()
     }
 
+    /// See [cef_window_delegate_t::on_key_event]
     fn on_key_event(&self, _window: Window, _event: cef_key_event_t) -> bool {
         false
     }
 
-    fn on_theme_color_changed(&self, _window: Window, _chrome_theme: i32) {}
+    /// See [cef_window_delegate_t::on_theme_colors_changed]
+    fn on_theme_colors_changed(&self, _window: Window, _chrome_theme: i32) {}
 
+    /// See [cef_window_delegate_t::get_window_runtime_style]
     fn get_window_runtime_style(&self) -> cef_runtime_style_t {
         todo!()
     }
 
     #[cfg(target_os = "linux")]
+    /// See [cef_window_delegate_t::get_linux_window_properties]
     fn get_linux_window_properties(
         &self,
         _window: Window,

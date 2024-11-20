@@ -1,6 +1,9 @@
 use proc_macro::TokenStream;
 use quote::quote;
-use syn::{parse::Parse, parse::ParseStream, parse_macro_input, ItemFn, ReturnType};
+use syn::{
+    parse::{Parse, ParseStream},
+    parse_macro_input, FnArg, ItemFn, Pat, PatType, ReturnType,
+};
 
 struct MultipleFunctions {
     functions: Vec<ItemFn>,
@@ -34,11 +37,30 @@ pub fn wrapper_methods(input: TokenStream) -> TokenStream {
         let vis = &func.vis;
         let mut sig = func.sig.clone();
         let wrapped_output = wrap_return_type(&sig.output);
+        let name = &sig.ident;
+
+        let args = sig
+            .inputs
+            .iter()
+            .filter_map(|arg| {
+                if let syn::FnArg::Typed(PatType { pat, .. }) = arg {
+                    if let Pat::Ident(pat_ident) = &**pat {
+                        Some(quote! { #pat_ident })
+                    } else {
+                        None
+                    }
+                } else {
+                    None
+                }
+            })
+            .collect::<Vec<_>>();
         sig.output = syn::parse2(wrapped_output).unwrap();
 
         quote! {
             #vis #sig {
-                None
+                unsafe {
+                    self.0.#name.map(|f|f(self.0.get_raw(), #(#args)*))
+                }
             }
         }
     });
