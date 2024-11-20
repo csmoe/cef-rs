@@ -38,11 +38,6 @@ mod alias {
 }
 pub use alias::*;
 
-pub trait IntoRaw: Rc {
-    type RawDelegate;
-    unsafe fn into_raw(&self) -> *mut Self::RawDelegate;
-}
-
 macro_rules! wrapper {
     (
         $(#[$attr:meta])*

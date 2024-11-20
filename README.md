@@ -1,6 +1,11 @@
-# cef-rs
 
-Use CEF in Rust.
+<div align="center">
+  <picture>
+    <img src="cef-rs.png" alt="cef-rs logo" width="20%"/>
+  </picture>
+
+  <p>cef-rs - Emebbed CEF into Rust Application</p>
+</div>
 
 ## Supported Targets
 

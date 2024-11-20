@@ -2,7 +2,7 @@ use proc_macro::TokenStream;
 use quote::quote;
 use syn::{
     parse::{Parse, ParseStream},
-    parse_macro_input, FnArg, ItemFn, Pat, PatType, ReturnType,
+    parse_macro_input, ItemFn, Pat, PatType, ReturnType,
 };
 
 struct MultipleFunctions {
