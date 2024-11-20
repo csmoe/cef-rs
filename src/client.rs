@@ -1,12 +1,5 @@
 use crate::handler::*;
-use cef_sys::{
-    cef_audio_handler_t, cef_client_t, cef_command_handler_t, cef_context_menu_handler_t,
-    cef_dialog_handler_t, cef_display_handler_t, cef_download_handler_t, cef_drag_handler_t,
-    cef_find_handler_t, cef_focus_handler_t, cef_frame_handler_t, cef_frame_t,
-    cef_jsdialog_handler_t, cef_keyboard_handler_t, cef_life_span_handler_t, cef_load_handler_t,
-    cef_permission_handler_t, cef_print_handler_t, cef_process_id_t, cef_process_message_t,
-    cef_render_handler_t, cef_request_handler_t,
-};
+use cef_sys::{cef_client_t, cef_frame_t, cef_process_id_t, cef_process_message_t};
 
 use crate::{rc::RcImpl, Browser};
 
@@ -14,78 +7,97 @@ use crate::{rc::RcImpl, Browser};
 ///
 /// See [cef_client_t] for more documentation.
 pub trait Client: Sized {
+    /// See [cef_client_t::get_audio_handler]
     fn get_audio_handler(&self) -> Option<AudioHandler> {
         None
     }
 
+    /// See [cef_client_t::get_render_handler]
     fn get_command_handler(&self) -> Option<CommandHandler> {
         None
     }
 
+    /// See [cef_client_t::get_request_handler]
     fn get_context_menu_handler(&self) -> Option<ContextMenuHandler> {
         None
     }
 
+    /// See [cef_client_t::get_request_handler]
     fn get_dialog_handler(&self) -> Option<DialogHandler> {
         None
     }
 
+    /// See [cef_client_t::get_display_handler]
     fn get_display_handler(&self) -> Option<DisplayHandler> {
         None
     }
 
+    /// See [cef_client_t::get_download_handler]
     fn get_download_handler(&self) -> Option<DownloadHandler> {
         None
     }
 
+    /// See [cef_client_t::get_drag_handler]
     fn get_drag_handler(&self) -> Option<DragHandler> {
         None
     }
 
+    /// See [cef_client_t::get_find_handler]
     fn get_find_handler(&self) -> Option<FindHandler> {
         None
     }
 
+    /// See [cef_client_t::get_focus_handler]
     fn get_focus_handler(&self) -> Option<FocusHandler> {
         None
     }
 
+    /// See [cef_client_t::get_frame_handler]
     fn get_frame_handler(&self) -> Option<FrameHandler> {
         None
     }
 
+    /// See [cef_client_t::get_permission_handler]
     fn get_permission_handler(&self) -> Option<PermissionHandler> {
         None
     }
 
+    /// See [cef_client_t::get_jsdialog_handler]
     fn get_jsdialog_handler(&self) -> Option<JsDialogHandler> {
         None
     }
 
+    /// See [cef_client_t::get_keyboard_handler]
     fn get_keyboard_handler(&self) -> Option<KeyboardHandler> {
         None
     }
 
+    /// See [cef_client_t::get_life_span_handler]
     fn get_life_span_handler(&self) -> Option<BrowerLifeSpanHandler> {
         None
     }
 
+    /// See [cef_client_t::get_load_handler]
     fn get_load_handler(&self) -> Option<LoadHandler> {
         None
     }
 
+    /// See [cef_client_t::get_print_handler]
     fn get_print_handler(&self) -> Option<PrintHandler> {
         None
     }
 
+    /// See [cef_client_t::get_request_handler]
     fn get_request_handler(&self) -> Option<RequestHandler> {
         None
     }
 
+    /// See [cef_client_t::get_render_handler]
     fn get_render_handler(&self) -> Option<RenderHandler> {
         None
     }
 
+    /// See [cef_client_t::on_process_message_received]
     fn on_process_message_received(
         &self,
         _browser: Browser,

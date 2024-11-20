@@ -5,7 +5,7 @@ use cef_sys::cef_textfield_delegate_t;
 use cef_sys::cef_textfield_t;
 
 wrapper! {
-    #[doc = "See [cef_scroll_view_t] for more documentation."]
+    /// See [cef_textfield_t] for more documentation.
     #[derive(Debug, Clone)]
     pub struct TextField(cef_textfield_t);
 }

@@ -49,12 +49,14 @@ features = [ "dox" ]
 [workspace]
 members = [
  "sys",
+ "cef-wrapper-macro",
 ]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
 cef-sys = { package = "libcef-sys", version = "130.1.16", path = "sys" }
+cef-wrapper-macro = { path = "cef-wrapper-macro" }
 widestring = "1.0"
 anyhow = "1"
 thiserror = "1"

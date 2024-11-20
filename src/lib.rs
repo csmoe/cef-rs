@@ -38,49 +38,9 @@ mod alias {
 }
 pub use alias::*;
 
-pub trait IntoRawCallback: Rc {
+pub trait IntoRaw: Rc {
     type RawDelegate;
     unsafe fn into_raw(&self) -> *mut Self::RawDelegate;
-}
-
-#[macro_export]
-macro_rules! gen_fn {
-    ($visibility:vis fn $method:ident(&self $(,$arg:ident: $type:ty)*)) => {
-        $visibility fn $method(&self $(,$arg: $type)*) {
-            unsafe {
-                let _result = self.0.$method.map(|f|
-                    f(self.0.get_raw() $(,$arg.into_raw())*)
-                );
-            }
-        }
-    };
-    ($visibility:vis fn $method:ident(&self $(,$arg:ident: $type:ty)*) -> $ret:ty) => {
-        $visibility fn $method(&self $(,$arg: $type)*) -> $ret {
-            unsafe {
-                self.0.$method.map(|f|
-                    f(self.0.get_raw() $(,$arg.into_raw())*)
-                )
-            }
-        }
-    };
-    ($visibility:vis fn $method:ident(&mut self $(,$arg:ident: $type:ty)*)) => {
-        $visibility fn $method(&mut self $(,$arg: $type)*) {
-            unsafe {
-                let _result = self.0.$method.map(|f|
-                    f(self.0.get_raw() $(,$arg.into_raw())*)
-                );
-            }
-        }
-    };
-    ($visibility:vis fn $method:ident(&mut self $(,$arg:ident: $type:ty)*) -> $ret:ty) => {
-        $visibility fn $method(&mut self $(,$arg: $type)*) -> $ret {
-            unsafe {
-                self.0.$method.map(|f|
-                    f(self.0.get_raw() $(,$arg.into_raw())*)
-                )
-            }
-        }
-    };
 }
 
 macro_rules! wrapper {
@@ -88,7 +48,7 @@ macro_rules! wrapper {
         $(#[$attr:meta])*
         pub struct $name:ident($sys:path);
         $(
-            $visibility:vis fn $method:ident($(&$($mut:tt)?)? self $(, $arg:ident : $type:ty),* ) $(-> $ret:ty)?;
+            $visibility:vis fn $method:ident($(&$($mut:tt)?)? self $(, $arg:ident : $type:ty)* ) $(-> $ret:ty)?;
         )*
     ) => {
         $(#[$attr])*
@@ -116,12 +76,6 @@ macro_rules! wrapper {
             pub unsafe fn into_raw(self) -> *mut $sys {
                 self.0.into_raw()
             }
-
-            $(
-                $crate::gen_fn!(
-                    $visibility fn $method($(&$($mut)?)? self $(, $arg: $type)* ) $(-> $ret)?
-                );
-            )*
         }
     };
 }

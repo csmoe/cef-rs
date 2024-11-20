@@ -49,7 +49,7 @@ convert_view! {
 }
 
 wrapper!(
-    #[doc = "See [cef_view_t] for more documentation."]
+    /// See [cef_view_t] for more documentation.
     #[derive(Debug, Clone)]
     pub struct View(cef_view_t);
 );

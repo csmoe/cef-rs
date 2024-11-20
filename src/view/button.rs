@@ -1,17 +1,17 @@
-use crate::{add_view_delegate_methods, rc::RefGuard, string::CefString};
-
 use super::ViewDelegate;
+use crate::{add_view_delegate_methods, rc::RefGuard, string::CefString};
+use cef_sys::{cef_button_t, cef_label_button_t, cef_menu_button_t};
 
 crate::wrapper!(
-    #[doc = "See `[cef_sys::cef_button_t]` for more documentation."]
+    /// See [cef_button_t] for more documentation.
     #[derive(Debug, Clone)]
-    pub struct Button(cef_sys::cef_button_t);
+    pub struct Button(cef_button_t);
 );
 
 crate::wrapper!(
-    #[doc = "See `[cef_sys::cef_label_button_t]` for more documentation."]
+    /// See [cef_label_button_t] for more documentation.
     #[derive(Debug, Clone)]
-    pub struct LabelButton(cef_sys::cef_label_button_t);
+    pub struct LabelButton(cef_label_button_t);
 );
 
 pub trait ButtonDelegate: ViewDelegate {
@@ -40,9 +40,9 @@ impl LabelButton {
 }
 
 crate::wrapper!(
-    #[doc = "See `[cef_sys::cef_menu_button_t]` for more documentation."]
+    /// See [cef_menu_button_t] for more documentation.
     #[derive(Debug, Clone)]
-    pub struct MenuButton(cef_sys::cef_menu_button_t);
+    pub struct MenuButton(cef_menu_button_t);
 );
 
 pub trait MenuButtonDelegate: ButtonDelegate {

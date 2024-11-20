@@ -7,8 +7,9 @@ use crate::{
 };
 use cef_sys::{
     cef_key_event_t, cef_runtime_style_t, cef_show_state_t, cef_window_create_top_level,
-    cef_window_delegate_t, cef_window_info_t, cef_window_t,
+    cef_window_delegate_t, cef_window_info_t, cef_window_t, *,
 };
+use cef_wrapper_macro::wrapper_methods;
 
 /// See [cef_window_info_t] for more documentation.
 #[derive(Debug, Default)]
@@ -78,13 +79,57 @@ impl WindowInfo {
     }
 }
 
-wrapper!(
-    #[doc = "See [cef_window_t] for more documentation."]
+wrapper! {
+    /// See [cef_window_t] for more documentation.
     #[derive(Debug, Clone)]
     pub struct Window(cef_window_t);
-    pub fn close(&mut self);
-    pub fn show(&mut self);
-);
+}
+
+impl Window {
+    wrapper_methods! {
+        pub fn close(&mut self) {}
+        pub fn show(&mut self) {}
+        pub fn show_as_browser_modal_dialog(&mut self, browser_view: crate::BrowserView) {}
+        pub fn hide(&mut self) {}
+        pub fn center_window(&mut self, size: &cef_size_t) {}
+        pub fn is_closed(&self) {}
+        pub fn activate(&mut self) {}
+        pub fn deactivate(&mut self) {}
+        pub fn is_active(&self) -> bool {}
+        pub fn bring_to_top(&mut self) {}
+        pub fn set_always_on_top(&mut self, on_top: bool) {}
+        pub fn is_always_on_top(&self) -> bool {}
+        pub fn maximize(&mut self) {}
+        pub fn minimize(&mut self) {}
+        pub fn restore(&mut self) {}
+        pub fn set_fullscreen(&mut self, fullscreen: bool) {}
+        pub fn is_maximized(&self) -> bool {}
+        pub fn is_minimized(&self) -> bool {}
+        pub fn is_fullscreen(&self) -> bool {}
+        pub fn set_title(&mut self, title: &str) {}
+        pub fn get_title(&self) -> CefString {}
+        pub fn set_window_icon(&mut self, image: cef_image_t) {}
+        pub fn get_window_icon(&self) -> cef_image_t {}
+        pub fn set_window_app_icon(&mut self, image: cef_sys::cef_image_t) {}
+        pub fn get_window_app_icon(&self) -> cef_sys::cef_image_t {}
+        pub fn add_overlay_view(&mut self, view: crate::View, docking_mode: cef_docking_mode_t, can_activate: bool) -> cef_sys::cef_overlay_controller_t{}
+        pub fn show_menu(&mut self, menu_model: cef_menu_model_t, screen_point: &cef_point_t, anchor_position: cef_menu_anchor_position_t) {}
+        pub fn cancel_menu(&mut self){}
+        pub fn get_display(&self) -> cef_sys::cef_display_t {}
+        pub fn get_client_area_bounds_in_screen(&self) -> cef_rect_t {}
+        pub fn set_draggable_regions(&mut self, regions: &[cef_draggable_region_t]) {}
+        pub fn get_window_handle(&self) -> *mut ::std::os::raw::c_void {}
+        pub fn send_key_press(&mut self, key_code: i32, event_flags: u32) {}
+        pub fn send_mouse_move(&mut self, screen_x: i32, screen_y: i32) {}
+        pub fn send_mouse_events(&mut self, button: cef_mouse_button_type_t, mouse_down: bool, mouse_up: bool) {}
+        pub fn set_accelerator(&mut self, command_id: i32, key_code: i32, shift_pressed: bool, ctrl_pressed: bool, alt_pressed: bool, high_priority: bool) {}
+        pub fn remove_accelerator(&mut self, command_id: i32) {}
+        pub fn remove_all_accelerators(&mut self) {}
+        pub fn set_theme_color(&mut self, color_id: i32, color: cef_color_t) {}
+        pub fn theme_changed(&mut self) {}
+        pub fn get_runtime_style(&self) -> cef_runtime_style_t {}
+    }
+}
 
 impl Window {
     pub fn create(delegate: impl WindowDelegate) -> crate::Result<Self> {

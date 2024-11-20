@@ -2,7 +2,7 @@ use crate::{rc::RefGuard, wrapper, ViewDelegate};
 use cef_sys::cef_scroll_view_t;
 
 wrapper! {
-    #[doc = "See [cef_scroll_view_t] for more documentation."]
+    /// See [cef_scroll_view_t] for more documentation.
     #[derive(Debug, Clone)]
     pub struct ScrollView(cef_scroll_view_t);
 }

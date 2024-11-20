@@ -13,6 +13,7 @@ pub mod frame;
 /// See [cef_browser_settings_t] for more documentation.
 #[derive(Debug, Clone)]
 pub struct BrowserSettings {
+    /// See [cef_browser_settings_t::windowless_frame_rate]
     pub windowless_frame_rate: usize,
     pub standard_font_family: CefString,
     pub fixed_font_family: CefString,
@@ -116,13 +117,13 @@ impl BrowserSettings {
 }
 
 crate::wrapper! {
-    #[doc = "see [cef_browser_t] for more documentation."]
+    /// See [cef_browser_t] for more documentation.
     #[derive(Debug, Clone)]
     pub struct Browser(cef_browser_t);
 }
 
 impl Browser {
-    /// See [cef_browser_host_create_browser] for more documentation.
+    /// See [cef_browser_host_create_browser_sync] for more documentation.
     pub fn create<T: Client>(
         window_info: WindowInfo,
         client: Option<T>,
@@ -149,10 +150,13 @@ impl Browser {
 }
 
 pub trait BrowserViewDelegate: Sized {
+    /// See [cef_sys::cef_browser_view_delegate_t::on_browser_created]
     fn on_browser_created(&self, _browser_view: BrowserView, _browser: Browser) {}
 
+    /// See [cef_sys::cef_browser_view_delegate_t::on_browser_destroyed]
     fn on_browser_destroyed(&self, _browser_view: BrowserView, _browser: Browser) {}
 
+    /// See [cef_sys::cef_browser_view_delegate_t::on_gesture_command]
     fn on_gesture_command(
         &self,
         _browser_view: BrowserView,
@@ -161,6 +165,7 @@ pub trait BrowserViewDelegate: Sized {
         todo!()
     }
 
+    /// See [cef_sys::cef_browser_view_delegate_t::get_delegate_for_popup_browser_view]
     fn get_delegate_for_popup_browser_view<T: BrowserViewDelegate>(
         &self,
         _browser_view: BrowserView,
@@ -171,6 +176,7 @@ pub trait BrowserViewDelegate: Sized {
         None
     }
 
+    /// See [cef_sys::cef_browser_view_delegate_t::on_popup_browser_view_created]
     fn on_popup_browser_view_created(
         &self,
         _browser_view: BrowserView,
@@ -179,14 +185,17 @@ pub trait BrowserViewDelegate: Sized {
     ) {
     }
 
+    /// See [cef_sys::cef_browser_view_delegate_t::get_chrome_toolbar_type]
     fn get_chrome_toolbar_type(&self, _browser_view: BrowserView) -> cef_chrome_toolbar_type_t {
         todo!()
     }
 
-    fn use_frameless_window_for_picture_in_picture_view(&self, _browser_view: BrowserView) -> bool {
+    /// See [cef_sys::cef_browser_view_delegate_t::use_frameless_window_for_picture_in_picture]
+    fn use_frameless_window_for_picture_in_picture(&self, _browser_view: BrowserView) -> bool {
         todo!()
     }
 
+    /// See [cef_sys::cef_browser_view_delegate_t::get_browser_runtime_style]
     fn get_browser_runtime_style(&self) -> cef_runtime_style_t {
         todo!()
     }

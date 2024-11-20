@@ -9,7 +9,7 @@ use cef_sys::{cef_browser_view_create, cef_browser_view_t};
 use std::ptr::null_mut;
 
 crate::wrapper!(
-    #[doc = "See [cef_browser_view_t] for more documentation."]
+    /// See [cef_browser_view_t] for more documentation.
     #[derive(Debug, Clone)]
     pub struct BrowserView(cef_browser_view_t);
 );
