@@ -148,7 +148,7 @@ impl Window {
         fn show_menu(
             &mut self,
             menu_model: *mut cef_menu_model_t,
-            screen_point: &cef_point_t,
+            screen_point: cef_point_t,
             anchor_position: cef_menu_anchor_position_t,
         );
         /// See [cef_window_t::cancel_menu]

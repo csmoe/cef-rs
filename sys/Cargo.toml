@@ -21,6 +21,7 @@ features = [ "dox" ]
 cef_version = "130.1.16+g5a7e5ed+chromium-130.0.6723.117"
 
 [dependencies]
+cef-wrapper-macro = { path = "../cef-wrapper-macro" }
 
 [dev-dependencies]
 winit = "0.28"

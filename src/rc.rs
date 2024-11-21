@@ -45,7 +45,7 @@ use std::{
     sync::atomic::{fence, AtomicUsize, Ordering},
 };
 
-use cef_sys::cef_base_ref_counted_t;
+use cef_sys::{cef_base_ref_counted_t, FfiRc};
 
 /// Reference counted trait for types has [`cef_base_ref_counted_t`].
 pub trait Rc {
@@ -121,11 +121,11 @@ impl Rc for cef_base_ref_counted_t {
 
 /// A smart pointer for types from cef library.
 #[derive(Debug)]
-pub struct RefGuard<T: Rc> {
+pub struct RefGuard<T: Rc + FfiRc> {
     object: *mut T,
 }
 
-impl<T: Rc> RefGuard<T> {
+impl<T: Rc + FfiRc> RefGuard<T> {
     /// Create [RefGuard] from a raw C pointer.
     ///
     /// # Safety
@@ -186,15 +186,15 @@ impl<T: Rc> RefGuard<T> {
     ///
     /// This should be used when the type has type `U` as its base type. Using this method
     /// elsewhere may cause memory safety issues.
-    pub unsafe fn convert<U: Rc>(&self) -> RefGuard<U> {
+    pub unsafe fn convert<U: Rc + FfiRc>(&self) -> RefGuard<U> {
         RefGuard::from_raw_add_ref(self.get_raw() as *mut _)
     }
 }
 
-unsafe impl<T: Rc> Send for RefGuard<T> {}
-unsafe impl<T: Rc> Sync for RefGuard<T> {}
+unsafe impl<T: Rc + FfiRc + Send> Send for RefGuard<T> {}
+unsafe impl<T: Rc + FfiRc + Sync> Sync for RefGuard<T> {}
 
-impl<T: Rc> Clone for RefGuard<T> {
+impl<T: Rc + FfiRc> Clone for RefGuard<T> {
     fn clone(&self) -> RefGuard<T> {
         unsafe { self.add_ref() };
 
@@ -204,7 +204,7 @@ impl<T: Rc> Clone for RefGuard<T> {
     }
 }
 
-impl<T: Rc> Deref for RefGuard<T> {
+impl<T: Rc + FfiRc> Deref for RefGuard<T> {
     type Target = T;
 
     fn deref(&self) -> &T {
@@ -212,7 +212,7 @@ impl<T: Rc> Deref for RefGuard<T> {
     }
 }
 
-impl<T: Rc> Drop for RefGuard<T> {
+impl<T: Rc + FfiRc> Drop for RefGuard<T> {
     fn drop(&mut self) {
         unsafe { self.release() };
     }

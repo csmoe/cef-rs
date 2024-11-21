@@ -197,6 +197,8 @@ fn bindgen(target: &str, cef_path: &std::path::Path) {
         "cef_.*",
         "--bitfield-enum",
         ".*_mask_t",
+        "--with-derive-custom-struct",
+        r#".*=crate::FfiRc"#,
         // clang args
         "--",
         &format!("-I{}", cef_path.display()),
