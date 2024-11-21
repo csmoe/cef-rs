@@ -162,7 +162,7 @@ impl<T: Rc + FfiRc> RefGuard<T> {
     /// the `self` type (usually the first parameter). This means we pass the ownership of the
     /// value to the function call. Using this method elsewehre may cause incorrect reference count
     /// and memory safety issues.
-    pub unsafe fn get_raw(&self) -> *mut T {
+    pub unsafe fn get_this(&self) -> *mut T {
         self.object
     }
 
@@ -175,7 +175,7 @@ impl<T: Rc + FfiRc> RefGuard<T> {
     /// value to the function call. Using this method elsewehre may cause incorrect reference count
     /// and memory safety issues.
     pub unsafe fn into_raw(self) -> *mut T {
-        let ptr = unsafe { self.get_raw() };
+        let ptr = unsafe { self.get_this() };
         std::mem::forget(self);
         ptr
     }
@@ -187,7 +187,7 @@ impl<T: Rc + FfiRc> RefGuard<T> {
     /// This should be used when the type has type `U` as its base type. Using this method
     /// elsewhere may cause memory safety issues.
     pub unsafe fn convert<U: Rc + FfiRc>(&self) -> RefGuard<U> {
-        RefGuard::from_raw_add_ref(self.get_raw() as *mut _)
+        RefGuard::from_raw_add_ref(self.get_this() as *mut _)
     }
 }
 

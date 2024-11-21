@@ -57,6 +57,7 @@ members = [
 [dependencies]
 cef-sys = { package = "libcef-sys", version = "130.1.16", path = "sys" }
 cef-wrapper-macro = { path = "cef-wrapper-macro" }
+image = { version = "0.25" , default-features = false, features = [ "bmp", "jpeg", "png" ] }
 widestring = "1.0"
 anyhow = "1"
 thiserror = "1"

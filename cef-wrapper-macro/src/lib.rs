@@ -57,19 +57,22 @@ pub fn wrapper_methods(input: TokenStream) -> TokenStream {
 
         let args = quote! { #(#args,)* };
 
-        let mut body = quote! { self.0.#name.map(|f|f(self.0.get_raw(), #args)) };
-        if let Some(syn::Type::Path(TypePath { path, .. })) = ty {
-            if path.is_ident("bool") {
-                body = quote! { self.0.#name.map(|f| f(self.0.get_raw(), #args) == 1) };
+        let block = if let Some(block) = func.default.clone() {
+            quote! { #block }
+        } else {
+            let mut block = quote! {{ unsafe { self.0.#name.map(|f| f(self.0.get_this(), #args)) }}};
+            if let Some(syn::Type::Path(TypePath { path, .. })) = ty {
+                if path.is_ident("bool") {
+                    block = quote! {{ unsafe { self.0.#name.map(|f| f(self.0.get_this(), #args) == 1) }}};
+                }
             }
-        }
+            block
+        };
 
         let attrs = quote! { #(#attrs)* };
         quote! {
             #attrs
-            pub #sig {
-                unsafe { #body }
-            }
+            pub #sig #block
         }
     });
 

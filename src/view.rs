@@ -26,7 +26,7 @@ macro_rules! convert_view {
             impl From<$view> for Option<$crate::$target_type> {
                 fn from(value: $view) -> Self {
                     value.0.$as_field.and_then(|f| {
-                        let v = unsafe { f(value.0.get_raw()) };
+                        let v = unsafe { f(value.0.get_this()) };
                         if v.is_null() {
                             None
                         } else {

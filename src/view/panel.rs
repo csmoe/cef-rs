@@ -2,7 +2,7 @@ use cef_sys::cef_panel_create;
 use cef_sys::{cef_panel_delegate_t, cef_panel_t};
 
 use crate::rc::RefGuard;
-use crate::{add_view_delegate_methods, view::View, wrapper, ViewDelegate, Window};
+use crate::{add_view_delegate_methods, view::View, wrapper, ViewDelegate};
 
 wrapper!(
     /// See [cef_panel_t] for more documentation.
@@ -27,19 +27,8 @@ impl Panel {
 
     pub fn add_child_view(&self, view: View) {
         if let Some(f) = self.0.add_child_view {
-            unsafe { f(self.0.get_raw(), view.0.into_raw()) }
+            unsafe { f(self.0.get_this(), view.0.into_raw()) }
         }
-    }
-
-    pub fn as_window(&self) -> Option<Window> {
-        self.0.as_window.and_then(|f| {
-            let p = unsafe { f(self.0.get_raw()) };
-            if p.is_null() {
-                None
-            } else {
-                Some(unsafe { Window::from_raw(p) })
-            }
-        })
     }
 }
 

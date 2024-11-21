@@ -7,15 +7,18 @@ pub mod client;
 mod command_line;
 mod error;
 mod handler;
+mod image;
 pub mod rc;
 mod settings;
 pub mod string;
 mod view;
+
 pub use app::*;
 pub use browser::*;
 pub use command_line::*;
 pub use error::Error;
 pub use error::Result;
+pub use image::*;
 pub use settings::*;
 pub use view::*;
 
@@ -55,6 +58,24 @@ macro_rules! wrapper {
         impl $crate::rc::Rc for $name {
             fn as_base(&self) -> &cef_sys::cef_base_ref_counted_t {
                 self.0.as_base()
+            }
+        }
+
+        impl From<*mut $sys> for $name {
+            fn from(ptr: *mut $sys) -> Self {
+                unsafe { $name($crate::rc::RefGuard::from_raw(ptr)) }
+            }
+        }
+
+        impl From<$name> for *mut $sys {
+            fn from(value: $name) -> Self {
+                unsafe { value.into_raw() }
+            }
+        }
+
+        impl From<$name> for *const $sys {
+            fn from(value: $name) -> Self {
+                unsafe { value.into_raw() }
             }
         }
 

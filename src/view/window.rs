@@ -92,7 +92,7 @@ impl Window {
         /// See [cef_window_t::show]
         fn show(&mut self);
         /// See [cef_window_t::show_as_browser_modal_dialog]
-        fn show_as_browser_modal_dialog(&mut self, browser_view: *mut cef_browser_view_t);
+        fn show_as_browser_modal_dialog(&mut self, browser_view: crate::BrowserView);
         /// See [cef_window_t::hide]
         fn hide(&mut self);
         /// See [cef_window_t::center_window]
@@ -126,7 +126,14 @@ impl Window {
         /// See [cef_window_t::is_fullscreen]
         fn is_fullscreen(&self) -> bool;
         /// See [cef_window_t::set_title]
-        fn set_title(&mut self, title: *const cef_string_t);
+        fn set_title(&mut self, title: &str) {
+            let cef_string = CefString::from(title);
+            unsafe {
+                self.0
+                    .set_title
+                    .map(|f| f(self.0.get_this(), std::ptr::from_ref(&cef_string.as_raw())))
+            }
+        }
         /// See [cef_window_t::get_title]
         fn get_title(&self) -> CefString;
         /// See [cef_window_t::set_window_icon]
@@ -134,7 +141,7 @@ impl Window {
         /// See [cef_window_t::get_window_icon]
         fn get_window_icon(&self) -> *mut cef_image_t;
         /// See [cef_window_t::set_window_app_icon]
-        fn set_window_app_icon(&mut self, image: *mut cef_sys::cef_image_t);
+        fn set_window_app_icon(&mut self, image: *mut cef_image_t);
         /// See [cef_window_t::get_window_app_icon]
         fn get_window_app_icon(&self) -> cef_sys::cef_image_t;
         /// See [cef_window_t::add_overlay_view]
