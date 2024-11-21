@@ -86,49 +86,76 @@ wrapper! {
 }
 
 impl Window {
-    wrapper_methods! {
-        pub fn close(&mut self) {}
-        pub fn show(&mut self) {}
-        pub fn show_as_browser_modal_dialog(&mut self, browser_view: crate::BrowserView) {}
-        pub fn hide(&mut self) {}
-        pub fn center_window(&mut self, size: &cef_size_t) {}
-        pub fn is_closed(&self) {}
-        pub fn activate(&mut self) {}
-        pub fn deactivate(&mut self) {}
-        pub fn is_active(&self) -> bool {}
-        pub fn bring_to_top(&mut self) {}
-        pub fn set_always_on_top(&mut self, on_top: bool) {}
-        pub fn is_always_on_top(&self) -> bool {}
-        pub fn maximize(&mut self) {}
-        pub fn minimize(&mut self) {}
-        pub fn restore(&mut self) {}
-        pub fn set_fullscreen(&mut self, fullscreen: bool) {}
-        pub fn is_maximized(&self) -> bool {}
-        pub fn is_minimized(&self) -> bool {}
-        pub fn is_fullscreen(&self) -> bool {}
-        pub fn set_title(&mut self, title: &str) {}
-        pub fn get_title(&self) -> CefString {}
-        pub fn set_window_icon(&mut self, image: cef_image_t) {}
-        pub fn get_window_icon(&self) -> cef_image_t {}
-        pub fn set_window_app_icon(&mut self, image: cef_sys::cef_image_t) {}
-        pub fn get_window_app_icon(&self) -> cef_sys::cef_image_t {}
-        pub fn add_overlay_view(&mut self, view: crate::View, docking_mode: cef_docking_mode_t, can_activate: bool) -> cef_sys::cef_overlay_controller_t{}
-        pub fn show_menu(&mut self, menu_model: cef_menu_model_t, screen_point: &cef_point_t, anchor_position: cef_menu_anchor_position_t) {}
-        pub fn cancel_menu(&mut self){}
-        pub fn get_display(&self) -> cef_sys::cef_display_t {}
-        pub fn get_client_area_bounds_in_screen(&self) -> cef_rect_t {}
-        pub fn set_draggable_regions(&mut self, regions: &[cef_draggable_region_t]) {}
-        pub fn get_window_handle(&self) -> *mut ::std::os::raw::c_void {}
-        pub fn send_key_press(&mut self, key_code: i32, event_flags: u32) {}
-        pub fn send_mouse_move(&mut self, screen_x: i32, screen_y: i32) {}
-        pub fn send_mouse_events(&mut self, button: cef_mouse_button_type_t, mouse_down: bool, mouse_up: bool) {}
-        pub fn set_accelerator(&mut self, command_id: i32, key_code: i32, shift_pressed: bool, ctrl_pressed: bool, alt_pressed: bool, high_priority: bool) {}
-        pub fn remove_accelerator(&mut self, command_id: i32) {}
-        pub fn remove_all_accelerators(&mut self) {}
-        pub fn set_theme_color(&mut self, color_id: i32, color: cef_color_t) {}
-        pub fn theme_changed(&mut self) {}
-        pub fn get_runtime_style(&self) -> cef_runtime_style_t {}
-    }
+    wrapper_methods!(
+        fn close(&mut self);
+        fn show(&mut self);
+        fn show_as_browser_modal_dialog(&mut self, browser_view: *mut cef_browser_view_t);
+        fn hide(&mut self);
+        fn center_window(&mut self, size: &cef_size_t);
+        fn is_closed(&self);
+        fn activate(&mut self);
+        fn deactivate(&mut self);
+        fn is_active(&self) -> bool;
+        fn bring_to_top(&mut self);
+        fn set_always_on_top(&mut self, on_top: i32);
+        fn is_always_on_top(&self) -> bool;
+        fn maximize(&mut self);
+        fn minimize(&mut self);
+        fn restore(&mut self);
+        fn set_fullscreen(&mut self, fullscreen: i32);
+        fn is_maximized(&self) -> bool;
+        fn is_minimized(&self) -> bool;
+        fn is_fullscreen(&self) -> bool;
+        fn set_title(&mut self, title: *const cef_string_t);
+        fn get_title(&self) -> CefString;
+        fn set_window_icon(&mut self, image: *mut cef_image_t);
+        fn get_window_icon(&self) -> *mut cef_image_t;
+        fn set_window_app_icon(&mut self, image: *mut cef_sys::cef_image_t);
+        fn get_window_app_icon(&self) -> cef_sys::cef_image_t;
+        fn add_overlay_view(
+            &mut self,
+            view: *mut cef_view_t,
+            docking_mode: cef_docking_mode_t,
+            can_activate: i32,
+        ) -> cef_sys::cef_overlay_controller_t;
+        fn show_menu(
+            &mut self,
+            menu_model: *mut cef_menu_model_t,
+            screen_point: &cef_point_t,
+            anchor_position: cef_menu_anchor_position_t,
+        );
+        fn cancel_menu(&mut self);
+        fn get_display(&self) -> cef_sys::cef_display_t;
+        fn get_client_area_bounds_in_screen(&self) -> cef_rect_t;
+        fn set_draggable_regions(
+            &mut self,
+            regions_count: usize,
+            regions: *const cef_draggable_region_t,
+        );
+        fn get_window_handle(&self) -> *mut ::std::os::raw::c_void;
+        fn send_key_press(&mut self, key_code: i32, event_flags: u32);
+        fn send_mouse_move(&mut self, screen_x: i32, screen_y: i32);
+        fn send_mouse_events(
+            &mut self,
+            button: cef_mouse_button_type_t,
+            mouse_down: bool,
+            mouse_up: bool,
+        );
+        fn set_accelerator(
+            &mut self,
+            command_id: i32,
+            key_code: i32,
+            shift_pressed: bool,
+            ctrl_pressed: bool,
+            alt_pressed: bool,
+            high_priority: bool,
+        );
+        fn remove_accelerator(&mut self, command_id: i32);
+        fn remove_all_accelerators(&mut self);
+        fn set_theme_color(&mut self, color_id: i32, color: cef_color_t);
+        fn theme_changed(&mut self);
+        fn get_runtime_style(&self) -> cef_runtime_style_t;
+    );
 }
 
 impl Window {
