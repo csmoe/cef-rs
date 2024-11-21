@@ -1,7 +1,5 @@
 #![doc = include_str!("../README.md")]
 
-pub use cef_sys as sys;
-
 mod app;
 pub mod args;
 mod browser;
@@ -18,7 +16,6 @@ pub use browser::*;
 pub use command_line::*;
 pub use error::Error;
 pub use error::Result;
-use rc::Rc;
 pub use settings::*;
 pub use view::*;
 

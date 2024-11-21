@@ -87,60 +87,96 @@ wrapper! {
 
 impl Window {
     wrapper_methods!(
+        /// See [cef_window_t::close]
         fn close(&mut self);
+        /// See [cef_window_t::show]
         fn show(&mut self);
+        /// See [cef_window_t::show_as_browser_modal_dialog]
         fn show_as_browser_modal_dialog(&mut self, browser_view: *mut cef_browser_view_t);
+        /// See [cef_window_t::hide]
         fn hide(&mut self);
-        fn center_window(&mut self, size: &cef_size_t);
-        fn is_closed(&self);
+        /// See [cef_window_t::center_window]
+        fn center_window(&mut self, size: *const cef_size_t);
+        /// See [cef_window_t::is_closed]
+        fn is_closed(&self) -> bool;
+        /// See [cef_window_t::activate]
         fn activate(&mut self);
+        /// See [cef_window_t::deactivate]
         fn deactivate(&mut self);
+        /// See [cef_window_t::is_active]
         fn is_active(&self) -> bool;
+        /// See [cef_window_t::bring_to_top]
         fn bring_to_top(&mut self);
+        /// See [cef_window_t::set_always_on_top]
         fn set_always_on_top(&mut self, on_top: i32);
+        /// See [cef_window_t::is_always_on_top]
         fn is_always_on_top(&self) -> bool;
+        /// See [cef_window_t::maximize]
         fn maximize(&mut self);
+        /// See [cef_window_t::minimize]
         fn minimize(&mut self);
+        /// See [cef_window_t::restore]
         fn restore(&mut self);
+        /// See [cef_window_t::set_fullscreen]
         fn set_fullscreen(&mut self, fullscreen: i32);
+        /// See [cef_window_t::is_maximized]
         fn is_maximized(&self) -> bool;
+        /// See [cef_window_t::is_minimized]
         fn is_minimized(&self) -> bool;
+        /// See [cef_window_t::is_fullscreen]
         fn is_fullscreen(&self) -> bool;
+        /// See [cef_window_t::set_title]
         fn set_title(&mut self, title: *const cef_string_t);
+        /// See [cef_window_t::get_title]
         fn get_title(&self) -> CefString;
+        /// See [cef_window_t::set_window_icon]
         fn set_window_icon(&mut self, image: *mut cef_image_t);
+        /// See [cef_window_t::get_window_icon]
         fn get_window_icon(&self) -> *mut cef_image_t;
+        /// See [cef_window_t::set_window_app_icon]
         fn set_window_app_icon(&mut self, image: *mut cef_sys::cef_image_t);
+        /// See [cef_window_t::get_window_app_icon]
         fn get_window_app_icon(&self) -> cef_sys::cef_image_t;
+        /// See [cef_window_t::add_overlay_view]
         fn add_overlay_view(
             &mut self,
             view: *mut cef_view_t,
             docking_mode: cef_docking_mode_t,
             can_activate: i32,
         ) -> cef_sys::cef_overlay_controller_t;
+        /// See [cef_window_t::show_menu]
         fn show_menu(
             &mut self,
             menu_model: *mut cef_menu_model_t,
             screen_point: &cef_point_t,
             anchor_position: cef_menu_anchor_position_t,
         );
+        /// See [cef_window_t::cancel_menu]
         fn cancel_menu(&mut self);
-        fn get_display(&self) -> cef_sys::cef_display_t;
+        /// See [cef_window_t::get_display]
+        fn get_display(&self) -> *mut cef_sys::cef_display_t;
+        /// See [cef_window_t::get_client_area_bounds_in_screen]
         fn get_client_area_bounds_in_screen(&self) -> cef_rect_t;
+        /// See [cef_window_t::set_draggable_regions]
         fn set_draggable_regions(
             &mut self,
             regions_count: usize,
             regions: *const cef_draggable_region_t,
         );
+        /// See [cef_window_t::get_window_handle]
         fn get_window_handle(&self) -> *mut ::std::os::raw::c_void;
+        /// See [cef_window_t::send_key_press]
         fn send_key_press(&mut self, key_code: i32, event_flags: u32);
+        /// See [cef_window_t::send_mouse_move]
         fn send_mouse_move(&mut self, screen_x: i32, screen_y: i32);
+        /// See [cef_window_t::send_mouse_events]
         fn send_mouse_events(
             &mut self,
             button: cef_mouse_button_type_t,
             mouse_down: bool,
             mouse_up: bool,
         );
+        /// See [cef_window_t::set_accelerator]
         fn set_accelerator(
             &mut self,
             command_id: i32,
@@ -150,10 +186,15 @@ impl Window {
             alt_pressed: bool,
             high_priority: bool,
         );
+        /// See [cef_window_t::remove_accelerator]
         fn remove_accelerator(&mut self, command_id: i32);
+        /// See [cef_window_t::remove_all_accelerators]
         fn remove_all_accelerators(&mut self);
+        /// See [cef_window_t::set_theme_color]
         fn set_theme_color(&mut self, color_id: i32, color: cef_color_t);
+        /// See [cef_window_t::theme_changed]
         fn theme_changed(&mut self);
+        /// See [cef_window_t::get_runtime_style]
         fn get_runtime_style(&self) -> cef_runtime_style_t;
     );
 }

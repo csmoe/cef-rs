@@ -2,7 +2,7 @@ use proc_macro::TokenStream;
 use quote::quote;
 use syn::{
     parse::{Parse, ParseStream},
-    parse_macro_input, Pat, PatType, ReturnType, TraitItemFn,
+    parse_macro_input, Pat, PatType, ReturnType, TraitItemFn, TypePath,
 };
 
 struct MultipleFunctions {
@@ -19,14 +19,12 @@ impl Parse for MultipleFunctions {
     }
 }
 
-fn wrap_return_type(return_type: &ReturnType) -> proc_macro2::TokenStream {
+fn wrap_return_type(return_type: &ReturnType) -> (Option<syn::Type>, proc_macro2::TokenStream) {
     match return_type {
-        ReturnType::Default => {
-            quote! { -> Option<()> }
-        }
+        ReturnType::Default => (None, quote! { -> Option<()> }),
         ReturnType::Type(arrow, ty) => {
             let wrapped = quote! { Option<#ty> };
-            quote! { #arrow #wrapped }
+            (Some(*ty.clone()), quote! { #arrow #wrapped })
         }
     }
 }
@@ -39,27 +37,36 @@ pub fn wrapper_methods(input: TokenStream) -> TokenStream {
         let mut sig = func.sig.clone();
         let wrapped_output = wrap_return_type(&sig.output);
         let name = &sig.ident;
+        let attrs = &func.attrs;
 
-        let args = (&sig.inputs)
-            .iter()
-            .filter_map(|arg| {
-                if let syn::FnArg::Typed(PatType { pat, .. }) = arg {
-                    if let Pat::Ident(pat_ident) = &**pat {
-                        Some(quote! { #pat_ident })
-                    } else {
-                        None
-                    }
+        let args = (&sig.inputs).iter().filter_map(|arg| {
+            if let syn::FnArg::Typed(PatType { pat, .. }) = arg {
+                if let Pat::Ident(pat_ident) = &**pat {
+                    Some(quote! { #pat_ident.into() })
                 } else {
                     None
                 }
-            })
-            .collect::<Vec<_>>();
+            } else {
+                None
+            }
+        });
+        let (ty, wrapped_output) = wrapped_output;
         sig.output = syn::parse2(wrapped_output).unwrap();
 
         let args = quote! { #(#args,)* };
+
+        let mut body = quote! { self.0.#name.map(|f|f(self.0.get_raw(), #args)) };
+        if let Some(syn::Type::Path(TypePath { path, .. })) = ty {
+            if path.is_ident("bool") {
+                body = quote! { self.0.#name.map(|f| f(self.0.get_raw(), #args) == 1) };
+            }
+        }
+
+        let attrs = quote! { #(#attrs)* };
         quote! {
+            #attrs
             pub #sig {
-                unsafe { self.0.#name.map(|f|f(self.0.get_raw(), #args)) }
+                unsafe { #body }
             }
         }
     });
