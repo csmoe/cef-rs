@@ -270,7 +270,7 @@ impl<
     }
 
     pub fn into_raw(self) -> *mut cef_sys::cef_client_t {
-        let mut object: cef_client_t = unsafe { std::mem::zeroed() };
+        let object: cef_client_t = unsafe { std::mem::zeroed() };
         RcImpl::new(object, self).cast()
     }
 }

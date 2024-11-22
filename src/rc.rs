@@ -229,7 +229,7 @@ pub struct RcImpl<T, I> {
     ref_count: AtomicUsize,
 }
 
-impl<T, I> RcImpl<T, I> {
+impl<T: FfiRc, I> RcImpl<T, I> {
     pub fn new(mut cef_object: T, interface: I) -> *mut RcImpl<T, I> {
         let base = unsafe { &mut *(&mut cef_object as *mut T as *mut cef_base_ref_counted_t) };
 
@@ -251,13 +251,13 @@ impl<T, I> RcImpl<T, I> {
     }
 }
 
-extern "C" fn add_ref<T, I>(this: *mut cef_base_ref_counted_t) {
+extern "C" fn add_ref<T: FfiRc, I>(this: *mut cef_base_ref_counted_t) {
     let obj = RcImpl::<T, I>::get(this as *mut T);
 
     obj.ref_count.fetch_add(1, Ordering::Relaxed);
 }
 
-extern "C" fn has_one_ref<T, I>(this: *mut cef_base_ref_counted_t) -> i32 {
+extern "C" fn has_one_ref<T: FfiRc, I>(this: *mut cef_base_ref_counted_t) -> i32 {
     let obj = RcImpl::<T, I>::get(this as *mut T);
 
     if obj.ref_count.load(Ordering::Relaxed) == 1 {
@@ -267,7 +267,7 @@ extern "C" fn has_one_ref<T, I>(this: *mut cef_base_ref_counted_t) -> i32 {
     }
 }
 
-extern "C" fn has_at_least_one_ref<T, I>(this: *mut cef_base_ref_counted_t) -> i32 {
+extern "C" fn has_at_least_one_ref<T: FfiRc, I>(this: *mut cef_base_ref_counted_t) -> i32 {
     let obj = RcImpl::<T, I>::get(this as *mut T);
 
     if obj.ref_count.load(Ordering::Relaxed) >= 1 {
@@ -277,7 +277,7 @@ extern "C" fn has_at_least_one_ref<T, I>(this: *mut cef_base_ref_counted_t) -> i
     }
 }
 
-pub extern "C" fn release<T, I>(this: *mut cef_base_ref_counted_t) -> i32 {
+pub extern "C" fn release<T: FfiRc, I>(this: *mut cef_base_ref_counted_t) -> i32 {
     let obj = RcImpl::<T, I>::get(this as *mut T);
 
     if obj.ref_count.fetch_sub(1, Ordering::Release) != 1 {

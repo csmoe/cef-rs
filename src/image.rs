@@ -9,7 +9,7 @@ crate::wrapper! {
 }
 
 impl Image {
-    pub fn create(image: image::DynamicImage) -> Result<Self> {
+    pub fn create(_image: image::DynamicImage) -> Result<Self> {
         let image = unsafe { cef_sys::cef_image_create() };
         Ok(Self(unsafe { RefGuard::from_raw(image) }))
     }

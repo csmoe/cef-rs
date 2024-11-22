@@ -14,27 +14,42 @@ use cef_wrapper_macro::wrapper_methods;
 /// See [cef_window_info_t] for more documentation.
 #[derive(Debug, Default)]
 pub struct WindowInfo {
+    /// See [cef_window_info_t::window_name]
     window_name: CefString,
+    /// See [cef_window_info_t::bounds]
     bounds: Rect,
+    /// See [cef_window_info_t::windowless_rendering_enabled]
     windowless_rendering_enabled: bool,
+    /// See [cef_window_info_t::shared_texture_enabled]
     shared_texture_enabled: bool,
+    /// See [cef_window_info_t::external_begin_frame_enabled]
     external_begin_frame_enabled: bool,
+
     #[cfg(target_os = "macos")]
+    /// See [cef_window_info_t::hidden]
     hidden: bool,
     #[cfg(target_os = "macos")]
+    /// See [cef_window_info_t::parent_view]
     parent_view: Option<objc2_app_kit::NSView>,
     #[cfg(target_os = "macos")]
+    /// See [cef_window_info_t::view]
     view: Option<objc2_app_kit::NSView>,
+    /// See [cef_window_info_t::runtime_style]
     runtime_style: cef_sys::cef_runtime_style_t,
     #[cfg(windows)]
+    /// See [cef_window_info_t::menu]
     menu: windows::Win32::UI::WindowsAndMessaging::HMENU,
     #[cfg(windows)]
+    /// Seee [cef_window_info_t::ex_style]
     ex_style: u32,
     #[cfg(windows)]
+    /// See [cef_window_info_t::style]
     style: u32,
     #[cfg(any(windows, target_os = "linux"))]
+    /// See [cef_window_info_t::parent_window]
     parent_window: windows::Win32::Foundation::HWND,
     #[cfg(any(windows, target_os = "linux"))]
+    /// See [cef_window_info_t::window]
     window: windows::Win32::Foundation::HWND,
 }
 
@@ -135,7 +150,13 @@ impl Window {
             }
         }
         /// See [cef_window_t::get_title]
-        fn get_title(&self) -> CefString;
+        fn get_title(&self) -> CefString {
+            unsafe {
+                self.0
+                    .get_title
+                    .and_then(|f| CefString::from_raw(f(self.0.get_this())))
+            }
+        }
         /// See [cef_window_t::set_window_icon]
         fn set_window_icon(&mut self, image: *mut cef_image_t);
         /// See [cef_window_t::get_window_icon]
@@ -143,21 +164,27 @@ impl Window {
         /// See [cef_window_t::set_window_app_icon]
         fn set_window_app_icon(&mut self, image: *mut cef_image_t);
         /// See [cef_window_t::get_window_app_icon]
-        fn get_window_app_icon(&self) -> cef_sys::cef_image_t;
+        fn get_window_app_icon(&self) -> cef_sys::cef_image_t {
+            todo!()
+        }
         /// See [cef_window_t::add_overlay_view]
         fn add_overlay_view(
             &mut self,
-            view: *mut cef_view_t,
-            docking_mode: cef_docking_mode_t,
-            can_activate: i32,
-        ) -> cef_sys::cef_overlay_controller_t;
+            _view: *mut cef_view_t,
+            _docking_mode: cef_docking_mode_t,
+            _can_activate: i32,
+        ) -> cef_sys::cef_overlay_controller_t {
+            todo!()
+        }
         /// See [cef_window_t::show_menu]
         fn show_menu(
             &mut self,
-            menu_model: *mut cef_menu_model_t,
-            screen_point: cef_point_t,
-            anchor_position: cef_menu_anchor_position_t,
-        );
+            _menu_model: *mut cef_menu_model_t,
+            _screen_point: cef_point_t,
+            _anchor_position: cef_menu_anchor_position_t,
+        ) {
+            todo!()
+        }
         /// See [cef_window_t::cancel_menu]
         fn cancel_menu(&mut self);
         /// See [cef_window_t::get_display]

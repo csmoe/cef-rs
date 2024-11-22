@@ -11,10 +11,10 @@ wrapper! {
 }
 
 pub trait TextFieldDelegate: ViewDelegate {
-    fn on_key_event(&self, textfield: TextField, event: cef_key_event_t) -> bool {
+    fn on_key_event(&self, _textfield: TextField, _event: cef_key_event_t) -> bool {
         false
     }
-    fn on_after_user_action(&self, textfield: TextField) {}
+    fn on_after_user_action(&self, _textfield: TextField) {}
 
     fn into_raw(self) -> *mut cef_textfield_delegate_t {
         let mut object: cef_textfield_delegate_t = unsafe { std::mem::zeroed() };
