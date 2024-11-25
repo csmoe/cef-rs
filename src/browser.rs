@@ -145,7 +145,7 @@ impl Browser {
             return Err(crate::error::Error::NullPtr);
         }
 
-        Ok(Browser(unsafe { RefGuard::from_raw(ret) }))
+        Ok(unsafe { Self::from_raw(ret) })
     }
 }
 

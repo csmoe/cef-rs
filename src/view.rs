@@ -87,7 +87,7 @@ impl View {
                 if window.is_null() {
                     None
                 } else {
-                    Some(Window(RefGuard::from_raw(window)))
+                    Some(Window::from_raw(window))
                 }
             })
         }
@@ -115,7 +115,7 @@ impl View {
                 if view.is_null() {
                     None
                 } else {
-                    Some(View(RefGuard::from_raw(view)))
+                    Some(View::from_raw(view))
                 }
             })
         }
@@ -126,7 +126,7 @@ impl View {
                 if view.is_null() {
                     None
                 } else {
-                    Some(View(RefGuard::from_raw(view)))
+                    Some(View::from_raw(view))
                 }
             })
         }
@@ -327,9 +327,9 @@ pub(crate) extern "C" fn on_parent_view_changed<I: ViewDelegate>(
     parent: *mut cef_view_t,
 ) {
     let obj: &mut RcImpl<_, I> = RcImpl::get(this);
-    let view = View(unsafe { RefGuard::from_raw(view) });
+    let view = unsafe { View::from_raw(view) };
     let added = added != 0;
-    let parent = View(unsafe { RefGuard::from_raw(parent) });
+    let parent = unsafe { View::from_raw(parent) };
     obj.interface.on_child_view_changed(view, added, parent);
 }
 
@@ -340,9 +340,9 @@ pub(crate) extern "C" fn on_child_view_changed<I: ViewDelegate>(
     child: *mut cef_view_t,
 ) {
     let obj: &mut RcImpl<_, I> = RcImpl::get(this);
-    let view = View(unsafe { RefGuard::from_raw(view) });
+    let view = unsafe { View::from_raw(view) };
     let added = added != 0;
-    let child = View(unsafe { RefGuard::from_raw(child) });
+    let child = unsafe { View::from_raw(child) };
     obj.interface.on_child_view_changed(view, added, child);
 }
 
@@ -352,7 +352,7 @@ pub(crate) extern "C" fn on_window_changed<I: ViewDelegate>(
     added: c_int,
 ) {
     let obj: &mut RcImpl<_, I> = RcImpl::get(this);
-    let view = View(unsafe { RefGuard::from_raw(view) });
+    let view = unsafe { View::from_raw(view) };
     let added = added != 0;
     obj.interface.on_window_changed(view, added);
 }

@@ -21,7 +21,7 @@ impl Panel {
             if view.is_null() {
                 return Err(crate::Error::NullPtr);
             }
-            Ok(Self(RefGuard::from_raw(view)))
+            Ok(Self::from_raw(view))
         }
     }
 

@@ -1,9 +1,9 @@
-use crate::{rc::RefGuard, Result};
+use crate::Result;
 use cef_sys::cef_image_t;
 use cef_wrapper_macro::wrapper_methods;
 
 crate::wrapper! {
-    /// See [`cef_image_t`] for more docs.
+    /// See [cef_image_t] for more docs.
     #[derive(Debug, Clone)]
     pub struct Image(cef_image_t);
 }
@@ -11,7 +11,7 @@ crate::wrapper! {
 impl Image {
     pub fn create(_image: image::DynamicImage) -> Result<Self> {
         let image = unsafe { cef_sys::cef_image_create() };
-        Ok(Self(unsafe { RefGuard::from_raw(image) }))
+        Ok(unsafe { Self::from_raw(image) })
     }
 
     wrapper_methods!(

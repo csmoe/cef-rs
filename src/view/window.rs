@@ -1,6 +1,6 @@
 use crate::{
     add_view_delegate_methods,
-    rc::{RcImpl, RefGuard},
+    rc::RcImpl,
     string::CefString,
     view::{Panel, PanelDelegate},
     wrapper, Rect, State,
@@ -239,7 +239,7 @@ impl Window {
         if window.is_null() {
             return Err(crate::Error::NullPtr);
         }
-        Ok(Window(unsafe { RefGuard::from_raw(window) }))
+        Ok(unsafe { Window::from_raw(window) })
     }
 
     pub fn get_panel(&self) -> Panel {
@@ -372,7 +372,7 @@ extern "C" fn on_window_created<I: WindowDelegate>(
     window: *mut cef_window_t,
 ) {
     let obj: &RcImpl<_, I> = RcImpl::get(this);
-    let window = Window(unsafe { RefGuard::from_raw(window) });
+    let window = unsafe { Window::from_raw(window) };
     obj.interface.on_window_created(window);
 }
 
@@ -381,7 +381,7 @@ extern "C" fn on_window_closing<I: WindowDelegate>(
     window: *mut cef_window_t,
 ) {
     let obj: &mut RcImpl<_, I> = RcImpl::get(this);
-    let window = Window(unsafe { RefGuard::from_raw(window) });
+    let window = unsafe { Window::from_raw(window) };
     obj.interface.on_window_closing(window);
 }
 
@@ -390,7 +390,7 @@ extern "C" fn on_window_destroyed<I: WindowDelegate>(
     window: *mut cef_window_t,
 ) {
     let obj: &mut RcImpl<_, I> = RcImpl::get(this);
-    let window = Window(unsafe { RefGuard::from_raw(window) });
+    let window = unsafe { Window::from_raw(window) };
     obj.interface.on_window_destroyed(window);
 }
 
@@ -399,7 +399,7 @@ extern "C" fn can_close<I: WindowDelegate>(
     window: *mut cef_window_t,
 ) -> i32 {
     let obj: &mut RcImpl<_, I> = RcImpl::get(this);
-    let window = Window(unsafe { RefGuard::from_raw(window) });
+    let window = unsafe { Window::from_raw(window) };
     let result = obj.interface.can_close(window);
     result as i32
 }

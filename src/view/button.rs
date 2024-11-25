@@ -34,7 +34,7 @@ impl LabelButton {
             if button.is_null() {
                 return Err(crate::Error::NullPtr);
             }
-            Ok(Self(RefGuard::from_raw(button)))
+            Ok(Self::from_raw(button))
         }
     }
 }
@@ -73,7 +73,7 @@ impl MenuButton {
             if button.is_null() {
                 return Err(crate::Error::NullPtr);
             }
-            Ok(Self(RefGuard::from_raw(button)))
+            Ok(Self::from_raw(button))
         }
     }
 }

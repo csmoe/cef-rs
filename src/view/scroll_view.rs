@@ -1,4 +1,4 @@
-use crate::{rc::RefGuard, wrapper, ViewDelegate};
+use crate::{wrapper, ViewDelegate};
 use cef_sys::cef_scroll_view_t;
 use cef_wrapper_macro::wrapper_methods;
 
@@ -9,13 +9,14 @@ wrapper! {
 }
 
 impl ScrollView {
+    /// See [cef_sys::cef_scroll_view_create]
     pub fn create(delegate: impl ViewDelegate) -> crate::Result<Self> {
         unsafe {
             let view = cef_sys::cef_scroll_view_create(delegate.into_raw());
             if view.is_null() {
                 return Err(crate::Error::NullPtr);
             }
-            Ok(Self(RefGuard::from_raw(view)))
+            Ok(Self::from_raw(view))
         }
     }
 }
@@ -28,7 +29,7 @@ impl ScrollView {
         fn get_content_view(&self) -> crate::View {
             self.0.get_content_view.map(|f| unsafe {
                 let view = f(self.0.get_this());
-                crate::View(RefGuard::from_raw(view))
+                crate::View::from_raw(view)
             })
         }
         /// See [cef_scroll_view_t::get_visible_content_rect]
