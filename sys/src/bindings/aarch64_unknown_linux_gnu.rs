@@ -7,7 +7,7 @@ pub type wchar_t = ::std::os::raw::c_uint;
 pub type char16_t = __uint_least16_t;
 #[doc = "\n CEF string type definitions. Whomever allocates |str| is responsible for\n providing an appropriate |dtor| implementation that will free the string in\n the same memory space. When reusing an existing string structure make sure\n to call |dtor| for the old value before assigning new |str| and |dtor|\n values. Static strings will have a NULL |dtor| value. Using the below\n functions if you want this managed for you.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_string_wide_t {
     pub str_: *mut wchar_t,
     pub length: usize,
@@ -27,7 +27,7 @@ const _: () = {
 #[doc = "\n CEF string type definitions. Whomever allocates |str| is responsible for\n providing an appropriate |dtor| implementation that will free the string in\n the same memory space. When reusing an existing string structure make sure\n to call |dtor| for the old value before assigning new |str| and |dtor|\n values. Static strings will have a NULL |dtor| value. Using the below\n functions if you want this managed for you.\n"]
 pub type cef_string_wide_t = _cef_string_wide_t;
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_string_utf8_t {
     pub str_: *mut ::std::os::raw::c_char,
     pub length: usize,
@@ -46,7 +46,7 @@ const _: () = {
 };
 pub type cef_string_utf8_t = _cef_string_utf8_t;
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_string_utf16_t {
     pub str_: *mut char16_t,
     pub length: usize,
@@ -219,7 +219,7 @@ pub type cef_char_t = char16_t;
 pub type cef_string_userfree_t = cef_string_userfree_utf16_t;
 pub type cef_string_t = cef_string_utf16_t;
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_string_list_t {
     _unused: [u8; 0],
 }
@@ -258,7 +258,7 @@ extern "C" {
     pub fn cef_string_list_copy(list: cef_string_list_t) -> cef_string_list_t;
 }
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_string_map_t {
     _unused: [u8; 0],
 }
@@ -313,7 +313,7 @@ extern "C" {
     pub fn cef_string_map_free(map: cef_string_map_t);
 }
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_string_multimap_t {
     _unused: [u8; 0],
 }
@@ -378,7 +378,7 @@ extern "C" {
 pub type time_t = __time_t;
 #[doc = "\n Represents a wall clock time in UTC. Values are not guaranteed to be\n monotonically non-decreasing and are subject to large amounts of skew.\n Time is stored internally as microseconds since the Windows epoch (1601).\n\n This is equivalent of Chromium `base::Time` (see base/time/time.h).\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_basetime_t {
     pub val: i64,
 }
@@ -393,7 +393,7 @@ const _: () = {
 pub type cef_basetime_t = _cef_basetime_t;
 #[doc = "\n Time information. Values should always be in UTC.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_time_t {
     #[doc = "\n Four or five digit year \"2007\" (1601 to 30827 on Windows, 1970 to 2038 on\n 32-bit POSIX)\n"]
     pub year: ::std::os::raw::c_int,
@@ -729,7 +729,7 @@ pub enum cef_content_setting_values_t {
 }
 #[doc = "\n Structure representing a point.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_point_t {
     pub x: ::std::os::raw::c_int,
     pub y: ::std::os::raw::c_int,
@@ -745,7 +745,7 @@ const _: () = {
 pub type cef_point_t = _cef_point_t;
 #[doc = "\n Structure representing a rectangle.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_rect_t {
     pub x: ::std::os::raw::c_int,
     pub y: ::std::os::raw::c_int,
@@ -765,7 +765,7 @@ const _: () = {
 pub type cef_rect_t = _cef_rect_t;
 #[doc = "\n Structure representing a size.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_size_t {
     pub width: ::std::os::raw::c_int,
     pub height: ::std::os::raw::c_int,
@@ -781,7 +781,7 @@ const _: () = {
 pub type cef_size_t = _cef_size_t;
 #[doc = "\n Structure representing insets.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_insets_t {
     pub top: ::std::os::raw::c_int,
     pub left: ::std::os::raw::c_int,
@@ -802,13 +802,13 @@ const _: () = {
 #[doc = "\n Structure representing insets.\n"]
 pub type cef_insets_t = _cef_insets_t;
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, crate :: FfiRc)]
 pub struct _XEvent {
     _unused: [u8; 0],
 }
 pub type XEvent = _XEvent;
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _XDisplay {
     _unused: [u8; 0],
 }
@@ -840,7 +840,7 @@ extern "C" {
 }
 #[doc = "\n Structure representing CefExecuteProcess arguments.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_main_args_t {
     pub argc: ::std::os::raw::c_int,
     pub argv: *mut *mut ::std::os::raw::c_char,
@@ -858,7 +858,7 @@ const _: () = {
 pub type cef_main_args_t = _cef_main_args_t;
 #[doc = "\n Class representing window information.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_window_info_t {
     #[doc = "\n The initial title of the window, to be set when the window is created.\n Some layout managers (e.g., Compiz) can look at the window title\n in order to decide where to place the window when it is\n created. When this attribute is not empty, the window title will\n be set before the window is mapped to the dispay. Otherwise the\n title will be initially empty.\n"]
     pub window_name: cef_string_t,
@@ -902,7 +902,7 @@ const _: () = {
 pub type cef_window_info_t = _cef_window_info_t;
 #[doc = "\n Structure containing the plane information of the shared texture.\n Sync with native_pixmap_handle.h\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_accelerated_paint_native_pixmap_plane_info_t {
     #[doc = "\n The strides and offsets in bytes to be used when accessing the buffers via\n a memory mapping. One per plane per entry. Size in bytes of the plane is\n necessary to map the buffers.\n"]
     pub stride: u32,
@@ -935,7 +935,7 @@ pub type cef_accelerated_paint_native_pixmap_plane_t =
     _cef_accelerated_paint_native_pixmap_plane_info_t;
 #[doc = "\n Structure containing shared texture information for the OnAcceleratedPaint\n callback. Resources will be released to the underlying pool for reuse when\n the callback returns from client code.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_accelerated_paint_info_t {
     #[doc = "\n Planes of the shared texture, usually file descriptors of dmabufs.\n"]
     pub planes: [cef_accelerated_paint_native_pixmap_plane_t; 4usize],
@@ -1019,7 +1019,7 @@ pub enum cef_state_t {
 }
 #[doc = "\n Initialization settings. Specify NULL or 0 to get the recommended default\n values. Many of these and other settings can also configured using command-\n line switches.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_settings_t {
     #[doc = "\n Size of this structure.\n"]
     pub size: usize,
@@ -1150,7 +1150,7 @@ const _: () = {
 pub type cef_settings_t = _cef_settings_t;
 #[doc = "\n Request context initialization settings. Specify NULL or 0 to get the\n recommended default values.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_request_context_settings_t {
     #[doc = "\n Size of this structure.\n"]
     pub size: usize,
@@ -1194,7 +1194,7 @@ const _: () = {
 pub type cef_request_context_settings_t = _cef_request_context_settings_t;
 #[doc = "\n Browser initialization settings. Specify NULL or 0 to get the recommended\n default values. The consequences of using custom values may not be well\n tested. Many of these and other settings can also configured using command-\n line switches.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_browser_settings_t {
     #[doc = "\n Size of this structure.\n"]
     pub size: usize,
@@ -1325,7 +1325,7 @@ pub enum cef_return_value_t {
 }
 #[doc = "\n URL component parts.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_urlparts_t {
     #[doc = "\n The complete URL specification.\n"]
     pub spec: cef_string_t,
@@ -1396,7 +1396,7 @@ pub enum cef_cookie_same_site_t {
 }
 #[doc = "\n Cookie information.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_cookie_t {
     #[doc = "\n The cookie name.\n"]
     pub name: cef_string_t,
@@ -2096,7 +2096,7 @@ pub enum cef_urlrequest_status_t {
 }
 #[doc = " Structure representing a draggable region.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_draggable_region_t {
     #[doc = "\n Bounds of the region.\n"]
     pub bounds: cef_rect_t,
@@ -2209,7 +2209,7 @@ pub enum cef_jsdialog_type_t {
 }
 #[doc = "\n Screen information used when window rendering is disabled. This structure is\n passed as a parameter to CefRenderHandler::GetScreenInfo and should be\n filled in by the client.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_screen_info_t {
     #[doc = "\n Device scale factor. Specifies the ratio between physical and logical\n pixels.\n"]
     pub device_scale_factor: f32,
@@ -2245,7 +2245,7 @@ const _: () = {
 pub type cef_screen_info_t = _cef_screen_info_t;
 #[doc = "\n Linux window properties, such as X11's WM_CLASS or Wayland's app_id.\n Those are passed to CefWindowDelegate, so the client can set them\n for the CefWindow's top-level. Thus, allowing window managers to correctly\n display the application's information (e.g., icons).\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_linux_window_properties_t {
     #[doc = "\n Main window's Wayland's app_id\n"]
     pub wayland_app_id: cef_string_t,
@@ -2320,7 +2320,7 @@ pub enum cef_mouse_button_type_t {
 }
 #[doc = "\n Structure representing mouse event information.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_mouse_event_t {
     #[doc = "\n X coordinate relative to the left side of the view.\n"]
     pub x: ::std::os::raw::c_int,
@@ -2365,7 +2365,7 @@ pub enum cef_pointer_type_t {
 }
 #[doc = "\n Structure representing touch event information.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_touch_event_t {
     #[doc = "\n Id of a touch point. Must be unique per touch, can be any number except\n -1. Note that a maximum of 16 concurrent touches will be tracked; touches\n beyond that will be ignored.\n"]
     pub id: ::std::os::raw::c_int,
@@ -2566,7 +2566,7 @@ pub enum cef_key_event_type_t {
 }
 #[doc = "\n Structure representing keyboard event information.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_key_event_t {
     #[doc = "\n The type of keyboard event.\n"]
     pub type_: cef_key_event_type_t,
@@ -2660,7 +2660,7 @@ pub enum cef_xml_node_type_t {
 }
 #[doc = "\n Popup window features.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_popup_features_t {
     pub x: ::std::os::raw::c_int,
     pub xSet: ::std::os::raw::c_int,
@@ -2907,7 +2907,7 @@ pub enum cef_cursor_type_t {
 }
 #[doc = "\n Structure representing cursor information. |buffer| will be\n |size.width|*|size.height|*4 bytes in size and represents a BGRA image with\n an upper-left origin.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_cursor_info_t {
     pub hotspot: cef_point_t,
     pub image_scale_factor: f32,
@@ -2985,7 +2985,7 @@ pub enum cef_pdf_print_margin_type_t {
 }
 #[doc = "\n Structure representing PDF print settings. These values match the parameters\n supported by the DevTools Page.printToPDF function. See\n https://chromedevtools.github.io/devtools-protocol/tot/Page/#method-printToPDF\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_pdf_print_settings_t {
     #[doc = "\n Set to true (1) for landscape mode or false (0) for portrait mode.\n"]
     pub landscape: ::std::os::raw::c_int,
@@ -3158,7 +3158,7 @@ pub enum cef_axis_alignment_t {
 }
 #[doc = "\n Settings used when initializing a CefBoxLayout.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_box_layout_settings_t {
     #[doc = "\n If true (1) the layout will be horizontal, otherwise the layout will be\n vertical.\n"]
     pub horizontal: ::std::os::raw::c_int,
@@ -3300,7 +3300,7 @@ pub enum cef_scheme_options_t {
 }
 #[doc = "\n Structure representing a range.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_range_t {
     pub from: u32,
     pub to: u32,
@@ -3326,7 +3326,7 @@ pub enum cef_composition_underline_style_t {
 }
 #[doc = "\n Structure representing IME composition underline information. This is a thin\n wrapper around Blink's WebCompositionUnderline class and should be kept in\n sync with that.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_composition_underline_t {
     #[doc = "\n Underline character range.\n"]
     pub range: cef_range_t,
@@ -3440,7 +3440,7 @@ pub enum cef_channel_layout_t {
 }
 #[doc = "\n Structure representing the audio parameters for setting up the audio\n handler.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_audio_parameters_t {
     #[doc = "\n Layout of the audio channels\n"]
     pub channel_layout: cef_channel_layout_t,
@@ -3507,7 +3507,7 @@ pub enum cef_media_sink_icon_type_t {
 }
 #[doc = "\n Device information for a MediaSink object.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_media_sink_device_info_t {
     pub ip_address: cef_string_t,
     pub port: ::std::os::raw::c_int,
@@ -3638,7 +3638,7 @@ pub enum cef_touch_handle_state_flags_t {
     CEF_THS_FLAG_ALPHA = 8,
 }
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_touch_handle_state_t {
     #[doc = "\n Touch handle id. Increments for each new touch handle.\n"]
     pub touch_handle_id: ::std::os::raw::c_int,
@@ -3892,7 +3892,7 @@ pub enum cef_task_type_t {
 }
 #[doc = "\n Structure representing task information provided by CefTaskManager.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_task_info_t {
     #[doc = " The task ID."]
     pub id: i64,
@@ -3939,7 +3939,7 @@ const _: () = {
 #[doc = "\n Structure representing task information provided by CefTaskManager.\n"]
 pub type cef_task_info_t = _cef_task_info_t;
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_base_ref_counted_t {
     pub size: usize,
     pub add_ref: ::std::option::Option<unsafe extern "C" fn(self_: *mut _cef_base_ref_counted_t)>,
@@ -3971,7 +3971,7 @@ const _: () = {
 };
 pub type cef_base_ref_counted_t = _cef_base_ref_counted_t;
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_base_scoped_t {
     pub size: usize,
     pub del: ::std::option::Option<unsafe extern "C" fn(self_: *mut _cef_base_scoped_t)>,
@@ -3988,7 +3988,7 @@ const _: () = {
 pub type cef_base_scoped_t = _cef_base_scoped_t;
 #[doc = "\n Callback structure for cef_browser_host_t::AddDevToolsMessageObserver. The\n functions of this structure will be called on the browser process UI thread.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_dev_tools_message_observer_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -4068,7 +4068,7 @@ const _: () = {
 pub type cef_dev_tools_message_observer_t = _cef_dev_tools_message_observer_t;
 #[doc = "\n Structure that wraps other data value types. Complex types (binary,\n dictionary and list) will be referenced but not owned by this object. Can be\n used on any process and thread.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_value_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -4238,7 +4238,7 @@ extern "C" {
 }
 #[doc = "\n Structure representing a binary value. Can be used on any process and\n thread.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_binary_value_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -4319,7 +4319,7 @@ extern "C" {
 }
 #[doc = "\n Structure representing a dictionary value. Can be used on any process and\n thread.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_dictionary_value_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -4591,7 +4591,7 @@ extern "C" {
 }
 #[doc = "\n Structure representing a list value. Can be used on any process and thread.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_list_value_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -4822,7 +4822,7 @@ extern "C" {
 }
 #[doc = "\n Container for a single image represented at different scale factors. All\n image representations should be the same size in density independent pixel\n (DIP) units. For example, if the image at scale factor 1.0 is 100x100 pixels\n then the image at scale factor 2.0 should be 200x200 pixels -- both images\n will display with a DIP size of 100x100 units. The functions of this\n structure can be called on any browser process thread.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_image_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -4962,7 +4962,7 @@ extern "C" {
 }
 #[doc = "\n Structure the client can implement to provide a custom stream reader. The\n functions of this structure may be called on any thread.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_read_handler_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -5015,7 +5015,7 @@ const _: () = {
 pub type cef_read_handler_t = _cef_read_handler_t;
 #[doc = "\n Structure used to read data from a stream. The functions of this structure\n may be called on any thread.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_stream_reader_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -5087,7 +5087,7 @@ extern "C" {
 }
 #[doc = "\n Structure the client can implement to provide a custom stream writer. The\n functions of this structure may be called on any thread.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_write_handler_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -5140,7 +5140,7 @@ const _: () = {
 pub type cef_write_handler_t = _cef_write_handler_t;
 #[doc = "\n Structure used to write data to a stream. The functions of this structure\n may be called on any thread.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_stream_writer_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -5205,7 +5205,7 @@ extern "C" {
 }
 #[doc = "\n Structure used to represent drag data. The functions of this structure may\n be called on any thread.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_drag_data_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -5396,7 +5396,7 @@ extern "C" {
 }
 #[doc = "\n Structure to implement for visiting the DOM. The functions of this structure\n will be called on the render process main thread.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_domvisitor_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -5418,7 +5418,7 @@ const _: () = {
 pub type cef_domvisitor_t = _cef_domvisitor_t;
 #[doc = "\n Structure used to represent a DOM document. The functions of this structure\n should only be called on the render process main thread thread.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_domdocument_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -5524,7 +5524,7 @@ const _: () = {
 pub type cef_domdocument_t = _cef_domdocument_t;
 #[doc = "\n Structure used to represent a DOM node. The functions of this structure\n should only be called on the render process main thread.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_domnode_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -5711,7 +5711,7 @@ const _: () = {
 pub type cef_domnode_t = _cef_domnode_t;
 #[doc = "\n Structure that wraps platform-dependent share memory region mapping.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_shared_memory_region_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -5749,7 +5749,7 @@ const _: () = {
 pub type cef_shared_memory_region_t = _cef_shared_memory_region_t;
 #[doc = "\n Structure representing a message. Can be used on any process and thread.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_process_message_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -5808,7 +5808,7 @@ extern "C" {
 }
 #[doc = "\n Structure used to represent a web request. The functions of this structure\n may be called on any thread.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_request_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -5977,7 +5977,7 @@ extern "C" {
 }
 #[doc = "\n Structure used to represent post data for a web request. The functions of\n this structure may be called on any thread.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_post_data_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -6046,7 +6046,7 @@ extern "C" {
 }
 #[doc = "\n Structure used to represent a single element in the request post data. The\n functions of this structure may be called on any thread.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_post_data_element_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -6122,7 +6122,7 @@ extern "C" {
 }
 #[doc = "\n Implement this structure to receive string values asynchronously.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_string_visitor_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -6144,18 +6144,18 @@ const _: () = {
 #[doc = "\n Implement this structure to receive string values asynchronously.\n"]
 pub type cef_string_visitor_t = _cef_string_visitor_t;
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_urlrequest_client_t {
     _unused: [u8; 0],
 }
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_urlrequest_t {
     _unused: [u8; 0],
 }
 #[doc = "\n Structure used to represent a frame in the browser window. When used in the\n browser process the functions of this structure may be called on any thread\n unless otherwise indicated in the comments. When used in the render process\n the functions of this structure may only be called on the main thread.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_frame_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -6310,7 +6310,7 @@ const _: () = {
 pub type cef_frame_t = _cef_frame_t;
 #[doc = "\n Structure representing the issuer or subject field of an X.509 certificate.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_x509cert_principal_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -6370,7 +6370,7 @@ const _: () = {
 pub type cef_x509cert_principal_t = _cef_x509cert_principal_t;
 #[doc = "\n Structure representing a X.509 certificate.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_x509certificate_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -6454,7 +6454,7 @@ const _: () = {
 pub type cef_x509certificate_t = _cef_x509certificate_t;
 #[doc = "\n Structure representing the SSL information for a navigation entry.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_sslstatus_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -6500,7 +6500,7 @@ const _: () = {
 pub type cef_sslstatus_t = _cef_sslstatus_t;
 #[doc = "\n Structure used to represent an entry in navigation history.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_navigation_entry_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -6578,7 +6578,7 @@ const _: () = {
 pub type cef_navigation_entry_t = _cef_navigation_entry_t;
 #[doc = "\n Generic callback structure used for managing the lifespan of a registration.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_registration_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -6594,7 +6594,7 @@ const _: () = {
 pub type cef_registration_t = _cef_registration_t;
 #[doc = "\n Generic callback structure used for asynchronous continuation.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_callback_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -6618,7 +6618,7 @@ const _: () = {
 pub type cef_callback_t = _cef_callback_t;
 #[doc = "\n Generic callback structure used for asynchronous completion.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_completion_callback_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -6641,7 +6641,7 @@ const _: () = {
 pub type cef_completion_callback_t = _cef_completion_callback_t;
 #[doc = "\n Structure used for managing cookies. The functions of this structure may be\n called on any thread unless otherwise indicated.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_cookie_manager_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -6715,7 +6715,7 @@ extern "C" {
 }
 #[doc = "\n Structure to implement for visiting cookie values. The functions of this\n structure will always be called on the UI thread.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_cookie_visitor_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -6744,7 +6744,7 @@ const _: () = {
 pub type cef_cookie_visitor_t = _cef_cookie_visitor_t;
 #[doc = "\n Structure to implement to be notified of asynchronous completion via\n cef_cookie_manager_t::set_cookie().\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_set_cookie_callback_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -6771,7 +6771,7 @@ const _: () = {
 pub type cef_set_cookie_callback_t = _cef_set_cookie_callback_t;
 #[doc = "\n Structure to implement to be notified of asynchronous completion via\n cef_cookie_manager_t::delete_cookies().\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_delete_cookies_callback_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -6798,7 +6798,7 @@ const _: () = {
 pub type cef_delete_cookies_callback_t = _cef_delete_cookies_callback_t;
 #[doc = "\n Supports discovery of and communication with media devices on the local\n network via the Cast and DIAL protocols. The functions of this structure may\n be called on any browser process thread unless otherwise indicated.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_media_router_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -6859,7 +6859,7 @@ extern "C" {
 }
 #[doc = "\n Implemented by the client to observe MediaRouter events and registered via\n cef_media_router_t::AddObserver. The functions of this structure will be\n called on the browser process UI thread.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_media_observer_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -6917,7 +6917,7 @@ const _: () = {
 pub type cef_media_observer_t = _cef_media_observer_t;
 #[doc = "\n Represents the route between a media source and sink. Instances of this\n object are created via cef_media_router_t::CreateRoute and retrieved via\n cef_media_observer_t::OnRoutes. Contains the status and metadata of a\n routing operation. The functions of this structure may be called on any\n browser process thread unless otherwise indicated.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_media_route_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -6965,7 +6965,7 @@ const _: () = {
 pub type cef_media_route_t = _cef_media_route_t;
 #[doc = "\n Callback structure for cef_media_router_t::CreateRoute. The functions of\n this structure will be called on the browser process UI thread.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_media_route_create_callback_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -6997,7 +6997,7 @@ const _: () = {
 pub type cef_media_route_create_callback_t = _cef_media_route_create_callback_t;
 #[doc = "\n Represents a sink to which media can be routed. Instances of this object are\n retrieved via cef_media_observer_t::OnSinks. The functions of this structure\n may be called on any browser process thread unless otherwise indicated.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_media_sink_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -7061,7 +7061,7 @@ const _: () = {
 pub type cef_media_sink_t = _cef_media_sink_t;
 #[doc = "\n Callback structure for cef_media_sink_t::GetDeviceInfo. The functions of\n this structure will be called on the browser process UI thread.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_media_sink_device_info_callback_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -7091,7 +7091,7 @@ const _: () = {
 pub type cef_media_sink_device_info_callback_t = _cef_media_sink_device_info_callback_t;
 #[doc = "\n Represents a source from which media can be routed. Instances of this object\n are retrieved via cef_media_router_t::GetSource. The functions of this\n structure may be called on any browser process thread unless otherwise\n indicated.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_media_source_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -7125,7 +7125,7 @@ const _: () = {
 pub type cef_media_source_t = _cef_media_source_t;
 #[doc = "\n Structure that manages custom preference registrations.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_preference_registrar_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_scoped_t,
@@ -7153,7 +7153,7 @@ const _: () = {
 pub type cef_preference_registrar_t = _cef_preference_registrar_t;
 #[doc = "\n Manage access to preferences. Many built-in preferences are registered by\n Chromium. Custom preferences can be registered in\n cef_browser_process_handler_t::OnRegisterCustomPreferences.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_preference_manager_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -7222,7 +7222,7 @@ extern "C" {
 }
 #[doc = "\n Callback structure for cef_request_context_t::ResolveHost.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_resolve_callback_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -7249,7 +7249,7 @@ const _: () = {
 pub type cef_resolve_callback_t = _cef_resolve_callback_t;
 #[doc = "\n A request context provides request handling for a set of related browser or\n URL request objects. A request context can be specified when creating a new\n browser via the cef_browser_host_t static factory functions or when creating\n a new URL request via the cef_urlrequest_t static factory functions. Browser\n objects with different request contexts will never be hosted in the same\n render process. Browser objects with the same request context may or may not\n be hosted in the same render process depending on the process model. Browser\n objects created indirectly via the JavaScript window.open function or\n targeted links will share the same render process and the same request\n context as the source browser. When running in single-process mode there is\n only a single render process (the main process) and so all browsers created\n in single-process mode will share the same request context. This will be the\n first request context passed into a cef_browser_host_t static factory\n function and all other request context objects will be ignored.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_request_context_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_preference_manager_t,
@@ -7472,7 +7472,7 @@ extern "C" {
 }
 #[doc = "\n Structure used to represent a browser. When used in the browser process the\n functions of this structure may be called on any thread unless otherwise\n indicated in the comments. When used in the render process the functions of\n this structure may only be called on the main thread.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_browser_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -7613,7 +7613,7 @@ const _: () = {
 pub type cef_browser_t = _cef_browser_t;
 #[doc = "\n Callback structure for cef_browser_host_t::RunFileDialog. The functions of\n this structure will be called on the browser process UI thread.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_run_file_dialog_callback_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -7642,7 +7642,7 @@ const _: () = {
 pub type cef_run_file_dialog_callback_t = _cef_run_file_dialog_callback_t;
 #[doc = "\n Callback structure for cef_browser_host_t::GetNavigationEntries. The\n functions of this structure will be called on the browser process UI thread.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_navigation_entry_visitor_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -7672,7 +7672,7 @@ const _: () = {
 pub type cef_navigation_entry_visitor_t = _cef_navigation_entry_visitor_t;
 #[doc = "\n Callback structure for cef_browser_host_t::PrintToPDF. The functions of this\n structure will be called on the browser process UI thread.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_pdf_print_callback_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -7700,7 +7700,7 @@ const _: () = {
 pub type cef_pdf_print_callback_t = _cef_pdf_print_callback_t;
 #[doc = "\n Callback structure for cef_browser_host_t::DownloadImage. The functions of\n this structure will be called on the browser process UI thread.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_download_image_callback_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -7731,7 +7731,7 @@ const _: () = {
 pub type cef_download_image_callback_t = _cef_download_image_callback_t;
 #[doc = "\n Structure used to represent the browser process aspects of a browser. The\n functions of this structure can only be called in the browser process. They\n may be called on any thread in that process unless otherwise indicated in\n the comments.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_browser_host_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -8269,7 +8269,7 @@ extern "C" {
 }
 #[doc = "\n Implement this structure to handle audio events.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_audio_handler_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -8334,7 +8334,7 @@ const _: () = {
 pub type cef_audio_handler_t = _cef_audio_handler_t;
 #[doc = "\n Implement this structure to handle events related to commands. The functions\n of this structure will be called on the UI thread.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_command_handler_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -8404,7 +8404,7 @@ const _: () = {
 pub type cef_command_handler_t = _cef_command_handler_t;
 #[doc = "\n Implement this structure to handle menu model events. The functions of this\n structure will be called on the browser process UI thread unless otherwise\n indicated.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_menu_model_delegate_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -8491,7 +8491,7 @@ const _: () = {
 pub type cef_menu_model_delegate_t = _cef_menu_model_delegate_t;
 #[doc = "\n Supports creation and modification of menus. See cef_menu_id_t for the\n command ids that have default implementations. All user-defined command ids\n should be between MENU_ID_USER_FIRST and MENU_ID_USER_LAST. The functions of\n this structure can only be accessed on the browser process the UI thread.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_menu_model_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -9019,7 +9019,7 @@ extern "C" {
 }
 #[doc = "\n Callback structure used for continuation of custom context menu display.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_run_context_menu_callback_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -9052,7 +9052,7 @@ const _: () = {
 pub type cef_run_context_menu_callback_t = _cef_run_context_menu_callback_t;
 #[doc = "\n Callback structure used for continuation of custom quick menu display.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_run_quick_menu_callback_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -9085,7 +9085,7 @@ const _: () = {
 pub type cef_run_quick_menu_callback_t = _cef_run_quick_menu_callback_t;
 #[doc = "\n Implement this structure to handle context menu events. The functions of\n this structure will be called on the UI thread.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_context_menu_handler_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -9187,7 +9187,7 @@ const _: () = {
 pub type cef_context_menu_handler_t = _cef_context_menu_handler_t;
 #[doc = "\n Provides information about the context menu state. The functions of this\n structure can only be accessed on browser process the UI thread.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_context_menu_params_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -9336,7 +9336,7 @@ const _: () = {
 pub type cef_context_menu_params_t = _cef_context_menu_params_t;
 #[doc = "\n Callback structure for asynchronous continuation of file dialog requests.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_file_dialog_callback_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -9368,7 +9368,7 @@ const _: () = {
 pub type cef_file_dialog_callback_t = _cef_file_dialog_callback_t;
 #[doc = "\n Implement this structure to handle dialog events. The functions of this\n structure will be called on the browser process UI thread.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_dialog_handler_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -9401,7 +9401,7 @@ const _: () = {
 pub type cef_dialog_handler_t = _cef_dialog_handler_t;
 #[doc = "\n Implement this structure to handle events related to browser display state.\n The functions of this structure will be called on the UI thread.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_display_handler_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -9535,7 +9535,7 @@ const _: () = {
 pub type cef_display_handler_t = _cef_display_handler_t;
 #[doc = "\n Structure used to represent a download item.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_download_item_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -9661,7 +9661,7 @@ const _: () = {
 pub type cef_download_item_t = _cef_download_item_t;
 #[doc = "\n Callback structure used to asynchronously continue a download.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_before_download_callback_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -9689,7 +9689,7 @@ const _: () = {
 pub type cef_before_download_callback_t = _cef_before_download_callback_t;
 #[doc = "\n Callback structure used to asynchronously cancel a download.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_download_item_callback_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -9722,7 +9722,7 @@ const _: () = {
 pub type cef_download_item_callback_t = _cef_download_item_callback_t;
 #[doc = "\n Structure used to handle file downloads. The functions of this structure\n will called on the browser process UI thread.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_download_handler_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -9773,7 +9773,7 @@ const _: () = {
 pub type cef_download_handler_t = _cef_download_handler_t;
 #[doc = "\n Implement this structure to handle events related to dragging. The functions\n of this structure will be called on the UI thread.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_drag_handler_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -9812,7 +9812,7 @@ const _: () = {
 pub type cef_drag_handler_t = _cef_drag_handler_t;
 #[doc = "\n Implement this structure to handle events related to find results. The\n functions of this structure will be called on the UI thread.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_find_handler_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -9842,7 +9842,7 @@ const _: () = {
 pub type cef_find_handler_t = _cef_find_handler_t;
 #[doc = "\n Implement this structure to handle events related to focus. The functions of\n this structure will be called on the UI thread.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_focus_handler_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -9884,7 +9884,7 @@ const _: () = {
 pub type cef_focus_handler_t = _cef_focus_handler_t;
 #[doc = "\n Implement this structure to handle events related to cef_frame_t life span.\n The order of callbacks is:\n\n (1) During initial cef_browser_host_t creation and navigation of the main\n frame:\n - cef_frame_handler_t::OnFrameCreated => The initial main frame object has\n   been created. Any commands will be queued until the frame is attached.\n - cef_frame_handler_t::OnMainFrameChanged => The initial main frame object\n   has been assigned to the browser.\n - cef_life_span_handler_t::OnAfterCreated => The browser is now valid and\n   can be used.\n - cef_frame_handler_t::OnFrameAttached => The initial main frame object is\n   now connected to its peer in the renderer process. Commands can be routed.\n\n (2) During further cef_browser_host_t navigation/loading of the main frame\n     and/or sub-frames:\n - cef_frame_handler_t::OnFrameCreated => A new main frame or sub-frame\n   object has been created. Any commands will be queued until the frame is\n   attached.\n - cef_frame_handler_t::OnFrameAttached => A new main frame or sub-frame\n   object is now connected to its peer in the renderer process. Commands can\n   be routed.\n - cef_frame_handler_t::OnFrameDetached => An existing main frame or sub-\n   frame object has lost its connection to the renderer process. If multiple\n   objects are detached at the same time then notifications will be sent for\n   any sub-frame objects before the main frame object. Commands can no longer\n   be routed and will be discarded.\n - cef_frame_handler_t::OnMainFrameChanged => A new main frame object has\n   been assigned to the browser. This will only occur with cross-origin\n   navigation or re-navigation after renderer process termination (due to\n   crashes, etc).\n\n (3) During final cef_browser_host_t destruction of the main frame:\n - cef_frame_handler_t::OnFrameDetached => Any sub-frame objects have lost\n   their connection to the renderer process. Commands can no longer be routed\n   and will be discarded.\n - cef_life_span_handler_t::OnBeforeClose => The browser has been destroyed.\n - cef_frame_handler_t::OnFrameDetached => The main frame object have lost\n   its connection to the renderer process. Notifications will be sent for any\n   sub-frame objects before the main frame object. Commands can no longer be\n   routed and will be discarded.\n - cef_frame_handler_t::OnMainFrameChanged => The final main frame object has\n   been removed from the browser.\n\n Cross-origin navigation and/or loading receives special handling.\n\n When the main frame navigates to a different origin the OnMainFrameChanged\n callback (2) will be executed with the old and new main frame objects.\n\n When a new sub-frame is loaded in, or an existing sub-frame is navigated to,\n a different origin from the parent frame, a temporary sub-frame object will\n first be created in the parent's renderer process. That temporary sub-frame\n will then be discarded after the real cross-origin sub-frame is created in\n the new/target renderer process. The client will receive cross-origin\n navigation callbacks (2) for the transition from the temporary sub-frame to\n the real sub-frame. The temporary sub-frame will not receive or execute\n commands during this transitional period (any sent commands will be\n discarded).\n\n When a new popup browser is created in a different origin from the parent\n browser, a temporary main frame object for the popup will first be created\n in the parent's renderer process. That temporary main frame will then be\n discarded after the real cross-origin main frame is created in the\n new/target renderer process. The client will receive creation and initial\n navigation callbacks (1) for the temporary main frame, followed by cross-\n origin navigation callbacks (2) for the transition from the temporary main\n frame to the real main frame. The temporary main frame may receive and\n execute commands during this transitional period (any sent commands may be\n executed, but the behavior is potentially undesirable since they execute in\n the parent browser's renderer process and not the new/target renderer\n process).\n\n Callbacks will not be executed for placeholders that may be created during\n pre-commit navigation for sub-frames that do not yet exist in the renderer\n process. Placeholders will have cef_frame_t::get_identifier() == -4.\n\n The functions of this structure will be called on the UI thread unless\n otherwise indicated.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_frame_handler_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -9942,7 +9942,7 @@ const _: () = {
 pub type cef_frame_handler_t = _cef_frame_handler_t;
 #[doc = "\n Callback structure used for asynchronous continuation of JavaScript dialog\n requests.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_jsdialog_callback_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -9970,7 +9970,7 @@ const _: () = {
 pub type cef_jsdialog_callback_t = _cef_jsdialog_callback_t;
 #[doc = "\n Implement this structure to handle events related to JavaScript dialogs. The\n functions of this structure will be called on the UI thread.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_jsdialog_handler_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -10026,7 +10026,7 @@ const _: () = {
 pub type cef_jsdialog_handler_t = _cef_jsdialog_handler_t;
 #[doc = "\n Implement this structure to handle events related to keyboard input. The\n functions of this structure will be called on the UI thread.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_keyboard_handler_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -10066,7 +10066,7 @@ const _: () = {
 pub type cef_keyboard_handler_t = _cef_keyboard_handler_t;
 #[doc = "\n Implement this structure to handle events related to browser life span. The\n functions of this structure will be called on the UI thread unless otherwise\n indicated.\n"]
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, crate :: FfiRc)]
 pub struct _cef_life_span_handler_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -10139,7 +10139,7 @@ const _: () = {
 pub type cef_life_span_handler_t = _cef_life_span_handler_t;
 #[doc = "\n Implement this structure to handle events related to browser load status.\n The functions of this structure will be called on the browser process UI\n thread or render process main thread (TID_RENDERER).\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_load_handler_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -10202,7 +10202,7 @@ const _: () = {
 pub type cef_load_handler_t = _cef_load_handler_t;
 #[doc = "\n Callback structure used for asynchronous continuation of media access\n permission requests.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_media_access_callback_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -10231,7 +10231,7 @@ const _: () = {
 pub type cef_media_access_callback_t = _cef_media_access_callback_t;
 #[doc = "\n Callback structure used for asynchronous continuation of permission prompts.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_permission_prompt_callback_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -10258,7 +10258,7 @@ const _: () = {
 pub type cef_permission_prompt_callback_t = _cef_permission_prompt_callback_t;
 #[doc = "\n Implement this structure to handle events related to permission requests.\n The functions of this structure will be called on the browser process UI\n thread.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_permission_handler_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -10315,7 +10315,7 @@ const _: () = {
 pub type cef_permission_handler_t = _cef_permission_handler_t;
 #[doc = "\n Structure representing print settings.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_print_settings_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -10483,7 +10483,7 @@ extern "C" {
 }
 #[doc = "\n Callback structure for asynchronous continuation of print dialog requests.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_print_dialog_callback_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -10515,7 +10515,7 @@ const _: () = {
 pub type cef_print_dialog_callback_t = _cef_print_dialog_callback_t;
 #[doc = "\n Callback structure for asynchronous continuation of print job requests.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_print_job_callback_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -10537,7 +10537,7 @@ const _: () = {
 pub type cef_print_job_callback_t = _cef_print_job_callback_t;
 #[doc = "\n Implement this structure to handle printing on Linux. Each browser will have\n only one print job in progress at a time. The functions of this structure\n will be called on the browser process UI thread.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_print_handler_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -10609,7 +10609,7 @@ const _: () = {
 pub type cef_print_handler_t = _cef_print_handler_t;
 #[doc = "\n Implement this structure to receive accessibility notification when\n accessibility events have been registered. The functions of this structure\n will be called on the UI thread.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_accessibility_handler_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -10644,7 +10644,7 @@ const _: () = {
 pub type cef_accessibility_handler_t = _cef_accessibility_handler_t;
 #[doc = "\n Implement this structure to handle events when window rendering is disabled.\n The functions of this structure will be called on the UI thread.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_render_handler_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -10850,7 +10850,7 @@ const _: () = {
 pub type cef_render_handler_t = _cef_render_handler_t;
 #[doc = "\n Callback structure used for asynchronous continuation of authentication\n requests.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_auth_callback_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -10880,7 +10880,7 @@ const _: () = {
 pub type cef_auth_callback_t = _cef_auth_callback_t;
 #[doc = "\n Structure used to represent a web response. The functions of this structure\n may be called on any thread.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_response_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -11009,7 +11009,7 @@ extern "C" {
 }
 #[doc = "\n Callback for asynchronous continuation of cef_resource_handler_t::skip().\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_resource_skip_callback_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -11033,7 +11033,7 @@ const _: () = {
 pub type cef_resource_skip_callback_t = _cef_resource_skip_callback_t;
 #[doc = "\n Callback for asynchronous continuation of cef_resource_handler_t::read().\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_resource_read_callback_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -11060,7 +11060,7 @@ const _: () = {
 pub type cef_resource_read_callback_t = _cef_resource_read_callback_t;
 #[doc = "\n Structure used to implement a custom request handler structure. The\n functions of this structure will be called on the IO thread unless otherwise\n indicated.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_resource_handler_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -11148,7 +11148,7 @@ const _: () = {
 pub type cef_resource_handler_t = _cef_resource_handler_t;
 #[doc = "\n Implement this structure to filter resource response content. The functions\n of this structure will be called on the browser process IO thread.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_response_filter_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -11185,7 +11185,7 @@ const _: () = {
 pub type cef_response_filter_t = _cef_response_filter_t;
 #[doc = "\n Implement this structure to handle events related to browser requests. The\n functions of this structure will be called on the IO thread unless otherwise\n indicated.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_resource_request_handler_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -11308,7 +11308,7 @@ const _: () = {
 pub type cef_resource_request_handler_t = _cef_resource_request_handler_t;
 #[doc = "\n Implement this structure to filter cookies that may be sent or received from\n resource requests. The functions of this structure will be called on the IO\n thread unless otherwise indicated.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_cookie_access_filter_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -11351,7 +11351,7 @@ const _: () = {
 pub type cef_cookie_access_filter_t = _cef_cookie_access_filter_t;
 #[doc = "\n Structure representing SSL information.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_sslinfo_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -11383,7 +11383,7 @@ extern "C" {
 }
 #[doc = "\n Callback structure for asynchronous handling of an unresponsive process.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_unresponsive_process_callback_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -11413,7 +11413,7 @@ const _: () = {
 pub type cef_unresponsive_process_callback_t = _cef_unresponsive_process_callback_t;
 #[doc = "\n Callback structure used to select a client certificate for authentication.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_select_client_certificate_callback_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -11440,7 +11440,7 @@ const _: () = {
 pub type cef_select_client_certificate_callback_t = _cef_select_client_certificate_callback_t;
 #[doc = "\n Implement this structure to handle events related to browser requests. The\n functions of this structure will be called on the thread indicated.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_request_handler_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -11584,7 +11584,7 @@ const _: () = {
 pub type cef_request_handler_t = _cef_request_handler_t;
 #[doc = "\n Implement this structure to provide handler implementations.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_client_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -11719,7 +11719,7 @@ const _: () = {
 pub type cef_client_t = _cef_client_t;
 #[doc = "\n Structure used to create and/or parse command line arguments. Arguments with\n \"--\", \"-\" and, on Windows, \"/\" prefixes are considered switches. Switches\n will always precede any arguments without switch prefixes. Switches can\n optionally have a value specified using the \"=\" delimiter (e.g.\n \"-switch=value\"). An argument of \"--\" will terminate switch parsing with all\n subsequent tokens, regardless of prefix, being interpreted as non-switch\n arguments. Switch names should be lowercase ASCII and will be converted to\n such if necessary. Switch values will retain the original case and UTF8\n encoding. This structure can be used before cef_initialize() is called.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_command_line_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -11875,7 +11875,7 @@ extern "C" {
 }
 #[doc = "\n Implement this structure to provide handler implementations. The handler\n instance will not be released until all objects related to the context have\n been destroyed.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_request_context_handler_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -11922,7 +11922,7 @@ const _: () = {
 pub type cef_request_context_handler_t = _cef_request_context_handler_t;
 #[doc = "\n Structure used to implement browser process callbacks. The functions of this\n structure will be called on the browser process main thread unless otherwise\n indicated.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_browser_process_handler_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -12008,7 +12008,7 @@ const _: () = {
 pub type cef_browser_process_handler_t = _cef_browser_process_handler_t;
 #[doc = "\n Implement this structure for asynchronous task execution. If the task is\n posted successfully and if the associated message loop is still running then\n the execute() function will be called on the target thread. If the task\n fails to post then the task object may be destroyed on the source thread\n instead of the target thread. For this reason be cautious when performing\n work in the task object destructor.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_task_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -12027,7 +12027,7 @@ const _: () = {
 pub type cef_task_t = _cef_task_t;
 #[doc = "\n Structure that asynchronously executes tasks on the associated thread. It is\n safe to call the functions of this structure on any thread.\n\n CEF maintains multiple internal threads that are used for handling different\n types of tasks in different processes. The cef_thread_id_t definitions in\n cef_types.h list the common CEF threads. Task runners are also available for\n other CEF threads as appropriate (for example, V8 WebWorker threads).\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_task_runner_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -12111,7 +12111,7 @@ extern "C" {
 }
 #[doc = "\n Structure representing a V8 context handle. V8 handles can only be accessed\n from the thread on which they are created. Valid threads for creating a V8\n handle include the render process main thread (TID_RENDERER) and WebWorker\n threads. A task runner for posting tasks on the associated thread can be\n retrieved via the cef_v8context_t::get_task_runner() function.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_v8context_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -12203,7 +12203,7 @@ extern "C" {
 }
 #[doc = "\n Structure that should be implemented to handle V8 function calls. The\n functions of this structure will be called on the thread associated with the\n V8 function.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_v8handler_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -12233,7 +12233,7 @@ const _: () = {
 pub type cef_v8handler_t = _cef_v8handler_t;
 #[doc = "\n Structure that should be implemented to handle V8 accessor calls. Accessor\n identifiers are registered by calling cef_v8value_t::set_value(). The\n functions of this structure will be called on the thread associated with the\n V8 accessor.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_v8accessor_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -12273,7 +12273,7 @@ const _: () = {
 pub type cef_v8accessor_t = _cef_v8accessor_t;
 #[doc = "\n Structure that should be implemented to handle V8 interceptor calls. The\n functions of this structure will be called on the thread associated with the\n V8 interceptor. Interceptor's named property handlers (with first argument\n of type CefString) are called when object is indexed by string. Indexed\n property handlers (with first argument of type int) are called when object\n is indexed by integer.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_v8interceptor_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -12337,7 +12337,7 @@ const _: () = {
 pub type cef_v8interceptor_t = _cef_v8interceptor_t;
 #[doc = "\n Structure representing a V8 exception. The functions of this structure may\n be called on any render process thread.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_v8exception_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -12401,7 +12401,7 @@ const _: () = {
 pub type cef_v8exception_t = _cef_v8exception_t;
 #[doc = "\n Callback structure that is passed to cef_v8value_t::CreateArrayBuffer.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_v8array_buffer_release_callback_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -12428,7 +12428,7 @@ const _: () = {
 pub type cef_v8array_buffer_release_callback_t = _cef_v8array_buffer_release_callback_t;
 #[doc = "\n Structure representing a V8 value handle. V8 handles can only be accessed\n from the thread on which they are created. Valid threads for creating a V8\n handle include the render process main thread (TID_RENDERER) and WebWorker\n threads. A task runner for posting tasks on the associated thread can be\n retrieved via the cef_v8context_t::get_task_runner() function.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_v8value_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -12885,7 +12885,7 @@ extern "C" {
 }
 #[doc = "\n Structure representing a V8 stack trace handle. V8 handles can only be\n accessed from the thread on which they are created. Valid threads for\n creating a V8 handle include the render process main thread (TID_RENDERER)\n and WebWorker threads. A task runner for posting tasks on the associated\n thread can be retrieved via the cef_v8context_t::get_task_runner() function.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_v8stack_trace_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -12928,7 +12928,7 @@ extern "C" {
 }
 #[doc = "\n Structure representing a V8 stack frame handle. V8 handles can only be\n accessed from the thread on which they are created. Valid threads for\n creating a V8 handle include the render process main thread (TID_RENDERER)\n and WebWorker threads. A task runner for posting tasks on the associated\n thread can be retrieved via the cef_v8context_t::get_task_runner() function.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_v8stack_frame_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -13000,7 +13000,7 @@ extern "C" {
 }
 #[doc = "\n Structure used to implement render process callbacks. The functions of this\n structure will be called on the render process main thread (TID_RENDERER)\n unless otherwise indicated.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_render_process_handler_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -13108,7 +13108,7 @@ const _: () = {
 pub type cef_render_process_handler_t = _cef_render_process_handler_t;
 #[doc = "\n Structure used to implement a custom resource bundle structure. See\n CefSettings for additional options related to resource bundle loading. The\n functions of this structure may be called on multiple threads.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_resource_bundle_handler_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -13161,7 +13161,7 @@ const _: () = {
 pub type cef_resource_bundle_handler_t = _cef_resource_bundle_handler_t;
 #[doc = "\n Structure that manages custom scheme registrations.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_scheme_registrar_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_scoped_t,
@@ -13188,7 +13188,7 @@ const _: () = {
 pub type cef_scheme_registrar_t = _cef_scheme_registrar_t;
 #[doc = "\n Structure that creates cef_resource_handler_t instances for handling scheme\n requests. The functions of this structure will always be called on the IO\n thread.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_scheme_handler_factory_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -13230,7 +13230,7 @@ extern "C" {
 }
 #[doc = "\n Implement this structure to provide handler implementations. Methods will be\n called by the process and/or thread indicated.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_app_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -13316,7 +13316,7 @@ extern "C" {
 }
 #[doc = "\n Implement this structure to handle view events. All size and position values\n are in density independent pixels (DIP) unless otherwise indicated. The\n functions of this structure will be called on the browser process UI thread\n unless otherwise indicated.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_view_delegate_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -13429,7 +13429,7 @@ const _: () = {
 pub type cef_view_delegate_t = _cef_view_delegate_t;
 #[doc = "\n Implement this structure to handle BrowserView events. The functions of this\n structure will be called on the browser process UI thread unless otherwise\n indicated.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_browser_view_delegate_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_view_delegate_t,
@@ -13528,24 +13528,9 @@ const _: () = {
 };
 #[doc = "\n Implement this structure to handle BrowserView events. The functions of this\n structure will be called on the browser process UI thread unless otherwise\n indicated.\n"]
 pub type cef_browser_view_delegate_t = _cef_browser_view_delegate_t;
-#[repr(C)]
-#[derive(Debug, Copy, Clone)]
-pub struct _cef_button_t {
-    _unused: [u8; 0],
-}
-#[repr(C)]
-#[derive(Debug, Copy, Clone)]
-pub struct _cef_scroll_view_t {
-    _unused: [u8; 0],
-}
-#[repr(C)]
-#[derive(Debug, Copy, Clone)]
-pub struct _cef_textfield_t {
-    _unused: [u8; 0],
-}
 #[doc = "\n A View is a rectangle within the views View hierarchy. It is the base\n structure for all Views. All size and position values are in density\n independent pixels (DIP) unless otherwise indicated. Methods must be called\n on the browser process UI thread unless otherwise indicated.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_view_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -13882,7 +13867,7 @@ const _: () = {
 pub type cef_view_t = _cef_view_t;
 #[doc = "\n A View hosting a cef_browser_t instance. Methods must be called on the\n browser process UI thread unless otherwise indicated.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_browser_view_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_view_t,
@@ -13942,7 +13927,7 @@ extern "C" {
 }
 #[doc = "\n This structure typically, but not always, corresponds to a physical display\n connected to the system. A fake Display may exist on a headless system, or a\n Display may correspond to a remote, virtual display. All size and position\n values are in density independent pixel (DIP) coordinates unless otherwise\n indicated. Methods must be called on the browser process UI thread unless\n otherwise indicated.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_display_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -14037,7 +14022,7 @@ extern "C" {
 }
 #[doc = "\n Controller for an overlay that contains a contents View added via\n cef_window_t::AddOverlayView. Methods exposed by this controller should be\n called in preference to functions of the same name exposed by the contents\n View unless otherwise indicated. Methods must be called on the browser\n process UI thread unless otherwise indicated.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_overlay_controller_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_base_ref_counted_t,
@@ -14169,7 +14154,7 @@ const _: () = {
 pub type cef_overlay_controller_t = _cef_overlay_controller_t;
 #[doc = "\n Implement this structure to handle Panel events. The functions of this\n structure will be called on the browser process UI thread unless otherwise\n indicated.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_panel_delegate_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_view_delegate_t,
@@ -14184,24 +14169,9 @@ const _: () = {
 };
 #[doc = "\n Implement this structure to handle Panel events. The functions of this\n structure will be called on the browser process UI thread unless otherwise\n indicated.\n"]
 pub type cef_panel_delegate_t = _cef_panel_delegate_t;
-#[repr(C)]
-#[derive(Debug, Copy, Clone)]
-pub struct _cef_box_layout_t {
-    _unused: [u8; 0],
-}
-#[repr(C)]
-#[derive(Debug, Copy, Clone)]
-pub struct _cef_fill_layout_t {
-    _unused: [u8; 0],
-}
-#[repr(C)]
-#[derive(Debug, Copy, Clone)]
-pub struct _cef_layout_t {
-    _unused: [u8; 0],
-}
 #[doc = "\n A Panel is a container in the views hierarchy that can contain other Views\n as children. Methods must be called on the browser process UI thread unless\n otherwise indicated.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_panel_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_view_t,
@@ -14300,7 +14270,7 @@ extern "C" {
 }
 #[doc = "\n Implement this structure to handle window events. The functions of this\n structure will be called on the browser process UI thread unless otherwise\n indicated.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_window_delegate_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_panel_delegate_t,
@@ -14524,7 +14494,7 @@ const _: () = {
 pub type cef_window_delegate_t = _cef_window_delegate_t;
 #[doc = "\n A Window is a top-level Window/widget in the Views hierarchy. By default it\n will have a non-client area with title bar, icon and buttons that supports\n moving and resizing. All size and position values are in density independent\n pixels (DIP) unless otherwise indicated. Methods must be called on the\n browser process UI thread unless otherwise indicated.\n"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
 pub struct _cef_window_t {
     #[doc = "\n Base structure.\n"]
     pub base: cef_panel_t,
@@ -14800,3 +14770,660 @@ extern "C" {
     #[doc = "\n Create a new Window.\n"]
     pub fn cef_window_create_top_level(delegate: *mut _cef_window_delegate_t) -> *mut cef_window_t;
 }
+#[doc = "\n A View representing a button. Depending on the specific type, the button\n could be implemented by a native control or custom rendered. Methods must be\n called on the browser process UI thread unless otherwise indicated.\n"]
+#[repr(C)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
+pub struct _cef_button_t {
+    #[doc = "\n Base structure.\n"]
+    pub base: cef_view_t,
+    #[doc = "\n Returns this Button as a LabelButton or NULL if this is not a LabelButton.\n"]
+    pub as_label_button: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_button_t) -> *mut _cef_label_button_t,
+    >,
+    #[doc = "\n Sets the current display state of the Button.\n"]
+    pub set_state: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_button_t, state: cef_button_state_t),
+    >,
+    #[doc = "\n Returns the current display state of the Button.\n"]
+    pub get_state: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_button_t) -> cef_button_state_t,
+    >,
+    #[doc = "\n Sets the Button will use an ink drop effect for displaying state changes.\n"]
+    pub set_ink_drop_enabled: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_button_t, enabled: ::std::os::raw::c_int),
+    >,
+    #[doc = "\n Sets the tooltip text that will be displayed when the user hovers the\n mouse cursor over the Button.\n"]
+    pub set_tooltip_text: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_button_t, tooltip_text: *const cef_string_t),
+    >,
+    #[doc = "\n Sets the accessible name that will be exposed to assistive technology\n (AT).\n"]
+    pub set_accessible_name: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_button_t, name: *const cef_string_t),
+    >,
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of _cef_button_t"][::std::mem::size_of::<_cef_button_t>() - 496usize];
+    ["Alignment of _cef_button_t"][::std::mem::align_of::<_cef_button_t>() - 8usize];
+    ["Offset of field: _cef_button_t::base"][::std::mem::offset_of!(_cef_button_t, base) - 0usize];
+    ["Offset of field: _cef_button_t::as_label_button"]
+        [::std::mem::offset_of!(_cef_button_t, as_label_button) - 448usize];
+    ["Offset of field: _cef_button_t::set_state"]
+        [::std::mem::offset_of!(_cef_button_t, set_state) - 456usize];
+    ["Offset of field: _cef_button_t::get_state"]
+        [::std::mem::offset_of!(_cef_button_t, get_state) - 464usize];
+    ["Offset of field: _cef_button_t::set_ink_drop_enabled"]
+        [::std::mem::offset_of!(_cef_button_t, set_ink_drop_enabled) - 472usize];
+    ["Offset of field: _cef_button_t::set_tooltip_text"]
+        [::std::mem::offset_of!(_cef_button_t, set_tooltip_text) - 480usize];
+    ["Offset of field: _cef_button_t::set_accessible_name"]
+        [::std::mem::offset_of!(_cef_button_t, set_accessible_name) - 488usize];
+};
+#[doc = "\n A View representing a button. Depending on the specific type, the button\n could be implemented by a native control or custom rendered. Methods must be\n called on the browser process UI thread unless otherwise indicated.\n"]
+pub type cef_button_t = _cef_button_t;
+#[doc = "\n Implement this structure to handle Button events. The functions of this\n structure will be called on the browser process UI thread unless otherwise\n indicated.\n"]
+#[repr(C)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
+pub struct _cef_button_delegate_t {
+    #[doc = "\n Base structure.\n"]
+    pub base: cef_view_delegate_t,
+    #[doc = "\n Called when |button| is pressed.\n"]
+    pub on_button_pressed: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_button_delegate_t, button: *mut _cef_button_t),
+    >,
+    #[doc = "\n Called when the state of |button| changes.\n"]
+    pub on_button_state_changed: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_button_delegate_t, button: *mut _cef_button_t),
+    >,
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of _cef_button_delegate_t"][::std::mem::size_of::<_cef_button_delegate_t>() - 144usize];
+    ["Alignment of _cef_button_delegate_t"]
+        [::std::mem::align_of::<_cef_button_delegate_t>() - 8usize];
+    ["Offset of field: _cef_button_delegate_t::base"]
+        [::std::mem::offset_of!(_cef_button_delegate_t, base) - 0usize];
+    ["Offset of field: _cef_button_delegate_t::on_button_pressed"]
+        [::std::mem::offset_of!(_cef_button_delegate_t, on_button_pressed) - 128usize];
+    ["Offset of field: _cef_button_delegate_t::on_button_state_changed"]
+        [::std::mem::offset_of!(_cef_button_delegate_t, on_button_state_changed) - 136usize];
+};
+#[doc = "\n Implement this structure to handle Button events. The functions of this\n structure will be called on the browser process UI thread unless otherwise\n indicated.\n"]
+pub type cef_button_delegate_t = _cef_button_delegate_t;
+#[doc = "\n LabelButton is a button with optional text and/or icon. Methods must be\n called on the browser process UI thread unless otherwise indicated.\n"]
+#[repr(C)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
+pub struct _cef_label_button_t {
+    #[doc = "\n Base structure.\n"]
+    pub base: cef_button_t,
+    #[doc = "\n Returns this LabelButton as a MenuButton or NULL if this is not a\n MenuButton.\n"]
+    pub as_menu_button: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_label_button_t) -> *mut _cef_menu_button_t,
+    >,
+    #[doc = "\n Sets the text shown on the LabelButton. By default |text| will also be\n used as the accessible name.\n"]
+    pub set_text: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_label_button_t, text: *const cef_string_t),
+    >,
+    #[doc = "\n Returns the text shown on the LabelButton.\n"]
+    pub get_text: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_label_button_t) -> cef_string_userfree_t,
+    >,
+    #[doc = "\n Sets the image shown for |button_state|. When this Button is drawn if no\n image exists for the current state then the image for\n CEF_BUTTON_STATE_NORMAL, if any, will be shown.\n"]
+    pub set_image: ::std::option::Option<
+        unsafe extern "C" fn(
+            self_: *mut _cef_label_button_t,
+            button_state: cef_button_state_t,
+            image: *mut _cef_image_t,
+        ),
+    >,
+    #[doc = "\n Returns the image shown for |button_state|. If no image exists for that\n state then the image for CEF_BUTTON_STATE_NORMAL will be returned.\n"]
+    pub get_image: ::std::option::Option<
+        unsafe extern "C" fn(
+            self_: *mut _cef_label_button_t,
+            button_state: cef_button_state_t,
+        ) -> *mut _cef_image_t,
+    >,
+    #[doc = "\n Sets the text color shown for the specified button |for_state| to |color|.\n"]
+    pub set_text_color: ::std::option::Option<
+        unsafe extern "C" fn(
+            self_: *mut _cef_label_button_t,
+            for_state: cef_button_state_t,
+            color: cef_color_t,
+        ),
+    >,
+    #[doc = "\n Sets the text colors shown for the non-disabled states to |color|.\n"]
+    pub set_enabled_text_colors: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_label_button_t, color: cef_color_t),
+    >,
+    #[doc = "\n Sets the font list. The format is \"<FONT_FAMILY_LIST>,[STYLES] <SIZE>\",\n where:\n - FONT_FAMILY_LIST is a comma-separated list of font family names,\n - STYLES is an optional space-separated list of style names (case-\n   sensitive \"Bold\" and \"Italic\" are supported), and\n - SIZE is an integer font size in pixels with the suffix \"px\".\n\n Here are examples of valid font description strings:\n - \"Arial, Helvetica, Bold Italic 14px\"\n - \"Arial, 14px\"\n"]
+    pub set_font_list: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_label_button_t, font_list: *const cef_string_t),
+    >,
+    #[doc = "\n Sets the horizontal alignment; reversed in RTL. Default is\n CEF_HORIZONTAL_ALIGNMENT_CENTER.\n"]
+    pub set_horizontal_alignment: ::std::option::Option<
+        unsafe extern "C" fn(
+            self_: *mut _cef_label_button_t,
+            alignment: cef_horizontal_alignment_t,
+        ),
+    >,
+    #[doc = "\n Reset the minimum size of this LabelButton to |size|.\n"]
+    pub set_minimum_size: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_label_button_t, size: *const cef_size_t),
+    >,
+    #[doc = "\n Reset the maximum size of this LabelButton to |size|.\n"]
+    pub set_maximum_size: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_label_button_t, size: *const cef_size_t),
+    >,
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of _cef_label_button_t"][::std::mem::size_of::<_cef_label_button_t>() - 584usize];
+    ["Alignment of _cef_label_button_t"][::std::mem::align_of::<_cef_label_button_t>() - 8usize];
+    ["Offset of field: _cef_label_button_t::base"]
+        [::std::mem::offset_of!(_cef_label_button_t, base) - 0usize];
+    ["Offset of field: _cef_label_button_t::as_menu_button"]
+        [::std::mem::offset_of!(_cef_label_button_t, as_menu_button) - 496usize];
+    ["Offset of field: _cef_label_button_t::set_text"]
+        [::std::mem::offset_of!(_cef_label_button_t, set_text) - 504usize];
+    ["Offset of field: _cef_label_button_t::get_text"]
+        [::std::mem::offset_of!(_cef_label_button_t, get_text) - 512usize];
+    ["Offset of field: _cef_label_button_t::set_image"]
+        [::std::mem::offset_of!(_cef_label_button_t, set_image) - 520usize];
+    ["Offset of field: _cef_label_button_t::get_image"]
+        [::std::mem::offset_of!(_cef_label_button_t, get_image) - 528usize];
+    ["Offset of field: _cef_label_button_t::set_text_color"]
+        [::std::mem::offset_of!(_cef_label_button_t, set_text_color) - 536usize];
+    ["Offset of field: _cef_label_button_t::set_enabled_text_colors"]
+        [::std::mem::offset_of!(_cef_label_button_t, set_enabled_text_colors) - 544usize];
+    ["Offset of field: _cef_label_button_t::set_font_list"]
+        [::std::mem::offset_of!(_cef_label_button_t, set_font_list) - 552usize];
+    ["Offset of field: _cef_label_button_t::set_horizontal_alignment"]
+        [::std::mem::offset_of!(_cef_label_button_t, set_horizontal_alignment) - 560usize];
+    ["Offset of field: _cef_label_button_t::set_minimum_size"]
+        [::std::mem::offset_of!(_cef_label_button_t, set_minimum_size) - 568usize];
+    ["Offset of field: _cef_label_button_t::set_maximum_size"]
+        [::std::mem::offset_of!(_cef_label_button_t, set_maximum_size) - 576usize];
+};
+#[doc = "\n LabelButton is a button with optional text and/or icon. Methods must be\n called on the browser process UI thread unless otherwise indicated.\n"]
+pub type cef_label_button_t = _cef_label_button_t;
+extern "C" {
+    #[doc = "\n Create a new LabelButton. A |delegate| must be provided to handle the button\n click. |text| will be shown on the LabelButton and used as the default\n accessible name.\n"]
+    pub fn cef_label_button_create(
+        delegate: *mut _cef_button_delegate_t,
+        text: *const cef_string_t,
+    ) -> *mut cef_label_button_t;
+}
+#[doc = "\n MenuButton pressed lock is released when this object is destroyed.\n"]
+#[repr(C)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
+pub struct _cef_menu_button_pressed_lock_t {
+    #[doc = "\n Base structure.\n"]
+    pub base: cef_base_ref_counted_t,
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of _cef_menu_button_pressed_lock_t"]
+        [::std::mem::size_of::<_cef_menu_button_pressed_lock_t>() - 40usize];
+    ["Alignment of _cef_menu_button_pressed_lock_t"]
+        [::std::mem::align_of::<_cef_menu_button_pressed_lock_t>() - 8usize];
+    ["Offset of field: _cef_menu_button_pressed_lock_t::base"]
+        [::std::mem::offset_of!(_cef_menu_button_pressed_lock_t, base) - 0usize];
+};
+#[doc = "\n MenuButton pressed lock is released when this object is destroyed.\n"]
+pub type cef_menu_button_pressed_lock_t = _cef_menu_button_pressed_lock_t;
+#[doc = "\n Implement this structure to handle MenuButton events. The functions of this\n structure will be called on the browser process UI thread unless otherwise\n indicated.\n"]
+#[repr(C)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
+pub struct _cef_menu_button_delegate_t {
+    #[doc = "\n Base structure.\n"]
+    pub base: cef_button_delegate_t,
+    #[doc = "\n Called when |button| is pressed. Call cef_menu_button_t::show_menu() to\n show a popup menu at |screen_point|. When showing a custom popup such as a\n window keep a reference to |button_pressed_lock| until the popup is hidden\n to maintain the pressed button state.\n"]
+    pub on_menu_button_pressed: ::std::option::Option<
+        unsafe extern "C" fn(
+            self_: *mut _cef_menu_button_delegate_t,
+            menu_button: *mut _cef_menu_button_t,
+            screen_point: *const cef_point_t,
+            button_pressed_lock: *mut _cef_menu_button_pressed_lock_t,
+        ),
+    >,
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of _cef_menu_button_delegate_t"]
+        [::std::mem::size_of::<_cef_menu_button_delegate_t>() - 152usize];
+    ["Alignment of _cef_menu_button_delegate_t"]
+        [::std::mem::align_of::<_cef_menu_button_delegate_t>() - 8usize];
+    ["Offset of field: _cef_menu_button_delegate_t::base"]
+        [::std::mem::offset_of!(_cef_menu_button_delegate_t, base) - 0usize];
+    ["Offset of field: _cef_menu_button_delegate_t::on_menu_button_pressed"]
+        [::std::mem::offset_of!(_cef_menu_button_delegate_t, on_menu_button_pressed) - 144usize];
+};
+#[doc = "\n Implement this structure to handle MenuButton events. The functions of this\n structure will be called on the browser process UI thread unless otherwise\n indicated.\n"]
+pub type cef_menu_button_delegate_t = _cef_menu_button_delegate_t;
+#[doc = "\n MenuButton is a button with optional text, icon and/or menu marker that\n shows a menu when clicked with the left mouse button. All size and position\n values are in density independent pixels (DIP) unless otherwise indicated.\n Methods must be called on the browser process UI thread unless otherwise\n indicated.\n"]
+#[repr(C)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
+pub struct _cef_menu_button_t {
+    #[doc = "\n Base structure.\n"]
+    pub base: cef_label_button_t,
+    #[doc = "\n Show a menu with contents |menu_model|. |screen_point| specifies the menu\n position in screen coordinates. |anchor_position| specifies how the menu\n will be anchored relative to |screen_point|. This function should be\n called from cef_menu_button_delegate_t::on_menu_button_pressed().\n"]
+    pub show_menu: ::std::option::Option<
+        unsafe extern "C" fn(
+            self_: *mut _cef_menu_button_t,
+            menu_model: *mut _cef_menu_model_t,
+            screen_point: *const cef_point_t,
+            anchor_position: cef_menu_anchor_position_t,
+        ),
+    >,
+    #[doc = "\n Show the menu for this button. Results in a call to\n cef_menu_button_delegate_t::on_menu_button_pressed().\n"]
+    pub trigger_menu: ::std::option::Option<unsafe extern "C" fn(self_: *mut _cef_menu_button_t)>,
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of _cef_menu_button_t"][::std::mem::size_of::<_cef_menu_button_t>() - 600usize];
+    ["Alignment of _cef_menu_button_t"][::std::mem::align_of::<_cef_menu_button_t>() - 8usize];
+    ["Offset of field: _cef_menu_button_t::base"]
+        [::std::mem::offset_of!(_cef_menu_button_t, base) - 0usize];
+    ["Offset of field: _cef_menu_button_t::show_menu"]
+        [::std::mem::offset_of!(_cef_menu_button_t, show_menu) - 584usize];
+    ["Offset of field: _cef_menu_button_t::trigger_menu"]
+        [::std::mem::offset_of!(_cef_menu_button_t, trigger_menu) - 592usize];
+};
+#[doc = "\n MenuButton is a button with optional text, icon and/or menu marker that\n shows a menu when clicked with the left mouse button. All size and position\n values are in density independent pixels (DIP) unless otherwise indicated.\n Methods must be called on the browser process UI thread unless otherwise\n indicated.\n"]
+pub type cef_menu_button_t = _cef_menu_button_t;
+extern "C" {
+    #[doc = "\n Create a new MenuButton. A |delegate| must be provided to call show_menu()\n when the button is clicked. |text| will be shown on the MenuButton and used\n as the default accessible name. If |with_frame| is true (1) the button will\n have a visible frame at all times, center alignment, additional padding and\n a default minimum size of 70x33 DIP. If |with_frame| is false (0) the button\n will only have a visible frame on hover/press, left alignment, less padding\n and no default minimum size.\n"]
+    pub fn cef_menu_button_create(
+        delegate: *mut _cef_menu_button_delegate_t,
+        text: *const cef_string_t,
+    ) -> *mut cef_menu_button_t;
+}
+#[doc = "\n A ScrollView will show horizontal and/or vertical scrollbars when necessary\n based on the size of the attached content view. Methods must be called on\n the browser process UI thread unless otherwise indicated.\n"]
+#[repr(C)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
+pub struct _cef_scroll_view_t {
+    #[doc = "\n Base structure.\n"]
+    pub base: cef_view_t,
+    #[doc = "\n Set the content View. The content View must have a specified size (e.g.\n via cef_view_t::SetBounds or cef_view_delegate_t::GetPreferredSize).\n"]
+    pub set_content_view: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_scroll_view_t, view: *mut _cef_view_t),
+    >,
+    #[doc = "\n Returns the content View.\n"]
+    pub get_content_view: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_scroll_view_t) -> *mut _cef_view_t,
+    >,
+    #[doc = "\n Returns the visible region of the content View.\n"]
+    pub get_visible_content_rect:
+        ::std::option::Option<unsafe extern "C" fn(self_: *mut _cef_scroll_view_t) -> cef_rect_t>,
+    #[doc = "\n Returns true (1) if the horizontal scrollbar is currently showing.\n"]
+    pub has_horizontal_scrollbar: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_scroll_view_t) -> ::std::os::raw::c_int,
+    >,
+    #[doc = "\n Returns the height of the horizontal scrollbar.\n"]
+    pub get_horizontal_scrollbar_height: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_scroll_view_t) -> ::std::os::raw::c_int,
+    >,
+    #[doc = "\n Returns true (1) if the vertical scrollbar is currently showing.\n"]
+    pub has_vertical_scrollbar: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_scroll_view_t) -> ::std::os::raw::c_int,
+    >,
+    #[doc = "\n Returns the width of the vertical scrollbar.\n"]
+    pub get_vertical_scrollbar_width: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_scroll_view_t) -> ::std::os::raw::c_int,
+    >,
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of _cef_scroll_view_t"][::std::mem::size_of::<_cef_scroll_view_t>() - 504usize];
+    ["Alignment of _cef_scroll_view_t"][::std::mem::align_of::<_cef_scroll_view_t>() - 8usize];
+    ["Offset of field: _cef_scroll_view_t::base"]
+        [::std::mem::offset_of!(_cef_scroll_view_t, base) - 0usize];
+    ["Offset of field: _cef_scroll_view_t::set_content_view"]
+        [::std::mem::offset_of!(_cef_scroll_view_t, set_content_view) - 448usize];
+    ["Offset of field: _cef_scroll_view_t::get_content_view"]
+        [::std::mem::offset_of!(_cef_scroll_view_t, get_content_view) - 456usize];
+    ["Offset of field: _cef_scroll_view_t::get_visible_content_rect"]
+        [::std::mem::offset_of!(_cef_scroll_view_t, get_visible_content_rect) - 464usize];
+    ["Offset of field: _cef_scroll_view_t::has_horizontal_scrollbar"]
+        [::std::mem::offset_of!(_cef_scroll_view_t, has_horizontal_scrollbar) - 472usize];
+    ["Offset of field: _cef_scroll_view_t::get_horizontal_scrollbar_height"]
+        [::std::mem::offset_of!(_cef_scroll_view_t, get_horizontal_scrollbar_height) - 480usize];
+    ["Offset of field: _cef_scroll_view_t::has_vertical_scrollbar"]
+        [::std::mem::offset_of!(_cef_scroll_view_t, has_vertical_scrollbar) - 488usize];
+    ["Offset of field: _cef_scroll_view_t::get_vertical_scrollbar_width"]
+        [::std::mem::offset_of!(_cef_scroll_view_t, get_vertical_scrollbar_width) - 496usize];
+};
+#[doc = "\n A ScrollView will show horizontal and/or vertical scrollbars when necessary\n based on the size of the attached content view. Methods must be called on\n the browser process UI thread unless otherwise indicated.\n"]
+pub type cef_scroll_view_t = _cef_scroll_view_t;
+extern "C" {
+    #[doc = "\n Create a new ScrollView.\n"]
+    pub fn cef_scroll_view_create(delegate: *mut _cef_view_delegate_t) -> *mut cef_scroll_view_t;
+}
+#[doc = "\n Implement this structure to handle Textfield events. The functions of this\n structure will be called on the browser process UI thread unless otherwise\n indicated.\n"]
+#[repr(C)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
+pub struct _cef_textfield_delegate_t {
+    #[doc = "\n Base structure.\n"]
+    pub base: cef_view_delegate_t,
+    #[doc = "\n Called when |textfield| receives a keyboard event. |event| contains\n information about the keyboard event. Return true (1) if the keyboard\n event was handled or false (0) otherwise for default handling.\n"]
+    pub on_key_event: ::std::option::Option<
+        unsafe extern "C" fn(
+            self_: *mut _cef_textfield_delegate_t,
+            textfield: *mut _cef_textfield_t,
+            event: *const cef_key_event_t,
+        ) -> ::std::os::raw::c_int,
+    >,
+    #[doc = "\n Called after performing a user action that may change |textfield|.\n"]
+    pub on_after_user_action: ::std::option::Option<
+        unsafe extern "C" fn(
+            self_: *mut _cef_textfield_delegate_t,
+            textfield: *mut _cef_textfield_t,
+        ),
+    >,
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of _cef_textfield_delegate_t"]
+        [::std::mem::size_of::<_cef_textfield_delegate_t>() - 144usize];
+    ["Alignment of _cef_textfield_delegate_t"]
+        [::std::mem::align_of::<_cef_textfield_delegate_t>() - 8usize];
+    ["Offset of field: _cef_textfield_delegate_t::base"]
+        [::std::mem::offset_of!(_cef_textfield_delegate_t, base) - 0usize];
+    ["Offset of field: _cef_textfield_delegate_t::on_key_event"]
+        [::std::mem::offset_of!(_cef_textfield_delegate_t, on_key_event) - 128usize];
+    ["Offset of field: _cef_textfield_delegate_t::on_after_user_action"]
+        [::std::mem::offset_of!(_cef_textfield_delegate_t, on_after_user_action) - 136usize];
+};
+#[doc = "\n Implement this structure to handle Textfield events. The functions of this\n structure will be called on the browser process UI thread unless otherwise\n indicated.\n"]
+pub type cef_textfield_delegate_t = _cef_textfield_delegate_t;
+#[doc = "\n A Textfield supports editing of text. This control is custom rendered with\n no platform-specific code. Methods must be called on the browser process UI\n thread unless otherwise indicated.\n"]
+#[repr(C)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
+pub struct _cef_textfield_t {
+    #[doc = "\n Base structure.\n"]
+    pub base: cef_view_t,
+    #[doc = "\n Sets whether the text will be displayed as asterisks.\n"]
+    pub set_password_input: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_textfield_t, password_input: ::std::os::raw::c_int),
+    >,
+    #[doc = "\n Returns true (1) if the text will be displayed as asterisks.\n"]
+    pub is_password_input: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_textfield_t) -> ::std::os::raw::c_int,
+    >,
+    #[doc = "\n Sets whether the text will read-only.\n"]
+    pub set_read_only: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_textfield_t, read_only: ::std::os::raw::c_int),
+    >,
+    #[doc = "\n Returns true (1) if the text is read-only.\n"]
+    pub is_read_only: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_textfield_t) -> ::std::os::raw::c_int,
+    >,
+    #[doc = "\n Returns the currently displayed text.\n"]
+    pub get_text: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_textfield_t) -> cef_string_userfree_t,
+    >,
+    #[doc = "\n Sets the contents to |text|. The cursor will be moved to end of the text\n if the current position is outside of the text range.\n"]
+    pub set_text: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_textfield_t, text: *const cef_string_t),
+    >,
+    #[doc = "\n Appends |text| to the previously-existing text.\n"]
+    pub append_text: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_textfield_t, text: *const cef_string_t),
+    >,
+    #[doc = "\n Inserts |text| at the current cursor position replacing any selected text.\n"]
+    pub insert_or_replace_text: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_textfield_t, text: *const cef_string_t),
+    >,
+    #[doc = "\n Returns true (1) if there is any selected text.\n"]
+    pub has_selection: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_textfield_t) -> ::std::os::raw::c_int,
+    >,
+    #[doc = "\n Returns the currently selected text.\n"]
+    pub get_selected_text: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_textfield_t) -> cef_string_userfree_t,
+    >,
+    #[doc = "\n Selects all text. If |reversed| is true (1) the range will end at the\n logical beginning of the text; this generally shows the leading portion of\n text that overflows its display area.\n"]
+    pub select_all: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_textfield_t, reversed: ::std::os::raw::c_int),
+    >,
+    #[doc = "\n Clears the text selection and sets the caret to the end.\n"]
+    pub clear_selection: ::std::option::Option<unsafe extern "C" fn(self_: *mut _cef_textfield_t)>,
+    #[doc = "\n Returns the selected logical text range.\n"]
+    pub get_selected_range:
+        ::std::option::Option<unsafe extern "C" fn(self_: *mut _cef_textfield_t) -> cef_range_t>,
+    #[doc = "\n Selects the specified logical text range.\n"]
+    pub select_range: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_textfield_t, range: *const cef_range_t),
+    >,
+    #[doc = "\n Returns the current cursor position.\n"]
+    pub get_cursor_position:
+        ::std::option::Option<unsafe extern "C" fn(self_: *mut _cef_textfield_t) -> usize>,
+    #[doc = "\n Sets the text color.\n"]
+    pub set_text_color: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_textfield_t, color: cef_color_t),
+    >,
+    #[doc = "\n Returns the text color.\n"]
+    pub get_text_color:
+        ::std::option::Option<unsafe extern "C" fn(self_: *mut _cef_textfield_t) -> cef_color_t>,
+    #[doc = "\n Sets the selection text color.\n"]
+    pub set_selection_text_color: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_textfield_t, color: cef_color_t),
+    >,
+    #[doc = "\n Returns the selection text color.\n"]
+    pub get_selection_text_color:
+        ::std::option::Option<unsafe extern "C" fn(self_: *mut _cef_textfield_t) -> cef_color_t>,
+    #[doc = "\n Sets the selection background color.\n"]
+    pub set_selection_background_color: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_textfield_t, color: cef_color_t),
+    >,
+    #[doc = "\n Returns the selection background color.\n"]
+    pub get_selection_background_color:
+        ::std::option::Option<unsafe extern "C" fn(self_: *mut _cef_textfield_t) -> cef_color_t>,
+    #[doc = "\n Sets the font list. The format is \"<FONT_FAMILY_LIST>,[STYLES] <SIZE>\",\n where:\n - FONT_FAMILY_LIST is a comma-separated list of font family names,\n - STYLES is an optional space-separated list of style names (case-\n   sensitive \"Bold\" and \"Italic\" are supported), and\n - SIZE is an integer font size in pixels with the suffix \"px\".\n\n Here are examples of valid font description strings:\n - \"Arial, Helvetica, Bold Italic 14px\"\n - \"Arial, 14px\"\n"]
+    pub set_font_list: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_textfield_t, font_list: *const cef_string_t),
+    >,
+    #[doc = "\n Applies |color| to the specified |range| without changing the default\n color. If |range| is NULL the color will be set on the complete text\n contents.\n"]
+    pub apply_text_color: ::std::option::Option<
+        unsafe extern "C" fn(
+            self_: *mut _cef_textfield_t,
+            color: cef_color_t,
+            range: *const cef_range_t,
+        ),
+    >,
+    #[doc = "\n Applies |style| to the specified |range| without changing the default\n style. If |add| is true (1) the style will be added, otherwise the style\n will be removed. If |range| is NULL the style will be set on the complete\n text contents.\n"]
+    pub apply_text_style: ::std::option::Option<
+        unsafe extern "C" fn(
+            self_: *mut _cef_textfield_t,
+            style: cef_text_style_t,
+            add: ::std::os::raw::c_int,
+            range: *const cef_range_t,
+        ),
+    >,
+    #[doc = "\n Returns true (1) if the action associated with the specified command id is\n enabled. See additional comments on execute_command().\n"]
+    pub is_command_enabled: ::std::option::Option<
+        unsafe extern "C" fn(
+            self_: *mut _cef_textfield_t,
+            command_id: cef_text_field_commands_t,
+        ) -> ::std::os::raw::c_int,
+    >,
+    #[doc = "\n Performs the action associated with the specified command id.\n"]
+    pub execute_command: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_textfield_t, command_id: cef_text_field_commands_t),
+    >,
+    #[doc = "\n Clears Edit history.\n"]
+    pub clear_edit_history:
+        ::std::option::Option<unsafe extern "C" fn(self_: *mut _cef_textfield_t)>,
+    #[doc = "\n Sets the placeholder text that will be displayed when the Textfield is\n NULL.\n"]
+    pub set_placeholder_text: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_textfield_t, text: *const cef_string_t),
+    >,
+    #[doc = "\n Returns the placeholder text that will be displayed when the Textfield is\n NULL.\n"]
+    pub get_placeholder_text: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_textfield_t) -> cef_string_userfree_t,
+    >,
+    #[doc = "\n Sets the placeholder text color.\n"]
+    pub set_placeholder_text_color: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_textfield_t, color: cef_color_t),
+    >,
+    #[doc = "\n Set the accessible name that will be exposed to assistive technology (AT).\n"]
+    pub set_accessible_name: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_textfield_t, name: *const cef_string_t),
+    >,
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of _cef_textfield_t"][::std::mem::size_of::<_cef_textfield_t>() - 696usize];
+    ["Alignment of _cef_textfield_t"][::std::mem::align_of::<_cef_textfield_t>() - 8usize];
+    ["Offset of field: _cef_textfield_t::base"]
+        [::std::mem::offset_of!(_cef_textfield_t, base) - 0usize];
+    ["Offset of field: _cef_textfield_t::set_password_input"]
+        [::std::mem::offset_of!(_cef_textfield_t, set_password_input) - 448usize];
+    ["Offset of field: _cef_textfield_t::is_password_input"]
+        [::std::mem::offset_of!(_cef_textfield_t, is_password_input) - 456usize];
+    ["Offset of field: _cef_textfield_t::set_read_only"]
+        [::std::mem::offset_of!(_cef_textfield_t, set_read_only) - 464usize];
+    ["Offset of field: _cef_textfield_t::is_read_only"]
+        [::std::mem::offset_of!(_cef_textfield_t, is_read_only) - 472usize];
+    ["Offset of field: _cef_textfield_t::get_text"]
+        [::std::mem::offset_of!(_cef_textfield_t, get_text) - 480usize];
+    ["Offset of field: _cef_textfield_t::set_text"]
+        [::std::mem::offset_of!(_cef_textfield_t, set_text) - 488usize];
+    ["Offset of field: _cef_textfield_t::append_text"]
+        [::std::mem::offset_of!(_cef_textfield_t, append_text) - 496usize];
+    ["Offset of field: _cef_textfield_t::insert_or_replace_text"]
+        [::std::mem::offset_of!(_cef_textfield_t, insert_or_replace_text) - 504usize];
+    ["Offset of field: _cef_textfield_t::has_selection"]
+        [::std::mem::offset_of!(_cef_textfield_t, has_selection) - 512usize];
+    ["Offset of field: _cef_textfield_t::get_selected_text"]
+        [::std::mem::offset_of!(_cef_textfield_t, get_selected_text) - 520usize];
+    ["Offset of field: _cef_textfield_t::select_all"]
+        [::std::mem::offset_of!(_cef_textfield_t, select_all) - 528usize];
+    ["Offset of field: _cef_textfield_t::clear_selection"]
+        [::std::mem::offset_of!(_cef_textfield_t, clear_selection) - 536usize];
+    ["Offset of field: _cef_textfield_t::get_selected_range"]
+        [::std::mem::offset_of!(_cef_textfield_t, get_selected_range) - 544usize];
+    ["Offset of field: _cef_textfield_t::select_range"]
+        [::std::mem::offset_of!(_cef_textfield_t, select_range) - 552usize];
+    ["Offset of field: _cef_textfield_t::get_cursor_position"]
+        [::std::mem::offset_of!(_cef_textfield_t, get_cursor_position) - 560usize];
+    ["Offset of field: _cef_textfield_t::set_text_color"]
+        [::std::mem::offset_of!(_cef_textfield_t, set_text_color) - 568usize];
+    ["Offset of field: _cef_textfield_t::get_text_color"]
+        [::std::mem::offset_of!(_cef_textfield_t, get_text_color) - 576usize];
+    ["Offset of field: _cef_textfield_t::set_selection_text_color"]
+        [::std::mem::offset_of!(_cef_textfield_t, set_selection_text_color) - 584usize];
+    ["Offset of field: _cef_textfield_t::get_selection_text_color"]
+        [::std::mem::offset_of!(_cef_textfield_t, get_selection_text_color) - 592usize];
+    ["Offset of field: _cef_textfield_t::set_selection_background_color"]
+        [::std::mem::offset_of!(_cef_textfield_t, set_selection_background_color) - 600usize];
+    ["Offset of field: _cef_textfield_t::get_selection_background_color"]
+        [::std::mem::offset_of!(_cef_textfield_t, get_selection_background_color) - 608usize];
+    ["Offset of field: _cef_textfield_t::set_font_list"]
+        [::std::mem::offset_of!(_cef_textfield_t, set_font_list) - 616usize];
+    ["Offset of field: _cef_textfield_t::apply_text_color"]
+        [::std::mem::offset_of!(_cef_textfield_t, apply_text_color) - 624usize];
+    ["Offset of field: _cef_textfield_t::apply_text_style"]
+        [::std::mem::offset_of!(_cef_textfield_t, apply_text_style) - 632usize];
+    ["Offset of field: _cef_textfield_t::is_command_enabled"]
+        [::std::mem::offset_of!(_cef_textfield_t, is_command_enabled) - 640usize];
+    ["Offset of field: _cef_textfield_t::execute_command"]
+        [::std::mem::offset_of!(_cef_textfield_t, execute_command) - 648usize];
+    ["Offset of field: _cef_textfield_t::clear_edit_history"]
+        [::std::mem::offset_of!(_cef_textfield_t, clear_edit_history) - 656usize];
+    ["Offset of field: _cef_textfield_t::set_placeholder_text"]
+        [::std::mem::offset_of!(_cef_textfield_t, set_placeholder_text) - 664usize];
+    ["Offset of field: _cef_textfield_t::get_placeholder_text"]
+        [::std::mem::offset_of!(_cef_textfield_t, get_placeholder_text) - 672usize];
+    ["Offset of field: _cef_textfield_t::set_placeholder_text_color"]
+        [::std::mem::offset_of!(_cef_textfield_t, set_placeholder_text_color) - 680usize];
+    ["Offset of field: _cef_textfield_t::set_accessible_name"]
+        [::std::mem::offset_of!(_cef_textfield_t, set_accessible_name) - 688usize];
+};
+#[doc = "\n A Textfield supports editing of text. This control is custom rendered with\n no platform-specific code. Methods must be called on the browser process UI\n thread unless otherwise indicated.\n"]
+pub type cef_textfield_t = _cef_textfield_t;
+extern "C" {
+    #[doc = "\n Create a new Textfield.\n"]
+    pub fn cef_textfield_create(delegate: *mut _cef_textfield_delegate_t) -> *mut cef_textfield_t;
+}
+#[doc = "\n A Layout handles the sizing of the children of a Panel according to\n implementation-specific heuristics. Methods must be called on the browser\n process UI thread unless otherwise indicated.\n"]
+#[repr(C)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
+pub struct _cef_layout_t {
+    #[doc = "\n Base structure.\n"]
+    pub base: cef_base_ref_counted_t,
+    #[doc = "\n Returns this Layout as a BoxLayout or NULL if this is not a BoxLayout.\n"]
+    pub as_box_layout: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_layout_t) -> *mut _cef_box_layout_t,
+    >,
+    #[doc = "\n Returns this Layout as a FillLayout or NULL if this is not a FillLayout.\n"]
+    pub as_fill_layout: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_layout_t) -> *mut _cef_fill_layout_t,
+    >,
+    #[doc = "\n Returns true (1) if this Layout is valid.\n"]
+    pub is_valid: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_layout_t) -> ::std::os::raw::c_int,
+    >,
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of _cef_layout_t"][::std::mem::size_of::<_cef_layout_t>() - 64usize];
+    ["Alignment of _cef_layout_t"][::std::mem::align_of::<_cef_layout_t>() - 8usize];
+    ["Offset of field: _cef_layout_t::base"][::std::mem::offset_of!(_cef_layout_t, base) - 0usize];
+    ["Offset of field: _cef_layout_t::as_box_layout"]
+        [::std::mem::offset_of!(_cef_layout_t, as_box_layout) - 40usize];
+    ["Offset of field: _cef_layout_t::as_fill_layout"]
+        [::std::mem::offset_of!(_cef_layout_t, as_fill_layout) - 48usize];
+    ["Offset of field: _cef_layout_t::is_valid"]
+        [::std::mem::offset_of!(_cef_layout_t, is_valid) - 56usize];
+};
+#[doc = "\n A Layout handles the sizing of the children of a Panel according to\n implementation-specific heuristics. Methods must be called on the browser\n process UI thread unless otherwise indicated.\n"]
+pub type cef_layout_t = _cef_layout_t;
+#[doc = "\n A Layout manager that arranges child views vertically or horizontally in a\n side-by-side fashion with spacing around and between the child views. The\n child views are always sized according to their preferred size. If the\n host's bounds provide insufficient space, child views will be clamped.\n Excess space will not be distributed. Methods must be called on the browser\n process UI thread unless otherwise indicated.\n"]
+#[repr(C)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
+pub struct _cef_box_layout_t {
+    #[doc = "\n Base structure.\n"]
+    pub base: cef_layout_t,
+    #[doc = "\n Set the flex weight for the given |view|. Using the preferred size as the\n basis, free space along the main axis is distributed to views in the ratio\n of their flex weights. Similarly, if the views will overflow the parent,\n space is subtracted in these ratios. A flex of 0 means this view is not\n resized. Flex values must not be negative.\n"]
+    pub set_flex_for_view: ::std::option::Option<
+        unsafe extern "C" fn(
+            self_: *mut _cef_box_layout_t,
+            view: *mut _cef_view_t,
+            flex: ::std::os::raw::c_int,
+        ),
+    >,
+    #[doc = "\n Clears the flex for the given |view|, causing it to use the default flex\n specified via cef_box_layout_tSettings.default_flex.\n"]
+    pub clear_flex_for_view: ::std::option::Option<
+        unsafe extern "C" fn(self_: *mut _cef_box_layout_t, view: *mut _cef_view_t),
+    >,
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of _cef_box_layout_t"][::std::mem::size_of::<_cef_box_layout_t>() - 80usize];
+    ["Alignment of _cef_box_layout_t"][::std::mem::align_of::<_cef_box_layout_t>() - 8usize];
+    ["Offset of field: _cef_box_layout_t::base"]
+        [::std::mem::offset_of!(_cef_box_layout_t, base) - 0usize];
+    ["Offset of field: _cef_box_layout_t::set_flex_for_view"]
+        [::std::mem::offset_of!(_cef_box_layout_t, set_flex_for_view) - 64usize];
+    ["Offset of field: _cef_box_layout_t::clear_flex_for_view"]
+        [::std::mem::offset_of!(_cef_box_layout_t, clear_flex_for_view) - 72usize];
+};
+#[doc = "\n A Layout manager that arranges child views vertically or horizontally in a\n side-by-side fashion with spacing around and between the child views. The\n child views are always sized according to their preferred size. If the\n host's bounds provide insufficient space, child views will be clamped.\n Excess space will not be distributed. Methods must be called on the browser\n process UI thread unless otherwise indicated.\n"]
+pub type cef_box_layout_t = _cef_box_layout_t;
+#[doc = "\n A simple Layout that causes the associated Panel's one child to be sized to\n match the bounds of its parent. Methods must be called on the browser\n process UI thread unless otherwise indicated.\n"]
+#[repr(C)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
+pub struct _cef_fill_layout_t {
+    #[doc = "\n Base structure.\n"]
+    pub base: cef_layout_t,
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of _cef_fill_layout_t"][::std::mem::size_of::<_cef_fill_layout_t>() - 64usize];
+    ["Alignment of _cef_fill_layout_t"][::std::mem::align_of::<_cef_fill_layout_t>() - 8usize];
+    ["Offset of field: _cef_fill_layout_t::base"]
+        [::std::mem::offset_of!(_cef_fill_layout_t, base) - 0usize];
+};
+#[doc = "\n A simple Layout that causes the associated Panel's one child to be sized to\n match the bounds of its parent. Methods must be called on the browser\n process UI thread unless otherwise indicated.\n"]
+pub type cef_fill_layout_t = _cef_fill_layout_t;
