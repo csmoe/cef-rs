@@ -39,6 +39,12 @@ mod alias {
     pub type Point = cef_sys::cef_point_t;
 
     pub type Insets = cef_sys::cef_insets_t;
+
+    pub type TextStyle = cef_sys::cef_text_style_t;
+
+    pub type TextFieldCommands = cef_sys::cef_text_field_commands_t;
+
+    pub type Range = cef_sys::cef_range_t;
 }
 pub use alias::*;
 
