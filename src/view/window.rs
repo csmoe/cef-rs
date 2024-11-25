@@ -234,6 +234,7 @@ impl Window {
 }
 
 impl Window {
+    /// See [cef_window_create_top_level]
     pub fn create(delegate: impl WindowDelegate) -> crate::Result<Self> {
         let window = unsafe { cef_window_create_top_level(WindowDelegate::into_raw(delegate)) };
         if window.is_null() {
