@@ -96,7 +96,7 @@ impl WindowInfo {
 
 wrapper! {
     /// See [cef_window_t] for more documentation.
-    #[derive(Debug, Clone)]
+    #[derive(Clone)]
     pub struct Window(cef_window_t);
 }
 

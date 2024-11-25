@@ -35,6 +35,10 @@ mod alias {
     pub type State = cef_sys::cef_state_t;
 
     pub type GestureCommand = cef_sys::cef_gesture_command_t;
+
+    pub type Point = cef_sys::cef_point_t;
+
+    pub type Insets = cef_sys::cef_insets_t;
 }
 pub use alias::*;
 

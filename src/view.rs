@@ -1,11 +1,12 @@
-use std::ffi::c_int;
-
-use cef_sys::{cef_view_delegate_t, cef_view_t};
-
+use crate::rc::Rc;
+use crate::string::CefString;
 use crate::{
     rc::{RcImpl, RefGuard},
     wrapper, Rect, Size,
 };
+use cef_sys::{cef_view_delegate_t, cef_view_t};
+use cef_wrapper_macro::wrapper_methods;
+use std::ffi::c_int;
 
 mod panel;
 pub use panel::*;
@@ -54,32 +55,247 @@ wrapper!(
     pub struct View(cef_view_t);
 );
 
+impl View {
+    #[cfg(debug_assertions)]
+    pub fn get_type_string(&self) -> Option<CefString> {
+        self.0
+            .get_type_string
+            .and_then(|f| unsafe { CefString::from_userfree_cef(f(self.0.get_this())) })
+    }
+
+    pub fn to_string(&self, include_children: bool) -> Option<CefString> {
+        self.0.to_string.and_then(|f| unsafe {
+            CefString::from_userfree_cef(f(self.0.get_this(), include_children.into()))
+        })
+    }
+
+    pub fn get_delegate(&self) -> Option<RefGuard<cef_view_delegate_t>> {
+        self.0.get_delegate.and_then(|f| {
+            let delegate = unsafe { f(self.0.get_this()) };
+            if delegate.is_null() {
+                None
+            } else {
+                Some(unsafe { RefGuard::from_raw(delegate) })
+            }
+        })
+    }
+
+    pub fn get_window(&self) -> Option<Window> {
+        unsafe {
+            self.0.get_window.and_then(|f| {
+                let window = f(self.0.get_this());
+                if window.is_null() {
+                    None
+                } else {
+                    Some(Window(RefGuard::from_raw(window)))
+                }
+            })
+        }
+    }
+
+    wrapper_methods!(
+        /// See [cef_view_t::is_valid]
+        fn is_valid(&self) -> bool;
+        /// See [cef_view_t::is_attached]
+        fn is_attached(&self) -> bool;
+        /// See [cef_view_t::is_same]
+        fn is_same(&self, other: View) -> bool;
+        /// See [cef_view_t::get_id]
+        fn get_id(&self) -> i32;
+        /// See [cef_view_t::set_id]
+        fn set_id(&mut self, id: i32);
+        /// See [cef_view_t::get_group_id]
+        fn get_group_id(&self) -> i32;
+        /// See [cef_view_t::set_group_id]
+        fn set_group_id(&mut self, group: i32);
+        /// See [cef_view_t::get_parent_view]
+        fn get_parent_view(&self) -> View {
+            self.0.get_parent_view.and_then(|f| unsafe {
+                let view = f(self.0.get_this());
+                if view.is_null() {
+                    None
+                } else {
+                    Some(View(RefGuard::from_raw(view)))
+                }
+            })
+        }
+        /// See [cef_view_t::get_view_for_id]
+        fn get_view_for_id(&self, id: i32) -> View {
+            self.0.get_view_for_id.and_then(|f| unsafe {
+                let view = f(self.0.get_this(), id);
+                if view.is_null() {
+                    None
+                } else {
+                    Some(View(RefGuard::from_raw(view)))
+                }
+            })
+        }
+
+        /// See [cef_view_t::get_bounds]
+        fn get_bounds(&self) -> Rect;
+        /// See [cef_view_t::set_bounds]
+        fn set_bounds(&mut self, bounds: &Rect) {
+            self.0
+                .set_bounds
+                .map(|f| unsafe { f(self.0.get_this(), std::ptr::from_ref(bounds)) })
+        }
+
+        /// See [cef_view_t::get_size]
+        fn get_size(&self) -> Size;
+        /// See [cef_view_t::set_size]
+        fn set_size(&mut self, size: &Size) {
+            self.0
+                .set_size
+                .map(|f| unsafe { f(self.0.get_this(), std::ptr::from_ref(size)) })
+        }
+
+        /// See [cef_view_t::get_position]
+        fn get_position(&self) -> crate::Point;
+        /// See [cef_view_t::set_position]
+        fn set_position(&mut self, position: &crate::Point) {
+            self.0
+                .set_position
+                .map(|f| unsafe { f(self.0.get_this(), std::ptr::from_ref(position)) })
+        }
+
+        /// See [cef_view_t::set_insets]
+        fn set_insets(&mut self, inset: &crate::Insets) {
+            self.0
+                .set_insets
+                .map(|f| unsafe { f(self.0.get_this(), std::ptr::from_ref(inset)) })
+        }
+        /// See [cef_view_t::get_insets]
+        fn get_insets(&self) -> crate::Insets;
+
+        /// See [cef_view_t::get_preferred_size]
+        fn get_preferred_size(&self) -> Size;
+        /// See [cef_view_t::size_to_preferred_size]
+        fn size_to_preferred_size(&self);
+
+        /// See [cef_view_t::get_minimum_size]
+        fn get_minimum_size(&self) -> Size;
+        /// See [cef_view_t::get_maximum_size]
+        fn get_maximum_size(&self) -> Size;
+        /// See [cef_view_t::get_height_for_width]
+        fn get_height_for_width(&self, width: i32) -> i32;
+
+        /// See [cef_view_t::invalidate_layout]
+        fn invalidate_layout(&mut self);
+
+        /// See [cef_view_t::set_visible]
+        fn set_visible(&mut self, visible: bool);
+        /// See [cef_view_t::is_visible]
+        fn is_visible(&self) -> bool;
+
+        /// See [cef_view_t::is_drawn]
+        fn is_drawn(&self) -> bool;
+
+        /// See [cef_view_t::set_focusable]
+        fn set_focusable(&mut self, focus: bool);
+        /// See [cef_view_t::is_focusable]
+        fn is_focusable(&self) -> bool;
+
+        /// See [cef_view_t::is_enabled]
+        fn is_enabled(&self) -> bool;
+        /// See [cef_view_t::set_enabled]
+        fn set_enabled(&mut self, enabled: bool);
+
+        /// See [cef_view_t::is_accessibility_focusable]
+        fn is_accessibility_focusable(&self) -> bool;
+
+        /// see [cef_view_t::request_focus]
+        fn request_focus(&mut self);
+
+        /// See [cef_view_t::set_background_color]
+        fn set_background_color(&mut self, color: u32);
+        /// See [cef_view_t::get_background_color]
+        fn get_background_color(&self) -> u32;
+
+        /// See [cef_view_t::get_theme_color]
+        fn get_theme_color(&self, id: i32) -> u32;
+
+        /// See [cef_view_t::convert_point_to_screen]
+        fn convert_point_to_screen(&self, point: &mut crate::Point) -> bool {
+            self.0
+                .convert_point_to_screen
+                .map(|f| unsafe { f(self.0.get_this(), std::ptr::from_mut(point)) == 1 })
+        }
+        /// See [cef_view_t::convert_point_from_screen]
+        fn convert_point_from_screen(&self, point: &mut crate::Point) -> bool {
+            self.0
+                .convert_point_from_screen
+                .map(|f| unsafe { f(self.0.get_this(), std::ptr::from_mut(point)) == 1 })
+        }
+        /// See [cef_view_t::convert_point_to_window]
+        fn convert_point_to_window(&self, point: &mut crate::Point) -> bool {
+            self.0
+                .convert_point_to_window
+                .map(|f| unsafe { f(self.0.get_this(), std::ptr::from_mut(point)) == 1 })
+        }
+        /// See [cef_view_t::convert_point_from_window]
+        fn convert_point_from_window(&self, point: &mut crate::Point) -> bool {
+            self.0
+                .convert_point_from_window
+                .map(|f| unsafe { f(self.0.get_this(), std::ptr::from_mut(point)) == 1 })
+        }
+        /// See [cef_view_t::convert_point_to_view]
+        fn convert_point_to_view(&self, point: &mut crate::Point, view: View) -> bool {
+            self.0.convert_point_to_view.map(|f| unsafe {
+                f(
+                    self.0.get_this(),
+                    view.0.get_this(),
+                    std::ptr::from_mut(point),
+                ) == 1
+            })
+        }
+        /// See [cef_view_t::convert_point_from_view]
+        fn convert_point_from_view(&self, point: &mut crate::Point, view: View) -> bool {
+            self.0.convert_point_from_view.map(|f| unsafe {
+                f(
+                    self.0.get_this(),
+                    view.0.get_this(),
+                    std::ptr::from_mut(point),
+                ) == 1
+            })
+        }
+    );
+}
+
+impl Rc for cef_view_delegate_t {
+    fn as_base(&self) -> &cef_sys::cef_base_ref_counted_t {
+        &self.base
+    }
+}
+
 /// See [cef_view_delegate_t] for more documentation.
 pub trait ViewDelegate: Sized {
+    /// See [cef_view_delegate_t::on_parent_view_changed]
     fn on_parent_view_changed(&self, _view: View, _added: bool, _parent: View) {}
+    /// See [cef_view_delegate_t::on_child_view_changed]
     fn on_child_view_changed(&self, _view: View, _added: bool, _child: View) {}
+    /// See [cef_view_delegate_t::on_window_changed]
     fn on_window_changed(&self, _view: View, _added: bool) {}
-
+    /// See [cef_view_delegate_t::on_layout_changed]
     fn on_layout_changed(&self, _view: View, _new_bounds: Rect) {}
-
+    /// See [cef_view_delegate_t::on_focus]
     fn on_focus(&self, _view: View) {}
-
+    /// See [cef_view_delegate_t::on_blur]
     fn on_blur(&self, _view: View) {}
-
+    /// See [cef_view_delegate_t::on_theme_changed]
     fn on_theme_changed(&self, _view: View) {}
-
+    /// See [cef_view_delegate_t::get_preferred_size]
     fn get_preferred_size(&self, _view: View) -> Size {
         todo!()
     }
-
+    /// See [cef_view_delegate_t::get_minimum_size]
     fn get_minimum_size(&self, _view: View) -> Size {
         todo!()
     }
-
+    /// See [cef_view_delegate_t::get_maximum_size]
     fn get_maximum_size(&self, _view: View) -> Size {
         todo!()
     }
-
+    /// See [cef_view_delegate_t::get_height_for_width]
     fn get_height_for_width(&self, _view: View, _width: i32) -> i32 {
         todo!()
     }
