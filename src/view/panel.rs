@@ -1,8 +1,6 @@
+use crate::{add_view_delegate_methods, view::View, wrapper, ViewDelegate};
 use cef_sys::cef_panel_create;
 use cef_sys::{cef_panel_delegate_t, cef_panel_t};
-
-use crate::rc::RefGuard;
-use crate::{add_view_delegate_methods, view::View, wrapper, ViewDelegate};
 
 wrapper!(
     /// See [cef_panel_t] for more documentation.

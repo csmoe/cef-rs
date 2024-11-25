@@ -1,6 +1,7 @@
 use super::ViewDelegate;
-use crate::{add_view_delegate_methods, rc::RefGuard, string::CefString};
+use crate::{add_view_delegate_methods, string::CefString};
 use cef_sys::{cef_button_t, cef_label_button_t, cef_menu_button_t};
+use cef_wrapper_macro::wrapper_methods;
 
 crate::wrapper!(
     /// See [cef_button_t] for more documentation.
@@ -45,6 +46,32 @@ crate::wrapper!(
     pub struct MenuButton(cef_menu_button_t);
 );
 
+impl MenuButton {
+    wrapper_methods!(
+        /// See [cef_menu_button_t::show_menu]
+        fn show_menu(
+            &mut self,
+            menu_model: *mut cef_sys::cef_menu_model_t,
+            screen_point: &crate::Point,
+            anchor_position: cef_sys::cef_menu_anchor_position_t,
+        ) {
+            self.0.show_menu.map(|f| unsafe {
+                f(
+                    self.0.get_this(),
+                    menu_model,
+                    std::ptr::from_ref(&screen_point),
+                    anchor_position,
+                )
+            })
+        }
+
+        /// See [cef_menu_button_t::trigger_menu]
+        fn trigger_menu(&mut self) {
+            self.0.trigger_menu.map(|f| unsafe { f(self.0.get_this()) })
+        }
+    );
+}
+
 pub trait MenuButtonDelegate: ButtonDelegate {
     fn on_menu_button_pressed(
         &self,
@@ -64,6 +91,7 @@ pub trait MenuButtonDelegate: ButtonDelegate {
 }
 
 impl MenuButton {
+    /// See [cef_sys::cef_menu_button_create]
     pub fn create(delegate: impl MenuButtonDelegate, text: CefString) -> crate::Result<Self> {
         unsafe {
             let button = cef_sys::cef_menu_button_create(

@@ -8,6 +8,7 @@ mod command_line;
 mod error;
 mod handler;
 mod image;
+mod menu_model;
 pub mod rc;
 mod settings;
 pub mod string;

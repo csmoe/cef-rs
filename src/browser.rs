@@ -1,6 +1,5 @@
 use crate::{
-    client::Client, error::Result, rc::RefGuard, string::CefString, view::WindowInfo, BrowserView,
-    State,
+    client::Client, error::Result, string::CefString, view::WindowInfo, BrowserView, State,
 };
 use cef_sys::{
     cef_browser_host_create_browser_sync, cef_browser_settings_t, cef_browser_t,

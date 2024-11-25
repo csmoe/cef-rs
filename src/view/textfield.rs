@@ -3,7 +3,7 @@ use crate::string::CefString;
 use crate::Range;
 use crate::TextFieldCommands;
 use crate::TextStyle;
-use crate::{rc::RefGuard, wrapper, ViewDelegate};
+use crate::{wrapper, ViewDelegate};
 use cef_sys::cef_key_event_t;
 use cef_sys::cef_textfield_delegate_t;
 use cef_sys::cef_textfield_t;
@@ -52,17 +52,37 @@ impl TextField {
         /// See [cef_textfield_t::is_read_only]
         fn is_read_only(&self) -> bool;
         /// See [cef_textfield_t::get_text]
-        fn get_text(&self) -> CefString;
+        fn get_text(&self) -> CefString {
+            self.0
+                .get_text
+                .and_then(|f| unsafe { CefString::from_raw(f(self.0.get_this())) })
+        }
         /// See [cef_textfield_t::set_text]
-        fn set_text(&mut self, text: &CefString);
+        fn set_text(&mut self, text: &CefString) {
+            self.0
+                .set_text
+                .map(|f| unsafe { f(self.0.get_this(), &text.as_raw()) })
+        }
         /// See [cef_textfield_t::append_text]
-        fn append_text(&mut self, text: &CefString);
+        fn append_text(&mut self, text: &CefString) {
+            self.0
+                .append_text
+                .map(|f| unsafe { f(self.0.get_this(), &text.as_raw()) })
+        }
         /// See [cef_textfield_t::insert_or_replace_text]
-        fn insert_or_replace_text(&mut self, text: &CefString);
+        fn insert_or_replace_text(&mut self, text: &CefString) {
+            self.0
+                .insert_or_replace_text
+                .map(|f| unsafe { f(self.0.get_this(), &text.as_raw()) })
+        }
         /// See [cef_textfield_t::has_selection]
         fn has_selection(&self) -> bool;
         /// See [cef_textfield_t::get_selected_text]
-        fn get_selected_text(&self) -> CefString;
+        fn get_selected_text(&self) -> CefString {
+            self.0
+                .get_selected_text
+                .and_then(|f| unsafe { CefString::from_raw(f(self.0.get_this())) })
+        }
         /// See [cef_textfield_t::select_all]
         fn select_all(&mut self, reversed: bool);
         /// See [cef_textfield_t::clear_selection]
@@ -70,7 +90,11 @@ impl TextField {
         /// See [cef_textfield_t::get_selected_range]
         fn get_selected_range(&self) -> Range;
         /// See [cef_textfield_t::select_range]
-        fn select_range(&mut self, range: Range);
+        fn select_range(&mut self, range: Range) {
+            self.0
+                .select_range
+                .map(|f| unsafe { f(self.0.get_this(), std::ptr::from_ref(&range)) })
+        }
         /// See [cef_textfield_t::get_cursor_position]
         fn get_cursor_position(&self) -> usize;
         /// See [cef_textfield_t::set_text_color]
@@ -86,11 +110,28 @@ impl TextField {
         /// See [cef_textfield_t::get_selection_background_color]
         fn get_selection_background_color(&self) -> u32;
         /// See [cef_textfield_t::set_font_list]
-        fn set_font_list(&mut self, font_list: &CefString);
+        fn set_font_list(&mut self, font_list: &CefString) {
+            self.0
+                .set_font_list
+                .map(|f| unsafe { f(self.0.get_this(), &font_list.as_raw()) })
+        }
         /// See [cef_textfield_t::apply_text_color]
-        fn apply_text_color(&mut self, color: u32, range: Range);
+        fn apply_text_color(&mut self, color: u32, range: Range) {
+            self.0
+                .apply_text_color
+                .map(|f| unsafe { f(self.0.get_this(), color, std::ptr::from_ref(&range)) })
+        }
         /// See [cef_textfield_t::apply_text_style]
-        fn apply_text_style(&mut self, style: TextStyle, add: bool, range: Range);
+        fn apply_text_style(&mut self, style: TextStyle, add: bool, range: Range) {
+            self.0.apply_text_style.map(|f| unsafe {
+                f(
+                    self.0.get_this(),
+                    style,
+                    add as i32,
+                    std::ptr::from_ref(&range),
+                )
+            })
+        }
         /// See [cef_textfield_t::is_command_enabled]
         fn is_command_enabled(&self, command_id: TextFieldCommands) -> bool;
         /// See [cef_textfield_t::execute_command]
@@ -98,12 +139,24 @@ impl TextField {
         /// See [cef_textfield_t::clear_edit_history]
         fn clear_edit_history(&mut self);
         /// See [cef_textfield_t::set_placeholder_text]
-        fn set_placeholder_text(&mut self, text: &CefString);
+        fn set_placeholder_text(&mut self, text: &CefString) {
+            self.0
+                .set_placeholder_text
+                .map(|f| unsafe { f(self.0.get_this(), &text.as_raw()) })
+        }
         /// See [cef_textfield_t::get_placeholder_text]
-        fn get_placeholder_text(&self) -> CefString;
+        fn get_placeholder_text(&self) -> CefString {
+            self.0
+                .get_placeholder_text
+                .and_then(|f| unsafe { CefString::from_raw(f(self.0.get_this())) })
+        }
         /// See [cef_textfield_t::set_placeholder_text_color]
         fn set_placeholder_text_color(&mut self, color: u32);
         /// See [cef_textfield_t::set_accessible_name]
-        fn set_accessible_name(&mut self, name: &CefString);
+        fn set_accessible_name(&mut self, name: &CefString) {
+            self.0
+                .set_accessible_name
+                .map(|f| unsafe { f(self.0.get_this(), &name.as_raw()) })
+        }
     );
 }
