@@ -48,6 +48,8 @@ mod alias {
     pub type Range = cef_sys::cef_range_t;
 
     pub type AxisAlignment = cef_sys::cef_axis_alignment_t;
+
+    pub type MenuColorType = cef_sys::cef_menu_color_type_t;
 }
 pub use alias::*;
 
