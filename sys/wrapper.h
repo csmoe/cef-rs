@@ -9,6 +9,18 @@
 #include "include/capi/cef_command_line_capi.h"
 #include "include/capi/cef_command_handler_capi.h"
 
+#include "include/capi/cef_request_capi.h"
+#include "include/capi/cef_request_context_handler_capi.h"
+#include "include/capi/cef_request_handler_capi.h"
+
+#include "include/capi/cef_resource_bundle_capi.h"
+#include "include/capi/cef_resource_bundle_handler_capi.h"
+#include "include/capi/cef_response_capi.h"
+#include "include/capi/cef_response_filter_capi.h"
+
+#include "include/capi/cef_resource_handler_capi.h"
+#include "include/capi/cef_resource_request_handler_capi.h"
+
 // views
 #include "include/capi/views/cef_browser_view_capi.h"
 #include "include/capi/views/cef_browser_view_delegate_capi.h"
@@ -35,3 +47,6 @@
 
 #include "include/capi/views/cef_display_capi.h"
 #include "include/capi/views/cef_overlay_controller_capi.h"
+
+// v8
+#include "include/capi/cef_v8_capi.h"
