@@ -46,6 +46,8 @@ mod alias {
     pub type TextFieldCommands = cef_sys::cef_text_field_commands_t;
 
     pub type Range = cef_sys::cef_range_t;
+
+    pub type AxisAlignment = cef_sys::cef_axis_alignment_t;
 }
 pub use alias::*;
 

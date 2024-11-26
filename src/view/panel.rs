@@ -29,13 +29,40 @@ impl Panel {
 impl Panel {
     wrapper_methods!(
         /// See [cef_panel_t::set_to_fill_layout]
-        fn set_to_fill_layout(&mut self) -> crate::FillLayout;
+        fn set_to_fill_layout(&mut self) -> crate::FillLayout {
+            self.0.set_to_fill_layout.and_then(|f| unsafe {
+                let v = f(self.0.get_this());
+                if v.is_null() {
+                    None
+                } else {
+                    Some(crate::FillLayout::from_raw(v))
+                }
+            })
+        }
 
         /// See [cef_panel_t::set_to_box_layout]
-        fn set_to_box_layout(&mut self, settings: &cef_box_layout_settings_t) -> crate::BoxLayout;
+        fn set_to_box_layout(&mut self, settings: crate::BoxLayoutSettings) -> crate::BoxLayout {
+            self.0.set_to_box_layout.and_then(|f| unsafe {
+                let v = f(self.0.get_this(), std::ptr::from_ref(&settings.into_raw()));
+                if v.is_null() {
+                    None
+                } else {
+                    Some(crate::BoxLayout::from_raw(v))
+                }
+            })
+        }
 
         /// See [cef_panel_t::get_layout]
-        fn get_layout(&self) -> crate::Layout;
+        fn get_layout(&self) -> crate::Layout {
+            self.0.get_layout.and_then(|f| unsafe {
+                let v = f(self.0.get_this());
+                if v.is_null() {
+                    None
+                } else {
+                    Some(crate::Layout::from_raw(v))
+                }
+            })
+        }
 
         /// See [cef_panel_t::layout]
         fn layout(&mut self);

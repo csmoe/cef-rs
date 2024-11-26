@@ -20,6 +20,8 @@ mod textfield;
 pub use textfield::*;
 mod scroll_view;
 pub use scroll_view::*;
+mod layout;
+pub use layout::*;
 
 macro_rules! convert_view {
     ($( ($view:ident, $as_field:ident, $target_type:ident) ),*) => {
