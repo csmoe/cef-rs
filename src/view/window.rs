@@ -200,9 +200,13 @@ impl Window {
         #[cfg(target_family = "unix")]
         /// See [cef_window_t::get_window_handle]
         fn get_window_handle(&self) -> *mut ::std::os::raw::c_void;
-        //#[cfg(target_os = "windows")]
-        // See [cef_window_t::get_window_handle]
-        //fn get_window_handle(&self) -> *mut windows::Win32::Foundation::HWND;
+        #[cfg(target_os = "windows")]
+        /// See [cef_window_t::get_window_handle]
+        fn get_window_handle(&self) -> *mut windows::Win32::Foundation::HWND {
+            self.0
+                .get_window_handle
+                .map(|f| unsafe { f(self.0.get_this()).cast() })
+        }
         /// See [cef_window_t::send_key_press]
         fn send_key_press(&mut self, key_code: i32, event_flags: u32);
         /// See [cef_window_t::send_mouse_move]
