@@ -8,6 +8,7 @@ wrapper! {
     pub struct Frame(cef_frame_t);
 }
 
+/*
 impl Frame {
     wrapper_methods!(
         /// See [cef_frame_t::is_valid]
@@ -94,3 +95,4 @@ impl Frame {
         );
     );
 }
+*/

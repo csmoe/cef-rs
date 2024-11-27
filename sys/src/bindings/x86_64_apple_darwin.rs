@@ -13260,6 +13260,55 @@ extern "C" {
     #[doc = "\n Quit the CEF message loop that was started by calling\n cef_run_message_loop(). This function should only be called on the main\n application thread and only if cef_run_message_loop() was used.\n"]
     pub fn cef_quit_message_loop();
 }
+#[doc = "\n Structure used for retrieving resources from the resource bundle (*.pak)\n files loaded by CEF during startup or via the cef_resource_bundle_handler_t\n returned from cef_app_t::GetResourceBundleHandler. See CefSettings for\n additional options related to resource bundle loading. The functions of this\n structure may be called on any thread unless otherwise indicated.\n"]
+#[repr(C)]
+#[derive(Debug, Copy, Clone, crate :: FfiRc)]
+pub struct _cef_resource_bundle_t {
+    #[doc = "\n Base structure.\n"]
+    pub base: cef_base_ref_counted_t,
+    #[doc = "\n Returns the localized string for the specified |string_id| or an NULL\n string if the value is not found. Include cef_pack_strings.h for a listing\n of valid string ID values.\n"]
+    pub get_localized_string: ::std::option::Option<
+        unsafe extern "C" fn(
+            self_: *mut _cef_resource_bundle_t,
+            string_id: ::std::os::raw::c_int,
+        ) -> cef_string_userfree_t,
+    >,
+    #[doc = "\n Returns a cef_binary_value_t containing the decompressed contents of the\n specified scale independent |resource_id| or NULL if not found. Include\n cef_pack_resources.h for a listing of valid resource ID values.\n"]
+    pub get_data_resource: ::std::option::Option<
+        unsafe extern "C" fn(
+            self_: *mut _cef_resource_bundle_t,
+            resource_id: ::std::os::raw::c_int,
+        ) -> *mut _cef_binary_value_t,
+    >,
+    #[doc = "\n Returns a cef_binary_value_t containing the decompressed contents of the\n specified |resource_id| nearest the scale factor |scale_factor| or NULL if\n not found. Use a |scale_factor| value of SCALE_FACTOR_NONE for scale\n independent resources or call GetDataResource instead.Include\n cef_pack_resources.h for a listing of valid resource ID values.\n"]
+    pub get_data_resource_for_scale: ::std::option::Option<
+        unsafe extern "C" fn(
+            self_: *mut _cef_resource_bundle_t,
+            resource_id: ::std::os::raw::c_int,
+            scale_factor: cef_scale_factor_t,
+        ) -> *mut _cef_binary_value_t,
+    >,
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of _cef_resource_bundle_t"][::std::mem::size_of::<_cef_resource_bundle_t>() - 64usize];
+    ["Alignment of _cef_resource_bundle_t"]
+        [::std::mem::align_of::<_cef_resource_bundle_t>() - 8usize];
+    ["Offset of field: _cef_resource_bundle_t::base"]
+        [::std::mem::offset_of!(_cef_resource_bundle_t, base) - 0usize];
+    ["Offset of field: _cef_resource_bundle_t::get_localized_string"]
+        [::std::mem::offset_of!(_cef_resource_bundle_t, get_localized_string) - 40usize];
+    ["Offset of field: _cef_resource_bundle_t::get_data_resource"]
+        [::std::mem::offset_of!(_cef_resource_bundle_t, get_data_resource) - 48usize];
+    ["Offset of field: _cef_resource_bundle_t::get_data_resource_for_scale"]
+        [::std::mem::offset_of!(_cef_resource_bundle_t, get_data_resource_for_scale) - 56usize];
+};
+#[doc = "\n Structure used for retrieving resources from the resource bundle (*.pak)\n files loaded by CEF during startup or via the cef_resource_bundle_handler_t\n returned from cef_app_t::GetResourceBundleHandler. See CefSettings for\n additional options related to resource bundle loading. The functions of this\n structure may be called on any thread unless otherwise indicated.\n"]
+pub type cef_resource_bundle_t = _cef_resource_bundle_t;
+extern "C" {
+    #[doc = "\n Returns the global resource bundle instance.\n"]
+    pub fn cef_resource_bundle_get_global() -> *mut cef_resource_bundle_t;
+}
 #[doc = "\n Implement this structure to handle view events. All size and position values\n are in density independent pixels (DIP) unless otherwise indicated. The\n functions of this structure will be called on the browser process UI thread\n unless otherwise indicated.\n"]
 #[repr(C)]
 #[derive(Debug, Copy, Clone, crate :: FfiRc)]
