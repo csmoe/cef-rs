@@ -197,8 +197,12 @@ impl Window {
             regions_count: usize,
             regions: *const cef_draggable_region_t,
         );
+        #[cfg(target_family = "unix")]
         /// See [cef_window_t::get_window_handle]
         fn get_window_handle(&self) -> *mut ::std::os::raw::c_void;
+        #[cfg(target_os = "windows")]
+        /// See [cef_window_t::get_window_handle]
+        fn get_window_handle(&self) -> *mut windows::Win32::Foundation::HWND;
         /// See [cef_window_t::send_key_press]
         fn send_key_press(&mut self, key_code: i32, event_flags: u32);
         /// See [cef_window_t::send_mouse_move]
