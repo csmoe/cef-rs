@@ -9,19 +9,22 @@ mod error;
 mod handler;
 mod image;
 mod menu_model;
+mod net;
+mod prelude;
+mod process_message;
 pub mod rc;
 mod settings;
 mod string;
+mod value;
 mod view;
 
-pub use string::CefString;
 pub use app::*;
 pub use browser::*;
 pub use command_line::*;
-pub use error::Error;
-pub use error::Result;
 pub use image::*;
+pub use process_message::ProcessMessage;
 pub use settings::*;
+pub use value::*;
 pub use view::*;
 
 mod alias {
@@ -51,6 +54,10 @@ mod alias {
     pub type AxisAlignment = cef_sys::cef_axis_alignment_t;
 
     pub type MenuColorType = cef_sys::cef_menu_color_type_t;
+
+    pub type ProcessId = cef_sys::cef_process_id_t;
+
+    pub type ValueType = cef_sys::cef_value_type_t;
 }
 pub use alias::*;
 

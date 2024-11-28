@@ -1,7 +1,4 @@
-use crate::wrapper;
-use cef_sys::cef_frame_t;
-use cef_wrapper_macro::wrapper_methods;
-use crate::CefString;
+use crate::prelude::*;
 
 wrapper! {
     #[doc = "See [cef_frame_t] for more details."]
@@ -48,14 +45,26 @@ impl Frame {
         fn load_request(&self, request: crate::Request);
 
         /// See [cef_frame_t::load_url]
-        fn load_url(&self, url: CefString) {
-        self.0.load_url.map(|f| unsafe {
-            f(self.0.get_this(), std::ptr::from_ref(&CefString::as_raw()))
-        })
-    }
+        fn load_url(&self, url: &str) {
+            self.0.load_url.map(|f| unsafe {
+                f(
+                    self.0.get_this(),
+                    std::ptr::from_ref(&<_ as Into<CefString>>::into(url).as_raw()),
+                )
+            })
+        }
 
         /// See [cef_frame_t::execute_java_script]
-        fn execute_java_script(&self, code: &str, script_url: &str, start_line: i32);
+        fn execute_java_script(&self, code: &str, script_url: &str, start_line: i32) {
+            self.0.execute_java_script.map(|f| unsafe {
+                f(
+                    self.0.get_this(),
+                    std::ptr::from_ref(&<_ as Into<CefString>>::into(code).as_raw()),
+                    std::ptr::from_ref(&<_ as Into<CefString>>::into(script_url).as_raw()),
+                    start_line,
+                )
+            })
+        }
 
         /// See [cef_frame_t::is_main]
         fn is_main(&self) -> bool;
@@ -64,38 +73,72 @@ impl Frame {
         fn is_focused(&self) -> bool;
 
         /// See [cef_frame_t::get_name]
-        fn get_name(&self) -> Option<String>;
+        fn get_name(&self) -> CefString {
+            self.0
+                .get_name
+                .and_then(|f| unsafe { CefString::from_raw(f(self.0.get_this())) })
+        }
 
         /// See [cef_frame_t::get_identifier]
-        fn get_identifier(&self) -> Option<String>;
+        fn get_identifier(&self) -> CefString {
+            self.0
+                .get_identifier
+                .and_then(|f| unsafe { CefString::from_raw(f(self.0.get_this())) })
+        }
 
         /// See [cef_frame_t::get_parent]
-        fn get_parent(&self) -> crate::Frame;
+        fn get_parent(&self) -> Frame {
+            self.0.get_parent.and_then(|f| unsafe {
+                let f = f(self.0.get_this());
+                if f.is_null() {
+                    None
+                } else {
+                    Some(Frame::from_raw(f))
+                }
+            })
+        }
 
         /// See [cef_frame_t::get_url]
-        fn get_url(&self) -> CefString;
+        fn get_url(&self) -> CefString {
+            self.0
+                .get_url
+                .and_then(|f| unsafe { CefString::from_raw(f(self.0.get_this())) })
+        }
 
         /// See [cef_frame_t::get_browser]
-        fn get_browser(&self) -> crate::Browser;
+        fn get_browser(&self) -> crate::Browser {
+            self.0.get_browser.and_then(|f| unsafe {
+                let f = f(self.0.get_this());
+                if f.is_null() {
+                    None
+                } else {
+                    Some(crate::Browser::from_raw(f))
+                }
+            })
+        }
 
         // See [cef_frame_t::get_v8context]
         //fn get_v8context(&self) -> crate::V8Context;
 
         /// See [cef_frame_t::visit_dom]
-        fn visit_dom(&self, visitor: crate::DOMVisitor);
+        // fn visit_dom(&self, visitor: crate::DOMVisitor);
 
         /// See [cef_frame_t::create_urlrequest]
-        fn create_urlrequest(
-            &self,
-            request: crate::Request,
-            client: crate::URLRequestClient,
-        ) -> Option<crate::URLRequest>;
+        //fn create_urlrequest(
+        //    &self,
+        //    request: crate::Request,
+        //    client: crate::URLRequestClient,
+        //) -> Option<crate::URLRequest>;
 
         /// See [cef_frame_t::send_process_message]
         fn send_process_message(
             &self,
-            target_process: cef_process_id_t,
+            target_process: crate::ProcessId,
             message: crate::ProcessMessage,
-        );
+        ) {
+            self.0
+                .send_process_message
+                .map(|f| unsafe { f(self.0.get_this(), target_process, message.into_raw()) })
+        }
     );
 }

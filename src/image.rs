@@ -1,6 +1,4 @@
-use crate::Result;
-use cef_sys::cef_image_t;
-use cef_wrapper_macro::wrapper_methods;
+use crate::prelude::*;
 
 crate::wrapper! {
     /// See [cef_image_t] for more docs.
