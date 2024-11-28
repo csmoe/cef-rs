@@ -18,6 +18,7 @@ impl Request {
     }
 }
 
+/*
 impl Request {
     wrapper_methods!(
         /// See [cef_request_t::is_read_only]
@@ -112,3 +113,4 @@ impl Request {
         fn get_identifier(&self) -> u64;
     );
 }
+*/

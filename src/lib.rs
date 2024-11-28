@@ -22,6 +22,7 @@ pub use app::*;
 pub use browser::*;
 pub use command_line::*;
 pub use image::*;
+pub use menu_model::*;
 pub use process_message::ProcessMessage;
 pub use settings::*;
 pub use value::*;

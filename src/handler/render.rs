@@ -3,15 +3,19 @@ use cef_sys::cef_render_handler_t;
 use crate::{string::CefString, Browser, Rect};
 
 crate::wrapper! {
-    #[doc = "See [cef_render_handler_t] for more docs."]
+    /// See [cef_render_handler_t] for more docs.
     #[derive(Debug,Clone)]
     pub struct RenderHandler(cef_render_handler_t);
 }
 
 pub trait RenderCallback {
+    /// See [get_accessibility_handler]
     fn get_accessibility_handler(&self) -> *mut cef_sys::cef_accessibility_handler_t;
+    /// See [get_focus_handler]
     fn get_root_screen_rect(&self, browser: Browser, rect: Rect) -> ::std::os::raw::c_int;
+    /// See [get_view_rect]
     fn get_view_rect(&self, browser: Browser, rect: Rect);
+    /// See [get_screen_point]
     fn get_screen_point(
         &self,
         browser: Browser,
@@ -20,13 +24,17 @@ pub trait RenderCallback {
         screen_x: i32,
         screen_y: i32,
     ) -> ::std::os::raw::c_int;
+    /// See [get_screen_info]
     fn get_screen_info(
         &self,
         browser: Browser,
         screen_info: *mut cef_sys::cef_screen_info_t,
     ) -> ::std::os::raw::c_int;
+    /// See [on_popup_show]
     fn on_popup_show(&self, browser: Browser, show: bool);
+    /// See [on_popup_size]
     fn on_popup_size(&self, browser: Browser, rect: Rect);
+    /// / See [on_paint]
     fn on_paint(
         &self,
         browser: Browser,
@@ -37,6 +45,7 @@ pub trait RenderCallback {
         width: ::std::os::raw::c_int,
         height: ::std::os::raw::c_int,
     );
+    /// See [on_accelerated_paint]
     fn on_accelerated_paint(
         &self,
         browser: Browser,
