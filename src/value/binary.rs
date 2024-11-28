@@ -8,7 +8,7 @@ wrapper! {
 }
 
 impl BinaryValue {
-    fn create(data: &[u8]) -> Result<BinaryValue> {
+    pub fn create(data: &[u8]) -> Result<BinaryValue> {
         let ptr = unsafe { cef_binary_value_create(data.as_ptr().cast(), data.len()) };
         if ptr.is_null() {
             Err(crate::error::Error::NullPtr)

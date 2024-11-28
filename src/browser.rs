@@ -1,5 +1,6 @@
 use crate::{
-    client::Client, error::Result, string::CefString, view::WindowInfo, BrowserView, State,
+    client::Client, error::Result, string::CefString, view::WindowInfo, BrowserView,
+    ChromeToolbarType, State,
 };
 use cef_sys::{
     cef_browser_host_create_browser_sync, cef_browser_settings_t, cef_browser_t,
@@ -165,13 +166,13 @@ pub trait BrowserViewDelegate: Sized {
     }
 
     /// See [cef_sys::cef_browser_view_delegate_t::get_delegate_for_popup_browser_view]
-    fn get_delegate_for_popup_browser_view<T: BrowserViewDelegate>(
+    fn get_delegate_for_popup_browser_view(
         &self,
         _browser_view: BrowserView,
         _settings: BrowserSettings,
         _client: cef_client_t,
         _is_devtools: bool,
-    ) -> Option<T> {
+    ) -> Option<Self> {
         None
     }
 
@@ -185,7 +186,7 @@ pub trait BrowserViewDelegate: Sized {
     }
 
     /// See [cef_sys::cef_browser_view_delegate_t::get_chrome_toolbar_type]
-    fn get_chrome_toolbar_type(&self, _browser_view: BrowserView) -> cef_chrome_toolbar_type_t {
+    fn get_chrome_toolbar_type(&self, _browser_view: BrowserView) -> ChromeToolbarType {
         todo!()
     }
 
@@ -195,7 +196,7 @@ pub trait BrowserViewDelegate: Sized {
     }
 
     /// See [cef_sys::cef_browser_view_delegate_t::get_browser_runtime_style]
-    fn get_browser_runtime_style(&self) -> cef_runtime_style_t {
+    fn get_browser_runtime_style(&self) -> crate::RuntimeStyle {
         todo!()
     }
 }

@@ -50,14 +50,14 @@ impl MenuButton {
         /// See [cef_menu_button_t::show_menu]
         fn show_menu(
             &mut self,
-            menu_model: *mut cef_sys::cef_menu_model_t,
+            menu_model: crate::MenuModel,
             screen_point: &crate::Point,
             anchor_position: cef_sys::cef_menu_anchor_position_t,
         ) {
             self.0.show_menu.map(|f| unsafe {
                 f(
                     self.0.get_this(),
-                    menu_model,
+                    menu_model.into_raw(),
                     std::ptr::from_ref(&screen_point),
                     anchor_position,
                 )
@@ -75,7 +75,7 @@ pub trait MenuButtonDelegate: ButtonDelegate {
     fn on_menu_button_pressed(
         &self,
         _menu_button: MenuButton,
-        _screen_point: cef_sys::cef_point_t,
+        _screen_point: crate::Point,
         _button_pressed_lock: cef_sys::cef_menu_button_pressed_lock_t,
     ) {
     }
@@ -91,14 +91,14 @@ pub trait MenuButtonDelegate: ButtonDelegate {
 
 impl MenuButton {
     /// See [cef_sys::cef_menu_button_create]
-    pub fn create(delegate: impl MenuButtonDelegate, text: CefString) -> crate::Result<Self> {
+    pub fn create(delegate: impl MenuButtonDelegate, text: CefString) -> Result<Self> {
         unsafe {
             let button = cef_sys::cef_menu_button_create(
                 MenuButtonDelegate::into_raw(delegate),
                 core::ptr::from_ref(&text.as_raw()),
             );
             if button.is_null() {
-                return Err(crate::Error::NullPtr);
+                return Err(Error::NullPtr);
             }
             Ok(Self::from_raw(button))
         }

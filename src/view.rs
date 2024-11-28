@@ -33,7 +33,7 @@ macro_rules! convert_view {
                         if v.is_null() {
                             None
                         } else {
-                            Some($crate::view::$target_type(unsafe { $crate::rc::RefGuard::from_raw(v) }))
+                            unsafe { Some($crate::view::$target_type::from_raw(v)) }
                         }
                     })
                 }

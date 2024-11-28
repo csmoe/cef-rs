@@ -22,6 +22,7 @@ pub use app::*;
 pub use browser::*;
 pub use command_line::*;
 pub use image::*;
+pub use menu_model::*;
 pub use process_message::ProcessMessage;
 pub use settings::*;
 pub use value::*;
@@ -58,6 +59,10 @@ mod alias {
     pub type ProcessId = cef_sys::cef_process_id_t;
 
     pub type ValueType = cef_sys::cef_value_type_t;
+
+    pub type RuntimeStyle = cef_sys::cef_runtime_style_t;
+
+    pub type ChromeToolbarType = cef_sys::cef_chrome_toolbar_type_t;
 }
 pub use alias::*;
 
