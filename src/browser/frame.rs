@@ -1,6 +1,7 @@
 use crate::wrapper;
 use cef_sys::cef_frame_t;
 use cef_wrapper_macro::wrapper_methods;
+use crate::CefString;
 
 wrapper! {
     #[doc = "See [cef_frame_t] for more details."]
@@ -8,7 +9,6 @@ wrapper! {
     pub struct Frame(cef_frame_t);
 }
 
-/*
 impl Frame {
     wrapper_methods!(
         /// See [cef_frame_t::is_valid]
@@ -48,7 +48,11 @@ impl Frame {
         fn load_request(&self, request: crate::Request);
 
         /// See [cef_frame_t::load_url]
-        fn load_url(&self, url: &str);
+        fn load_url(&self, url: CefString) {
+        self.0.load_url.map(|f| unsafe {
+            f(self.0.get_this(), std::ptr::from_ref(&CefString::as_raw()))
+        })
+    }
 
         /// See [cef_frame_t::execute_java_script]
         fn execute_java_script(&self, code: &str, script_url: &str, start_line: i32);
@@ -95,4 +99,3 @@ impl Frame {
         );
     );
 }
-*/

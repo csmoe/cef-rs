@@ -133,7 +133,7 @@ impl Window {
         /// See [cef_window_t::restore]
         fn restore(&mut self);
         /// See [cef_window_t::set_fullscreen]
-        fn set_fullscreen(&mut self, fullscreen: i32);
+        fn set_fullscreen(&mut self, fullscreen: bool);
         /// See [cef_window_t::is_maximized]
         fn is_maximized(&self) -> bool;
         /// See [cef_window_t::is_minimized]

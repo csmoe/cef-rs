@@ -11,9 +11,10 @@ mod image;
 mod menu_model;
 pub mod rc;
 mod settings;
-pub mod string;
+mod string;
 mod view;
 
+pub use string::CefString;
 pub use app::*;
 pub use browser::*;
 pub use command_line::*;
