@@ -1,7 +1,6 @@
 use super::ViewDelegate;
+use crate::prelude::*;
 use crate::{add_view_delegate_methods, string::CefString};
-use cef_sys::{cef_button_t, cef_label_button_t, cef_menu_button_t};
-use cef_wrapper_macro::wrapper_methods;
 
 crate::wrapper!(
     /// See [cef_button_t] for more documentation.
@@ -25,7 +24,7 @@ pub trait ButtonDelegate: ViewDelegate {
 }
 
 impl LabelButton {
-    pub fn create(delegate: impl ButtonDelegate, text: CefString) -> crate::Result<Self> {
+    pub fn create(delegate: impl ButtonDelegate, text: CefString) -> Result<Self> {
         unsafe {
             // TODO: ui thread restriction
             let button = cef_sys::cef_label_button_create(
@@ -33,7 +32,7 @@ impl LabelButton {
                 std::ptr::from_ref(&text.as_raw()),
             );
             if button.is_null() {
-                return Err(crate::Error::NullPtr);
+                return Err(Error::NullPtr);
             }
             Ok(Self::from_raw(button))
         }

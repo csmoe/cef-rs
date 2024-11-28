@@ -1,4 +1,5 @@
 use crate::prelude::*;
+use crate::wrapper;
 
 wrapper! {
     /// See [cef_list_value_t] for more docs.

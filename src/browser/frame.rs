@@ -1,4 +1,5 @@
 use crate::prelude::*;
+use crate::wrapper;
 
 wrapper! {
     #[doc = "See [cef_frame_t] for more details."]
@@ -36,13 +37,13 @@ impl Frame {
         fn view_source(&self);
 
         /// See [cef_frame_t::get_source]
-        fn get_source(&self, visitor: crate::StringVisitor);
+        /// fn get_source(&self, visitor: crate::StringVisitor);
 
         /// See [cef_frame_t::get_text]
-        fn get_text(&self, visitor: crate::StringVisitor);
+        ///fn get_text(&self, visitor: crate::StringVisitor);
 
         /// See [cef_frame_t::load_request]
-        fn load_request(&self, request: crate::Request);
+        fn load_request(&self, request: crate::net::Request);
 
         /// See [cef_frame_t::load_url]
         fn load_url(&self, url: &str) {

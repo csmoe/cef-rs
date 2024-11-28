@@ -1,7 +1,5 @@
+use crate::prelude::*;
 use crate::{add_view_delegate_methods, view::View, wrapper, ViewDelegate};
-use cef_sys::cef_panel_create;
-use cef_sys::{cef_panel_delegate_t, cef_panel_t};
-use cef_wrapper_macro::wrapper_methods;
 
 wrapper!(
     /// See [cef_panel_t] for more documentation.
@@ -15,11 +13,11 @@ crate::convert_view! {
 
 impl Panel {
     /// See [cef_panel_create]
-    pub fn create(delegate: impl PanelDelegate) -> crate::Result<Self> {
+    pub fn create(delegate: impl PanelDelegate) -> Result<Self> {
         unsafe {
             let view = cef_panel_create(PanelDelegate::into_raw(delegate));
             if view.is_null() {
-                return Err(crate::Error::NullPtr);
+                return Err(Error::NullPtr);
             }
             Ok(Self::from_raw(view))
         }

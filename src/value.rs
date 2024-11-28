@@ -8,7 +8,7 @@ pub use binary::*;
 pub use dictionary::*;
 pub use list::*;
 
-wrapper! {
+crate::wrapper! {
     /// See [cef_value_t] for more docs.
     #[derive(Debug, Clone)]
     pub struct Value(cef_value_t);

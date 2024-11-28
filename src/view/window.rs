@@ -1,3 +1,4 @@
+use crate::prelude::*;
 use crate::{
     add_view_delegate_methods,
     rc::RcImpl,
@@ -5,11 +6,6 @@ use crate::{
     view::{Panel, PanelDelegate},
     wrapper, Rect, State,
 };
-use cef_sys::{
-    cef_key_event_t, cef_runtime_style_t, cef_show_state_t, cef_window_create_top_level,
-    cef_window_delegate_t, cef_window_info_t, cef_window_t, *,
-};
-use cef_wrapper_macro::wrapper_methods;
 
 /// See [cef_window_info_t] for more documentation.
 #[derive(Debug, Default)]
@@ -243,10 +239,10 @@ impl Window {
 
 impl Window {
     /// See [cef_window_create_top_level]
-    pub fn create(delegate: impl WindowDelegate) -> crate::Result<Self> {
+    pub fn create(delegate: impl WindowDelegate) -> Result<Self> {
         let window = unsafe { cef_window_create_top_level(WindowDelegate::into_raw(delegate)) };
         if window.is_null() {
-            return Err(crate::Error::NullPtr);
+            return Err(Error::NullPtr);
         }
         Ok(unsafe { Window::from_raw(window) })
     }

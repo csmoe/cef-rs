@@ -1,6 +1,5 @@
+use crate::prelude::*;
 use crate::{wrapper, AxisAlignment};
-use cef_sys::{cef_box_layout_settings_t, cef_box_layout_t, cef_fill_layout_t, cef_layout_t};
-use cef_wrapper_macro::wrapper_methods;
 
 wrapper! {
     /// See [cef_layout_t] for more docs.

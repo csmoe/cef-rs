@@ -1,13 +1,10 @@
 use crate::add_view_delegate_methods;
+use crate::prelude::*;
 use crate::string::CefString;
 use crate::Range;
 use crate::TextFieldCommands;
 use crate::TextStyle;
 use crate::{wrapper, ViewDelegate};
-use cef_sys::cef_key_event_t;
-use cef_sys::cef_textfield_delegate_t;
-use cef_sys::cef_textfield_t;
-use cef_wrapper_macro::wrapper_methods;
 
 wrapper! {
     /// See [cef_textfield_t] for more documentation.
@@ -30,11 +27,11 @@ pub trait TextFieldDelegate: ViewDelegate {
 }
 
 impl TextField {
-    pub fn create(delegate: impl TextFieldDelegate) -> crate::Result<Self> {
+    pub fn create(delegate: impl TextFieldDelegate) -> Result<Self> {
         unsafe {
             let view = cef_sys::cef_textfield_create(<_ as TextFieldDelegate>::into_raw(delegate));
             if view.is_null() {
-                return Err(crate::Error::NullPtr);
+                return Err(Error::NullPtr);
             }
             Ok(Self::from_raw(view))
         }

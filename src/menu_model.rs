@@ -1,9 +1,5 @@
-use crate::Result;
-use crate::{add_view_delegate_methods, rc::RcImpl, string::CefString, wrapper};
-use cef_sys::cef_menu_model_create;
-use cef_sys::cef_menu_model_delegate_t;
-use cef_sys::cef_menu_model_t;
-use cef_wrapper_macro::wrapper_methods;
+use crate::prelude::*;
+use crate::wrapper;
 
 wrapper! {
     /// See [cef_menu_model_t] for more docs.
@@ -17,7 +13,7 @@ impl MenuModel {
         unsafe {
             let m = cef_menu_model_create(delegate.into_raw());
             if m.is_null() {
-                Err(crate::Error::NullPtr)
+                Err(Error::NullPtr)
             } else {
                 Ok(Self::from_raw(m))
             }

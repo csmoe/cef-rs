@@ -1,4 +1,5 @@
 use crate::prelude::*;
+use crate::wrapper;
 
 wrapper! {
     /// See [cef_request_t] for more docs.
@@ -7,7 +8,7 @@ wrapper! {
 }
 
 impl Request {
-    pub fn create() -> crate::Result<Request> {
+    pub fn create() -> Result<Request> {
         let ptr = unsafe { cef_request_create() };
         if ptr.is_null() {
             Err(crate::error::Error::NullPtr)
@@ -23,13 +24,28 @@ impl Request {
         fn is_read_only(&self) -> bool;
 
         /// See [cef_request_t::get_url]
-        fn get_url(&self) -> Option<String>;
+        fn get_url(&self) -> CefString {
+            self.0
+                .get_url
+                .and_then(|f| unsafe { CefString::from_userfree_cef(f(self.0.get_this())) })
+        }
 
         /// See [cef_request_t::set_url]
-        fn set_url(&self, url: &str);
+        fn set_url(&self, url: &str) {
+            self.0.set_url.map(|f| unsafe {
+                f(
+                    self.0.get_this(),
+                    std::ptr::from_ref(&<_ as Into<CefString>>::into(url).as_raw()),
+                )
+            })
+        }
 
         /// See [cef_request_t::get_method]
-        fn get_method(&self) -> Option<String>;
+        fn get_method(&self) -> CefString {
+            self.0
+                .get_method
+                .and_then(|f| unsafe { CefString::from_userfree_cef(f(self.0.get_this())) })
+        }
 
         /// See [cef_request_t::set_method]
         fn set_method(&self, method: &str);
@@ -38,16 +54,20 @@ impl Request {
         fn set_referrer(&self, referrer_url: &str, policy: cef_referrer_policy_t);
 
         /// See [cef_request_t::get_referrer_url]
-        fn get_referrer_url(&self) -> Option<String>;
+        fn get_referrer_url(&self) -> CefString {
+            self.0
+                .get_referrer_url
+                .and_then(|f| unsafe { CefString::from_userfree_cef(f(self.0.get_this())) })
+        }
 
         /// See [cef_request_t::get_referrer_policy]
         fn get_referrer_policy(&self) -> cef_referrer_policy_t;
 
         /// See [cef_request_t::get_post_data]
-        fn get_post_data(&self) -> Option<crate::PostData>;
+        fn get_post_data(&self) -> crate::net::PostData;
 
         /// See [cef_request_t::set_post_data]
-        fn set_post_data(&self, post_data: crate::PostData);
+        fn set_post_data(&self, post_data: crate::net::PostData);
 
         /// See [cef_request_t::get_header_map]
         fn get_header_map(&self) -> crate::StringMultimap;
@@ -66,7 +86,7 @@ impl Request {
             &self,
             url: &str,
             method: &str,
-            post_data: crate::PostData,
+            post_data: crate::net::PostData,
             header_map: crate::StringMultimap,
         );
 

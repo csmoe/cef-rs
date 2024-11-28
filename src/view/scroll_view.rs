@@ -1,6 +1,5 @@
+use crate::prelude::*;
 use crate::{wrapper, ViewDelegate};
-use cef_sys::cef_scroll_view_t;
-use cef_wrapper_macro::wrapper_methods;
 
 wrapper! {
     /// See [cef_scroll_view_t] for more documentation.
@@ -10,11 +9,11 @@ wrapper! {
 
 impl ScrollView {
     /// See [cef_sys::cef_scroll_view_create]
-    pub fn create(delegate: impl ViewDelegate) -> crate::Result<Self> {
+    pub fn create(delegate: impl ViewDelegate) -> Result<Self> {
         unsafe {
             let view = cef_sys::cef_scroll_view_create(delegate.into_raw());
             if view.is_null() {
-                return Err(crate::Error::NullPtr);
+                return Err(Error::NullPtr);
             }
             Ok(Self::from_raw(view))
         }
