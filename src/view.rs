@@ -1,8 +1,9 @@
 use crate::rc::Rc;
 use crate::string::CefString;
 use crate::{
+    prelude::*,
     rc::{RcImpl, RefGuard},
-    wrapper, Rect, Size,
+    Rect, Size,
 };
 use cef_sys::{cef_view_delegate_t, cef_view_t};
 use cef_wrapper_macro::wrapper_methods;
@@ -51,11 +52,10 @@ convert_view! {
     (View, as_button, Button)
 }
 
-wrapper!(
-    /// See [cef_view_t] for more documentation.
-    #[derive(Debug, Clone)]
-    pub struct View(cef_view_t);
-);
+/// See [cef_view_t] for more documentation.
+#[derive(Debug, Clone)]
+#[wrapper]
+pub struct View(cef_view_t);
 
 impl View {
     #[cfg(debug_assertions)]

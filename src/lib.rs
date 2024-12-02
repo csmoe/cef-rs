@@ -15,6 +15,7 @@ mod process_message;
 pub mod rc;
 mod settings;
 mod string;
+mod v8;
 mod value;
 mod view;
 
@@ -25,6 +26,7 @@ pub use image::*;
 pub use menu_model::*;
 pub use process_message::ProcessMessage;
 pub use settings::*;
+pub use string::CefString;
 pub use value::*;
 pub use view::*;
 
@@ -65,60 +67,3 @@ mod alias {
     pub type ChromeToolbarType = cef_sys::cef_chrome_toolbar_type_t;
 }
 pub use alias::*;
-
-macro_rules! wrapper {
-    (
-        $(#[$attr:meta])*
-        pub struct $name:ident($sys:path);
-        $(
-            $visibility:vis fn $method:ident($(&$($mut:tt)?)? self $(, $arg:ident : $type:ty)* ) $(-> $ret:ty)?;
-        )*
-    ) => {
-        $(#[$attr])*
-        pub struct $name(pub(crate) $crate::rc::RefGuard<$sys>);
-
-        impl $crate::rc::Rc for $sys {
-            fn as_base(&self) -> &cef_sys::cef_base_ref_counted_t {
-                &self.base.as_base()
-            }
-        }
-
-        impl $crate::rc::Rc for $name {
-            fn as_base(&self) -> &cef_sys::cef_base_ref_counted_t {
-                self.0.as_base()
-            }
-        }
-
-        impl From<*mut $sys> for $name {
-            fn from(ptr: *mut $sys) -> Self {
-                unsafe { $name($crate::rc::RefGuard::from_raw(ptr)) }
-            }
-        }
-
-        impl From<$name> for *mut $sys {
-            fn from(value: $name) -> Self {
-                unsafe { value.into_raw() }
-            }
-        }
-
-        impl From<$name> for *const $sys {
-            fn from(value: $name) -> Self {
-                unsafe { value.into_raw() }
-            }
-        }
-
-        impl $name {
-            #[allow(clippy::missing_safety_doc)]
-            pub unsafe fn from_raw(ptr: *mut $sys) -> Self {
-                Self($crate::rc::RefGuard::from_raw(ptr))
-            }
-
-            #[allow(clippy::missing_safety_doc)]
-            pub unsafe fn into_raw(self) -> *mut $sys {
-                self.0.into_raw()
-            }
-        }
-    };
-}
-
-pub(crate) use wrapper;

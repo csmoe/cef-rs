@@ -1,11 +1,9 @@
 use crate::prelude::*;
-use crate::wrapper;
 
-wrapper! {
-    /// See [cef_dictionary_value_t] for more docs.
-    #[derive(Debug, Clone)]
-    pub struct DictionaryValue(cef_dictionary_value_t);
-}
+/// See [cef_dictionary_value_t] for more docs.
+#[derive(Debug, Clone)]
+#[wrapper]
+pub struct DictionaryValue(cef_dictionary_value_t);
 
 impl DictionaryValue {
     pub fn create() -> Result<DictionaryValue> {

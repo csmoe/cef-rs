@@ -4,13 +4,12 @@ use crate::string::CefString;
 use crate::Range;
 use crate::TextFieldCommands;
 use crate::TextStyle;
-use crate::{wrapper, ViewDelegate};
+use crate::ViewDelegate;
 
-wrapper! {
-    /// See [cef_textfield_t] for more documentation.
-    #[derive(Debug, Clone)]
-    pub struct TextField(cef_textfield_t);
-}
+/// See [cef_textfield_t] for more documentation.
+#[derive(Debug, Clone)]
+#[wrapper]
+pub struct TextField(cef_textfield_t);
 
 pub trait TextFieldDelegate: ViewDelegate {
     fn on_key_event(&self, _textfield: TextField, _event: cef_key_event_t) -> bool {

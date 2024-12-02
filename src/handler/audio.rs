@@ -1,14 +1,11 @@
-use cef_sys::cef_audio_handler_t;
-use cef_sys::*;
-
+use crate::prelude::*;
 use crate::string::CefString;
 use crate::Browser;
 
-crate::wrapper! {
-    /// See [cef_audio_handler_t] for more documentation.
-    #[derive(Debug,Clone)]
-    pub struct AudioHandler(cef_audio_handler_t);
-}
+/// See [cef_audio_handler_t] for more documentation.
+#[derive(Debug, Clone)]
+#[wrapper]
+pub struct AudioHandler(cef_audio_handler_t);
 
 //TODO
 pub trait AudioCallback {

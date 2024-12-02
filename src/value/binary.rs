@@ -1,11 +1,9 @@
 use crate::prelude::*;
-use crate::wrapper;
 
-wrapper! {
-    /// See [cef_binary_value_t] for more docs.
-    #[derive(Debug, Clone)]
-    pub struct BinaryValue(cef_binary_value_t);
-}
+/// See [cef_binary_value_t] for more docs.
+#[derive(Debug, Clone)]
+#[wrapper]
+pub struct BinaryValue(cef_binary_value_t);
 
 impl BinaryValue {
     pub fn create(data: &[u8]) -> Result<BinaryValue> {

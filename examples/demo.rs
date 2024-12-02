@@ -1,5 +1,5 @@
 use cef::{
-    args::Args, client::Client, string::CefString, App, Browser, BrowserSettings, BrowserView,
+    args::Args, client::Client, App, Browser, BrowserSettings, BrowserView, CefString,
     PanelDelegate, Settings, ViewDelegate, WindowDelegate,
 };
 

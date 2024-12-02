@@ -1,11 +1,9 @@
 use crate::prelude::*;
-use crate::wrapper;
 
-wrapper! {
-    #[doc = "See [cef_frame_t] for more details."]
-    #[derive(Debug, Clone)]
-    pub struct Frame(cef_frame_t);
-}
+#[doc = "See [cef_frame_t] for more details."]
+#[derive(Debug, Clone)]
+#[wrapper]
+pub struct Frame(cef_frame_t);
 
 impl Frame {
     wrapper_methods!(

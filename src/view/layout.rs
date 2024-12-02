@@ -1,11 +1,10 @@
 use crate::prelude::*;
-use crate::{wrapper, AxisAlignment};
+use crate::AxisAlignment;
 
-wrapper! {
-    /// See [cef_layout_t] for more docs.
-    #[derive(Debug, Clone)]
-    pub struct Layout(cef_layout_t);
-}
+/// See [cef_layout_t] for more docs.
+#[derive(Debug, Clone)]
+#[wrapper]
+pub struct Layout(cef_layout_t);
 
 impl Layout {
     wrapper_methods!(
@@ -38,17 +37,15 @@ impl Layout {
     );
 }
 
-wrapper! {
-    /// See [cef_fill_layout_t] for more docs.
-    #[derive(Debug, Clone)]
-    pub struct FillLayout(cef_fill_layout_t);
-}
+/// See [cef_fill_layout_t] for more docs.
+#[derive(Debug, Clone)]
+#[wrapper]
+pub struct FillLayout(cef_fill_layout_t);
 
-wrapper! {
-    /// See [cef_box_layout_t] for more docs.
-    #[derive(Debug, Clone)]
-    pub struct BoxLayout(cef_box_layout_t);
-}
+/// See [cef_box_layout_t] for more docs.
+#[derive(Debug, Clone)]
+#[wrapper]
+pub struct BoxLayout(cef_box_layout_t);
 
 impl BoxLayout {
     wrapper_methods!(

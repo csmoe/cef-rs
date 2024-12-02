@@ -1,10 +1,10 @@
 use crate::{
-    client::Client, error::Result, string::CefString, view::WindowInfo, BrowserView,
+    client::Client, error::Result, prelude::*, string::CefString, view::WindowInfo, BrowserView,
     ChromeToolbarType, State,
 };
 use cef_sys::{
-    cef_browser_host_create_browser_sync, cef_browser_settings_t, cef_browser_t,
-    cef_chrome_toolbar_type_t, cef_client_t, cef_gesture_command_t, cef_runtime_style_t,
+    cef_browser_host_create_browser_sync, cef_browser_settings_t, cef_browser_t, cef_client_t,
+    cef_gesture_command_t,
 };
 use std::{ffi::c_int, ptr::null_mut};
 
@@ -116,11 +116,10 @@ impl BrowserSettings {
     }
 }
 
-crate::wrapper! {
-    /// See [cef_browser_t] for more documentation.
-    #[derive(Debug, Clone)]
-    pub struct Browser(cef_browser_t);
-}
+/// See [cef_browser_t] for more documentation.
+#[derive(Debug, Clone)]
+#[wrapper]
+pub struct Browser(cef_browser_t);
 
 impl Browser {
     /// See [cef_browser_host_create_browser_sync] for more documentation.

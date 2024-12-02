@@ -2,17 +2,15 @@ use super::ViewDelegate;
 use crate::prelude::*;
 use crate::{add_view_delegate_methods, string::CefString};
 
-crate::wrapper!(
-    /// See [cef_button_t] for more documentation.
-    #[derive(Debug, Clone)]
-    pub struct Button(cef_button_t);
-);
+/// See [cef_button_t] for more documentation.
+#[derive(Debug, Clone)]
+#[wrapper]
+pub struct Button(cef_button_t);
 
-crate::wrapper!(
-    /// See [cef_label_button_t] for more documentation.
-    #[derive(Debug, Clone)]
-    pub struct LabelButton(cef_label_button_t);
-);
+/// See [cef_label_button_t] for more documentation.
+#[derive(Debug, Clone)]
+#[wrapper]
+pub struct LabelButton(cef_label_button_t);
 
 pub trait ButtonDelegate: ViewDelegate {
     fn into_raw(self) -> *mut cef_sys::cef_button_delegate_t {
@@ -39,11 +37,10 @@ impl LabelButton {
     }
 }
 
-crate::wrapper!(
-    /// See [cef_menu_button_t] for more documentation.
-    #[derive(Debug, Clone)]
-    pub struct MenuButton(cef_menu_button_t);
-);
+/// See [cef_menu_button_t] for more documentation.
+#[derive(Debug, Clone)]
+#[wrapper]
+pub struct MenuButton(cef_menu_button_t);
 
 impl MenuButton {
     wrapper_methods!(

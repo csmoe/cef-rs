@@ -1,11 +1,9 @@
 use crate::prelude::*;
-use crate::wrapper;
 
-wrapper! {
-    /// See [cef_request_t] for more docs.
-    #[derive(Debug, Clone)]
-    pub struct Request(cef_request_t);
-}
+/// See [cef_request_t] for more docs.
+#[derive(Debug, Clone)]
+#[wrapper]
+pub struct Request(cef_request_t);
 
 impl Request {
     pub fn create() -> Result<Request> {

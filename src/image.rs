@@ -1,10 +1,9 @@
 use crate::prelude::*;
 
-crate::wrapper! {
-    /// See [cef_image_t] for more docs.
-    #[derive(Debug, Clone)]
-    pub struct Image(cef_image_t);
-}
+/// See [cef_image_t] for more docs.
+#[derive(Debug, Clone)]
+#[wrapper]
+pub struct Image(cef_image_t);
 
 impl Image {
     /// See [cef_sys::cef_image_create]

@@ -1,11 +1,9 @@
 use crate::prelude::*;
-use crate::wrapper;
 
-wrapper! {
-    /// See [cef_menu_model_t] for more docs.
-    #[derive(Debug, Clone)]
-    pub struct MenuModel(cef_menu_model_t);
-}
+/// See [cef_menu_model_t] for more docs.
+#[derive(Debug, Clone)]
+#[wrapper]
+pub struct MenuModel(cef_menu_model_t);
 
 impl MenuModel {
     /// See [cef_menu_model_create] for more docs.
