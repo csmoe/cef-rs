@@ -94,18 +94,24 @@ lldb -- <path-of-cef-binary>
 
 CEF is a wrapper of chromium, chromium source code is needed if you wanna step into chromium with code, get CEF code along with chromium: [BuildQuickStart](https://bitbucket.org/chromiumembedded/cef/wiki/MasterBuildQuickStart.md)
 
-For example, download CEF version `130.1.16+g5a7e5ed+chromium-130.0.6723.117`: `python3 automate/automate-git.py --download-dir=<code-path> --no-distrib --no-build --arm64-build --checkout 5a7e5ed` the checkout commit hash is wrapped in `g<commit>`
-
-After lldb symbols loading, execute `image lookup -vn cef_execute_process` in lldb session, it shoud print out the
-compileunit of `cef_execute_process`, copy the prefix of compileunit's file `/Users/spotify-buildagent/buildAgent/work/dci-wd/desktop/cef-tools/CEF3_git/chromium/src/`(checkout [Debugging LLDB with source stepping](https://werat.dev/blog/debugging-lldb-with-source-stepping/) for another way to get the path).
+For example, download CEF version <code>130.1.16+g<mark>5a7e5ed</mark>+chromium-130.0.6723.117</code>:
 
 ```sh
+python3 automate/automate-git.py --download-dir=<code-path> --no-distrib --no-build --arm64-build --checkout 5a7e5ed
+```
+
+the checkout commit hash is wrapped in `g<commit>`.
+
+After lldb symbols loading, execute `image lookup -vn cef_execute_process` in lldb session, it shoud print out the compileunit of `cef_execute_process`, copy the prefix of compileunit's file.(checkout [Debugging LLDB with source stepping](https://werat.dev/blog/debugging-lldb-with-source-stepping/) for another way to get the path).
+
+<pre>
+<code>
 (lldb) image lookup -vn cef_execute_process
 1 match found in /repo/cef-rs/target/debug/examples/bundle/osx/demo.app/Contents/Frameworks/Chromium Embedded Framework.framework/Chromium Embedded Framework:
         Address: Chromium Embedded Framework[0x000000000028a0fc] (Chromium Embedded Framework.__TEXT.__text + 2646268)
         Summary: Chromium Embedded Framework`::cef_execute_process(const cef_main_args_t *, _cef_app_t *, void *) at libcef_dll.cc:66:7
          Module: file = "/repo/cef-rs/target/debug/examples/bundle/osx/demo.app/Contents/Frameworks/Chromium Embedded Framework.framework/Chromium Embedded Framework", arch = "arm64"
-    CompileUnit: id = {0x00000068}, file = "/Users/spotify-buildagent/buildAgent/work/dci-wd/desktop/cef-tools/CEF3_git/chromium/src/cef/libcef_dll/libcef_dll.cc", language = "c++14"
+    CompileUnit: id = {0x00000068}, file = "<mark>/Users/spotify-buildagent/buildAgent/work/dci-wd/desktop/cef-tools/CEF3_git/chromium/src/</mark>cef/libcef_dll/libcef_dll.cc", language = "c++14"
        Function: id = {0x005e6349}, name = "::cef_execute_process(const cef_main_args_t *, _cef_app_t *, void *)", range = [0x000000010baf20fc-0x000000010baf21a4)
        FuncType: id = {0x005e6349}, byte-size = 0, decl = libcef_dll.cc:59, compiler_type = "int (const cef_main_args_t *, struct _cef_app_t *, void *)"
          Blocks: id = {0x005e6349}, range = [0x10baf20fc-0x10baf21a4)
@@ -115,7 +121,8 @@ compileunit of `cef_execute_process`, copy the prefix of compileunit's file `/Us
        Variable: id = {0x005e6373}, name = "application", type = "_cef_app_t *", valid ranges = <block>, location = [0x000000000028a0fc, 0x000000000028a11c) -> DW_OP_reg1 W1, decl = libcef_dll.cc:60
        Variable: id = {0x005e6383}, name = "windows_sandbox_info", type = "void *", valid ranges = <block>, location = [0x000000000028a0fc, 0x000000000028a118) -> DW_OP_reg2 W2, decl = libcef_dll.cc:61
        Variable: id = {0x005e6393}, name = "argsVal", type = "CefMainArgs", valid ranges = <block>, location = DW_OP_breg31 WSP+0, decl = libcef_dll.cc:72
-```
+</code>
+</pre>
 
 Finally add a sourcemap to lldb.
 

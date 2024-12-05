@@ -40,6 +40,7 @@ fn main() {
     //    .canonicalize()
     //    .unwrap();
     let mut args = Args::new(std::env::args());
+    dbg!(&args);
     let app = Application;
     let mut settings = Settings::new();
     settings.root_cache_path = CefString::from("/tmp/demo");

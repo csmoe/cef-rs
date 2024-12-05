@@ -65,5 +65,9 @@ mod alias {
     pub type RuntimeStyle = cef_sys::cef_runtime_style_t;
 
     pub type ChromeToolbarType = cef_sys::cef_chrome_toolbar_type_t;
+
+    pub type BaseTime = cef_sys::cef_basetime_t;
+
+    pub type V8PropertyAttribute = cef_sys::cef_v8_propertyattribute_t;
 }
 pub use alias::*;
