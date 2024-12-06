@@ -11,6 +11,7 @@ mod image;
 mod menu_model;
 mod multimap;
 mod net;
+mod preference_manager;
 mod prelude;
 mod process_message;
 pub mod rc;

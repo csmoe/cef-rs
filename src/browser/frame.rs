@@ -117,7 +117,16 @@ impl Frame {
         }
 
         // See [cef_frame_t::get_v8context]
-        //fn get_v8context(&self) -> crate::V8Context;
+        fn get_v8context(&self) -> crate::v8::V8Context {
+            self.0.get_v8context.and_then(|f| unsafe {
+                let f = f(self.0.get_this());
+                if f.is_null() {
+                    None
+                } else {
+                    Some(crate::v8::V8Context::from_raw(f))
+                }
+            })
+        }
 
         /// See [cef_frame_t::visit_dom]
         // fn visit_dom(&self, visitor: crate::DOMVisitor);

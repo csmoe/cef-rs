@@ -146,56 +146,9 @@ impl Browser {
 
         Ok(unsafe { Self::from_raw(ret) })
     }
-}
 
-pub trait BrowserViewDelegate: Sized {
-    /// See [cef_sys::cef_browser_view_delegate_t::on_browser_created]
-    fn on_browser_created(&self, _browser_view: BrowserView, _browser: Browser) {}
-
-    /// See [cef_sys::cef_browser_view_delegate_t::on_browser_destroyed]
-    fn on_browser_destroyed(&self, _browser_view: BrowserView, _browser: Browser) {}
-
-    /// See [cef_sys::cef_browser_view_delegate_t::on_gesture_command]
-    fn on_gesture_command(
-        &self,
-        _browser_view: BrowserView,
-        _gesture_command: cef_gesture_command_t,
-    ) -> bool {
-        todo!()
-    }
-
-    /// See [cef_sys::cef_browser_view_delegate_t::get_delegate_for_popup_browser_view]
-    fn get_delegate_for_popup_browser_view(
-        &self,
-        _browser_view: BrowserView,
-        _settings: BrowserSettings,
-        _client: cef_client_t,
-        _is_devtools: bool,
-    ) -> Option<Self> {
-        None
-    }
-
-    /// See [cef_sys::cef_browser_view_delegate_t::on_popup_browser_view_created]
-    fn on_popup_browser_view_created(
-        &self,
-        _browser_view: BrowserView,
-        _popup_browser_view: BrowserView,
-        _is_devtools: bool,
-    ) {
-    }
-
-    /// See [cef_sys::cef_browser_view_delegate_t::get_chrome_toolbar_type]
-    fn get_chrome_toolbar_type(&self, _browser_view: BrowserView) -> ChromeToolbarType {
-        todo!()
-    }
-
-    /// See [cef_sys::cef_browser_view_delegate_t::use_frameless_window_for_picture_in_picture]
-    fn use_frameless_window_for_picture_in_picture(&self, _browser_view: BrowserView) -> bool {
-        todo!()
-    }
-
-    /// See [cef_sys::cef_browser_view_delegate_t::get_browser_runtime_style]
-    fn get_browser_runtime_style(&self) -> crate::RuntimeStyle {
-        todo!()
+    /// See [cef_browser_view_get_for_browser]
+    pub fn browrer_view(&self) -> BrowserView {
+        unsafe { BrowserView::from_raw(cef_browser_view_get_for_browser(self.0.get_this())) }
     }
 }
