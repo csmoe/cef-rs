@@ -9,6 +9,7 @@ mod error;
 mod handler;
 mod image;
 mod menu_model;
+mod multimap;
 mod net;
 mod prelude;
 mod process_message;
@@ -69,5 +70,7 @@ mod alias {
     pub type BaseTime = cef_sys::cef_basetime_t;
 
     pub type V8PropertyAttribute = cef_sys::cef_v8_propertyattribute_t;
+
+    pub type PostDataElementType = cef_sys::cef_postdataelement_type_t;
 }
 pub use alias::*;
