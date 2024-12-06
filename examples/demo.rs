@@ -1,5 +1,5 @@
 use cef::{
-    args::Args, client::Client, string::CefString, App, Browser, BrowserSettings, BrowserView,
+    args::Args, client::Client, App, Browser, BrowserSettings, BrowserView, CefString,
     PanelDelegate, Settings, ViewDelegate, WindowDelegate,
 };
 
@@ -40,6 +40,7 @@ fn main() {
     //    .canonicalize()
     //    .unwrap();
     let mut args = Args::new(std::env::args());
+    dbg!(&args);
     let app = Application;
     let mut settings = Settings::new();
     settings.root_cache_path = CefString::from("/tmp/demo");

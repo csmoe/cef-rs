@@ -1,11 +1,9 @@
 use crate::prelude::*;
-use crate::wrapper;
 
-wrapper! {
-    /// See [cef_list_value_t] for more docs.
-    #[derive(Debug, Clone)]
-    pub struct ListValue(cef_list_value_t);
-}
+/// See [cef_list_value_t] for more docs.
+#[derive(Debug, Clone)]
+#[wrapper]
+pub struct ListValue(cef_list_value_t);
 
 impl ListValue {
     pub fn create() -> Result<ListValue> {

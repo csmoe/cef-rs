@@ -247,7 +247,7 @@ impl<T: FfiRc, I> RcImpl<T, I> {
     }
 
     pub fn get<'a>(ptr: *mut T) -> &'a mut RcImpl<T, I> {
-        unsafe { &mut *(ptr as *mut RcImpl<T, I>) }
+        unsafe { &mut *(ptr.cast()) }
     }
 }
 

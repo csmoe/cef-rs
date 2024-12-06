@@ -1,3 +1,4 @@
+use crate::prelude::*;
 use crate::{
     client::Client,
     error::{Error, Result},
@@ -8,11 +9,10 @@ use crate::{
 use cef_sys::{cef_browser_view_create, cef_browser_view_t};
 use std::ptr::null_mut;
 
-crate::wrapper!(
-    /// See [cef_browser_view_t] for more documentation.
-    #[derive(Debug, Clone)]
-    pub struct BrowserView(cef_browser_view_t);
-);
+/// See [cef_browser_view_t] for more documentation.
+#[derive(Debug, Clone)]
+#[wrapper]
+pub struct BrowserView(cef_browser_view_t);
 
 impl BrowserView {
     pub fn view(&self) -> View {

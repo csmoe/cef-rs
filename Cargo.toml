@@ -14,7 +14,7 @@ identifier = "com.cef.demo"
 category = "Utility"
 short_description = "An example of a bundled CEF application"
 long_description = """ CEF application in Rust """
-osx_frameworks = [ "sys/cef/archive/Chromium Embedded Framework.framework" ]
+osx_frameworks = [ "sys/cef/archive/Chromium Embedded Framework.framework", ]
 
 [package.metadata.bundle.example.demo_helper]
 name = "demo Helper"

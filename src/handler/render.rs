@@ -1,12 +1,10 @@
-use cef_sys::cef_render_handler_t;
-
+use crate::prelude::*;
 use crate::{string::CefString, Browser, Rect};
 
-crate::wrapper! {
-    /// See [cef_render_handler_t] for more docs.
-    #[derive(Debug,Clone)]
-    pub struct RenderHandler(cef_render_handler_t);
-}
+/// See [cef_render_handler_t] for more docs.
+#[derive(Debug, Clone)]
+#[wrapper]
+pub struct RenderHandler(cef_render_handler_t);
 
 pub trait RenderCallback {
     /// See [get_accessibility_handler]

@@ -8,11 +8,10 @@ pub use binary::*;
 pub use dictionary::*;
 pub use list::*;
 
-crate::wrapper! {
-    /// See [cef_value_t] for more docs.
-    #[derive(Debug, Clone)]
-    pub struct Value(cef_value_t);
-}
+/// See [cef_value_t] for more docs.
+#[derive(Debug, Clone)]
+#[wrapper]
+pub struct Value(cef_value_t);
 
 impl Value {
     pub fn create() -> Result<Value> {

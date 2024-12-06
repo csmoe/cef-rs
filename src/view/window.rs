@@ -4,7 +4,7 @@ use crate::{
     rc::RcImpl,
     string::CefString,
     view::{Panel, PanelDelegate},
-    wrapper, Rect, State,
+    Rect, State,
 };
 
 /// See [cef_window_info_t] for more documentation.
@@ -90,11 +90,10 @@ impl WindowInfo {
     }
 }
 
-wrapper! {
-    /// See [cef_window_t] for more documentation.
-    #[derive(Clone)]
-    pub struct Window(cef_window_t);
-}
+/// See [cef_window_t] for more documentation.
+#[derive(Clone)]
+#[wrapper]
+pub struct Window(cef_window_t);
 
 impl Window {
     wrapper_methods!(

@@ -1,11 +1,10 @@
 use crate::prelude::*;
-use crate::{add_view_delegate_methods, view::View, wrapper, ViewDelegate};
+use crate::{add_view_delegate_methods, view::View, ViewDelegate};
 
-wrapper!(
-    /// See [cef_panel_t] for more documentation.
-    #[derive(Debug, Clone)]
-    pub struct Panel(cef_panel_t);
-);
+/// See [cef_panel_t] for more documentation.
+#[derive(Debug, Clone)]
+#[wrapper]
+pub struct Panel(cef_panel_t);
 
 crate::convert_view! {
     (Panel, as_window, Window)

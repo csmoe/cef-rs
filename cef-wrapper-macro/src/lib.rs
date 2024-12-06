@@ -4,8 +4,9 @@ use syn::visit::Visit;
 use syn::DeriveInput;
 use syn::{
     parse::{Parse, ParseStream},
-    parse_macro_input, Pat, PatType, ReturnType, TraitItemFn, TypePath,
+    Pat, PatType, ReturnType, TraitItemFn, TypePath,
 };
+use syn::{parse_macro_input, ItemStruct};
 
 struct MultipleFunctions {
     functions: Vec<TraitItemFn>,
@@ -134,4 +135,61 @@ impl<'ast> Visit<'ast> for TypeVisitor {
         }
         syn::visit::visit_type_path(self, i);
     }
+}
+
+#[proc_macro_attribute]
+pub fn wrapper(_attr: TokenStream, item: TokenStream) -> TokenStream {
+    let input = parse_macro_input!(item as ItemStruct);
+    let attrs = &input.attrs;
+    let name = &input.ident;
+    let sys = &input.fields.iter().next().unwrap().ty;
+
+    let expanded = quote! {
+        #(#attrs)*
+        pub struct #name(pub(crate) crate::rc::RefGuard<#sys>);
+
+        impl crate::rc::Rc for #sys {
+            fn as_base(&self) -> &cef_sys::cef_base_ref_counted_t {
+                &self.base.as_base()
+            }
+        }
+
+        impl crate::rc::Rc for #name {
+            fn as_base(&self) -> &cef_sys::cef_base_ref_counted_t {
+                self.0.as_base()
+            }
+        }
+
+        impl From<*mut #sys> for #name {
+            fn from(ptr: *mut #sys) -> Self {
+                unsafe { #name(crate::rc::RefGuard::from_raw(ptr)) }
+            }
+        }
+
+        impl From<#name> for *mut #sys {
+            fn from(value: #name) -> Self {
+                unsafe { value.into_raw() }
+            }
+        }
+
+        impl From<#name> for *const #sys {
+            fn from(value: #name) -> Self {
+                unsafe { value.into_raw() }
+            }
+        }
+
+        impl #name {
+            #[allow(clippy::missing_safety_doc)]
+            pub unsafe fn from_raw(ptr: *mut #sys) -> Self {
+                Self(crate::rc::RefGuard::from_raw(ptr))
+            }
+
+            #[allow(clippy::missing_safety_doc)]
+            pub unsafe fn into_raw(self) -> *mut #sys {
+                self.0.into_raw()
+            }
+        }
+    };
+
+    TokenStream::from(expanded)
 }

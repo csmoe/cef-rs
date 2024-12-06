@@ -1,11 +1,11 @@
 use crate::prelude::*;
-use crate::{wrapper, ViewDelegate};
+use crate::ViewDelegate;
+use cef_wrapper_macro::wrapper;
 
-wrapper! {
-    /// See [cef_scroll_view_t] for more documentation.
-    #[derive(Debug, Clone)]
-    pub struct ScrollView(cef_scroll_view_t);
-}
+#[wrapper]
+/// See [cef_scroll_view_t] for more documentation.
+#[derive(Debug, Clone)]
+pub struct ScrollView(cef_scroll_view_t);
 
 impl ScrollView {
     /// See [cef_sys::cef_scroll_view_create]

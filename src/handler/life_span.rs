@@ -1,10 +1,10 @@
+use crate::prelude::*;
 use crate::{string::CefString, Browser};
 
-crate::wrapper! {
-    #[doc = ""]
-    #[derive(Clone)]
-    pub struct BrowerLifeSpanHandler(cef_sys::cef_life_span_handler_t);
-}
+/// See [cef_life_span_handler_t] for more docs.
+#[derive(Clone)]
+#[wrapper]
+pub struct BrowerLifeSpanHandler(cef_life_span_handler_t);
 
 pub trait BrowserLifeSpanCallback {
     fn on_loading_state_change(

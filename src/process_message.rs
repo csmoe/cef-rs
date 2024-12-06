@@ -1,11 +1,9 @@
 use crate::prelude::*;
-use crate::wrapper;
 
-wrapper! {
-    /// See [cef_process_message_t] for more docs.
-    #[derive(Debug, Clone)]
-    pub struct ProcessMessage(cef_process_message_t);
-}
+/// See [cef_process_message_t] for more docs.
+#[derive(Debug, Clone)]
+#[wrapper]
+pub struct ProcessMessage(cef_process_message_t);
 
 impl ProcessMessage {
     wrapper_methods!(
