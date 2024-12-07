@@ -48,7 +48,7 @@ impl Frame {
             self.0.load_url.map(|f| unsafe {
                 f(
                     self.0.get_this(),
-                    std::ptr::from_ref(&<_ as Into<CefString>>::into(url).as_raw()),
+                    &CefString::from(url).as_raw(),
                 )
             })
         }
@@ -58,8 +58,8 @@ impl Frame {
             self.0.execute_java_script.map(|f| unsafe {
                 f(
                     self.0.get_this(),
-                    std::ptr::from_ref(&<_ as Into<CefString>>::into(code).as_raw()),
-                    std::ptr::from_ref(&<_ as Into<CefString>>::into(script_url).as_raw()),
+                    &CefString::from(code).as_raw(),
+                    &CefString::from(script_url).as_raw(),
                     start_line,
                 )
             })
@@ -75,14 +75,14 @@ impl Frame {
         fn get_name(&self) -> CefString {
             self.0
                 .get_name
-                .and_then(|f| unsafe { CefString::from_raw(f(self.0.get_this())) })
+                .and_then(|f| unsafe { CefString::from_userfree_cef(f(self.0.get_this())) })
         }
 
         /// See [cef_frame_t::get_identifier]
         fn get_identifier(&self) -> CefString {
             self.0
                 .get_identifier
-                .and_then(|f| unsafe { CefString::from_raw(f(self.0.get_this())) })
+                .and_then(|f| unsafe { CefString::from_userfree_cef(f(self.0.get_this())) })
         }
 
         /// See [cef_frame_t::get_parent]
@@ -101,7 +101,7 @@ impl Frame {
         fn get_url(&self) -> CefString {
             self.0
                 .get_url
-                .and_then(|f| unsafe { CefString::from_raw(f(self.0.get_this())) })
+                .and_then(|f| unsafe { CefString::from_userfree_cef(f(self.0.get_this())) })
         }
 
         /// See [cef_frame_t::get_browser]
