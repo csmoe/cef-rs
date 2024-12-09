@@ -4,5 +4,3 @@ use crate::prelude::*;
 #[derive(Debug, Clone)]
 #[wrapper]
 pub struct PrintHandler(cef_print_handler_t);
-
-pub trait PrintCallback {}

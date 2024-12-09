@@ -16,7 +16,6 @@ impl Request {
     }
 }
 
-/*
 impl Request {
     wrapper_methods!(
         /// See [cef_request_t::is_read_only]
@@ -169,4 +168,14 @@ impl Request {
         fn get_identifier(&self) -> u64;
     );
 }
-*/
+
+/// See [cef_request_context_t] for more docs.
+#[wrapper]
+#[derive(Debug, Clone)]
+pub struct RequestContext(cef_request_context_t);
+
+impl RequestContext {
+    pub fn global() -> Self {
+        unsafe { RequestContext::from_raw(cef_request_context_get_global_context()) }
+    }
+}

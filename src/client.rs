@@ -108,8 +108,24 @@ pub trait Client: Sized {
         false
     }
 
+    #[doc(hidden)]
     fn into_raw(self) -> *mut cef_client_t {
-        let object: cef_client_t = unsafe { std::mem::zeroed() };
+        let mut object: cef_client_t = unsafe { std::mem::zeroed() };
+        object.get_drag_handler = Some(get_drag_handler::<Self>);
+        object.get_find_handler = Some(get_find_handler::<Self>);
+        object.get_load_handler = Some(get_load_handler::<Self>);
+        object.get_audio_handler = Some(get_audio_handler::<Self>);
+        object.get_focus_handler = Some(get_focus_handler::<Self>);
+        object.get_frame_handler = Some(get_frame_handler::<Self>);
+        object.get_print_handler = Some(get_print_handler::<Self>);
+        object.get_dialog_handler = Some(get_dialog_handler::<Self>);
+        object.get_render_handler = Some(get_render_handler::<Self>);
+        object.get_command_handler = Some(get_command_handler::<Self>);
+        object.get_display_handler = Some(get_display_handler::<Self>);
+        object.get_request_handler = Some(get_request_handler::<Self>);
+        object.get_download_handler = Some(get_download_handler::<Self>);
+        object.get_permission_handler = Some(get_permission_handler::<Self>);
+        object.get_context_menu_handler = Some(get_context_menu_handler::<Self>);
 
         RcImpl::new(object, self).cast()
     }
@@ -267,11 +283,6 @@ impl<
     pub fn with_focus_callback(mut self, focus: Focus) -> Self {
         self.focus = Some(focus);
         self
-    }
-
-    pub fn into_raw(self) -> *mut cef_sys::cef_client_t {
-        let object: cef_client_t = unsafe { std::mem::zeroed() };
-        RcImpl::new(object, self).cast()
     }
 }
 
@@ -431,6 +442,26 @@ pub(crate) unsafe extern "C" fn get_focus_handler<I: Client>(
     let obj: &mut RcImpl<_, I> = RcImpl::get(self_);
     obj.interface
         .get_focus_handler()
+        .map(|h| h.into_raw())
+        .unwrap_or(core::ptr::null_mut())
+}
+
+pub(crate) unsafe extern "C" fn get_load_handler<I: Client>(
+    self_: *mut cef_sys::cef_client_t,
+) -> *mut cef_sys::cef_load_handler_t {
+    let obj: &mut RcImpl<_, I> = RcImpl::get(self_);
+    obj.interface
+        .get_load_handler()
+        .map(|h| h.into_raw())
+        .unwrap_or(core::ptr::null_mut())
+}
+
+pub(crate) unsafe extern "C" fn get_print_handler<I: Client>(
+    self_: *mut cef_sys::cef_client_t,
+) -> *mut cef_sys::cef_print_handler_t {
+    let obj: &mut RcImpl<_, I> = RcImpl::get(self_);
+    obj.interface
+        .get_print_handler()
         .map(|h| h.into_raw())
         .unwrap_or(core::ptr::null_mut())
 }

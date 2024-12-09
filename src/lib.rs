@@ -11,9 +11,11 @@ mod image;
 mod menu_model;
 mod multimap;
 mod net;
+mod preference_manager;
 mod prelude;
 mod process_message;
 pub mod rc;
+mod scoped;
 mod settings;
 mod string;
 mod v8;
@@ -72,5 +74,7 @@ mod alias {
     pub type V8PropertyAttribute = cef_sys::cef_v8_propertyattribute_t;
 
     pub type PostDataElementType = cef_sys::cef_postdataelement_type_t;
+
+    pub type PreferencesType = cef_sys::cef_preferences_type_t;
 }
 pub use alias::*;

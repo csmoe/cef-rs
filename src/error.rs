@@ -13,6 +13,8 @@ pub enum Error {
     CannotCreateBrowser,
     #[error("null ptr")]
     NullPtr,
+    #[error("raw: {0:?}")]
+    Raw(Option<crate::string::CefString>),
 }
 
 pub type Result<T> = std::result::Result<T, Error>;

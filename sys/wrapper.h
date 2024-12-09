@@ -1,3 +1,6 @@
+#ifndef CEF_RUST_SYS_WRAPPER_H
+#define CEF_RUST_SYS_WRAPPER_H
+
 #include "include/capi/cef_base_capi.h"
 #include "include/capi/cef_app_capi.h"
 
@@ -50,3 +53,5 @@
 
 // v8
 #include "include/capi/cef_v8_capi.h"
+
+#endif

@@ -77,13 +77,13 @@ impl WindowInfo {
                 .unwrap_or(core::ptr::null_mut()),
             runtime_style: self.runtime_style,
             #[cfg(windows)]
-            menu: self.menu.0.cast(),
+            menu: self.menu.cast(),
             #[cfg(windows)]
             ex_style: self.ex_style,
             #[cfg(windows)]
             style: self.style,
             #[cfg(any(windows, target_os = "linux"))]
-            parent_window: self.parent_window.0.cast(),
+            parent_window: self.parent_window.cast(),
             #[cfg(any(windows, target_os = "linux"))]
             window: self.window.0.cast(),
         }
