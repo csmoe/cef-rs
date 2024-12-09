@@ -3,9 +3,9 @@ use crate::prelude::*;
 /// See [cef_image_t] for more docs.
 #[derive(Debug, Clone)]
 #[wrapper]
-pub struct Image(cef_image_t);
+pub struct CefImage(cef_image_t);
 
-impl Image {
+impl CefImage {
     /// See [cef_sys::cef_image_create]
     pub fn create(_image: image::DynamicImage) -> Result<Self> {
         let image = unsafe { cef_sys::cef_image_create() };

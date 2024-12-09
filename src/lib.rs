@@ -34,47 +34,47 @@ pub use value::*;
 pub use view::*;
 
 mod alias {
-    pub type LogSeverity = cef_sys::cef_log_severity_t;
+    pub type CefLogSeverity = cef_sys::cef_log_severity_t;
 
-    pub type LogItems = cef_sys::cef_log_items_t;
+    pub type CefLogItems = cef_sys::cef_log_items_t;
 
     /// The default value of `[Rect]` type is : { x: 0, y: 0, width: 1378, height: 800 }
-    pub type Rect = cef_sys::cef_rect_t;
+    pub type CefRect = cef_sys::cef_rect_t;
 
-    pub type Size = cef_sys::cef_size_t;
+    pub type CefSize = cef_sys::cef_size_t;
 
-    pub type State = cef_sys::cef_state_t;
+    pub type CefState = cef_sys::cef_state_t;
 
-    pub type GestureCommand = cef_sys::cef_gesture_command_t;
+    pub type CefGestureCommand = cef_sys::cef_gesture_command_t;
 
-    pub type Point = cef_sys::cef_point_t;
+    pub type CefPoint = cef_sys::cef_point_t;
 
-    pub type Insets = cef_sys::cef_insets_t;
+    pub type CefInsets = cef_sys::cef_insets_t;
 
-    pub type TextStyle = cef_sys::cef_text_style_t;
+    pub type CefTextStyle = cef_sys::cef_text_style_t;
 
-    pub type TextFieldCommands = cef_sys::cef_text_field_commands_t;
+    pub type CefTextFieldCommands = cef_sys::cef_text_field_commands_t;
 
-    pub type Range = cef_sys::cef_range_t;
+    pub type CefRange = cef_sys::cef_range_t;
 
-    pub type AxisAlignment = cef_sys::cef_axis_alignment_t;
+    pub type CefAxisAlignment = cef_sys::cef_axis_alignment_t;
 
-    pub type MenuColorType = cef_sys::cef_menu_color_type_t;
+    pub type CefMenuColorType = cef_sys::cef_menu_color_type_t;
 
-    pub type ProcessId = cef_sys::cef_process_id_t;
+    pub type CefProcessId = cef_sys::cef_process_id_t;
 
-    pub type ValueType = cef_sys::cef_value_type_t;
+    pub type CefValueType = cef_sys::cef_value_type_t;
 
-    pub type RuntimeStyle = cef_sys::cef_runtime_style_t;
+    pub type CefRuntimeStyle = cef_sys::cef_runtime_style_t;
 
-    pub type ChromeToolbarType = cef_sys::cef_chrome_toolbar_type_t;
+    pub type CefChromeToolbarType = cef_sys::cef_chrome_toolbar_type_t;
 
-    pub type BaseTime = cef_sys::cef_basetime_t;
+    pub type CefBaseTime = cef_sys::cef_basetime_t;
 
-    pub type V8PropertyAttribute = cef_sys::cef_v8_propertyattribute_t;
+    pub type CefV8PropertyAttribute = cef_sys::cef_v8_propertyattribute_t;
 
-    pub type PostDataElementType = cef_sys::cef_postdataelement_type_t;
+    pub type CefPostDataElementType = cef_sys::cef_postdataelement_type_t;
 
-    pub type PreferencesType = cef_sys::cef_preferences_type_t;
+    pub type CefPreferencesType = cef_sys::cef_preferences_type_t;
 }
 pub use alias::*;

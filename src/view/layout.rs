@@ -1,33 +1,33 @@
 use crate::prelude::*;
-use crate::AxisAlignment;
+use crate::CefAxisAlignment;
 
 /// See [cef_layout_t] for more docs.
 #[derive(Debug, Clone)]
 #[wrapper]
-pub struct Layout(cef_layout_t);
+pub struct CefLayout(cef_layout_t);
 
-impl Layout {
+impl CefLayout {
     wrapper_methods!(
         /// See [cef_layout_t::as_box_layout]
-        fn as_box_layout(&self) -> BoxLayout {
+        fn as_box_layout(&self) -> CefBoxLayout {
             self.0.as_box_layout.and_then(|f| unsafe {
                 let box_layout = f(self.0.get_this());
                 if box_layout.is_null() {
                     None
                 } else {
-                    BoxLayout::from_raw(box_layout).into()
+                    CefBoxLayout::from_raw(box_layout).into()
                 }
             })
         }
 
         /// See [cef_layout_t::as_fill_layout]
-        fn as_fill_layout(&self) -> FillLayout {
+        fn as_fill_layout(&self) -> CefFillLayout {
             self.0.as_fill_layout.and_then(|f| unsafe {
                 let fill_layout = f(self.0.get_this());
                 if fill_layout.is_null() {
                     None
                 } else {
-                    FillLayout::from_raw(fill_layout).into()
+                    CefFillLayout::from_raw(fill_layout).into()
                 }
             })
         }
@@ -40,26 +40,26 @@ impl Layout {
 /// See [cef_fill_layout_t] for more docs.
 #[derive(Debug, Clone)]
 #[wrapper]
-pub struct FillLayout(cef_fill_layout_t);
+pub struct CefFillLayout(cef_fill_layout_t);
 
 /// See [cef_box_layout_t] for more docs.
 #[derive(Debug, Clone)]
 #[wrapper]
-pub struct BoxLayout(cef_box_layout_t);
+pub struct CefBoxLayout(cef_box_layout_t);
 
-impl BoxLayout {
+impl CefBoxLayout {
     wrapper_methods!(
         /// See [cef_box_layout_t::set_flex_for_view]
-        fn set_flex_for_view(&self, view: crate::View, flex: i32);
+        fn set_flex_for_view(&self, view: crate::CefView, flex: i32);
 
         /// See [cef_box_layout_t::clerar_flex_for_view]
-        fn clear_flex_for_view(&self, view: crate::View);
+        fn clear_flex_for_view(&self, view: crate::CefView);
     );
 }
 
 #[derive(Copy, Clone)]
 /// See [cef_box_layout_settings_t] for more docs.
-pub struct BoxLayoutSettings {
+pub struct CefBoxLayoutSettings {
     /// See [cef_box_layout_settings_t::horizontal]
     pub horizontal: bool,
     /// See [cef_box_layout_settings_t::inside_border_horizontal_spacing]
@@ -67,20 +67,20 @@ pub struct BoxLayoutSettings {
     /// See [cef_box_layout_settings_t::inside_border_vertical_spacing]
     pub inside_border_vertical_spacing: i32,
     /// See [cef_box_layout_settings_t::inside_border_insets]
-    pub inside_border_insets: crate::Insets,
+    pub inside_border_insets: crate::CefInsets,
     /// See [cef_box_layout_settings_t::between_child_spacing]
     pub between_child_spacing: i32,
     /// See [cef_box_layout_settings_t::main_axis_alignment]
-    pub main_axis_alignment: AxisAlignment,
+    pub main_axis_alignment: CefAxisAlignment,
     /// See [cef_box_layout_settings_t::cross_axis_alignment]
-    pub cross_axis_alignment: AxisAlignment,
+    pub cross_axis_alignment: CefAxisAlignment,
     /// See [cef_box_layout_settings_t::minimum_cross_axis_size]
     pub minimum_cross_axis_size: i32,
     /// See [cef_box_layout_settings_t::default_flex]
     pub default_flex: u32,
 }
 
-impl BoxLayoutSettings {
+impl CefBoxLayoutSettings {
     pub fn into_raw(self) -> cef_box_layout_settings_t {
         cef_box_layout_settings_t {
             horizontal: self.horizontal.into(),

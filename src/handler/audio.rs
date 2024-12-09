@@ -1,6 +1,6 @@
 use crate::prelude::*;
 use crate::string::CefString;
-use crate::Browser;
+use crate::CefBrowser;
 
 /// See [cef_audio_handler_t] for more documentation.
 #[derive(Debug, Clone)]
@@ -12,7 +12,7 @@ pub trait AudioCallback {
     /// See [cef_audio_handler_t::get_audio_parameters]
     fn get_audio_parameters(
         &self,
-        _browser: Browser,
+        _browser: CefBrowser,
         _params: *mut cef_audio_parameters_t,
     ) -> bool {
         todo!()
@@ -30,7 +30,7 @@ pub trait AudioCallback {
     /// See [cef_audio_handler_t::on_audio_stream_packet]
     fn on_audio_stream_packet(
         &self,
-        _browser: Browser,
+        _browser: CefBrowser,
         _data: *mut *const f32,
         _frames: ::std::os::raw::c_int,
         _pts: i64,
@@ -38,8 +38,8 @@ pub trait AudioCallback {
     }
 
     /// See [cef_audio_handler_t::on_audio_stream_stopped]
-    fn on_audio_stream_stopped(&self, _browser: Browser) {}
+    fn on_audio_stream_stopped(&self, _browser: CefBrowser) {}
 
     /// See [cef_audio_handler_t::on_audio_stream_error]
-    fn on_audio_stream_error(&self, _browser: Browser, _message: CefString) {}
+    fn on_audio_stream_error(&self, _browser: CefBrowser, _message: CefString) {}
 }

@@ -3,9 +3,9 @@ use crate::{prelude::*, rc::RcImpl};
 /// See [cef_v8context_t] for more documentation.
 #[derive(Debug, Clone)]
 #[wrapper]
-pub struct V8Context(cef_v8context_t);
+pub struct CefV8Context(cef_v8context_t);
 
-impl V8Context {
+impl CefV8Context {
     /// See [cef_v8context_get_current_context].
     pub fn get_current() -> Self {
         unsafe { Self::from_raw(cef_v8context_get_current_context()) }
@@ -37,18 +37,18 @@ impl V8Context {
         }
 
         /// See [cef_v8context_t::get_browser].
-        fn get_browser(&self) -> crate::browser::Browser {
+        fn get_browser(&self) -> crate::browser::CefBrowser {
             self.0.get_browser.and_then(|f| unsafe {
                 let v = f(self.0.get_this());
-                if v.is_null() { None } else { Some(crate::browser::Browser::from_raw(v)) }
+                if v.is_null() { None } else { Some(crate::browser::CefBrowser::from_raw(v)) }
             })
         }
 
         /// See [cef_v8context_t::get_frame].
-        fn get_frame(&self) -> crate::browser::frame::Frame {
+        fn get_frame(&self) -> crate::browser::frame::CefFrame {
             self.0.get_frame.and_then(|f| unsafe {
                 let v = f(self.0.get_this());
-                if v.is_null() { None } else { Some(crate::browser::frame::Frame::from_raw(v)) }
+                if v.is_null() { None } else { Some(crate::browser::frame::CefFrame::from_raw(v)) }
             })
         }
 
@@ -134,7 +134,7 @@ impl V8Value {
     }
 
     /// See [cef_v8value_create_date].
-    pub fn date(value: crate::BaseTime) -> Self {
+    pub fn date(value: crate::CefBaseTime) -> Self {
         unsafe { Self::from_raw(cef_v8value_create_date(value)) }
     }
 
@@ -281,7 +281,7 @@ impl V8Value {
         }
 
         /// See [cef_v8value_t::get_date_value].
-        fn get_date_value(&self) -> crate::BaseTime {
+        fn get_date_value(&self) -> crate::CefBaseTime {
             if !self.is_valid().unwrap_or_default() { return None; }
             self.0.get_date_value.map(|f| unsafe { f(self.0.get_this())})
         }
@@ -335,7 +335,7 @@ impl V8Value {
         }
 
         /// See [cef_v8value_t::set_value_bykey].
-        fn set_value_bykey(&self, key: &str, value: Self, attribute: crate::V8PropertyAttribute) {
+        fn set_value_bykey(&self, key: &str, value: Self, attribute: crate::CefV8PropertyAttribute) {
             if !self.is_valid().unwrap_or_default() { return None; }
             self.0.set_value_bykey.map(|f| unsafe {
                 f(self.0.get_this(), std::ptr::from_ref(&CefString::from(key).as_raw()), value.into_raw(), attribute as _);
@@ -358,7 +358,7 @@ impl V8Value {
         }
 
         /// See [cef_v8value_t::set_value_byaccessor].
-        fn set_value_byaccessor(&self, key: &str,  attribute: crate::V8PropertyAttribute) {
+        fn set_value_byaccessor(&self, key: &str,  attribute: crate::CefV8PropertyAttribute) {
             if !self.is_valid().unwrap_or_default() { return None; }
             self.0.set_value_byaccessor.map(|f| unsafe { f(self.0.get_this(), std::ptr::from_ref(&CefString::from(key).as_raw()),  attribute as _); })
         }
@@ -374,7 +374,7 @@ impl V8Value {
         }
 
         /// See [cef_v8value_t::execute_function_with_context].
-        fn execute_function_with_context(&self, context: V8Context, object: V8Value, args: &[V8Value]) -> Self{
+        fn execute_function_with_context(&self, context: CefV8Context, object: V8Value, args: &[V8Value]) -> Self{
             if !self.is_valid().unwrap_or_default() { return None; }
             self.0.execute_function_with_context.map(|f| unsafe {
                 let args = args.iter().map(|a| a.clone().into_raw()).collect::<Vec<_>>();

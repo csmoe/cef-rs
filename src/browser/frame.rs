@@ -3,9 +3,9 @@ use crate::prelude::*;
 #[doc = "See [cef_frame_t] for more details."]
 #[derive(Debug, Clone)]
 #[wrapper]
-pub struct Frame(cef_frame_t);
+pub struct CefFrame(cef_frame_t);
 
-impl Frame {
+impl CefFrame {
     wrapper_methods!(
         /// See [cef_frame_t::is_valid]
         fn is_valid(&self) -> bool;
@@ -45,12 +45,9 @@ impl Frame {
 
         /// See [cef_frame_t::load_url]
         fn load_url(&self, url: &str) {
-            self.0.load_url.map(|f| unsafe {
-                f(
-                    self.0.get_this(),
-                    &CefString::from(url).as_raw(),
-                )
-            })
+            self.0
+                .load_url
+                .map(|f| unsafe { f(self.0.get_this(), &CefString::from(url).as_raw()) })
         }
 
         /// See [cef_frame_t::execute_java_script]
@@ -86,13 +83,13 @@ impl Frame {
         }
 
         /// See [cef_frame_t::get_parent]
-        fn get_parent(&self) -> Frame {
+        fn get_parent(&self) -> CefFrame {
             self.0.get_parent.and_then(|f| unsafe {
                 let f = f(self.0.get_this());
                 if f.is_null() {
                     None
                 } else {
-                    Some(Frame::from_raw(f))
+                    Some(CefFrame::from_raw(f))
                 }
             })
         }
@@ -105,25 +102,25 @@ impl Frame {
         }
 
         /// See [cef_frame_t::get_browser]
-        fn get_browser(&self) -> crate::Browser {
+        fn get_browser(&self) -> crate::CefBrowser {
             self.0.get_browser.and_then(|f| unsafe {
                 let f = f(self.0.get_this());
                 if f.is_null() {
                     None
                 } else {
-                    Some(crate::Browser::from_raw(f))
+                    Some(crate::CefBrowser::from_raw(f))
                 }
             })
         }
 
         // See [cef_frame_t::get_v8context]
-        fn get_v8context(&self) -> crate::v8::V8Context {
+        fn get_v8context(&self) -> crate::v8::CefV8Context {
             self.0.get_v8context.and_then(|f| unsafe {
                 let f = f(self.0.get_this());
                 if f.is_null() {
                     None
                 } else {
-                    Some(crate::v8::V8Context::from_raw(f))
+                    Some(crate::v8::CefV8Context::from_raw(f))
                 }
             })
         }
@@ -141,7 +138,7 @@ impl Frame {
         /// See [cef_frame_t::send_process_message]
         fn send_process_message(
             &self,
-            target_process: crate::ProcessId,
+            target_process: crate::CefProcessId,
             message: crate::ProcessMessage,
         ) {
             self.0

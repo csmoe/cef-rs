@@ -1,10 +1,10 @@
 use crate::prelude::*;
 use crate::{
-    client::Client,
+    client::CefClient,
     error::{Error, Result},
     string::CefString,
-    view::View,
-    BrowserSettings,
+    view::CefView,
+    CefBrowserSettings,
 };
 use cef_sys::{cef_browser_view_create, cef_browser_view_t};
 use std::ptr::null_mut;
@@ -12,15 +12,15 @@ use std::ptr::null_mut;
 /// See [cef_browser_view_t] for more documentation.
 #[derive(Debug, Clone)]
 #[wrapper]
-pub struct BrowserView(cef_browser_view_t);
+pub struct CefBrowserView(cef_browser_view_t);
 
-impl BrowserView {
+impl CefBrowserView {
     /// See [cef_browser_view_create] for more documentation.
-    pub fn create<T: Client>(
+    pub fn create<T: CefClient>(
         client: Option<T>,
         url: &CefString,
-        settings: BrowserSettings,
-    ) -> Result<BrowserView> {
+        settings: CefBrowserSettings,
+    ) -> Result<CefBrowserView> {
         let client = client.map(|c| c.into_raw()).unwrap_or(null_mut());
         let request_context = crate::net::RequestContext::global();
 
@@ -38,22 +38,22 @@ impl BrowserView {
             return Err(Error::CannotCreateBrowserView);
         }
 
-        Ok(unsafe { BrowserView::from_raw(view) })
+        Ok(unsafe { CefBrowserView::from_raw(view) })
     }
 
-    pub fn view(&self) -> View {
-        unsafe { crate::view::View(self.0.convert()) }
+    pub fn view(&self) -> CefView {
+        unsafe { crate::view::CefView(self.0.convert()) }
     }
 
     wrapper_methods! {
         /// See [cef_browser_view_t::get_browser] for more documentation.
-        fn get_browser(&self) -> crate::browser::Browser {
+        fn get_browser(&self) -> crate::browser::CefBrowser {
             self.0.get_browser.and_then(|f| unsafe {
                 let browser = f(self.0.get_this());
                 if browser.is_null() {
                     None
                 } else {
-                    Some(crate::browser::Browser::from_raw(browser))
+                    Some(crate::browser::CefBrowser::from_raw(browser))
                 }
             })
         }
@@ -62,15 +62,15 @@ impl BrowserView {
 
 pub trait BrowserViewDelegate: Sized {
     /// See [cef_sys::cef_browser_view_delegate_t::on_browser_created]
-    fn on_browser_created(&self, _browser_view: BrowserView, _browser: crate::Browser) {}
+    fn on_browser_created(&self, _browser_view: CefBrowserView, _browser: crate::CefBrowser) {}
 
     /// See [cef_sys::cef_browser_view_delegate_t::on_browser_destroyed]
-    fn on_browser_destroyed(&self, _browser_view: BrowserView, _browser: crate::Browser) {}
+    fn on_browser_destroyed(&self, _browser_view: CefBrowserView, _browser: crate::CefBrowser) {}
 
     /// See [cef_sys::cef_browser_view_delegate_t::on_gesture_command]
     fn on_gesture_command(
         &self,
-        _browser_view: BrowserView,
+        _browser_view: CefBrowserView,
         _gesture_command: cef_gesture_command_t,
     ) -> bool {
         todo!()
@@ -79,8 +79,8 @@ pub trait BrowserViewDelegate: Sized {
     /// See [cef_sys::cef_browser_view_delegate_t::get_delegate_for_popup_browser_view]
     fn get_delegate_for_popup_browser_view(
         &self,
-        _browser_view: BrowserView,
-        _settings: BrowserSettings,
+        _browser_view: CefBrowserView,
+        _settings: CefBrowserSettings,
         _client: cef_client_t,
         _is_devtools: bool,
     ) -> Option<Self> {
@@ -90,24 +90,27 @@ pub trait BrowserViewDelegate: Sized {
     /// See [cef_sys::cef_browser_view_delegate_t::on_popup_browser_view_created]
     fn on_popup_browser_view_created(
         &self,
-        _browser_view: BrowserView,
-        _popup_browser_view: BrowserView,
+        _browser_view: CefBrowserView,
+        _popup_browser_view: CefBrowserView,
         _is_devtools: bool,
     ) {
     }
 
     /// See [cef_sys::cef_browser_view_delegate_t::get_chrome_toolbar_type]
-    fn get_chrome_toolbar_type(&self, _browser_view: BrowserView) -> crate::ChromeToolbarType {
+    fn get_chrome_toolbar_type(
+        &self,
+        _browser_view: CefBrowserView,
+    ) -> crate::CefChromeToolbarType {
         todo!()
     }
 
     /// See [cef_sys::cef_browser_view_delegate_t::use_frameless_window_for_picture_in_picture]
-    fn use_frameless_window_for_picture_in_picture(&self, _browser_view: BrowserView) -> bool {
+    fn use_frameless_window_for_picture_in_picture(&self, _browser_view: CefBrowserView) -> bool {
         todo!()
     }
 
     /// See [cef_sys::cef_browser_view_delegate_t::get_browser_runtime_style]
-    fn get_browser_runtime_style(&self) -> crate::RuntimeStyle {
+    fn get_browser_runtime_style(&self) -> crate::CefRuntimeStyle {
         todo!()
     }
 }

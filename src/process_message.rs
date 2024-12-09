@@ -33,13 +33,13 @@ impl ProcessMessage {
         }
 
         /// See [cef_process_message_t::get_argument_list]
-        fn get_argument_list(&self) -> crate::ListValue {
+        fn get_argument_list(&self) -> crate::CefListValue {
             self.0.get_argument_list.and_then(|f| unsafe {
                 let ptr = f(self.0.get_this());
                 if ptr.is_null() {
                     None
                 } else {
-                    Some(crate::ListValue::from_raw(ptr))
+                    Some(crate::CefListValue::from_raw(ptr))
                 }
             })
         }

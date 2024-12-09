@@ -3,9 +3,9 @@ use crate::prelude::*;
 /// See [cef_menu_model_t] for more docs.
 #[derive(Debug, Clone)]
 #[wrapper]
-pub struct MenuModel(cef_menu_model_t);
+pub struct CefMenuModel(cef_menu_model_t);
 
-impl MenuModel {
+impl CefMenuModel {
     /// See [cef_menu_model_create] for more docs.
     pub fn create(delegate: impl MenuModelDelegate) -> Result<Self> {
         unsafe {
@@ -19,7 +19,7 @@ impl MenuModel {
     }
 }
 
-impl MenuModel {
+impl CefMenuModel {
     wrapper_methods!(
         /// See [cef_menu_model_t::is_sub_menu]
         fn is_sub_menu(&self) -> bool;
@@ -68,7 +68,7 @@ impl MenuModel {
         }
 
         /// See [cef_menu_model_t::add_sub_menu]
-        fn add_sub_menu(&mut self, command_id: i32, label: CefString) -> MenuModel {
+        fn add_sub_menu(&mut self, command_id: i32, label: CefString) -> CefMenuModel {
             self.0.add_sub_menu.and_then(|f| unsafe {
                 let m = f(
                     self.0.get_this(),
@@ -78,7 +78,7 @@ impl MenuModel {
                 if m.is_null() {
                     None
                 } else {
-                    MenuModel::from_raw(m).into()
+                    CefMenuModel::from_raw(m).into()
                 }
             })
         }
@@ -140,7 +140,7 @@ impl MenuModel {
             index: usize,
             command_id: i32,
             label: CefString,
-        ) -> MenuModel {
+        ) -> CefMenuModel {
             self.0.insert_sub_menu_at.and_then(|f| unsafe {
                 let m = f(
                     self.0.get_this(),
@@ -151,7 +151,7 @@ impl MenuModel {
                 if m.is_null() {
                     None
                 } else {
-                    MenuModel::from_raw(m).into()
+                    CefMenuModel::from_raw(m).into()
                 }
             })
         }
@@ -226,25 +226,25 @@ impl MenuModel {
         fn set_group_id_at(&mut self, index: usize, group_id: i32) -> bool;
 
         /// See [cef_menu_model_t::get_sub_menu]
-        fn get_sub_menu(&self, command_id: i32) -> MenuModel {
+        fn get_sub_menu(&self, command_id: i32) -> CefMenuModel {
             self.0.get_sub_menu.and_then(|f| unsafe {
                 let m = f(self.0.get_this(), command_id);
                 if m.is_null() {
                     None
                 } else {
-                    MenuModel::from_raw(m).into()
+                    CefMenuModel::from_raw(m).into()
                 }
             })
         }
 
         /// See [cef_menu_model_t::get_sub_menu_at]
-        fn get_sub_menu_at(&self, index: usize) -> MenuModel {
+        fn get_sub_menu_at(&self, index: usize) -> CefMenuModel {
             self.0.get_sub_menu_at.and_then(|f| unsafe {
                 let m = f(self.0.get_this(), index);
                 if m.is_null() {
                     None
                 } else {
-                    MenuModel::from_raw(m).into()
+                    CefMenuModel::from_raw(m).into()
                 }
             })
         }
@@ -340,7 +340,7 @@ impl MenuModel {
         ) -> bool;
 
         /// See [cef_menu_model_t::get_color]
-        fn get_color(&self, command_id: i32, color_type: crate::MenuColorType) -> u32 {
+        fn get_color(&self, command_id: i32, color_type: crate::CefMenuColorType) -> u32 {
             self.0.get_color.and_then(|f| unsafe {
                 let color = std::ptr::null_mut();
                 if f(self.0.get_this(), command_id, color_type, color) == 1 {

@@ -3,16 +3,16 @@ use crate::prelude::*;
 /// See [cef_post_data_t] for more docs.
 #[derive(Debug, Clone)]
 #[wrapper]
-pub struct PostData(cef_post_data_t);
+pub struct CefPostData(cef_post_data_t);
 
-impl PostData {
+impl CefPostData {
     /// See [cef_post_data_create].
-    pub fn create() -> Result<PostData> {
+    pub fn create() -> Result<CefPostData> {
         let ptr = unsafe { cef_post_data_create() };
         if ptr.is_null() {
             Err(Error::NullPtr)
         } else {
-            Ok(unsafe { PostData::from_raw(ptr) })
+            Ok(unsafe { CefPostData::from_raw(ptr) })
         }
     }
 }
@@ -20,20 +20,20 @@ impl PostData {
 /// See [cef_post_data_element_t] for more docs.
 #[derive(Debug, Clone)]
 #[wrapper]
-pub struct PostDataElement(cef_post_data_element_t);
+pub struct CefPostDataElement(cef_post_data_element_t);
 
-impl PostDataElement {
-    pub fn create() -> Result<PostDataElement> {
+impl CefPostDataElement {
+    pub fn create() -> Result<CefPostDataElement> {
         let ptr = unsafe { cef_post_data_element_create() };
         if ptr.is_null() {
             Err(Error::NullPtr)
         } else {
-            Ok(unsafe { PostDataElement::from_raw(ptr) })
+            Ok(unsafe { CefPostDataElement::from_raw(ptr) })
         }
     }
 }
 
-impl PostDataElement {
+impl CefPostDataElement {
     wrapper_methods! {
         /// See [cef_post_data_element_t::is_read_only].
         fn is_read_only(&self) -> bool;
@@ -52,7 +52,7 @@ impl PostDataElement {
         }
 
         /// See [cef_post_data_element_t::get_type].
-        fn get_type(&self) -> crate::PostDataElementType {
+        fn get_type(&self) -> crate::CefPostDataElementType {
             self.0.get_type.map(|f| unsafe {f(self.0.get_this())})
         }
 

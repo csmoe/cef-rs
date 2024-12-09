@@ -2,7 +2,7 @@ use std::ffi::c_int;
 
 use cef_sys::{cef_color_t, cef_settings_t};
 
-use crate::{string::CefString, LogItems, LogSeverity};
+use crate::{string::CefString, CefLogItems, CefLogSeverity};
 
 /// See [cef_settings_t] for more documentation.
 #[derive(Debug, Default, Clone)]
@@ -25,8 +25,8 @@ pub struct Settings {
     pub user_agent_product: CefString,
     pub locale: CefString,
     pub log_file: CefString,
-    pub log_severity: LogSeverity,
-    pub log_items: LogItems,
+    pub log_severity: CefLogSeverity,
+    pub log_items: CefLogItems,
     pub javascript_flags: CefString,
     pub resources_dir_path: CefString,
     pub locales_dir_path: CefString,

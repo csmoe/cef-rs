@@ -1,14 +1,14 @@
 use crate::prelude::*;
-use crate::{frame::Frame, Browser};
+use crate::{frame::CefFrame, CefBrowser};
 
 #[doc = "See [cef_frame_handler_t] for more docs."]
 #[derive(Debug, Clone)]
 #[wrapper]
-pub struct FrameHandler(cef_frame_handler_t);
+pub struct CefFrameHandler(cef_frame_handler_t);
 
-pub trait FrameCallback {
-    fn on_frame_created(browser: Browser, frame: Frame);
-    fn on_frame_attached(browser: Browser, frame: Frame, reattached: bool);
-    fn on_frame_detached(browser: Browser, frame: Frame);
-    fn on_main_frame_changed(browser: Browser, old_frame: Frame, new_frame: Frame);
+pub trait CefFrameCallback {
+    fn on_frame_created(browser: CefBrowser, frame: CefFrame);
+    fn on_frame_attached(browser: CefBrowser, frame: CefFrame, reattached: bool);
+    fn on_frame_detached(browser: CefBrowser, frame: CefFrame);
+    fn on_main_frame_changed(browser: CefBrowser, old_frame: CefFrame, new_frame: CefFrame);
 }

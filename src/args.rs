@@ -1,15 +1,15 @@
-pub struct Args {
+pub struct CefArgs {
     args: std::env::Args,
     args_: Vec<*mut u8>,
 }
 
-impl std::fmt::Debug for Args {
+impl std::fmt::Debug for CefArgs {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("Args").field("args", &self.args).finish()
     }
 }
 
-impl Args {
+impl CefArgs {
     pub fn new(args: std::env::Args) -> Self {
         Self {
             args,

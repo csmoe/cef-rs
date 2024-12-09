@@ -5,12 +5,12 @@ use crate::{add_view_delegate_methods, string::CefString};
 /// See [cef_button_t] for more documentation.
 #[derive(Debug, Clone)]
 #[wrapper]
-pub struct Button(cef_button_t);
+pub struct CefButton(cef_button_t);
 
 /// See [cef_label_button_t] for more documentation.
 #[derive(Debug, Clone)]
 #[wrapper]
-pub struct LabelButton(cef_label_button_t);
+pub struct CefLabelButton(cef_label_button_t);
 
 pub trait ButtonDelegate: ViewDelegate {
     fn into_raw(self) -> *mut cef_sys::cef_button_delegate_t {
@@ -21,7 +21,7 @@ pub trait ButtonDelegate: ViewDelegate {
     }
 }
 
-impl LabelButton {
+impl CefLabelButton {
     pub fn create(delegate: impl ButtonDelegate, text: CefString) -> Result<Self> {
         unsafe {
             // TODO: ui thread restriction
@@ -40,15 +40,15 @@ impl LabelButton {
 /// See [cef_menu_button_t] for more documentation.
 #[derive(Debug, Clone)]
 #[wrapper]
-pub struct MenuButton(cef_menu_button_t);
+pub struct CefMenuButton(cef_menu_button_t);
 
-impl MenuButton {
+impl CefMenuButton {
     wrapper_methods!(
         /// See [cef_menu_button_t::show_menu]
         fn show_menu(
             &mut self,
-            menu_model: crate::MenuModel,
-            screen_point: &crate::Point,
+            menu_model: crate::CefMenuModel,
+            screen_point: &crate::CefPoint,
             anchor_position: cef_sys::cef_menu_anchor_position_t,
         ) {
             self.0.show_menu.map(|f| unsafe {
@@ -71,8 +71,8 @@ impl MenuButton {
 pub trait MenuButtonDelegate: ButtonDelegate {
     fn on_menu_button_pressed(
         &self,
-        _menu_button: MenuButton,
-        _screen_point: crate::Point,
+        _menu_button: CefMenuButton,
+        _screen_point: crate::CefPoint,
         _button_pressed_lock: cef_sys::cef_menu_button_pressed_lock_t,
     ) {
     }
@@ -86,7 +86,7 @@ pub trait MenuButtonDelegate: ButtonDelegate {
     }
 }
 
-impl MenuButton {
+impl CefMenuButton {
     /// See [cef_sys::cef_menu_button_create]
     pub fn create(delegate: impl MenuButtonDelegate, text: CefString) -> Result<Self> {
         unsafe {
@@ -103,6 +103,6 @@ impl MenuButton {
 }
 
 crate::convert_view! {
-    (Button, as_label_button, LabelButton),
-    (LabelButton, as_menu_button, MenuButton)
+    (CefButton, as_label_button, CefLabelButton),
+    (CefLabelButton, as_menu_button, CefMenuButton)
 }

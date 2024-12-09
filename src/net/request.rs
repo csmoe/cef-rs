@@ -71,18 +71,18 @@ impl Request {
         fn get_referrer_policy(&self) -> cef_referrer_policy_t;
 
         /// See [cef_request_t::get_post_data]
-        fn get_post_data(&self) -> crate::net::PostData {
+        fn get_post_data(&self) -> crate::net::CefPostData {
             self.0.get_post_data.and_then(|f| unsafe {
                 let v = f(self.0.get_this());
                 if v.is_null() {
                     return None;
                 }
-                crate::net::PostData::from_raw(v).into()
+                crate::net::CefPostData::from_raw(v).into()
             })
         }
 
         /// See [cef_request_t::set_post_data]
-        fn set_post_data(&self, post_data: crate::net::PostData);
+        fn set_post_data(&self, post_data: crate::net::CefPostData);
 
         /// See [cef_request_t::get_header_map]
         fn get_header_map(&self) -> crate::multimap::CefStringMultiMap {
@@ -124,7 +124,7 @@ impl Request {
             &self,
             url: &str,
             method: &str,
-            post_data: crate::net::PostData,
+            post_data: crate::net::CefPostData,
             header_map: crate::multimap::CefStringMultiMap,
         ) {
             self.0.set.map(|f| unsafe {

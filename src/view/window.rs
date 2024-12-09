@@ -3,17 +3,17 @@ use crate::{
     add_view_delegate_methods,
     rc::RcImpl,
     string::CefString,
-    view::{Panel, PanelDelegate},
-    Rect, State,
+    view::{CefPanel, PanelDelegate},
+    CefRect, CefState,
 };
 
 /// See [cef_window_info_t] for more documentation.
 #[derive(Debug, Default)]
-pub struct WindowInfo {
+pub struct CefWindowInfo {
     /// See [cef_window_info_t::window_name]
     window_name: CefString,
     /// See [cef_window_info_t::bounds]
-    bounds: Rect,
+    bounds: CefRect,
     /// See [cef_window_info_t::windowless_rendering_enabled]
     windowless_rendering_enabled: bool,
     /// See [cef_window_info_t::shared_texture_enabled]
@@ -49,7 +49,7 @@ pub struct WindowInfo {
     window: windows::Win32::Foundation::HWND,
 }
 
-impl WindowInfo {
+impl CefWindowInfo {
     pub fn new() -> Self {
         Self::default()
     }
@@ -93,16 +93,16 @@ impl WindowInfo {
 /// See [cef_window_t] for more documentation.
 #[derive(Clone)]
 #[wrapper]
-pub struct Window(cef_window_t);
+pub struct CefWindow(cef_window_t);
 
-impl Window {
+impl CefWindow {
     wrapper_methods!(
         /// See [cef_window_t::close]
         fn close(&mut self);
         /// See [cef_window_t::show]
         fn show(&mut self);
         /// See [cef_window_t::show_as_browser_modal_dialog]
-        fn show_as_browser_modal_dialog(&mut self, browser_view: crate::BrowserView);
+        fn show_as_browser_modal_dialog(&mut self, browser_view: crate::CefBrowserView);
         /// See [cef_window_t::hide]
         fn hide(&mut self);
         /// See [cef_window_t::center_window]
@@ -236,109 +236,109 @@ impl Window {
     );
 }
 
-impl Window {
+impl CefWindow {
     /// See [cef_window_create_top_level]
     pub fn create(delegate: impl WindowDelegate) -> Result<Self> {
         let window = unsafe { cef_window_create_top_level(WindowDelegate::into_raw(delegate)) };
         if window.is_null() {
             return Err(Error::NullPtr);
         }
-        Ok(unsafe { Window::from_raw(window) })
+        Ok(unsafe { CefWindow::from_raw(window) })
     }
 
-    pub fn get_panel(&self) -> Panel {
-        unsafe { Panel(self.0.convert()) }
+    pub fn get_panel(&self) -> CefPanel {
+        unsafe { CefPanel(self.0.convert()) }
     }
 }
 
 /// See [cef_window_delegate_t] for more documentation.
 pub trait WindowDelegate: PanelDelegate {
     /// See [cef_window_delegate_t::on_window_created]
-    fn on_window_created(&self, _window: Window) {}
+    fn on_window_created(&self, _window: CefWindow) {}
     /// See [cef_window_delegate_t::on_window_closing]
-    fn on_window_closing(&self, _window: Window) {}
+    fn on_window_closing(&self, _window: CefWindow) {}
     /// See [cef_window_delegate_t::on_window_destroyed]
-    fn on_window_destroyed(&self, _window: Window) {}
+    fn on_window_destroyed(&self, _window: CefWindow) {}
 
     /// See [cef_window_delegate_t::on_window_activation_changed]
-    fn on_window_activation_changed(&self, _window: Window, _activated: bool) {}
+    fn on_window_activation_changed(&self, _window: CefWindow, _activated: bool) {}
 
     /// See [cef_window_delegate_t::on_window_bounds_changed]
-    fn on_window_bounds_changed(&self, _window: Window, _new_bounds: Rect) {}
+    fn on_window_bounds_changed(&self, _window: CefWindow, _new_bounds: CefRect) {}
 
     /// See [cef_window_delegate_t::on_window_fullscreen_transition]
-    fn on_window_fullscreen_transition(&self, _window: Window, _fullscreen: bool) {}
+    fn on_window_fullscreen_transition(&self, _window: CefWindow, _fullscreen: bool) {}
 
     /// See [cef_window_delegate_t::get_parent_window]
-    fn get_parent_window(&self, _window: Window, _is_menu: bool, _can_active_menu: bool) {}
+    fn get_parent_window(&self, _window: CefWindow, _is_menu: bool, _can_active_menu: bool) {}
 
     /// See [cef_window_delegate_t::is_window_modal_dialog]
-    fn is_window_modal_dialog(&self, _window: Window) -> bool {
+    fn is_window_modal_dialog(&self, _window: CefWindow) -> bool {
         false
     }
 
     /// See [cef_window_delegate_t::get_initial_bounds]
-    fn get_initial_bounds(&self, _window: Window) -> Rect {
+    fn get_initial_bounds(&self, _window: CefWindow) -> CefRect {
         todo!()
     }
 
     /// See [cef_window_delegate_t::get_initial_show_state]
-    fn get_initial_show_state(&self, _window: Window) -> cef_show_state_t {
+    fn get_initial_show_state(&self, _window: CefWindow) -> cef_show_state_t {
         todo!()
     }
 
     /// See [cef_window_delegate_t::is_frameless]
-    fn is_frameless(&self, _window: Window) -> bool {
+    fn is_frameless(&self, _window: CefWindow) -> bool {
         todo!()
     }
 
     /// See [cef_window_delegate_t::with_standard_window_buttons]
-    fn with_standard_window_buttons(&self, _window: Window) -> bool {
+    fn with_standard_window_buttons(&self, _window: CefWindow) -> bool {
         todo!()
     }
 
     /// See [cef_window_delegate_t::get_titlebar_height]
-    fn get_titlebar_height(&self, _window: Window) -> i32 {
+    fn get_titlebar_height(&self, _window: CefWindow) -> i32 {
         todo!()
     }
 
     /// See [cef_window_delegate_t::accepts_first_mouse]
-    fn accepts_first_mouse(&self, _window: Window) -> State {
+    fn accepts_first_mouse(&self, _window: CefWindow) -> CefState {
         todo!()
     }
 
     /// See [cef_window_delegate_t::can_resize]
-    fn can_resize(&self, _window: Window) -> bool {
+    fn can_resize(&self, _window: CefWindow) -> bool {
         true
     }
 
     /// See [cef_window_delegate_t::can_minimize]
-    fn can_minimize(&self, _window: Window) -> bool {
+    fn can_minimize(&self, _window: CefWindow) -> bool {
         true
     }
 
     /// see [cef_window_delegate_t::can_maximize]
-    fn can_maximize(&self, _window: Window) -> bool {
+    fn can_maximize(&self, _window: CefWindow) -> bool {
         true
     }
 
     /// See [cef_window_delegate_t::can_close]
-    fn can_close(&mut self, _window: Window) -> bool {
+    fn can_close(&mut self, _window: CefWindow) -> bool {
         true
     }
 
     /// See [cef_window_delegate_t::on_accelerator]
-    fn on_accelerator(&self, _window: Window, _command_id: i32) -> bool {
+    fn on_accelerator(&self, _window: CefWindow, _command_id: i32) -> bool {
         todo!()
     }
 
     /// See [cef_window_delegate_t::on_key_event]
-    fn on_key_event(&self, _window: Window, _event: cef_key_event_t) -> bool {
+    fn on_key_event(&self, _window: CefWindow, _event: cef_key_event_t) -> bool {
         false
     }
 
     /// See [cef_window_delegate_t::on_theme_colors_changed]
-    fn on_theme_colors_changed(&self, _window: Window, _chrome_theme: i32) {}
+    fn on_theme_colors_changed(&self, _window: CefWindow, _chrome_theme: i32) {}
 
     /// See [cef_window_delegate_t::get_window_runtime_style]
     fn get_window_runtime_style(&self) -> cef_runtime_style_t {
@@ -349,7 +349,7 @@ pub trait WindowDelegate: PanelDelegate {
     /// See [cef_window_delegate_t::get_linux_window_properties]
     fn get_linux_window_properties(
         &self,
-        _window: Window,
+        _window: CefWindow,
         _properties: cef_sys::cef_linux_window_properties_t,
     ) -> bool {
         false
@@ -376,7 +376,7 @@ extern "C" fn on_window_created<I: WindowDelegate>(
     window: *mut cef_window_t,
 ) {
     let obj: &RcImpl<_, I> = RcImpl::get(this);
-    let window = unsafe { Window::from_raw(window) };
+    let window = unsafe { CefWindow::from_raw(window) };
     obj.interface.on_window_created(window);
 }
 
@@ -385,7 +385,7 @@ extern "C" fn on_window_closing<I: WindowDelegate>(
     window: *mut cef_window_t,
 ) {
     let obj: &mut RcImpl<_, I> = RcImpl::get(this);
-    let window = unsafe { Window::from_raw(window) };
+    let window = unsafe { CefWindow::from_raw(window) };
     obj.interface.on_window_closing(window);
 }
 
@@ -394,7 +394,7 @@ extern "C" fn on_window_destroyed<I: WindowDelegate>(
     window: *mut cef_window_t,
 ) {
     let obj: &mut RcImpl<_, I> = RcImpl::get(this);
-    let window = unsafe { Window::from_raw(window) };
+    let window = unsafe { CefWindow::from_raw(window) };
     obj.interface.on_window_destroyed(window);
 }
 
@@ -403,7 +403,7 @@ extern "C" fn can_close<I: WindowDelegate>(
     window: *mut cef_window_t,
 ) -> i32 {
     let obj: &mut RcImpl<_, I> = RcImpl::get(this);
-    let window = unsafe { Window::from_raw(window) };
+    let window = unsafe { CefWindow::from_raw(window) };
     let result = obj.interface.can_close(window);
     result as i32
 }

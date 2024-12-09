@@ -23,16 +23,16 @@ impl ScrollView {
 impl ScrollView {
     wrapper_methods!(
         /// See [cef_scroll_view_t::set_content_view]
-        fn set_content_view(&mut self, view: crate::View);
+        fn set_content_view(&mut self, view: crate::CefView);
         /// See [cef_scroll_view_t::get_content_view]
-        fn get_content_view(&self) -> crate::View {
+        fn get_content_view(&self) -> crate::CefView {
             self.0.get_content_view.map(|f| unsafe {
                 let view = f(self.0.get_this());
-                crate::View::from_raw(view)
+                crate::CefView::from_raw(view)
             })
         }
         /// See [cef_scroll_view_t::get_visible_content_rect]
-        fn get_visible_content_rect(&self) -> crate::Rect;
+        fn get_visible_content_rect(&self) -> crate::CefRect;
         /// See [cef_scroll_view_t::has_horizontal_scrollbar]
         fn has_horizontal_scrollbar(&self) -> bool;
         /// See [cef_scroll_view_t::get_horizontal_scrollbar_height]

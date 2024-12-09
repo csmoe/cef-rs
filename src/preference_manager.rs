@@ -7,7 +7,7 @@ pub struct Preferencemanager(cef_preference_manager_t);
 
 impl Preferencemanager {
     /// See [cef_preference_manager_t::set_preference] for more docs.
-    pub fn set_preference(&self, name: &str, value: crate::Value) -> Result<()> {
+    pub fn set_preference(&self, name: &str, value: crate::CefValue) -> Result<()> {
         let error = std::ptr::null_mut();
         let f = self.0.set_preference.ok_or(Error::NullPtr)?;
         unsafe {
@@ -27,10 +27,10 @@ impl Preferencemanager {
 
     wrapper_methods! {
         /// See [cef_preference_manager_t::get_preference] for more docs.
-        fn get_preference(self, name: &str) -> crate::Value {
+        fn get_preference(self, name: &str) -> crate::CefValue {
             self.0.get_preference.and_then(|f| unsafe {
                 let v = f(self.0.get_this(), &CefString::from(name).as_raw());
-                if v.is_null() { None } else { Some(crate::Value::from_raw(v)) }
+                if v.is_null() { None } else { Some(crate::CefValue::from_raw(v)) }
             })
         }
     }

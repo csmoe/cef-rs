@@ -1,17 +1,17 @@
 use crate::prelude::*;
 use crate::{
-    args::Args, command_line::CommandLine, error::Error, error::Result, rc::RcImpl,
+    args::CefArgs, command_line::CefCommandLine, error::Error, error::Result, rc::RcImpl,
     settings::Settings, string::CefString,
 };
 
 /// Handle process-specific callbacks
 ///
 /// See [cef_app_t] for more documentation.
-pub trait App: Sized {
+pub trait CefApp: Sized {
     fn on_before_command_line_processing(
         &self,
         _process_type: Option<CefString>,
-        _command_line: CommandLine,
+        _command_line: CefCommandLine,
     ) {
     }
 
@@ -33,21 +33,21 @@ pub trait App: Sized {
     fn into_raw(self) -> *mut cef_app_t {
         let mut object: cef_app_t = unsafe { std::mem::zeroed() };
 
-        extern "C" fn on_before_command_line_processing<I: App>(
+        extern "C" fn on_before_command_line_processing<I: CefApp>(
             this: *mut cef_app_t,
             process_type: *const cef_string_t,
             command_line: *mut cef_command_line_t,
         ) {
             let obj: &mut RcImpl<_, I> = RcImpl::get(this);
             let process_type = unsafe { CefString::from_raw(process_type) };
-            let cmd = unsafe { CommandLine::from_raw(command_line) };
+            let cmd = unsafe { CefCommandLine::from_raw(command_line) };
 
             obj.interface
                 .on_before_command_line_processing(process_type, cmd);
         }
         object.on_before_command_line_processing = Some(on_before_command_line_processing::<Self>);
 
-        extern "C" fn get_render_process_handler<I: App>(
+        extern "C" fn get_render_process_handler<I: CefApp>(
             this: *mut cef_app_t,
         ) -> *mut cef_render_process_handler_t {
             let app: &mut RcImpl<_, I> = RcImpl::get(this);
@@ -59,7 +59,7 @@ pub trait App: Sized {
         }
         object.get_render_process_handler = Some(get_render_process_handler::<Self>);
 
-        extern "C" fn get_browser_process_handler<I: App>(
+        extern "C" fn get_browser_process_handler<I: CefApp>(
             this: *mut cef_app_t,
         ) -> *mut cef_browser_process_handler_t {
             let app: &mut RcImpl<_, I> = RcImpl::get(this);
@@ -75,7 +75,7 @@ pub trait App: Sized {
 }
 
 /// See [cef_execute_process] for more documentation.
-pub fn execute_process<T: App>(args: &mut Args, app: Option<T>) -> Result<()> {
+pub fn execute_process<T: CefApp>(args: &mut CefArgs, app: Option<T>) -> Result<()> {
     let args = args.as_raw()?;
     let app = app
         .map(|app| app.into_raw())
@@ -94,7 +94,11 @@ pub fn execute_process<T: App>(args: &mut Args, app: Option<T>) -> Result<()> {
 }
 
 /// See [cef_initialize] for more documentation.
-pub fn initialize<T: App>(args: &mut Args, settings: &Settings, app: Option<T>) -> Result<()> {
+pub fn initialize<T: CefApp>(
+    args: &mut CefArgs,
+    settings: &Settings,
+    app: Option<T>,
+) -> Result<()> {
     let args = args.as_raw()?;
     let settings = settings.as_raw();
     let app = app
@@ -133,10 +137,10 @@ impl RenderProcessHandler {
         fn on_web_kit_initialized(&self);
 
         /// See [cef_render_process_handler_t::on_browser_created] for more documentation.
-        fn on_browser_created(&self, browser: crate::Browser, extra_info: crate::value::DictionaryValue);
+        fn on_browser_created(&self, browser: crate::CefBrowser, extra_info: crate::value::CefDictionaryValue);
 
         /// See [cef_render_process_handler_t::on_browser_destroyed] for more documentation.
-        fn on_browser_destroyed(&self, browser: crate::Browser);
+        fn on_browser_destroyed(&self, browser: crate::CefBrowser);
 
         /// See [cef_render_process_handler_t::get_load_handler] for more documentation.
         fn get_load_handler(&self) -> crate::handler::LoadHandler {
@@ -148,15 +152,15 @@ impl RenderProcessHandler {
         }
 
         /// See [cef_render_process_handler_t::on_context_created] for more documentation.
-        fn on_context_created(&self, browser: crate::Browser, frame: crate::frame::Frame, context: crate::v8::V8Context);
+        fn on_context_created(&self, browser: crate::CefBrowser, frame: crate::frame::CefFrame, context: crate::v8::CefV8Context);
 
-        fn on_context_released(&self, browser: crate::Browser, frame: crate::frame::Frame, context: crate::v8::V8Context) ;
+        fn on_context_released(&self, browser: crate::CefBrowser, frame: crate::frame::CefFrame, context: crate::v8::CefV8Context) ;
 
-        fn on_uncaught_exception(&self, browser: crate::Browser, frame: crate::frame::Frame, context: crate::v8::V8Context, exception: crate::v8::V8Excepction, stack_trace: crate::v8::V8StackTrace);
+        fn on_uncaught_exception(&self, browser: crate::CefBrowser, frame: crate::frame::CefFrame, context: crate::v8::CefV8Context, exception: crate::v8::V8Excepction, stack_trace: crate::v8::V8StackTrace);
 
         // fn on_focused_node_changed(&self, browser: *mut _cef_browser_t, frame: *mut _cef_frame_t, node: *mut _cef_domnode_t);
 
-        fn on_process_message_received(&self, browser: crate::Browser, frame: crate::frame::Frame, source_process: crate::ProcessId, message: crate::ProcessMessage) -> bool;
+        fn on_process_message_received(&self, browser: crate::CefBrowser, frame: crate::frame::CefFrame, source_process: crate::CefProcessId, message: crate::ProcessMessage) -> bool;
     }
 }
 
@@ -168,7 +172,7 @@ pub struct BrowserProcessHandler(cef_sys::cef_browser_process_handler_t);
 impl BrowserProcessHandler {
     wrapper_methods! {
         /// See [cef_browser_process_handler_t::on_register_custom_preferences]
-        fn on_register_custom_preferences(&self, type_: crate::PreferencesType, registrar: *mut _cef_preference_registrar_t);
+        fn on_register_custom_preferences(&self, type_: crate::CefPreferencesType, registrar: *mut _cef_preference_registrar_t);
 
         /// See [cef_browser_process_handler_t::on_context_initialized]
         fn on_context_initialized(&self);

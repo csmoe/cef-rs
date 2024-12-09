@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use crate::{string::CefString, Browser, Rect};
+use crate::{string::CefString, CefBrowser, CefRect};
 
 /// See [cef_render_handler_t] for more docs.
 #[derive(Debug, Clone)]
@@ -10,13 +10,13 @@ pub trait RenderCallback {
     /// See [get_accessibility_handler]
     fn get_accessibility_handler(&self) -> *mut cef_sys::cef_accessibility_handler_t;
     /// See [get_focus_handler]
-    fn get_root_screen_rect(&self, browser: Browser, rect: Rect) -> ::std::os::raw::c_int;
+    fn get_root_screen_rect(&self, browser: CefBrowser, rect: CefRect) -> ::std::os::raw::c_int;
     /// See [get_view_rect]
-    fn get_view_rect(&self, browser: Browser, rect: Rect);
+    fn get_view_rect(&self, browser: CefBrowser, rect: CefRect);
     /// See [get_screen_point]
     fn get_screen_point(
         &self,
-        browser: Browser,
+        browser: CefBrowser,
         view_x: i32,
         view_y: i32,
         screen_x: i32,
@@ -25,20 +25,20 @@ pub trait RenderCallback {
     /// See [get_screen_info]
     fn get_screen_info(
         &self,
-        browser: Browser,
+        browser: CefBrowser,
         screen_info: *mut cef_sys::cef_screen_info_t,
     ) -> ::std::os::raw::c_int;
     /// See [on_popup_show]
-    fn on_popup_show(&self, browser: Browser, show: bool);
+    fn on_popup_show(&self, browser: CefBrowser, show: bool);
     /// See [on_popup_size]
-    fn on_popup_size(&self, browser: Browser, rect: Rect);
+    fn on_popup_size(&self, browser: CefBrowser, rect: CefRect);
     /// / See [on_paint]
     fn on_paint(
         &self,
-        browser: Browser,
+        browser: CefBrowser,
         type_: cef_sys::cef_paint_element_type_t,
         dirty_rects_count: usize,
-        dirty_rects: Rect,
+        dirty_rects: CefRect,
         buffer: *const ::std::os::raw::c_void,
         width: ::std::os::raw::c_int,
         height: ::std::os::raw::c_int,
@@ -46,49 +46,53 @@ pub trait RenderCallback {
     /// See [on_accelerated_paint]
     fn on_accelerated_paint(
         &self,
-        browser: Browser,
+        browser: CefBrowser,
         type_: cef_sys::cef_paint_element_type_t,
         dirty_rects_count: usize,
-        dirty_rects: Rect,
+        dirty_rects: CefRect,
         info: *const cef_sys::cef_accelerated_paint_info_t,
     );
     fn get_touch_handle_size(
         &self,
-        browser: Browser,
+        browser: CefBrowser,
         orientation: cef_sys::cef_horizontal_alignment_t,
-        size: crate::Size,
+        size: crate::CefSize,
     );
     fn on_touch_handle_state_changed(
         &self,
-        browser: Browser,
+        browser: CefBrowser,
         state: *const cef_sys::cef_touch_handle_state_t,
     );
     fn start_dragging(
         &self,
-        browser: Browser,
+        browser: CefBrowser,
         drag_data: cef_sys::cef_drag_data_t,
         allowed_ops: cef_sys::cef_drag_operations_mask_t,
         x: ::std::os::raw::c_int,
         y: ::std::os::raw::c_int,
     ) -> ::std::os::raw::c_int;
-    fn update_drag_cursor(&self, browser: Browser, operation: cef_sys::cef_drag_operations_mask_t);
-    fn on_scroll_offset_changed(&self, browser: Browser, x: f64, y: f64);
+    fn update_drag_cursor(
+        &self,
+        browser: CefBrowser,
+        operation: cef_sys::cef_drag_operations_mask_t,
+    );
+    fn on_scroll_offset_changed(&self, browser: CefBrowser, x: f64, y: f64);
     fn on_ime_composition_range_changed(
         &self,
-        browser: Browser,
+        browser: CefBrowser,
         selected_range: cef_sys::cef_range_t,
         character_bounds_count: usize,
-        character_bounds: Rect,
+        character_bounds: CefRect,
     );
     fn on_text_selection_changed(
         &self,
-        browser: Browser,
+        browser: CefBrowser,
         selected_text: CefString,
         selected_range: cef_sys::cef_range_t,
     );
     fn on_virtual_keyboard_requested(
         &self,
-        browser: Browser,
+        browser: CefBrowser,
         input_mode: cef_sys::cef_text_input_mode_t,
     );
 }

@@ -3,7 +3,7 @@ use crate::string::CefString;
 use crate::{
     prelude::*,
     rc::{RcImpl, RefGuard},
-    Rect, Size,
+    CefRect, CefSize,
 };
 use cef_sys::{cef_view_delegate_t, cef_view_t};
 use cef_wrapper_macro::wrapper_methods;
@@ -45,19 +45,19 @@ macro_rules! convert_view {
 pub(crate) use convert_view;
 
 convert_view! {
-    (View, as_browser_view, BrowserView),
-    (View, as_panel, Panel),
-    (View, as_textfield, TextField),
-    (View, as_scroll_view, ScrollView),
-    (View, as_button, Button)
+    (CefView, as_browser_view, CefBrowserView),
+    (CefView, as_panel, CefPanel),
+    (CefView, as_textfield, CefTextField),
+    (CefView, as_scroll_view, ScrollView),
+    (CefView, as_button, CefButton)
 }
 
 /// See [cef_view_t] for more documentation.
 #[derive(Debug, Clone)]
 #[wrapper]
-pub struct View(cef_view_t);
+pub struct CefView(cef_view_t);
 
-impl View {
+impl CefView {
     #[cfg(debug_assertions)]
     pub fn get_type_string(&self) -> Option<CefString> {
         self.0
@@ -82,14 +82,14 @@ impl View {
         })
     }
 
-    pub fn get_window(&self) -> Option<Window> {
+    pub fn get_window(&self) -> Option<CefWindow> {
         unsafe {
             self.0.get_window.and_then(|f| {
                 let window = f(self.0.get_this());
                 if window.is_null() {
                     None
                 } else {
-                    Some(Window::from_raw(window))
+                    Some(CefWindow::from_raw(window))
                 }
             })
         }
@@ -101,7 +101,7 @@ impl View {
         /// See [cef_view_t::is_attached]
         fn is_attached(&self) -> bool;
         /// See [cef_view_t::is_same]
-        fn is_same(&self, other: View) -> bool;
+        fn is_same(&self, other: CefView) -> bool;
         /// See [cef_view_t::get_id]
         fn get_id(&self) -> i32;
         /// See [cef_view_t::set_id]
@@ -111,73 +111,73 @@ impl View {
         /// See [cef_view_t::set_group_id]
         fn set_group_id(&mut self, group: i32);
         /// See [cef_view_t::get_parent_view]
-        fn get_parent_view(&self) -> View {
+        fn get_parent_view(&self) -> CefView {
             self.0.get_parent_view.and_then(|f| unsafe {
                 let view = f(self.0.get_this());
                 if view.is_null() {
                     None
                 } else {
-                    Some(View::from_raw(view))
+                    Some(CefView::from_raw(view))
                 }
             })
         }
         /// See [cef_view_t::get_view_for_id]
-        fn get_view_for_id(&self, id: i32) -> View {
+        fn get_view_for_id(&self, id: i32) -> CefView {
             self.0.get_view_for_id.and_then(|f| unsafe {
                 let view = f(self.0.get_this(), id);
                 if view.is_null() {
                     None
                 } else {
-                    Some(View::from_raw(view))
+                    Some(CefView::from_raw(view))
                 }
             })
         }
 
         /// See [cef_view_t::get_bounds]
-        fn get_bounds(&self) -> Rect;
+        fn get_bounds(&self) -> CefRect;
         /// See [cef_view_t::set_bounds]
-        fn set_bounds(&mut self, bounds: &Rect) {
+        fn set_bounds(&mut self, bounds: &CefRect) {
             self.0
                 .set_bounds
                 .map(|f| unsafe { f(self.0.get_this(), std::ptr::from_ref(bounds)) })
         }
 
         /// See [cef_view_t::get_size]
-        fn get_size(&self) -> Size;
+        fn get_size(&self) -> CefSize;
         /// See [cef_view_t::set_size]
-        fn set_size(&mut self, size: &Size) {
+        fn set_size(&mut self, size: &CefSize) {
             self.0
                 .set_size
                 .map(|f| unsafe { f(self.0.get_this(), std::ptr::from_ref(size)) })
         }
 
         /// See [cef_view_t::get_position]
-        fn get_position(&self) -> crate::Point;
+        fn get_position(&self) -> crate::CefPoint;
         /// See [cef_view_t::set_position]
-        fn set_position(&mut self, position: &crate::Point) {
+        fn set_position(&mut self, position: &crate::CefPoint) {
             self.0
                 .set_position
                 .map(|f| unsafe { f(self.0.get_this(), std::ptr::from_ref(position)) })
         }
 
         /// See [cef_view_t::set_insets]
-        fn set_insets(&mut self, inset: &crate::Insets) {
+        fn set_insets(&mut self, inset: &crate::CefInsets) {
             self.0
                 .set_insets
                 .map(|f| unsafe { f(self.0.get_this(), std::ptr::from_ref(inset)) })
         }
         /// See [cef_view_t::get_insets]
-        fn get_insets(&self) -> crate::Insets;
+        fn get_insets(&self) -> crate::CefInsets;
 
         /// See [cef_view_t::get_preferred_size]
-        fn get_preferred_size(&self) -> Size;
+        fn get_preferred_size(&self) -> CefSize;
         /// See [cef_view_t::size_to_preferred_size]
         fn size_to_preferred_size(&self);
 
         /// See [cef_view_t::get_minimum_size]
-        fn get_minimum_size(&self) -> Size;
+        fn get_minimum_size(&self) -> CefSize;
         /// See [cef_view_t::get_maximum_size]
-        fn get_maximum_size(&self) -> Size;
+        fn get_maximum_size(&self) -> CefSize;
         /// See [cef_view_t::get_height_for_width]
         fn get_height_for_width(&self, width: i32) -> i32;
 
@@ -217,31 +217,31 @@ impl View {
         fn get_theme_color(&self, id: i32) -> u32;
 
         /// See [cef_view_t::convert_point_to_screen]
-        fn convert_point_to_screen(&self, point: &mut crate::Point) -> bool {
+        fn convert_point_to_screen(&self, point: &mut crate::CefPoint) -> bool {
             self.0
                 .convert_point_to_screen
                 .map(|f| unsafe { f(self.0.get_this(), std::ptr::from_mut(point)) == 1 })
         }
         /// See [cef_view_t::convert_point_from_screen]
-        fn convert_point_from_screen(&self, point: &mut crate::Point) -> bool {
+        fn convert_point_from_screen(&self, point: &mut crate::CefPoint) -> bool {
             self.0
                 .convert_point_from_screen
                 .map(|f| unsafe { f(self.0.get_this(), std::ptr::from_mut(point)) == 1 })
         }
         /// See [cef_view_t::convert_point_to_window]
-        fn convert_point_to_window(&self, point: &mut crate::Point) -> bool {
+        fn convert_point_to_window(&self, point: &mut crate::CefPoint) -> bool {
             self.0
                 .convert_point_to_window
                 .map(|f| unsafe { f(self.0.get_this(), std::ptr::from_mut(point)) == 1 })
         }
         /// See [cef_view_t::convert_point_from_window]
-        fn convert_point_from_window(&self, point: &mut crate::Point) -> bool {
+        fn convert_point_from_window(&self, point: &mut crate::CefPoint) -> bool {
             self.0
                 .convert_point_from_window
                 .map(|f| unsafe { f(self.0.get_this(), std::ptr::from_mut(point)) == 1 })
         }
         /// See [cef_view_t::convert_point_to_view]
-        fn convert_point_to_view(&self, point: &mut crate::Point, view: View) -> bool {
+        fn convert_point_to_view(&self, point: &mut crate::CefPoint, view: CefView) -> bool {
             self.0.convert_point_to_view.map(|f| unsafe {
                 f(
                     self.0.get_this(),
@@ -251,7 +251,7 @@ impl View {
             })
         }
         /// See [cef_view_t::convert_point_from_view]
-        fn convert_point_from_view(&self, point: &mut crate::Point, view: View) -> bool {
+        fn convert_point_from_view(&self, point: &mut crate::CefPoint, view: CefView) -> bool {
             self.0.convert_point_from_view.map(|f| unsafe {
                 f(
                     self.0.get_this(),
@@ -272,33 +272,33 @@ impl Rc for cef_view_delegate_t {
 /// See [cef_view_delegate_t] for more documentation.
 pub trait ViewDelegate: Sized {
     /// See [cef_view_delegate_t::on_parent_view_changed]
-    fn on_parent_view_changed(&self, _view: View, _added: bool, _parent: View) {}
+    fn on_parent_view_changed(&self, _view: CefView, _added: bool, _parent: CefView) {}
     /// See [cef_view_delegate_t::on_child_view_changed]
-    fn on_child_view_changed(&self, _view: View, _added: bool, _child: View) {}
+    fn on_child_view_changed(&self, _view: CefView, _added: bool, _child: CefView) {}
     /// See [cef_view_delegate_t::on_window_changed]
-    fn on_window_changed(&self, _view: View, _added: bool) {}
+    fn on_window_changed(&self, _view: CefView, _added: bool) {}
     /// See [cef_view_delegate_t::on_layout_changed]
-    fn on_layout_changed(&self, _view: View, _new_bounds: Rect) {}
+    fn on_layout_changed(&self, _view: CefView, _new_bounds: CefRect) {}
     /// See [cef_view_delegate_t::on_focus]
-    fn on_focus(&self, _view: View) {}
+    fn on_focus(&self, _view: CefView) {}
     /// See [cef_view_delegate_t::on_blur]
-    fn on_blur(&self, _view: View) {}
+    fn on_blur(&self, _view: CefView) {}
     /// See [cef_view_delegate_t::on_theme_changed]
-    fn on_theme_changed(&self, _view: View) {}
+    fn on_theme_changed(&self, _view: CefView) {}
     /// See [cef_view_delegate_t::get_preferred_size]
-    fn get_preferred_size(&self, _view: View) -> Size {
+    fn get_preferred_size(&self, _view: CefView) -> CefSize {
         todo!()
     }
     /// See [cef_view_delegate_t::get_minimum_size]
-    fn get_minimum_size(&self, _view: View) -> Size {
+    fn get_minimum_size(&self, _view: CefView) -> CefSize {
         todo!()
     }
     /// See [cef_view_delegate_t::get_maximum_size]
-    fn get_maximum_size(&self, _view: View) -> Size {
+    fn get_maximum_size(&self, _view: CefView) -> CefSize {
         todo!()
     }
     /// See [cef_view_delegate_t::get_height_for_width]
-    fn get_height_for_width(&self, _view: View, _width: i32) -> i32 {
+    fn get_height_for_width(&self, _view: CefView, _width: i32) -> i32 {
         todo!()
     }
 
@@ -329,9 +329,9 @@ pub(crate) extern "C" fn on_parent_view_changed<I: ViewDelegate>(
     parent: *mut cef_view_t,
 ) {
     let obj: &mut RcImpl<_, I> = RcImpl::get(this);
-    let view = unsafe { View::from_raw(view) };
+    let view = unsafe { CefView::from_raw(view) };
     let added = added != 0;
-    let parent = unsafe { View::from_raw(parent) };
+    let parent = unsafe { CefView::from_raw(parent) };
     obj.interface.on_child_view_changed(view, added, parent);
 }
 
@@ -342,9 +342,9 @@ pub(crate) extern "C" fn on_child_view_changed<I: ViewDelegate>(
     child: *mut cef_view_t,
 ) {
     let obj: &mut RcImpl<_, I> = RcImpl::get(this);
-    let view = unsafe { View::from_raw(view) };
+    let view = unsafe { CefView::from_raw(view) };
     let added = added != 0;
-    let child = unsafe { View::from_raw(child) };
+    let child = unsafe { CefView::from_raw(child) };
     obj.interface.on_child_view_changed(view, added, child);
 }
 
@@ -354,7 +354,7 @@ pub(crate) extern "C" fn on_window_changed<I: ViewDelegate>(
     added: c_int,
 ) {
     let obj: &mut RcImpl<_, I> = RcImpl::get(this);
-    let view = unsafe { View::from_raw(view) };
+    let view = unsafe { CefView::from_raw(view) };
     let added = added != 0;
     obj.interface.on_window_changed(view, added);
 }

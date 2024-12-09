@@ -1,6 +1,6 @@
 use crate::{
-    client::Client, error::Result, prelude::*, string::CefString, view::WindowInfo, BrowserView,
-    ChromeToolbarType, State,
+    client::CefClient, error::Result, prelude::*, string::CefString, view::CefWindowInfo,
+    CefBrowserView, CefChromeToolbarType, CefState,
 };
 use cef_sys::{
     cef_browser_host_create_browser_sync, cef_browser_settings_t, cef_browser_t, cef_client_t,
@@ -12,7 +12,7 @@ pub mod frame;
 
 /// See [cef_browser_settings_t] for more documentation.
 #[derive(Debug, Clone)]
-pub struct BrowserSettings {
+pub struct CefBrowserSettings {
     /// See [cef_browser_settings_t::windowless_frame_rate]
     pub windowless_frame_rate: usize,
     pub standard_font_family: CefString,
@@ -26,24 +26,24 @@ pub struct BrowserSettings {
     pub minimum_font_size: u32,
     pub minimum_logical_font_size: u32,
     pub default_encoding: CefString,
-    pub remote_fonts: State,
-    pub javascript: State,
-    pub javascript_close_windows: State,
-    pub javascript_access_clipboard: State,
-    pub javascript_dom_paste: State,
-    pub image_loading: State,
-    pub image_shrink_standalone_to_fit: State,
-    pub text_area_resize: State,
-    pub tab_to_links: State,
-    pub local_storage: State,
-    pub databases: State,
-    pub webgl: State,
+    pub remote_fonts: CefState,
+    pub javascript: CefState,
+    pub javascript_close_windows: CefState,
+    pub javascript_access_clipboard: CefState,
+    pub javascript_dom_paste: CefState,
+    pub image_loading: CefState,
+    pub image_shrink_standalone_to_fit: CefState,
+    pub text_area_resize: CefState,
+    pub tab_to_links: CefState,
+    pub local_storage: CefState,
+    pub databases: CefState,
+    pub webgl: CefState,
     pub background_color: u32,
-    pub chrome_zoom_bubble: State,
-    pub chrome_status_bubble: State,
+    pub chrome_zoom_bubble: CefState,
+    pub chrome_status_bubble: CefState,
 }
 
-impl Default for BrowserSettings {
+impl Default for CefBrowserSettings {
     fn default() -> Self {
         Self {
             windowless_frame_rate: Default::default(),
@@ -58,26 +58,26 @@ impl Default for BrowserSettings {
             minimum_font_size: Default::default(),
             minimum_logical_font_size: Default::default(),
             default_encoding: Default::default(),
-            remote_fonts: State::STATE_DEFAULT,
-            javascript: State::STATE_DEFAULT,
-            javascript_close_windows: State::STATE_DEFAULT,
-            javascript_access_clipboard: State::STATE_DEFAULT,
-            javascript_dom_paste: State::STATE_DEFAULT,
-            image_loading: State::STATE_DEFAULT,
-            image_shrink_standalone_to_fit: State::STATE_DEFAULT,
-            text_area_resize: State::STATE_DEFAULT,
-            tab_to_links: State::STATE_DEFAULT,
-            local_storage: State::STATE_DEFAULT,
-            databases: State::STATE_DEFAULT,
-            webgl: State::STATE_DEFAULT,
+            remote_fonts: CefState::STATE_DEFAULT,
+            javascript: CefState::STATE_DEFAULT,
+            javascript_close_windows: CefState::STATE_DEFAULT,
+            javascript_access_clipboard: CefState::STATE_DEFAULT,
+            javascript_dom_paste: CefState::STATE_DEFAULT,
+            image_loading: CefState::STATE_DEFAULT,
+            image_shrink_standalone_to_fit: CefState::STATE_DEFAULT,
+            text_area_resize: CefState::STATE_DEFAULT,
+            tab_to_links: CefState::STATE_DEFAULT,
+            local_storage: CefState::STATE_DEFAULT,
+            databases: CefState::STATE_DEFAULT,
+            webgl: CefState::STATE_DEFAULT,
             background_color: Default::default(),
-            chrome_zoom_bubble: State::STATE_DEFAULT,
-            chrome_status_bubble: State::STATE_DEFAULT,
+            chrome_zoom_bubble: CefState::STATE_DEFAULT,
+            chrome_status_bubble: CefState::STATE_DEFAULT,
         }
     }
 }
 
-impl BrowserSettings {
+impl CefBrowserSettings {
     pub fn new() -> Self {
         Self::default()
     }
@@ -119,16 +119,16 @@ impl BrowserSettings {
 /// See [cef_browser_t] for more documentation.
 #[derive(Debug, Clone)]
 #[wrapper]
-pub struct Browser(cef_browser_t);
+pub struct CefBrowser(cef_browser_t);
 
-impl Browser {
+impl CefBrowser {
     /// See [cef_browser_host_create_browser_sync] for more documentation.
-    pub fn create<T: Client>(
-        window_info: WindowInfo,
+    pub fn create<T: CefClient>(
+        window_info: CefWindowInfo,
         client: Option<T>,
         url: CefString,
-        settings: BrowserSettings,
-    ) -> Result<Browser> {
+        settings: CefBrowserSettings,
+    ) -> Result<CefBrowser> {
         let client = client.map(|c| c.into_raw()).unwrap_or(null_mut());
         let ret = unsafe {
             cef_browser_host_create_browser_sync(
@@ -148,7 +148,7 @@ impl Browser {
     }
 
     /// See [cef_browser_view_get_for_browser]
-    pub fn browrer_view(&self) -> BrowserView {
-        unsafe { BrowserView::from_raw(cef_browser_view_get_for_browser(self.0.get_this())) }
+    pub fn browrer_view(&self) -> CefBrowserView {
+        unsafe { CefBrowserView::from_raw(cef_browser_view_get_for_browser(self.0.get_this())) }
     }
 }
