@@ -38,15 +38,14 @@ const URL: &str = "https://cef-builds.spotifycdn.com";
 
 fn main() {
     use std::ops::Deref;
-    let cef_path = std::env::var("CEF_PATH")
-        .map(std::path::PathBuf::from)
-        .unwrap();
     let args = std::env::args().collect::<Vec<_>>();
     let args = args.iter().map(|s| s.deref()).collect::<Vec<_>>();
 
     match args.as_slice() {
         [_, target @ _, "--download", ..] => {
             if TARGETS.contains(target) {
+                let (os, arch) = target_to_os_arch(target);
+                let cef_path = std::env::var(&format!("CEF_PATH_{os}_{arch}")).map(std::path::PathBuf::from).unwrap();
                 download_prebuilt_cef(target, &cef_path);
             } else {
                 eprintln!("expected targets: {TARGETS:?}");
@@ -55,6 +54,9 @@ fn main() {
         }
         [_, target @ _, "--bindgen", ..] => {
             if TARGETS.contains(target) {
+                let (os, arch) = target_to_os_arch(target);
+                let cef_path = std::env::var(&format!("CEF_PATH_{os}_{arch}")).map(std::path::PathBuf::from).unwrap();
+
                 bindgen(&target, &cef_path);
             } else {
                 eprintln!("expected targets: {TARGETS:?}");
@@ -77,17 +79,7 @@ fn download_prebuilt_cef(target: &str, cef_path: &std::path::Path) {
     println!("cef: trying to download {target} {cef_version}");
 
     let url = std::env::var("CEF_URL").unwrap_or(URL.into());
-    let platform = match target {
-        "aarch64-apple-darwin" => "macosarm64",
-        "x86_64-apple-darwin" => "macosx64",
-        "i686-pc-windows-msvc" => "windows32",
-        "x86_64-pc-windows-msvc" => "windows64",
-        "aarch64-pc-windows-msvc" => "windowsarm64",
-        "x86_64-unknown-linux-gnu" => "linux64",
-        "arm-unknown-linux-gnueabi" => "linuxarm",
-        "aarch64-unknown-linux-gnu" => "linuxarm64",
-        v @ _ => panic!("unsupported {v:?}"),
-    };
+    let platform = target_to_cef_target(target);
     let index_resp = ureq::get(&format!("{url}/index.json"))
         .call()
         .unwrap()
@@ -233,5 +225,33 @@ fn copy_directory(src: &std::path::Path, dst: &std::path::Path) {
         } else {
             std::fs::copy(&src_path, &dst_path).unwrap();
         }
+    }
+}
+
+fn target_to_cef_target(target: &str) -> &str {
+    match target {
+        "aarch64-apple-darwin" => "macosarm64",
+        "x86_64-apple-darwin" => "macosx64",
+        "i686-pc-windows-msvc" => "windows32",
+        "x86_64-pc-windows-msvc" => "windows64",
+        "aarch64-pc-windows-msvc" => "windowsarm64",
+        "x86_64-unknown-linux-gnu" => "linux64",
+        "arm-unknown-linux-gnueabi" => "linuxarm",
+        "aarch64-unknown-linux-gnu" => "linuxarm64",
+        v @ _ => panic!("unsupported {v:?}"),
+    }
+}
+
+fn target_to_os_arch(target: &str) -> (&str, &str) {
+    match target {
+        "aarch64-apple-darwin" => ("macos", "aarch64"),
+        "x86_64-apple-darwin" => ("macos", "x86_64"),
+        "i686-pc-windows-msvc" => ("windows", "x86"),
+        "x86_64-pc-windows-msvc" => ("windows", "x86_64"),
+        "aarch64-pc-windows-msvc" => ("windows", "aarch64"),
+        "x86_64-unknown-linux-gnu" => ("linux", "x86_64"),
+        "arm-unknown-linux-gnueabi" => ("linux", "arm"),
+        "aarch64-unknown-linux-gnu" => ("linux", "aarch64"),
+        v @ _ => panic!("unsupported {v:?}"),
     }
 }

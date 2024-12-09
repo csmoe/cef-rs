@@ -60,7 +60,7 @@ cd sys
 
 ./upgrade.rs x86_64-unknown-linux-gnu --download
 ```
-This command will download and extract prebuilt CEF from [cef-builds](https://cef-builds.spotifycdn.com/index.html) into `sys/cef/archive` as specified by `[env.CEF_PATH]` in [.cargo/config.toml](./.cargo/config.toml).
+This command will download and extract prebuilt CEF from [cef-builds](https://cef-builds.spotifycdn.com/index.html) into `sys/cef/archive` as specified by `[env.CEF_PATH_<os>_<arch>]` in [.cargo/config.toml](./.cargo/config.toml).
 
 #### Bindgen
 
