@@ -85,7 +85,7 @@ impl WindowInfo {
             #[cfg(any(windows, target_os = "linux"))]
             parent_window: self.parent_window.cast(),
             #[cfg(any(windows, target_os = "linux"))]
-            window: self.window.0.cast(),
+            window: self.window.cast(),
         }
     }
 }
