@@ -205,9 +205,12 @@ pub trait CefLifeSpanHandler: Sized {
         object.on_after_created = Some(on_after_created::<Self>);
         object.do_close = Some(do_close::<Self>);
         object.on_before_close = Some(on_before_close::<Self>);
-
         crate::rc::RcImpl::new(object, self).cast()
     }
 }
 
-impl CefLifeSpanHandler for () {}
+impl CefLifeSpanHandler for () {
+    fn into_raw(self) -> *mut cef_life_span_handler_t {
+        std::ptr::null_mut()
+    }
+}

@@ -143,17 +143,18 @@ pub struct RenderProcessHandler(cef_sys::cef_render_process_handler_t);
 /// See [cef_render_process_handler_t] for more documentation.
 pub trait CefRenderProcessHandler: Sized {
     /// See [cef_render_process_handler_t::on_web_kit_initialized] for more documentation.
-    fn on_web_kit_initialized(&self);
+    fn on_web_kit_initialized(&self) {}
 
     /// See [cef_render_process_handler_t::on_browser_created] for more documentation.
     fn on_browser_created(
         &self,
         browser: crate::CefBrowser,
         extra_info: crate::value::CefDictionaryValue,
-    );
+    ) {
+    }
 
     /// See [cef_render_process_handler_t::on_browser_destroyed] for more documentation.
-    fn on_browser_destroyed(&self, browser: crate::CefBrowser);
+    fn on_browser_destroyed(&self, browser: crate::CefBrowser) {}
 
     /// See [cef_render_process_handler_t::get_load_handler] for more documentation.
     fn get_load_handler(&self) -> Option<crate::handler::LoadHandler> {
@@ -336,6 +337,13 @@ pub trait CefRenderProcessHandler: Sized {
     }
 }
 
+impl CefRenderProcessHandler for () {
+    #[doc(hidden)]
+    fn into_raw(self) -> *mut cef_render_process_handler_t {
+        std::ptr::null_mut()
+    }
+}
+
 #[derive(Debug, Clone)]
 #[wrapper]
 /// See [cef_browser_process_handler_t] for more documentation.
@@ -459,6 +467,13 @@ pub trait CefBrowserProcessHandler: Sized {
     }
 }
 
+impl CefBrowserProcessHandler for () {
+    #[doc(hidden)]
+    fn into_raw(self) -> *mut cef_browser_process_handler_t {
+        std::ptr::null_mut()
+    }
+}
+
 #[derive(Debug, Clone)]
 #[wrapper]
 /// See [cef_resource_bundle_handler_t] for more documentation.
@@ -551,5 +566,12 @@ pub trait CefResourceBundleHandler: Sized {
         handler.get_data_resource_for_scale = Some(get_data_resource_for_scale::<Self>);
 
         crate::rc::RcImpl::new(handler, self).cast()
+    }
+}
+
+impl CefResourceBundleHandler for () {
+    #[doc(hidden)]
+    fn into_raw(self) -> *mut cef_resource_bundle_handler_t {
+        std::ptr::null_mut()
     }
 }
