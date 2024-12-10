@@ -1,6 +1,6 @@
 use std::ptr::null_mut;
 
-use cef::{args::CefArgs, client::CefClient, CefApp, Settings, ViewDelegate, WindowDelegate};
+use cef::{args::CefArgs, client::CefClient, CefApp, CefSettings, ViewDelegate, WindowDelegate};
 
 #[derive(Debug, Clone, Copy)]
 struct Application;
@@ -15,7 +15,7 @@ impl CefClient for DemoClient {}
 fn main() {
     let mut args = CefArgs::new(std::env::args());
     let app = Application;
-    let settings = Settings::new();
+    let settings = CefSettings::new();
     cef::execute_process(&mut args, Some(app)).unwrap();
     cef::initialize(&mut args, &settings, Some(app)).unwrap();
 

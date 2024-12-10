@@ -139,7 +139,7 @@ impl CefFrame {
         fn send_process_message(
             &self,
             target_process: crate::CefProcessId,
-            message: crate::ProcessMessage,
+            message: crate::CefProcessMessage,
         ) {
             self.0
                 .send_process_message

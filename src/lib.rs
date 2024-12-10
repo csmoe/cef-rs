@@ -1,9 +1,9 @@
 #![doc = include_str!("../README.md")]
 
 mod app;
-pub mod args;
+mod args;
 mod browser;
-pub mod client;
+mod client;
 mod command_line;
 mod error;
 mod handler;
@@ -23,14 +23,17 @@ mod value;
 mod view;
 
 pub use app::*;
+pub use args::*;
 pub use browser::*;
+pub use client::*;
 pub use command_line::*;
 pub use handler::*;
 pub use image::*;
 pub use menu_model::*;
-pub use process_message::ProcessMessage;
+pub use process_message::CefProcessMessage;
 pub use settings::*;
 pub use string::CefString;
+pub use v8::*;
 pub use value::*;
 pub use view::*;
 
@@ -77,5 +80,9 @@ mod alias {
     pub type CefPostDataElementType = cef_sys::cef_postdataelement_type_t;
 
     pub type CefPreferencesType = cef_sys::cef_preferences_type_t;
+
+    pub type CefPopupFeatures = cef_sys::cef_popup_features_t;
+
+    pub type CefWindowOpenDisposition = cef_sys::cef_window_open_disposition_t;
 }
 pub use alias::*;

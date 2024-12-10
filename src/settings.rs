@@ -6,7 +6,7 @@ use crate::{string::CefString, CefLogItems, CefLogSeverity};
 
 /// See [cef_settings_t] for more documentation.
 #[derive(Debug, Default, Clone)]
-pub struct Settings {
+pub struct CefSettings {
     pub no_sandbox: bool,
     pub browser_subprocess_path: CefString,
     pub framework_dir_path: CefString,
@@ -43,7 +43,7 @@ pub struct Settings {
     disable_signal_handlers: bool,
 }
 
-impl Settings {
+impl CefSettings {
     pub fn new() -> Self {
         Self {
             no_sandbox: true,

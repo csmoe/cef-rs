@@ -1,7 +1,7 @@
 use crate::prelude::*;
 
 /// See [cef_display_handler_t] for more docs.
-pub trait DisplayHandler: Sized {
+pub trait DisplayHandler: Sized + Default {
     /// See [cef_display_handler_t::on_address_change].
     fn on_address_change(&self, browser: crate::CefBrowser, frame: crate::CefFrame, url: CefString);
 
@@ -40,7 +40,8 @@ pub trait DisplayHandler: Sized {
     fn on_cursor_change(
         &self,
         browser: crate::CefBrowser,
-        cursor: *mut core::ffi::c_void,
+        #[cfg(target_family = "unix")] cursor: *mut ::std::os::raw::c_void,
+        #[cfg(target_os = "windows")] cursor: HCURSOR,
         type_: cef_cursor_type_t,
         custom_cursor_info: &cef_cursor_info_t,
     ) -> bool;
@@ -168,7 +169,8 @@ pub trait DisplayHandler: Sized {
         unsafe extern "C" fn on_cursor_change<I: DisplayHandler>(
             self_: *mut _cef_display_handler_t,
             browser: *mut _cef_browser_t,
-            cursor: *mut ::std::os::raw::c_void,
+            #[cfg(target_family = "unix")] cursor: *mut ::std::os::raw::c_void,
+            #[cfg(target_os = "windows")] cursor: HCURSOR,
             type_: cef_cursor_type_t,
             custom_cursor_info: *const cef_cursor_info_t,
         ) -> ::std::os::raw::c_int {

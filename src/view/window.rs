@@ -11,42 +11,42 @@ use crate::{
 #[derive(Debug, Default)]
 pub struct CefWindowInfo {
     /// See [cef_window_info_t::window_name]
-    window_name: CefString,
+    pub window_name: CefString,
     /// See [cef_window_info_t::bounds]
-    bounds: CefRect,
+    pub bounds: CefRect,
     /// See [cef_window_info_t::windowless_rendering_enabled]
-    windowless_rendering_enabled: bool,
+    pub windowless_rendering_enabled: bool,
     /// See [cef_window_info_t::shared_texture_enabled]
-    shared_texture_enabled: bool,
+    pub shared_texture_enabled: bool,
     /// See [cef_window_info_t::external_begin_frame_enabled]
-    external_begin_frame_enabled: bool,
+    pub external_begin_frame_enabled: bool,
 
     #[cfg(target_os = "macos")]
     /// See [cef_window_info_t::hidden]
-    hidden: bool,
+    pub hidden: bool,
     #[cfg(target_os = "macos")]
     /// See [cef_window_info_t::parent_view]
-    parent_view: Option<objc2_app_kit::NSView>,
+    pub parent_view: Option<objc2_app_kit::NSView>,
     #[cfg(target_os = "macos")]
     /// See [cef_window_info_t::view]
-    view: Option<objc2_app_kit::NSView>,
+    pub view: Option<objc2_app_kit::NSView>,
     /// See [cef_window_info_t::runtime_style]
-    runtime_style: cef_sys::cef_runtime_style_t,
+    pub runtime_style: cef_sys::cef_runtime_style_t,
     #[cfg(windows)]
     /// See [cef_window_info_t::menu]
-    menu: windows::Win32::UI::WindowsAndMessaging::HMENU,
+    pub menu: windows::Win32::UI::WindowsAndMessaging::HMENU,
     #[cfg(windows)]
     /// Seee [cef_window_info_t::ex_style]
-    ex_style: u32,
+    pub ex_style: u32,
     #[cfg(windows)]
     /// See [cef_window_info_t::style]
-    style: u32,
+    pub style: u32,
     #[cfg(any(windows, target_os = "linux"))]
     /// See [cef_window_info_t::parent_window]
-    parent_window: windows::Win32::Foundation::HWND,
+    pub parent_window: windows::Win32::Foundation::HWND,
     #[cfg(any(windows, target_os = "linux"))]
     /// See [cef_window_info_t::window]
-    window: windows::Win32::Foundation::HWND,
+    pub window: windows::Win32::Foundation::HWND,
 }
 
 impl CefWindowInfo {

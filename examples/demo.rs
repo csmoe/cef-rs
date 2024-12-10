@@ -1,6 +1,6 @@
 use cef::{
     args::CefArgs, client::CefClient, CefApp, CefBrowser, CefBrowserSettings, CefBrowserView,
-    CefString, PanelDelegate, Settings, ViewDelegate, WindowDelegate,
+    CefSettings, CefString, PanelDelegate, ViewDelegate, WindowDelegate,
 };
 
 #[derive(Debug, Clone, Copy)]
@@ -42,7 +42,7 @@ fn main() {
     let mut args = CefArgs::new(std::env::args());
     dbg!(&args);
     let app = Application;
-    let mut settings = Settings::new();
+    let mut settings = CefSettings::new();
     settings.root_cache_path = CefString::from("/tmp/demo");
     settings.no_sandbox = true;
     cef::execute_process(&mut args, Some(app)).unwrap();

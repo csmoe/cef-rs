@@ -3,9 +3,9 @@ use crate::prelude::*;
 /// See [cef_process_message_t] for more docs.
 #[derive(Debug, Clone)]
 #[wrapper]
-pub struct ProcessMessage(cef_process_message_t);
+pub struct CefProcessMessage(cef_process_message_t);
 
-impl ProcessMessage {
+impl CefProcessMessage {
     wrapper_methods!(
         /// See [cef_process_message_t::is_valid]
         fn is_valid(&self) -> bool;
@@ -14,13 +14,13 @@ impl ProcessMessage {
         fn is_read_only(&self) -> bool;
 
         /// See [cef_process_message_t::copy]
-        fn copy(&self) -> ProcessMessage {
+        fn copy(&self) -> CefProcessMessage {
             self.0.copy.and_then(|f| unsafe {
                 let v = f(self.0.get_this());
                 if v.is_null() {
                     None
                 } else {
-                    Some(ProcessMessage::from_raw(v))
+                    Some(CefProcessMessage::from_raw(v))
                 }
             })
         }
