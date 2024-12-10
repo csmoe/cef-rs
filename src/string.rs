@@ -76,14 +76,14 @@ impl ToString for CefString {
 }
 
 #[allow(clippy::missing_safety_doc)]
-pub unsafe fn parse_string_list(ptr: cef_string_list_t) -> Vec<String> {
+pub unsafe fn parse_string_list(ptr: cef_string_list_t) -> Vec<CefString> {
     let count = cef_sys::cef_string_list_size(ptr);
     let mut res = Vec::with_capacity(count);
     for i in 0..count {
         let value = null_mut();
         if cef_sys::cef_string_list_value(ptr, i, value) > 0 {
             if let Some(v) = CefString::from_raw(value) {
-                res.push(v.to_string())
+                res.push(v)
             }
         }
     }
