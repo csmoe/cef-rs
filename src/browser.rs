@@ -8,7 +8,8 @@ use cef_sys::{
 };
 use std::{ffi::c_int, ptr::null_mut};
 
-pub mod frame;
+mod frame;
+pub use frame::*;
 
 /// See [cef_browser_settings_t] for more documentation.
 #[derive(Debug, Clone)]

@@ -157,15 +157,15 @@ impl RenderProcessHandler {
         }
 
         /// See [cef_render_process_handler_t::on_context_created] for more documentation.
-        fn on_context_created(&self, browser: crate::CefBrowser, frame: crate::frame::CefFrame, context: crate::v8::CefV8Context);
+        fn on_context_created(&self, browser: crate::CefBrowser, frame: crate::CefFrame, context: crate::v8::CefV8Context);
 
-        fn on_context_released(&self, browser: crate::CefBrowser, frame: crate::frame::CefFrame, context: crate::v8::CefV8Context) ;
+        fn on_context_released(&self, browser: crate::CefBrowser, frame: crate::CefFrame, context: crate::v8::CefV8Context) ;
 
-        fn on_uncaught_exception(&self, browser: crate::CefBrowser, frame: crate::frame::CefFrame, context: crate::v8::CefV8Context, exception: crate::v8::V8Excepction, stack_trace: crate::v8::V8StackTrace);
+        fn on_uncaught_exception(&self, browser: crate::CefBrowser, frame: crate::CefFrame, context: crate::v8::CefV8Context, exception: crate::v8::V8Excepction, stack_trace: crate::v8::V8StackTrace);
 
         // fn on_focused_node_changed(&self, browser: *mut _cef_browser_t, frame: *mut _cef_frame_t, node: *mut _cef_domnode_t);
 
-        fn on_process_message_received(&self, browser: crate::CefBrowser, frame: crate::frame::CefFrame, source_process: crate::CefProcessId, message: crate::ProcessMessage) -> bool;
+        fn on_process_message_received(&self, browser: crate::CefBrowser, frame: crate::CefFrame, source_process: crate::CefProcessId, message: crate::ProcessMessage) -> bool;
     }
 }
 

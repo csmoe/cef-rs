@@ -23,12 +23,12 @@ pub trait CefClient: Sized {
     }
 
     /// See [cef_client_t::get_request_handler]
-    fn get_dialog_handler(&self) -> Option<DialogHandler> {
+    fn get_dialog_handler<I: DialogHandler>(&self) -> Option<I> {
         None
     }
 
     /// See [cef_client_t::get_display_handler]
-    fn get_display_handler(&self) -> Option<DisplayHandler> {
+    fn get_display_handler<I: DisplayHandler>(&self) -> Option<I> {
         None
     }
 
@@ -118,10 +118,10 @@ pub trait CefClient: Sized {
         object.get_focus_handler = Some(get_focus_handler::<Self>);
         object.get_frame_handler = Some(get_frame_handler::<Self>);
         object.get_print_handler = Some(get_print_handler::<Self>);
-        object.get_dialog_handler = Some(get_dialog_handler::<Self>);
+        //object.get_dialog_handler = Some(get_dialog_handler::<Self>);
         object.get_render_handler = Some(get_render_handler::<Self>);
         object.get_command_handler = Some(get_command_handler::<Self>);
-        object.get_display_handler = Some(get_display_handler::<Self>);
+        //object.get_display_handler = Some(get_display_handler::<Self>);
         object.get_request_handler = Some(get_request_handler::<Self>);
         object.get_download_handler = Some(get_download_handler::<Self>);
         object.get_permission_handler = Some(get_permission_handler::<Self>);
@@ -143,8 +143,8 @@ pub struct ClientBuilder<
     Audio: AudioCallback,
     Command: CommandCallback,
     ContextMenu: ContextMenuCallback,
-    Dialog: DialogCallback,
-    Display: DisplayCallback,
+    Dialog: DialogHandler,
+    Display: DisplayHandler,
     Download: DownloadCallback,
     Drag: DragCallback,
     Find: FindCallback,
@@ -179,8 +179,8 @@ impl<
         Audio: AudioCallback,
         Command: CommandCallback,
         ContextMenu: ContextMenuCallback,
-        Dialog: DialogCallback,
-        Display: DisplayCallback,
+        Dialog: DialogHandler,
+        Display: DisplayHandler,
         Download: DownloadCallback,
         Drag: DragCallback,
         Find: FindCallback,
@@ -386,6 +386,7 @@ pub(crate) unsafe extern "C" fn get_context_menu_handler<I: CefClient>(
         .unwrap_or(core::ptr::null_mut())
 }
 
+/*
 pub(crate) unsafe extern "C" fn get_dialog_handler<I: CefClient>(
     self_: *mut cef_sys::cef_client_t,
 ) -> *mut cef_sys::cef_dialog_handler_t {
@@ -405,6 +406,7 @@ pub(crate) unsafe extern "C" fn get_display_handler<I: CefClient>(
         .map(|h| h.into_raw())
         .unwrap_or(core::ptr::null_mut())
 }
+*/
 
 pub(crate) unsafe extern "C" fn get_download_handler<I: CefClient>(
     self_: *mut cef_sys::cef_client_t,

@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use crate::{frame::CefFrame, CefBrowser};
+use crate::{CefBrowser, CefFrame};
 
 #[doc = "See [cef_frame_handler_t] for more docs."]
 #[derive(Debug, Clone)]

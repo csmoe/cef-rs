@@ -45,10 +45,10 @@ impl CefV8Context {
         }
 
         /// See [cef_v8context_t::get_frame].
-        fn get_frame(&self) -> crate::browser::frame::CefFrame {
+        fn get_frame(&self) -> crate::CefFrame {
             self.0.get_frame.and_then(|f| unsafe {
                 let v = f(self.0.get_this());
-                if v.is_null() { None } else { Some(crate::browser::frame::CefFrame::from_raw(v)) }
+                if v.is_null() { None } else { Some(crate::CefFrame::from_raw(v)) }
             })
         }
 

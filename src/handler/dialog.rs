@@ -1,8 +1,5 @@
 use crate::prelude::*;
+use core::ffi::c_void;
 
-#[doc = "See [cef_dialog_handler_t] for more docs."]
-#[derive(Debug, Clone)]
-#[wrapper]
-pub struct DialogHandler(cef_dialog_handler_t);
-
-pub trait DialogCallback {}
+/// See [cef_dialog_handler_t] for more docs.
+pub trait DialogHandler: Send + Sync {}
