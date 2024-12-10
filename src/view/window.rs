@@ -137,11 +137,10 @@ impl CefWindow {
         fn is_fullscreen(&self) -> bool;
         /// See [cef_window_t::set_title]
         fn set_title(&mut self, title: &str) {
-            let cef_string = CefString::from(title);
             unsafe {
                 self.0
                     .set_title
-                    .map(|f| f(self.0.get_this(), std::ptr::from_ref(&cef_string.as_raw())))
+                    .map(|f| f(self.0.get_this(), &CefString::from(title).as_raw()))
             }
         }
         /// See [cef_window_t::get_title]

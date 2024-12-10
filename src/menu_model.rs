@@ -35,46 +35,29 @@ impl CefMenuModel {
 
         /// See [cef_menu_model_t::add_item]
         fn add_item(&mut self, command_id: i32, label: CefString) -> bool {
-            self.0.add_item.map(|f| unsafe {
-                f(
-                    self.0.get_this(),
-                    command_id,
-                    std::ptr::from_ref(&label.as_raw()),
-                ) == 1
-            })
+            self.0
+                .add_item
+                .map(|f| unsafe { f(self.0.get_this(), command_id, &label.as_raw()) == 1 })
         }
 
         /// See [cef_menu_model_t::add_check_item]
         fn add_check_item(&mut self, command_id: i32, label: CefString) -> bool {
-            self.0.add_check_item.map(|f| unsafe {
-                f(
-                    self.0.get_this(),
-                    command_id,
-                    std::ptr::from_ref(&label.as_raw()),
-                ) == 1
-            })
+            self.0
+                .add_check_item
+                .map(|f| unsafe { f(self.0.get_this(), command_id, &label.as_raw()) == 1 })
         }
 
         /// See [cef_menu_model_t::add_radio_item]
         fn add_radio_item(&mut self, command_id: i32, label: CefString, group_id: i32) -> bool {
             self.0.add_radio_item.map(|f| unsafe {
-                f(
-                    self.0.get_this(),
-                    command_id,
-                    std::ptr::from_ref(&label.as_raw()),
-                    group_id,
-                ) == 1
+                f(self.0.get_this(), command_id, &label.as_raw(), group_id) == 1
             })
         }
 
         /// See [cef_menu_model_t::add_sub_menu]
         fn add_sub_menu(&mut self, command_id: i32, label: CefString) -> CefMenuModel {
             self.0.add_sub_menu.and_then(|f| unsafe {
-                let m = f(
-                    self.0.get_this(),
-                    command_id,
-                    std::ptr::from_ref(&label.as_raw()),
-                );
+                let m = f(self.0.get_this(), command_id, &label.as_raw());
                 if m.is_null() {
                     None
                 } else {
@@ -88,14 +71,9 @@ impl CefMenuModel {
 
         /// See [cef_menu_model_t::insert_item_at]
         fn insert_item_at(&mut self, index: usize, command_id: i32, label: CefString) -> bool {
-            self.0.insert_item_at.map(|f| unsafe {
-                f(
-                    self.0.get_this(),
-                    index,
-                    command_id,
-                    std::ptr::from_ref(&label.as_raw()),
-                ) == 1
-            })
+            self.0
+                .insert_item_at
+                .map(|f| unsafe { f(self.0.get_this(), index, command_id, &label.as_raw()) == 1 })
         }
 
         /// See [cef_menu_model_t::insert_check_item_at]
@@ -105,14 +83,9 @@ impl CefMenuModel {
             command_id: i32,
             label: CefString,
         ) -> bool {
-            self.0.insert_check_item_at.map(|f| unsafe {
-                f(
-                    self.0.get_this(),
-                    index,
-                    command_id,
-                    std::ptr::from_ref(&label.as_raw()),
-                ) == 1
-            })
+            self.0
+                .insert_check_item_at
+                .map(|f| unsafe { f(self.0.get_this(), index, command_id, &label.as_raw()) == 1 })
         }
 
         /// See [cef_menu_model_t::insert_radio_item_at]
@@ -128,7 +101,7 @@ impl CefMenuModel {
                     self.0.get_this(),
                     index,
                     command_id,
-                    std::ptr::from_ref(&label.as_raw()),
+                    &label.as_raw(),
                     group_id,
                 ) == 1
             })
@@ -142,12 +115,7 @@ impl CefMenuModel {
             label: CefString,
         ) -> CefMenuModel {
             self.0.insert_sub_menu_at.and_then(|f| unsafe {
-                let m = f(
-                    self.0.get_this(),
-                    index,
-                    command_id,
-                    std::ptr::from_ref(&label.as_raw()),
-                );
+                let m = f(self.0.get_this(), index, command_id, &label.as_raw());
                 if m.is_null() {
                     None
                 } else {
@@ -187,24 +155,16 @@ impl CefMenuModel {
 
         /// See [cef_menu_model_t::set_label]
         fn set_label(&mut self, command_id: i32, label: CefString) -> bool {
-            self.0.set_label.map(|f| unsafe {
-                f(
-                    self.0.get_this(),
-                    command_id,
-                    std::ptr::from_ref(&label.as_raw()),
-                ) == 1
-            })
+            self.0
+                .set_label
+                .map(|f| unsafe { f(self.0.get_this(), command_id, &label.as_raw()) == 1 })
         }
 
         /// See [cef_menu_model_t::set_label_at]
         fn set_label_at(&mut self, index: usize, label: CefString) -> bool {
-            self.0.set_label_at.map(|f| unsafe {
-                f(
-                    self.0.get_this(),
-                    index,
-                    std::ptr::from_ref(&label.as_raw()),
-                ) == 1
-            })
+            self.0
+                .set_label_at
+                .map(|f| unsafe { f(self.0.get_this(), index, &label.as_raw()) == 1 })
         }
 
         /// See [cef_menu_model_t::get_type]
@@ -373,24 +333,16 @@ impl CefMenuModel {
 
         /// See [cef_menu_model_t::set_font_list]
         fn set_font_list(&mut self, command_id: i32, font_list: CefString) -> bool {
-            self.0.set_font_list.map(|f| unsafe {
-                f(
-                    self.0.get_this(),
-                    command_id,
-                    std::ptr::from_ref(&font_list.as_raw()),
-                ) == 1
-            })
+            self.0
+                .set_font_list
+                .map(|f| unsafe { f(self.0.get_this(), command_id, &font_list.as_raw()) == 1 })
         }
 
         /// See [cef_menu_model_t::set_font_list_at]
         fn set_font_list_at(&mut self, index: i32, font_list: CefString) -> bool {
-            self.0.set_font_list_at.map(|f| unsafe {
-                f(
-                    self.0.get_this(),
-                    index,
-                    std::ptr::from_ref(&font_list.as_raw()),
-                ) == 1
-            })
+            self.0
+                .set_font_list_at
+                .map(|f| unsafe { f(self.0.get_this(), index, &font_list.as_raw()) == 1 })
         }
     );
 }

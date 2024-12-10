@@ -130,12 +130,9 @@ impl CefValue {
 
         /// See [cef_value_t::set_string]
         fn set_string(&self, value: &str) -> bool {
-            self.0.set_string.map(|f| unsafe {
-                f(
-                    self.0.get_this(),
-                    std::ptr::from_ref(&<_ as Into<CefString>>::into(value).as_raw()),
-                ) == 1
-            })
+            self.0
+                .set_string
+                .map(|f| unsafe { f(self.0.get_this(), &CefString::from(value).as_raw()) == 1 })
         }
 
         /// See [cef_value_t::set_binary]

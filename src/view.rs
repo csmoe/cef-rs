@@ -139,7 +139,7 @@ impl CefView {
         fn set_bounds(&mut self, bounds: &CefRect) {
             self.0
                 .set_bounds
-                .map(|f| unsafe { f(self.0.get_this(), std::ptr::from_ref(bounds)) })
+                .map(|f| unsafe { f(self.0.get_this(), bounds) })
         }
 
         /// See [cef_view_t::get_size]
@@ -148,7 +148,7 @@ impl CefView {
         fn set_size(&mut self, size: &CefSize) {
             self.0
                 .set_size
-                .map(|f| unsafe { f(self.0.get_this(), std::ptr::from_ref(size)) })
+                .map(|f| unsafe { f(self.0.get_this(), size) })
         }
 
         /// See [cef_view_t::get_position]
@@ -157,14 +157,14 @@ impl CefView {
         fn set_position(&mut self, position: &crate::CefPoint) {
             self.0
                 .set_position
-                .map(|f| unsafe { f(self.0.get_this(), std::ptr::from_ref(position)) })
+                .map(|f| unsafe { f(self.0.get_this(), position) })
         }
 
         /// See [cef_view_t::set_insets]
         fn set_insets(&mut self, inset: &crate::CefInsets) {
             self.0
                 .set_insets
-                .map(|f| unsafe { f(self.0.get_this(), std::ptr::from_ref(inset)) })
+                .map(|f| unsafe { f(self.0.get_this(), inset) })
         }
         /// See [cef_view_t::get_insets]
         fn get_insets(&self) -> crate::CefInsets;

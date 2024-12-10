@@ -322,14 +322,14 @@ impl V8Value {
         /// See [cef_v8value_t::has_value_bykey].
         fn has_value_bykey(&self, key: &str) -> bool {
             if !self.is_valid().unwrap_or_default() { return None; }
-            self.0.has_value_bykey.map(|f| unsafe { f(self.0.get_this(), std::ptr::from_ref(&CefString::from(key).as_raw())) == 1 })
+            self.0.has_value_bykey.map(|f| unsafe { f(self.0.get_this(), &CefString::from(key).as_raw()) == 1 })
         }
 
         /// See [cef_v8value_t::get_value_bykey].
         fn get_value_bykey(&self, key: &str) -> Self {
             if !self.is_valid().unwrap_or_default() { return None; }
             self.0.get_value_bykey.and_then(|f| unsafe {
-                let v = f(self.0.get_this(), std::ptr::from_ref(&CefString::from(key).as_raw()));
+                let v = f(self.0.get_this(), &CefString::from(key).as_raw());
                 if v.is_null() { None } else { V8Value::from_raw(v).into() }
             })
         }
@@ -338,7 +338,7 @@ impl V8Value {
         fn set_value_bykey(&self, key: &str, value: Self, attribute: crate::CefV8PropertyAttribute) {
             if !self.is_valid().unwrap_or_default() { return None; }
             self.0.set_value_bykey.map(|f| unsafe {
-                f(self.0.get_this(), std::ptr::from_ref(&CefString::from(key).as_raw()), value.into_raw(), attribute as _);
+                f(self.0.get_this(), &CefString::from(key).as_raw(), value.into_raw(), attribute as _);
             })
         }
 
@@ -360,7 +360,7 @@ impl V8Value {
         /// See [cef_v8value_t::set_value_byaccessor].
         fn set_value_byaccessor(&self, key: &str,  attribute: crate::CefV8PropertyAttribute) {
             if !self.is_valid().unwrap_or_default() { return None; }
-            self.0.set_value_byaccessor.map(|f| unsafe { f(self.0.get_this(), std::ptr::from_ref(&CefString::from(key).as_raw()),  attribute as _); })
+            self.0.set_value_byaccessor.map(|f| unsafe { f(self.0.get_this(), &CefString::from(key).as_raw(),  attribute as _); })
         }
 
         /// See [cef_v8value_t::execute_function].
@@ -392,7 +392,7 @@ impl V8Value {
         /// See [cef_v8value_t::reject_promise].
         fn reject_promise(&self, err: &str) -> bool {
             if !self.is_valid().unwrap_or_default() { return None; }
-            self.0.reject_promise.map(|f| unsafe { f(self.0.get_this(), std::ptr::from_ref(&CefString::from(err).as_raw())) == 1 })
+            self.0.reject_promise.map(|f| unsafe { f(self.0.get_this(), &CefString::from(err).as_raw()) == 1 })
         }
 
     }

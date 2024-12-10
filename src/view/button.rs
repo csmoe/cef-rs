@@ -55,7 +55,7 @@ impl CefMenuButton {
                 f(
                     self.0.get_this(),
                     menu_model.into_raw(),
-                    std::ptr::from_ref(&screen_point),
+                    screen_point,
                     anchor_position,
                 )
             })

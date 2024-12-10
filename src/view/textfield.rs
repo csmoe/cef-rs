@@ -89,7 +89,7 @@ impl CefTextField {
         fn select_range(&mut self, range: CefRange) {
             self.0
                 .select_range
-                .map(|f| unsafe { f(self.0.get_this(), std::ptr::from_ref(&range)) })
+                .map(|f| unsafe { f(self.0.get_this(), &range) })
         }
         /// See [cef_textfield_t::get_cursor_position]
         fn get_cursor_position(&self) -> usize;
@@ -115,18 +115,13 @@ impl CefTextField {
         fn apply_text_color(&mut self, color: u32, range: CefRange) {
             self.0
                 .apply_text_color
-                .map(|f| unsafe { f(self.0.get_this(), color, std::ptr::from_ref(&range)) })
+                .map(|f| unsafe { f(self.0.get_this(), color, &range) })
         }
         /// See [cef_textfield_t::apply_text_style]
         fn apply_text_style(&mut self, style: CefTextStyle, add: bool, range: CefRange) {
-            self.0.apply_text_style.map(|f| unsafe {
-                f(
-                    self.0.get_this(),
-                    style,
-                    add as i32,
-                    std::ptr::from_ref(&range),
-                )
-            })
+            self.0
+                .apply_text_style
+                .map(|f| unsafe { f(self.0.get_this(), style, add as i32, &range) })
         }
         /// See [cef_textfield_t::is_command_enabled]
         fn is_command_enabled(&self, command_id: CefTextFieldCommands) -> bool;

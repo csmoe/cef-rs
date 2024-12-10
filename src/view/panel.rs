@@ -43,7 +43,7 @@ impl CefPanel {
             settings: crate::CefBoxLayoutSettings,
         ) -> crate::CefBoxLayout {
             self.0.set_to_box_layout.and_then(|f| unsafe {
-                let v = f(self.0.get_this(), std::ptr::from_ref(&settings.into_raw()));
+                let v = f(self.0.get_this(), &settings.into_raw());
                 if v.is_null() {
                     None
                 } else {

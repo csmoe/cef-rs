@@ -152,11 +152,7 @@ impl CefListValue {
         /// See [cef_list_value_t::set_string]
         fn set_string(&self, index: usize, value: &str) -> bool {
             self.0.set_string.map(|f| unsafe {
-                f(
-                    self.0.get_this(),
-                    index,
-                    std::ptr::from_ref(&<_ as Into<CefString>>::into(value).as_raw()),
-                ) == 1
+                f(self.0.get_this(), index, &CefString::from(value).as_raw()) == 1
             })
         }
 

@@ -126,6 +126,11 @@ pub fn shutdown() {
     unsafe { cef_shutdown() }
 }
 
+/// See [cef_do_message_loop_work] for more documentation.
+pub fn do_message_loop_work() {
+    unsafe { cef_do_message_loop_work() }
+}
+
 #[derive(Debug, Clone)]
 #[wrapper]
 /// See [cef_render_process_handler_t] for more documentation.
