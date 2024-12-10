@@ -153,3 +153,106 @@ impl CefBrowser {
         unsafe { CefBrowserView::from_raw(cef_browser_view_get_for_browser(self.0.get_this())) }
     }
 }
+
+#[derive(Debug, Clone)]
+#[wrapper]
+/// See [cef_browser_host_t] for more documentation.
+pub struct CefBrowserHost(cef_browser_host_t);
+
+impl CefBrowser {
+    wrapper_methods! {
+        /// See [cef_browser_t::is_valid]
+        fn is_valid(&self) -> bool;
+
+        /// See [cef_browser_t::get_host]
+        fn get_host(&self) -> CefBrowserHost {
+            self.0.get_host.map(|f| unsafe {
+                CefBrowserHost::from_raw(f(self.0.get_this()))
+            })
+        }
+
+        /// See [cef_browser_t::can_go_back]
+        fn can_go_back(&self) -> bool ;
+
+        /// See [cef_browser_t::go_back]
+        fn go_back(&mut self) ;
+
+        /// See [cef_browser_t::can_go_forward]
+        fn can_go_forward(&self) -> bool ;
+
+        /// See [cef_browser_t::go_forward]
+        fn go_forward(&mut self);
+
+        /// See [cef_browser_t::is_loading]
+        fn is_loading(&self) -> bool ;
+        /// See [cef_browser_t::reload]
+        fn reload(&mut self);
+
+        /// See [cef_browser_t::reload_ignore_cache]
+        fn reload_ignore_cache(&self) ;
+
+        /// See [cef_browser_t::stop_load]
+        fn stop_load(&self) ;
+
+        /// See [cef_browser_t::get_identifier]
+        fn get_identifier(&self) -> i32 ;
+
+        /// See [cef_browser_t::is_same]
+        fn is_same(&self, that: CefBrowser) -> bool ;
+        /// See [cef_browser_t::is_popup]
+        fn is_popup(&self) -> bool ;
+        /// See [cef_browser_t::has_document]
+        fn has_document(&self) -> bool ;
+        /// See [cef_browser_t::get_main_frame]
+        fn get_main_frame(&self) -> CefFrame {
+            self.0.get_main_frame.map(|f| unsafe {
+                CefFrame::from_raw(f(self.0.get_this()))
+            })
+        }
+
+        /// See [cef_browser_t::get_focused_frame]
+        fn get_focused_frame(&self) -> CefFrame {
+            self.0.get_focused_frame.map(|f| unsafe {
+                CefFrame::from_raw(f(self.0.get_this()))
+            })
+        }
+
+        /// See [cef_browser_t::get_frame_by_identifier]
+        fn get_frame_by_identifier(&self, identifier: &str) -> CefFrame {
+            self.0.get_frame_by_identifier.map(|f| unsafe {
+                CefFrame::from_raw(f(self.0.get_this(),&CefString::from(identifier).as_raw()))
+            })
+        }
+
+        /// See [cef_browser_t::get_frame_by_name]
+        fn get_frame_by_name(&self, name: &str) -> CefFrame {
+            self.0.get_frame_by_name.map(|f| unsafe {
+                CefFrame::from_raw(f(self.0.get_this(), &CefString::from(name).as_raw()))
+            })
+        }
+
+        /// See [cef_browser_t::get_frame_count]
+        fn get_frame_count(&self) -> usize ;
+        /// See [cef_browser_t::get_frame_identifiers]
+        fn get_frame_identifiers(&self) -> Vec<CefString> {
+            if let Some(f) = self.0.get_frame_identifiers {
+                let list = std::ptr::null_mut();
+                unsafe {
+                    f(self.0.get_this(), list);
+                    crate::string::parse_string_list(list).into()
+                }
+            } else { None }
+        }
+
+        /// See [cef_browser_t::get_frame_names]
+        fn get_frame_names(&self) -> Vec<CefString> {
+            if let Some(f) = self.0.get_frame_names {
+                let list = std::ptr::null_mut();
+                unsafe {
+                    f(self.0.get_this(), list);
+                    crate::string::parse_string_list(list).into()
+                }
+            } else { None }
+        }
+    }
+}
