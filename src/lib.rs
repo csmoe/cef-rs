@@ -25,6 +25,7 @@ mod view;
 pub use app::*;
 pub use args::*;
 pub use browser::*;
+pub use cef_sys as sys;
 pub use client::*;
 pub use command_line::*;
 pub use handler::*;

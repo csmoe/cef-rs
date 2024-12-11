@@ -55,7 +55,7 @@ pub trait CefLifeSpanHandler: Sized {
         user_gesture: bool,
         popup_features: &CefPopupFeatures,
         window_info: Option<CefWindowInfo>,
-        client: &mut *mut _cef_client_t,
+        client: &mut *mut cef_client_t,
         settings: Option<CefBrowserSettings>,
         extra_info: Option<CefDictionaryValue>,
         no_javascript_access: &mut bool,
