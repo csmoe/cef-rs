@@ -26,10 +26,10 @@ pub struct CefWindowInfo {
     pub hidden: bool,
     #[cfg(target_os = "macos")]
     /// See [cef_window_info_t::parent_view]
-    pub parent_view: Option<objc2_app_kit::NSView>,
+    pub parent_view: Option<objc2::rc::Retained<objc2_app_kit::NSView>>,
     #[cfg(target_os = "macos")]
     /// See [cef_window_info_t::view]
-    pub view: Option<objc2_app_kit::NSView>,
+    pub view: Option<objc2::rc::Retained<objc2_app_kit::NSView>>,
     /// See [cef_window_info_t::runtime_style]
     pub runtime_style: cef_sys::cef_runtime_style_t,
     #[cfg(windows)]
@@ -87,6 +87,65 @@ impl CefWindowInfo {
             #[cfg(any(windows, target_os = "linux"))]
             window: self.window.0.cast(),
         }
+    }
+
+    pub unsafe fn from_raw(raw: *mut cef_window_info_t) -> Option<Self> {
+        if raw.is_null() {
+            return None;
+        };
+        let cef_window_info_t {
+            window_name,
+            bounds,
+            #[cfg(target_os = "macos")]
+            hidden,
+            #[cfg(target_os = "macos")]
+            parent_view,
+            windowless_rendering_enabled,
+            shared_texture_enabled,
+            external_begin_frame_enabled,
+            #[cfg(target_os = "macos")]
+            view,
+            runtime_style,
+            #[cfg(windows)]
+            menu,
+            #[cfg(windows)]
+            ex_style,
+            #[cfg(windows)]
+            style,
+            #[cfg(any(windows, target_os = "linux"))]
+            parent_window,
+            #[cfg(any(windows, target_os = "linux"))]
+            window,
+        } = *raw;
+        let windown_info = Self {
+            window_name: CefString::from_raw(&window_name).unwrap_or_default(),
+            bounds,
+            #[cfg(target_os = "macos")]
+            hidden: hidden == 1,
+            #[cfg(target_os = "macos")]
+            parent_view: objc2::rc::Id::retain(parent_view.cast() as _),
+            windowless_rendering_enabled: windowless_rendering_enabled == 1,
+            shared_texture_enabled: shared_texture_enabled == 1,
+            external_begin_frame_enabled: external_begin_frame_enabled == 1,
+            #[cfg(target_os = "macos")]
+            view: objc2::rc::Id::retain(view.cast() as _),
+            runtime_style,
+            #[cfg(windows)]
+            menu: windows::Win32::UI::WindowsAndMessaging::HMENU(menu.cast()),
+            #[cfg(windows)]
+            ex_style,
+            #[cfg(windows)]
+            style,
+            #[cfg(windows)]
+            parent_window: windows::Win32::Foundation::HWND(parent_window.cast()),
+            #[cfg(target_os = "linux")]
+            parent_window: parent_window.cast(),
+            #[cfg(windows)]
+            window: windows::Win32::Foundation::HWND(window.cast()),
+            #[cfg(target_os = "linux")]
+            window: window.cast(),
+        };
+        Some(windown_info)
     }
 }
 

@@ -68,6 +68,7 @@ windows = { version = "0.58", features = [ "Win32_Foundation", "Win32_System_Lib
 
 [target.'cfg(target_os = "macos")'.dependencies]
 objc2-app-kit = { version = "0.2", features = [ "NSView", "NSResponder" ]}
+objc2 = "0.5"
 
 [dev-dependencies]
 winit = "0.28"

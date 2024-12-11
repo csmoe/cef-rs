@@ -1,4 +1,4 @@
-use crate::{prelude::*, CefPopupFeatures};
+use crate::{prelude::*, CefPopupFeatures, CefWindowInfo};
 use crate::{string::CefString, CefBrowser};
 
 /// See [cef_life_span_handler_t] for more docs.
@@ -51,7 +51,7 @@ pub trait CefLifeSpanHandler: Sized {
         target_disposition: cef_window_open_disposition_t,
         user_gesture: bool,
         popup_features: &CefPopupFeatures,
-        window_info: &mut _cef_window_info_t,
+        window_info: Option<CefWindowInfo>,
         client: &mut *mut _cef_client_t,
         settings: &mut _cef_browser_settings_t,
         extra_info: &mut *mut _cef_dictionary_value_t,
@@ -109,7 +109,7 @@ pub trait CefLifeSpanHandler: Sized {
             let target_frame_name = crate::CefString::from_raw(target_frame_name);
             let user_gesture = user_gesture != 0;
             let popup_features = &*popup_features;
-            let window_info = &mut *window_info;
+            let window_info = CefWindowInfo::from_raw(window_info);
             let client = &mut *client;
             let settings = &mut *settings;
             let extra_info = &mut *extra_info;

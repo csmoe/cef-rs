@@ -384,4 +384,9 @@ pub trait CefRenderHandler: Sized {
     }
 }
 
-impl CefRenderHandler for () {}
+impl CefRenderHandler for () {
+    #[doc(hidden)]
+    fn into_raw(self) -> *mut cef_render_handler_t {
+        std::ptr::null_mut()
+    }
+}
