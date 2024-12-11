@@ -1,4 +1,7 @@
-use crate::{prelude::*, CefPopupFeatures, CefWindowInfo};
+use crate::{
+    prelude::*, CefBrowserSettings, CefDictionaryValue, CefPopupFeatures, CefSettings,
+    CefWindowInfo, CefWindowOpenDisposition,
+};
 use crate::{string::CefString, CefBrowser};
 
 /// See [cef_life_span_handler_t] for more docs.
@@ -48,13 +51,13 @@ pub trait CefLifeSpanHandler: Sized {
         frame: crate::CefFrame,
         target_url: Option<CefString>,
         target_frame_name: Option<CefString>,
-        target_disposition: cef_window_open_disposition_t,
+        target_disposition: CefWindowOpenDisposition,
         user_gesture: bool,
         popup_features: &CefPopupFeatures,
         window_info: Option<CefWindowInfo>,
         client: &mut *mut _cef_client_t,
-        settings: &mut _cef_browser_settings_t,
-        extra_info: &mut *mut _cef_dictionary_value_t,
+        settings: Option<CefBrowserSettings>,
+        extra_info: Option<CefDictionaryValue>,
         no_javascript_access: &mut bool,
     ) -> bool {
         false
@@ -111,8 +114,16 @@ pub trait CefLifeSpanHandler: Sized {
             let popup_features = &*popup_features;
             let window_info = CefWindowInfo::from_raw(window_info);
             let client = &mut *client;
-            let settings = &mut *settings;
-            let extra_info = &mut *extra_info;
+            let settings = if settings.is_null() {
+                None
+            } else {
+                CefBrowserSettings::from_raw(*settings).into()
+            };
+            let extra_info = if extra_info.is_null() {
+                None
+            } else {
+                CefDictionaryValue::from_raw(*extra_info).into()
+            };
             let mut no_js_access = *no_javascript_access != 0;
 
             let result = object.interface.on_before_popup(

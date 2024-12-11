@@ -16,31 +16,57 @@ pub use frame::*;
 pub struct CefBrowserSettings {
     /// See [cef_browser_settings_t::windowless_frame_rate]
     pub windowless_frame_rate: usize,
-    pub standard_font_family: CefString,
-    pub fixed_font_family: CefString,
-    pub serif_font_family: CefString,
-    pub sans_serif_font_family: CefString,
-    pub cursive_font_family: CefString,
-    pub fantasy_font_family: CefString,
+    /// See [cef_browser_settings_t::standard_font_family]
+    pub standard_font_family: Option<CefString>,
+    /// See [cef_browser_settings_t::fixed_font_family]
+    pub fixed_font_family: Option<CefString>,
+    /// See [cef_browser_settings_t::serif_font_family]
+    pub serif_font_family: Option<CefString>,
+    /// See [cef_browser_settings_t::sans_serif_font_family]
+    pub sans_serif_font_family: Option<CefString>,
+    /// See [cef_browser_settings_t::cursive_font_family]
+    pub cursive_font_family: Option<CefString>,
+    /// See [cef_browser_settings_t::fantasy_font_family]
+    pub fantasy_font_family: Option<CefString>,
+    /// See [cef_browser_settings_t::default_font_size]
     pub default_font_size: u32,
+    /// See [cef_browser_settings_t::default_fixed_font_size]
     pub default_fixed_font_size: u32,
+    /// See [cef_browser_settings_t::minimum_font_size]
     pub minimum_font_size: u32,
+    /// See [cef_browser_settings_t::minimum_logical_font_size]
     pub minimum_logical_font_size: u32,
-    pub default_encoding: CefString,
+    /// See [cef_browser_settings_t::default_encoding]
+    pub default_encoding: Option<CefString>,
+    /// See [cef_browser_settings_t::remote_fonts]
     pub remote_fonts: CefState,
+    /// See [cef_browser_settings_t::javascript]
     pub javascript: CefState,
+    /// See [cef_browser_settings_t::javascript_close_windows]
     pub javascript_close_windows: CefState,
+    /// See [cef_browser_settings_t::javascript_access_clipboard]
     pub javascript_access_clipboard: CefState,
+    /// See [cef_browser_settings_t::javascript_dom_paste]
     pub javascript_dom_paste: CefState,
+    /// See [cef_browser_settings_t::image_loading]
     pub image_loading: CefState,
+    /// See [cef_browser_settings_t::image_shrink_standalone_to_fit]
     pub image_shrink_standalone_to_fit: CefState,
+    /// See [cef_browser_settings_t::text_area_resize]
     pub text_area_resize: CefState,
+    /// See [cef_browser_settings_t::tab_to_links]
     pub tab_to_links: CefState,
+    /// See [cef_browser_settings_t::local_storage]
     pub local_storage: CefState,
+    /// See [cef_browser_settings_t::databases]
     pub databases: CefState,
+    /// See [cef_browser_settings_t::webgl]
     pub webgl: CefState,
+    /// See [cef_browser_settings_t::background_color]
     pub background_color: u32,
+    /// See [cef_browser_settings_t::chrome_zoom_bubble]
     pub chrome_zoom_bubble: CefState,
+    /// See [cef_browser_settings_t::chrome_status_bubble]
     pub chrome_status_bubble: CefState,
 }
 
@@ -87,17 +113,38 @@ impl CefBrowserSettings {
         cef_browser_settings_t {
             size: std::mem::size_of::<cef_browser_settings_t>(),
             windowless_frame_rate: self.windowless_frame_rate as c_int,
-            standard_font_family: self.standard_font_family.as_raw(),
-            fixed_font_family: self.fixed_font_family.as_raw(),
-            serif_font_family: self.serif_font_family.as_raw(),
-            sans_serif_font_family: self.sans_serif_font_family.as_raw(),
-            cursive_font_family: self.cursive_font_family.as_raw(),
-            fantasy_font_family: self.fantasy_font_family.as_raw(),
+            standard_font_family: self
+                .standard_font_family
+                .map(|v| v.as_raw())
+                .unwrap_or_default(),
+            fixed_font_family: self
+                .fixed_font_family
+                .map(|v| v.as_raw())
+                .unwrap_or_default(),
+            serif_font_family: self
+                .serif_font_family
+                .map(|v| v.as_raw())
+                .unwrap_or_default(),
+            sans_serif_font_family: self
+                .sans_serif_font_family
+                .map(|v| v.as_raw())
+                .unwrap_or_default(),
+            cursive_font_family: self
+                .cursive_font_family
+                .map(|v| v.as_raw())
+                .unwrap_or_default(),
+            fantasy_font_family: self
+                .fantasy_font_family
+                .map(|v| v.as_raw())
+                .unwrap_or_default(),
             default_font_size: self.default_font_size as c_int,
             default_fixed_font_size: self.default_fixed_font_size as c_int,
             minimum_font_size: self.minimum_font_size as c_int,
             minimum_logical_font_size: self.minimum_logical_font_size as c_int,
-            default_encoding: self.default_encoding.as_raw(),
+            default_encoding: self
+                .default_encoding
+                .map(|v| v.as_raw())
+                .unwrap_or_default(),
             remote_fonts: self.remote_fonts,
             javascript: self.javascript,
             javascript_close_windows: self.javascript_close_windows,
@@ -113,6 +160,71 @@ impl CefBrowserSettings {
             background_color: self.background_color,
             chrome_zoom_bubble: self.chrome_zoom_bubble,
             chrome_status_bubble: self.chrome_status_bubble,
+        }
+    }
+
+    pub fn from_raw(raw: cef_browser_settings_t) -> CefBrowserSettings {
+        let cef_browser_settings_t {
+            windowless_frame_rate,
+            standard_font_family,
+            fixed_font_family,
+            serif_font_family,
+            sans_serif_font_family,
+            cursive_font_family,
+            fantasy_font_family,
+            default_font_size,
+            default_fixed_font_size,
+            minimum_font_size,
+            minimum_logical_font_size,
+            default_encoding,
+            remote_fonts,
+            javascript,
+            javascript_close_windows,
+            javascript_access_clipboard,
+            javascript_dom_paste,
+            image_loading,
+            image_shrink_standalone_to_fit,
+            text_area_resize,
+            tab_to_links,
+            local_storage,
+            databases,
+            webgl,
+            background_color,
+            chrome_zoom_bubble,
+            chrome_status_bubble,
+            ..
+        } = raw;
+
+        unsafe {
+            CefBrowserSettings {
+                windowless_frame_rate: windowless_frame_rate as usize,
+                standard_font_family: CefString::from_raw(&standard_font_family),
+                fixed_font_family: CefString::from_raw(&fixed_font_family),
+                serif_font_family: CefString::from_raw(&serif_font_family),
+                sans_serif_font_family: CefString::from_raw(&sans_serif_font_family),
+                cursive_font_family: CefString::from_raw(&cursive_font_family),
+                fantasy_font_family: CefString::from_raw(&fantasy_font_family),
+                default_font_size: default_font_size as u32,
+                default_fixed_font_size: default_fixed_font_size as u32,
+                minimum_font_size: minimum_font_size as u32,
+                minimum_logical_font_size: minimum_logical_font_size as u32,
+                default_encoding: CefString::from_raw(&default_encoding),
+                remote_fonts,
+                javascript,
+                javascript_close_windows,
+                javascript_access_clipboard,
+                javascript_dom_paste,
+                image_loading,
+                image_shrink_standalone_to_fit,
+                text_area_resize,
+                tab_to_links,
+                local_storage,
+                databases,
+                webgl,
+                background_color,
+                chrome_zoom_bubble,
+                chrome_status_bubble,
+            }
         }
     }
 }
