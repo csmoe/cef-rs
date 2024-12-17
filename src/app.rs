@@ -190,6 +190,7 @@ pub trait CefRenderProcessHandler: Sized {
 
     // fn on_focused_node_changed(&self, browser: *mut _cef_browser_t, frame: *mut _cef_frame_t, node: *mut _cef_domnode_t);
 
+    /// See [cef_render_process_handler_t::on_process_message_received] for more documentation.
     fn on_process_message_received(
         &self,
         browser: crate::CefBrowser,

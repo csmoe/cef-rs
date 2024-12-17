@@ -15,6 +15,9 @@ impl CefProcessMessage {
 
         /// See [cef_process_message_t::copy]
         fn copy(&self) -> CefProcessMessage {
+            if self.is_valid().unwrap_or_default() {
+                return None;
+            }
             self.0.copy.and_then(|f| unsafe {
                 let v = f(self.0.get_this());
                 if v.is_null() {
@@ -27,6 +30,9 @@ impl CefProcessMessage {
 
         /// See [cef_process_message_t::get_name]
         fn get_name(&self) -> CefString {
+            if self.is_valid().unwrap_or_default() {
+                return None;
+            }
             self.0
                 .get_name
                 .and_then(|f| unsafe { CefString::from_userfree_cef(f(self.0.get_this())) })
@@ -34,6 +40,9 @@ impl CefProcessMessage {
 
         /// See [cef_process_message_t::get_argument_list]
         fn get_argument_list(&self) -> crate::CefListValue {
+            if self.is_valid().unwrap_or_default() {
+                return None;
+            }
             self.0.get_argument_list.and_then(|f| unsafe {
                 let ptr = f(self.0.get_this());
                 if ptr.is_null() {

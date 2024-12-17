@@ -260,7 +260,7 @@ extern "C" fn add_ref<T: FfiRc, I>(this: *mut cef_base_ref_counted_t) {
 extern "C" fn has_one_ref<T: FfiRc, I>(this: *mut cef_base_ref_counted_t) -> i32 {
     let obj = RcImpl::<T, I>::get(this as *mut T);
 
-    if obj.ref_count.load(Ordering::Relaxed) == 1 {
+    if obj.ref_count.load(Ordering::Acquire) == 1 {
         1
     } else {
         0
@@ -280,7 +280,7 @@ extern "C" fn has_at_least_one_ref<T: FfiRc, I>(this: *mut cef_base_ref_counted_
 pub extern "C" fn release<T: FfiRc, I>(this: *mut cef_base_ref_counted_t) -> i32 {
     let obj = RcImpl::<T, I>::get(this as *mut T);
 
-    if obj.ref_count.fetch_sub(1, Ordering::Release) != 1 {
+    if obj.ref_count.fetch_sub(1, Ordering::AcqRel) != 1 {
         0
     } else {
         fence(Ordering::Acquire);
