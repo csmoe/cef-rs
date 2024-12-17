@@ -1,5 +1,7 @@
 #![doc = include_str!("../README.md")]
 
+mod interface;
+
 mod app;
 mod args;
 mod browser;

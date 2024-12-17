@@ -1,7 +1,7 @@
 use crate::prelude::*;
 use crate::{CefBrowser, CefFrame};
 
-#[doc = "See [cef_frame_handler_t] for more docs."]
+/// See [cef_frame_handler_t] for more docs.
 #[derive(Debug, Clone)]
 #[wrapper]
 pub struct CefFrameHandler(cef_frame_handler_t);

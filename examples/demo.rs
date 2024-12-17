@@ -1,17 +1,23 @@
 use cef::{
-    args::CefArgs, client::CefClient, CefApp, CefBrowser, CefBrowserSettings, CefBrowserView,
-    CefSettings, CefString, PanelDelegate, ViewDelegate, WindowDelegate,
+    CefApp, CefArgs, CefBrowser, CefBrowserSettings, CefBrowserView, CefClient, CefSettings,
+    CefString, PanelDelegate, ViewDelegate, WindowDelegate,
 };
 
 #[derive(Debug, Clone, Copy)]
 struct Application;
 
-impl CefApp for Application {}
+impl CefApp for Application {
+    type BrowserProcess = ();
+    type RenderProcess = ();
+}
 
 #[derive(Debug, Copy, Clone)]
 struct DemoClient;
 
-impl CefClient for DemoClient {}
+impl CefClient for DemoClient {
+    type LifeSpan = ();
+    type Render = ();
+}
 
 #[derive(Debug)]
 struct DemoWindow {
@@ -43,7 +49,7 @@ fn main() {
     dbg!(&args);
     let app = Application;
     let mut settings = CefSettings::new();
-    settings.root_cache_path = CefString::from("/tmp/demo");
+    settings.root_cache_path = CefString::from("/tmp/demo").into();
     settings.no_sandbox = true;
     cef::execute_process(&mut args, Some(app)).unwrap();
     cef::initialize(&mut args, &settings, Some(app)).unwrap();

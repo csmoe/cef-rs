@@ -1,6 +1,9 @@
 use std::str::FromStr;
 
-use crate::prelude::*;
+use crate::{
+    interface::{Base, CefInterface},
+    prelude::*,
+};
 
 /// See [cef_command_line_t] for more documentation.
 #[wrapper]

@@ -1,16 +1,20 @@
-use std::ptr::null_mut;
-
-use cef::{args::CefArgs, client::CefClient, CefApp, CefSettings, ViewDelegate, WindowDelegate};
+use cef::{CefApp, CefArgs, CefClient, CefSettings};
 
 #[derive(Debug, Clone, Copy)]
 struct Application;
 
-impl CefApp for Application {}
+impl CefApp for Application {
+    type RenderProcess = ();
+    type BrowserProcess = ();
+}
 
 #[derive(Debug, Copy, Clone)]
 struct DemoClient;
 
-impl CefClient for DemoClient {}
+impl CefClient for DemoClient {
+    type Render = ();
+    type LifeSpan = ();
+}
 
 fn main() {
     let mut args = CefArgs::new(std::env::args());
