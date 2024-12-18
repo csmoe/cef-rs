@@ -79,7 +79,7 @@ pub trait CefApp: Sized {
 
 /// See [cef_execute_process] for more documentation.
 pub fn execute_process<T: CefApp>(args: &mut CefArgs, app: Option<T>) -> Result<()> {
-    let args = args.as_raw();
+    let args = args.as_raw()?;
     let app = app
         .map(|app| app.into_raw())
         .unwrap_or(std::ptr::null_mut());
@@ -102,7 +102,7 @@ pub fn initialize<T: CefApp>(
     settings: &CefSettings,
     app: Option<T>,
 ) -> Result<()> {
-    let args = args.as_raw();
+    let args = args.as_raw()?;
     let settings = settings.as_raw();
     let app = app
         .map(|app| app.into_raw())

@@ -75,8 +75,16 @@ impl CefCommandLine {
 
     wrapper_methods! {
         /// See [cef_command_line_t::init_from_argv]
+        #[cfg(not(target_os = "windows"))]
         fn init_from_argv(&mut self, args: &mut crate::CefArgs) {
-            self.0.init_from_argv.map(|f| unsafe { f(self.0.get_this(), args.as_raw().argc, args.as_raw().argv.cast()) })
+            let Ok(args) = args.as_raw() else { return None };
+            self.0.init_from_argv.map(|f| unsafe { f(self.0.get_this(), args.argc, args.argv.cast()) })
+        }
+
+        #[cfg(target_os = "windows")]
+        fn init_from_string(&mut self, args: &str) {
+            let args = CefString::from(args);
+            self.0.init_from_string.map(|f| unsafe { f(self.0.get_this(), &args.as_raw()) })
         }
 
         /// See [cef_command_line_t::get_command_line_string]

@@ -16,26 +16,26 @@ impl CefArgs {
             args_: Vec::new(),
         }
     }
-    pub(crate) fn as_raw(&mut self) -> cef_sys::cef_main_args_t {
+    pub(crate) fn as_raw(&mut self) -> crate::error::Result<cef_sys::cef_main_args_t> {
         self.args_ = self
             .args
             .by_ref()
             .map(|mut arg| arg.as_mut_ptr())
             .collect::<Vec<_>>();
         #[cfg(target_family = "unix")]
-        return cef_sys::cef_main_args_t {
+        return Ok(cef_sys::cef_main_args_t {
             argc: self.args.len() as _,
             argv: self.args_.as_mut_ptr().cast(),
-        };
+        });
 
-        #[cfg(target_family = "windows")]
+        #[cfg(target_os = "windows")]
         {
             use crate::error::Error;
             use windows::Win32::System::LibraryLoader::GetModuleHandleW;
             let instance = unsafe { GetModuleHandleW(None).map_err(Error::WinOs)? };
-            cef_sys::cef_main_args_t {
+            Ok(cef_sys::cef_main_args_t {
                 instance: instance.0.cast(),
-            }
+            })
         }
     }
 }
