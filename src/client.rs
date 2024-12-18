@@ -1,5 +1,5 @@
 use crate::handler::*;
-use cef_sys::{cef_client_t, cef_frame_t, cef_process_id_t, cef_process_message_t};
+use cef_sys::cef_client_t;
 
 use crate::{rc::RcImpl, CefBrowser};
 
@@ -107,9 +107,9 @@ pub trait CefClient: Sized {
     fn on_process_message_received(
         &self,
         _browser: CefBrowser,
-        _frame: cef_frame_t,
-        _source_process: cef_process_id_t,
-        _message: cef_process_message_t,
+        _frame: crate::CefFrame,
+        _source_process: crate::CefProcessId,
+        _message: crate::CefProcessMessage,
     ) -> bool {
         false
     }

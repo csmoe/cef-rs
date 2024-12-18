@@ -278,7 +278,7 @@ impl CefMenuModel {
         fn remove_accelerator_at(&mut self, index: usize) -> bool;
 
         // See [cef_menu_model_t::get_accelerator]
-        // fn get_accelerator(&self, command_id: i32) -> (i32, bool, bool, bool) ;
+        // fn get_accelerator(&self, command_id: i32) -> (i32, bool, bool, bool);
 
         // See [cef_menu_model_t::get_accelerator_at]
         //fn get_accelerator_at(&self, index: usize) -> (i32, bool, bool, bool);

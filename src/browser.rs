@@ -279,37 +279,37 @@ impl CefBrowser {
         }
 
         /// See [cef_browser_t::can_go_back]
-        fn can_go_back(&self) -> bool ;
+        fn can_go_back(&self) -> bool;
 
         /// See [cef_browser_t::go_back]
-        fn go_back(&mut self) ;
+        fn go_back(&mut self);
 
         /// See [cef_browser_t::can_go_forward]
-        fn can_go_forward(&self) -> bool ;
+        fn can_go_forward(&self) -> bool;
 
         /// See [cef_browser_t::go_forward]
         fn go_forward(&mut self);
 
         /// See [cef_browser_t::is_loading]
-        fn is_loading(&self) -> bool ;
+        fn is_loading(&self) -> bool;
         /// See [cef_browser_t::reload]
         fn reload(&mut self);
 
         /// See [cef_browser_t::reload_ignore_cache]
-        fn reload_ignore_cache(&self) ;
+        fn reload_ignore_cache(&self);
 
         /// See [cef_browser_t::stop_load]
-        fn stop_load(&self) ;
+        fn stop_load(&self);
 
         /// See [cef_browser_t::get_identifier]
-        fn get_identifier(&self) -> i32 ;
+        fn get_identifier(&self) -> i32;
 
         /// See [cef_browser_t::is_same]
-        fn is_same(&self, that: CefBrowser) -> bool ;
+        fn is_same(&self, that: CefBrowser) -> bool;
         /// See [cef_browser_t::is_popup]
-        fn is_popup(&self) -> bool ;
+        fn is_popup(&self) -> bool;
         /// See [cef_browser_t::has_document]
-        fn has_document(&self) -> bool ;
+        fn has_document(&self) -> bool;
         /// See [cef_browser_t::get_main_frame]
         fn get_main_frame(&self) -> CefFrame {
             self.0.get_main_frame.map(|f| unsafe {
@@ -339,7 +339,8 @@ impl CefBrowser {
         }
 
         /// See [cef_browser_t::get_frame_count]
-        fn get_frame_count(&self) -> usize ;
+        fn get_frame_count(&self) -> usize;
+
         /// See [cef_browser_t::get_frame_identifiers]
         fn get_frame_identifiers(&self) -> Vec<CefString> {
             if let Some(f) = self.0.get_frame_identifiers {
