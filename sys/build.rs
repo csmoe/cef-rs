@@ -2,7 +2,11 @@ fn main() {
     build::rerun_if_changed("build.rs");
     let (os, arch) = (build::cargo_cfg_target_os(), build::cargo_cfg_target_arch());
     let var = format!("CEF_PATH_{os}_{arch}");
-    let cef_link_path = std::env::var(&var).map(std::path::PathBuf::from).unwrap();
+    let cef_link_path = std::env::var(&var)
+        .map(std::path::PathBuf::from)
+        .unwrap()
+        .canonicalize()
+        .unwrap();
     match os.as_str() {
         "macos" => {
             build::rustc_link_search_kind("framework", cef_link_path);

@@ -72,4 +72,4 @@ objc2 = "0.5"
 
 [dev-dependencies]
 winit = "0.28"
-
+windows-strings = "*"
