@@ -65,8 +65,8 @@ pub trait DisplayHandler: Sized + Default {
             url: *const cef_string_t,
         ) {
             let object: &crate::rc::RcImpl<_, I> = crate::rc::RcImpl::get(self_);
-            let browser = crate::CefBrowser::from_raw(browser);
-            let frame = crate::CefFrame::from_raw(frame);
+            let browser = crate::CefBrowser::from(browser);
+            let frame = crate::CefFrame::from(frame);
             let url = crate::CefString::from_raw(url).unwrap_or_default();
             object.interface.on_address_change(browser, frame, url);
         }
@@ -77,7 +77,7 @@ pub trait DisplayHandler: Sized + Default {
             title: *const cef_string_t,
         ) {
             let object: &crate::rc::RcImpl<_, I> = crate::rc::RcImpl::get(self_);
-            let browser = crate::CefBrowser::from_raw(browser);
+            let browser = crate::CefBrowser::from(browser);
             let title = crate::CefString::from_raw(title).unwrap_or_default();
             object.interface.on_title_change(browser, title);
         }
@@ -88,7 +88,7 @@ pub trait DisplayHandler: Sized + Default {
             icon_urls: cef_string_list_t,
         ) {
             let object: &crate::rc::RcImpl<_, I> = crate::rc::RcImpl::get(self_);
-            let browser = crate::CefBrowser::from_raw(browser);
+            let browser = crate::CefBrowser::from(browser);
             object.interface.on_favicon_urlchange(browser, icon_urls);
         }
 
@@ -98,7 +98,7 @@ pub trait DisplayHandler: Sized + Default {
             fullscreen: ::std::os::raw::c_int,
         ) {
             let object: &crate::rc::RcImpl<_, I> = crate::rc::RcImpl::get(self_);
-            let browser = crate::CefBrowser::from_raw(browser);
+            let browser = crate::CefBrowser::from(browser);
             object
                 .interface
                 .on_fullscreen_mode_change(browser, fullscreen != 0);
@@ -110,7 +110,7 @@ pub trait DisplayHandler: Sized + Default {
             text: *mut cef_string_t,
         ) -> ::std::os::raw::c_int {
             let object: &crate::rc::RcImpl<_, I> = crate::rc::RcImpl::get(self_);
-            let browser = crate::CefBrowser::from_raw(browser);
+            let browser = crate::CefBrowser::from(browser);
             let text_str = crate::CefString::from_raw(text).unwrap_or_default();
             object.interface.on_tooltip(browser, text_str) as _
         }
@@ -121,7 +121,7 @@ pub trait DisplayHandler: Sized + Default {
             value: *const cef_string_t,
         ) {
             let object: &crate::rc::RcImpl<_, I> = crate::rc::RcImpl::get(self_);
-            let browser = crate::CefBrowser::from_raw(browser);
+            let browser = crate::CefBrowser::from(browser);
             let value = crate::CefString::from_raw(value).unwrap_or_default();
             object.interface.on_status_message(browser, value);
         }
@@ -135,7 +135,7 @@ pub trait DisplayHandler: Sized + Default {
             line: ::std::os::raw::c_int,
         ) -> ::std::os::raw::c_int {
             let object: &crate::rc::RcImpl<_, I> = crate::rc::RcImpl::get(self_);
-            let browser = crate::CefBrowser::from_raw(browser);
+            let browser = crate::CefBrowser::from(browser);
             let message = crate::CefString::from_raw(message).unwrap_or_default();
             let source = crate::CefString::from_raw(source).unwrap_or_default();
             object
@@ -150,7 +150,7 @@ pub trait DisplayHandler: Sized + Default {
             new_size: *const cef_size_t,
         ) -> ::std::os::raw::c_int {
             let object: &crate::rc::RcImpl<_, I> = crate::rc::RcImpl::get(self_);
-            let browser = crate::CefBrowser::from_raw(browser);
+            let browser = crate::CefBrowser::from(browser);
             object.interface.on_auto_resize(browser, &*new_size) as ::std::os::raw::c_int
         }
 
@@ -160,7 +160,7 @@ pub trait DisplayHandler: Sized + Default {
             progress: f64,
         ) {
             let object: &crate::rc::RcImpl<_, I> = crate::rc::RcImpl::get(self_);
-            let browser = crate::CefBrowser::from_raw(browser);
+            let browser = crate::CefBrowser::from(browser);
             object
                 .interface
                 .on_loading_progress_change(browser, progress);
@@ -175,7 +175,7 @@ pub trait DisplayHandler: Sized + Default {
             custom_cursor_info: *const cef_cursor_info_t,
         ) -> ::std::os::raw::c_int {
             let object: &crate::rc::RcImpl<_, I> = crate::rc::RcImpl::get(self_);
-            let browser = crate::CefBrowser::from_raw(browser);
+            let browser = crate::CefBrowser::from(browser);
             object
                 .interface
                 .on_cursor_change(browser, cursor, type_, &*custom_cursor_info) as _
@@ -188,7 +188,7 @@ pub trait DisplayHandler: Sized + Default {
             has_audio_access: ::std::os::raw::c_int,
         ) {
             let object: &crate::rc::RcImpl<_, I> = crate::rc::RcImpl::get(self_);
-            let browser = crate::CefBrowser::from_raw(browser);
+            let browser = crate::CefBrowser::from(browser);
             object.interface.on_media_access_change(
                 browser,
                 has_video_access != 0,

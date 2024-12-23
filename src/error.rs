@@ -13,6 +13,8 @@ pub enum Error {
     CannotCreateBrowser,
     #[error("null ptr")]
     NullPtr,
+    #[error("js call ignored")]
+    IgnoreJsFn,
     #[error("raw: {0:?}")]
     Raw(Option<crate::string::CefString>),
 }

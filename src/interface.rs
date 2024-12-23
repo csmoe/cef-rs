@@ -8,7 +8,7 @@ pub unsafe trait CefInterface: Sized + 'static {
 
     fn as_raw(&self) -> core::ptr::NonNull<Self::VTable>;
 
-    const INNER_SIZE: usize = core::mem::size_of::<Self>();
+    const INNER_SIZE: usize = core::mem::size_of::<Self::VTable>();
 }
 
 #[repr(transparent)]
@@ -26,7 +26,7 @@ impl Base {
         let self_ = unsafe { core::mem::transmute::<_, &Self>(this) };
         let should_release = <_ as BaseImpl>::release(self_);
         if should_release {
-            _ = Box::from_raw(this);
+            _ = Box::from(this);
         }
         should_release as _
     }

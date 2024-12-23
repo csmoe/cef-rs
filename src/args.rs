@@ -28,7 +28,7 @@ impl CefArgs {
             argv: self.args_.as_mut_ptr().cast(),
         });
 
-        #[cfg(target_os = "windows")]
+        #[cfg(target_family = "windows")]
         {
             use crate::error::Error;
             use windows::Win32::System::LibraryLoader::GetModuleHandleW;

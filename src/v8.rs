@@ -8,12 +8,12 @@ pub struct CefV8Context(cef_v8context_t);
 impl CefV8Context {
     /// See [cef_v8context_get_current_context].
     pub fn get_current() -> Self {
-        unsafe { Self::from_raw(cef_v8context_get_current_context()) }
+        unsafe { Self::from(cef_v8context_get_current_context()) }
     }
 
     /// See [cef_v8context_get_entered_context].
     pub fn get_entered() -> Self {
-        unsafe { Self::from_raw(cef_v8context_get_entered_context()) }
+        unsafe { Self::from(cef_v8context_get_entered_context()) }
     }
 
     /// See [cef_v8context_in_context].
@@ -30,25 +30,25 @@ impl CefV8Context {
 
         /// See [cef_v8context_t::get_global].
         fn get_global(&self) -> V8Value {
-            self.0.get_global.and_then(|f| unsafe {
-                let v = f(self.0.get_this());
-                if v.is_null() { None } else { Some(V8Value::from_raw(v)) }
+             get_global.and_then(|f| unsafe {
+                let v = f(self.get_this());
+                if v.is_null() { None } else { Some(V8Value::from(v)) }
             })
         }
 
         /// See [cef_v8context_t::get_browser].
         fn get_browser(&self) -> crate::browser::CefBrowser {
-            self.0.get_browser.and_then(|f| unsafe {
-                let v = f(self.0.get_this());
-                if v.is_null() { None } else { Some(crate::browser::CefBrowser::from_raw(v)) }
+             get_browser.and_then(|f| unsafe {
+                let v = f(self.get_this());
+                if v.is_null() { None } else { Some(crate::browser::CefBrowser::from(v)) }
             })
         }
 
         /// See [cef_v8context_t::get_frame].
         fn get_frame(&self) -> crate::CefFrame {
-            self.0.get_frame.and_then(|f| unsafe {
-                let v = f(self.0.get_this());
-                if v.is_null() { None } else { Some(crate::CefFrame::from_raw(v)) }
+             get_frame.and_then(|f| unsafe {
+                let v = f(self.get_this());
+                if v.is_null() { None } else { Some(crate::CefFrame::from(v)) }
             })
         }
 
@@ -66,10 +66,10 @@ impl CefV8Context {
             retval: &mut V8Value,
             exception: &mut V8Excepction,
         ) -> bool {
-            self.0.eval.map(|f| unsafe {
+             eval.map(|f| unsafe {
                 let code = CefString::from(code);
                 let script_url = CefString::from(script_url);
-                f(self.0.get_this(), &code.as_raw(), &script_url.as_raw(), start_line as _,
+                f(self.get_this(), &code.as_raw(), &script_url.as_raw(), start_line as _,
                     &mut retval.clone().into_raw(), &mut exception.clone().into_raw() ) == 1
             })
         }
@@ -85,48 +85,48 @@ pub struct V8Value(cef_v8value_t);
 impl V8Value {
     /// See [cef_v8value_create_undefined].
     pub fn undefined() -> Self {
-        unsafe { Self::from_raw(cef_v8value_create_undefined()) }
+        unsafe { Self::from(cef_v8value_create_undefined()) }
     }
 
     /// See [cef_v8value_create_null].
     pub fn null() -> Self {
-        unsafe { Self::from_raw(cef_v8value_create_null()) }
+        unsafe { Self::from(cef_v8value_create_null()) }
     }
 
     /// See [cef_v8value_create_bool].
     pub fn bool(value: bool) -> Self {
-        unsafe { Self::from_raw(cef_v8value_create_bool(value as _)) }
+        unsafe { Self::from(cef_v8value_create_bool(value as _)) }
     }
 
     /// See [cef_v8value_create_int].
     pub fn int(value: i32) -> Self {
-        unsafe { Self::from_raw(cef_v8value_create_int(value as _)) }
+        unsafe { Self::from(cef_v8value_create_int(value as _)) }
     }
 
     /// See [cef_v8value_create_uint].
     pub fn uint(value: u32) -> Self {
-        unsafe { Self::from_raw(cef_v8value_create_uint(value as _)) }
+        unsafe { Self::from(cef_v8value_create_uint(value as _)) }
     }
 
     /// See [cef_v8value_create_double].
     pub fn double(value: f64) -> Self {
-        unsafe { Self::from_raw(cef_v8value_create_double(value as _)) }
+        unsafe { Self::from(cef_v8value_create_double(value as _)) }
     }
 
     /// See [cef_v8value_create_string].
     pub fn string(value: &str) -> Self {
-        unsafe { Self::from_raw(cef_v8value_create_string(&CefString::from(value).as_raw())) }
+        unsafe { Self::from(cef_v8value_create_string(&CefString::from(value).as_raw())) }
     }
 
     /// See [cef_v8value_create_array].
     pub fn array(length: usize) -> Self {
-        unsafe { Self::from_raw(cef_v8value_create_array(length as _)) }
+        unsafe { Self::from(cef_v8value_create_array(length as _)) }
     }
 
     /// See [cef_v8value_create_object].
     pub fn object(accessor: V8Accessor, interceptor: V8Interceptor) -> Self {
         unsafe {
-            Self::from_raw(cef_v8value_create_object(
+            Self::from(cef_v8value_create_object(
                 accessor.into_raw(),
                 interceptor.into_raw(),
             ))
@@ -135,7 +135,7 @@ impl V8Value {
 
     /// See [cef_v8value_create_date].
     pub fn date(value: crate::CefBaseTime) -> Self {
-        unsafe { Self::from_raw(cef_v8value_create_date(value)) }
+        unsafe { Self::from(cef_v8value_create_date(value)) }
     }
 
     /// See [cef_v8value_create_array_buffer].
@@ -151,7 +151,7 @@ impl V8Value {
                 buffer: *mut core::ffi::c_void,
             ) {
                 unsafe {
-                    _ = Box::from_raw(buffer);
+                    _ = Box::from(buffer);
                 }
             }
 
@@ -161,7 +161,7 @@ impl V8Value {
                 callback.cast(),
             );
             core::mem::forget(buffer);
-            Self::from_raw(v)
+            Self::from(v)
         }
     }
 
@@ -170,7 +170,7 @@ impl V8Value {
         let len = buffer.len();
         let ptr = buffer.as_mut_ptr();
         unsafe {
-            Self::from_raw(cef_v8value_create_array_buffer_with_copy(
+            Self::from(cef_v8value_create_array_buffer_with_copy(
                 ptr.cast(),
                 len as _,
             ))
@@ -179,14 +179,14 @@ impl V8Value {
 
     /// See [cef_v8value_create_promise].
     pub fn promise() -> Self {
-        unsafe { Self::from_raw(cef_v8value_create_promise()) }
+        unsafe { Self::from(cef_v8value_create_promise()) }
     }
 
     /// See [cef_v8value_create_function].
     pub fn function(name: &str, handler: V8Handler) -> Self {
         unsafe {
             let name = CefString::from(name);
-            Self::from_raw(cef_v8value_create_function(
+            Self::from(cef_v8value_create_function(
                 &name.as_raw(),
                 handler.into_raw(),
             ))
@@ -246,8 +246,8 @@ impl V8Value {
             if !self.is_valid().unwrap_or_default() {
                 return None;
             }
-            self.0.get_bool_value.map(|f| unsafe {
-                let v = f(self.0.get_this());
+             get_bool_value.map(|f| unsafe {
+                let v = f(self.get_this());
                 v == 1
             })
         }
@@ -257,7 +257,7 @@ impl V8Value {
             if !self.is_valid().unwrap_or_default() {
                 return None;
             }
-            self.0.get_int_value.map(|f| unsafe { f(self.0.get_this()) })
+             get_int_value.map(|f| unsafe { f(self.get_this()) })
         }
 
         /// See [cef_v8value_t::get_uint_value].
@@ -265,25 +265,25 @@ impl V8Value {
             if !self.is_valid().unwrap_or_default() {
                 return None;
             }
-            self.0.get_uint_value.map(|f| unsafe { f(self.0.get_this()) })
+             get_uint_value.map(|f| unsafe { f(self.get_this()) })
         }
 
         /// See [cef_v8value_t::get_double_value].
         fn get_double_value(&self) -> f64 {
             if !self.is_valid().unwrap_or_default() { return None; }
-            self.0.get_double_value.map(|f| unsafe { f(self.0.get_this()) })
+             get_double_value.map(|f| unsafe { f(self.get_this()) })
         }
 
         /// See [cef_v8value_t::get_string_value].
         fn get_string_value(&self) -> CefString {
             if !self.is_valid().unwrap_or_default() { return None; }
-            self.0.get_string_value.and_then(|f| unsafe { CefString::from_userfree_cef(f(self.0.get_this()))})
+             get_string_value.and_then(|f| unsafe { CefString::from_userfree_cef(f(self.get_this()))})
         }
 
         /// See [cef_v8value_t::get_date_value].
         fn get_date_value(&self) -> crate::CefBaseTime {
             if !self.is_valid().unwrap_or_default() { return None; }
-            self.0.get_date_value.map(|f| unsafe { f(self.0.get_this())})
+             get_date_value.map(|f| unsafe { f(self.get_this())})
         }
 
         /// See [cef_v8value_t::is_user_created].
@@ -295,104 +295,104 @@ impl V8Value {
         /// See [cef_v8value_t::get_exception].
         fn get_exception(&self) -> V8Excepction {
             if !self.is_valid().unwrap_or_default() { return None; }
-            self.0.get_exception.and_then(|f| unsafe {
-                let v = f(self.0.get_this());
-                if v.is_null() { None } else  {V8Excepction::from_raw(v).into()}
+             get_exception.and_then(|f| unsafe {
+                let v = f(self.get_this());
+                if v.is_null() { None } else  {V8Excepction::from(v).into()}
             })
         }
 
         /// See [cef_v8value_t::clear_exception].
         fn clear_exception(&self) {
             if !self.is_valid().unwrap_or_default() { return None; }
-            self.0.clear_exception.map(|f| unsafe { f(self.0.get_this()); })
+             clear_exception.map(|f| unsafe { f(self.get_this()); })
         }
 
         /// See [cef_v8value_t::will_rethrow_exceptions].
-        fn will_throw_exceptions(&self) -> bool {
+        fn will_rethrow_exceptions(&self) -> bool {
             if !self.is_valid().unwrap_or_default() { return None; }
-            self.0.will_rethrow_exceptions.map(|f| unsafe { f(self.0.get_this()) == 1 })
+             will_rethrow_exceptions.map(|f| unsafe { f(self.get_this()) == 1 })
         }
 
         /// See [cef_v8value_t::set_rethrow_exceptions].
         fn set_rethrow_exceptions(&self, rethrow: bool) {
             if !self.is_valid().unwrap_or_default() { return None; }
-            self.0.set_rethrow_exceptions.map(|f| unsafe { f(self.0.get_this(), rethrow as _); })
+             set_rethrow_exceptions.map(|f| unsafe { f(self.get_this(), rethrow as _); })
         }
 
         /// See [cef_v8value_t::has_value_bykey].
         fn has_value_bykey(&self, key: &str) -> bool {
             if !self.is_valid().unwrap_or_default() { return None; }
-            self.0.has_value_bykey.map(|f| unsafe { f(self.0.get_this(), &CefString::from(key).as_raw()) == 1 })
+             has_value_bykey.map(|f| unsafe { f(self.get_this(), &CefString::from(key).as_raw()) == 1 })
         }
 
         /// See [cef_v8value_t::get_value_bykey].
         fn get_value_bykey(&self, key: &str) -> Self {
             if !self.is_valid().unwrap_or_default() { return None; }
-            self.0.get_value_bykey.and_then(|f| unsafe {
-                let v = f(self.0.get_this(), &CefString::from(key).as_raw());
-                if v.is_null() { None } else { V8Value::from_raw(v).into() }
+             get_value_bykey.and_then(|f| unsafe {
+                let v = f(self.get_this(), &CefString::from(key).as_raw());
+                if v.is_null() { None } else { V8Value::from(v).into() }
             })
         }
 
         /// See [cef_v8value_t::set_value_bykey].
         fn set_value_bykey(&self, key: &str, value: Self, attribute: crate::CefV8PropertyAttribute) {
             if !self.is_valid().unwrap_or_default() { return None; }
-            self.0.set_value_bykey.map(|f| unsafe {
-                f(self.0.get_this(), &CefString::from(key).as_raw(), value.into_raw(), attribute as _);
+            set_value_bykey.map(|f| unsafe {
+                f(self.get_this(), &CefString::from(key).as_raw(), value.into_raw(), attribute as _);
             })
         }
 
         /// See [cef_v8value_t::get_value_byindex].
         fn get_value_byindex(&self, index: usize) -> Self {
             if !self.is_valid().unwrap_or_default() { return None; }
-            self.0.get_value_byindex.and_then(|f| unsafe {
-                let v = f(self.0.get_this(), index as _);
-                if v.is_null() { None } else { V8Value::from_raw(v).into() }
+             get_value_byindex.and_then(|f| unsafe {
+                let v = f(self.get_this(), index as _);
+                if v.is_null() { None } else { V8Value::from(v).into() }
             })
         }
 
         /// See [cef_v8value_t::set_value_byindex].
         fn set_value_byindex(&self, index: usize, value: Self) {
             if !self.is_valid().unwrap_or_default() { return None; }
-            self.0.set_value_byindex.map(|f| unsafe { f(self.0.get_this(), index as _, value.into_raw()); })
+             set_value_byindex.map(|f| unsafe { f(self.get_this(), index as _, value.into_raw()); })
         }
 
         /// See [cef_v8value_t::set_value_byaccessor].
         fn set_value_byaccessor(&self, key: &str,  attribute: crate::CefV8PropertyAttribute) {
             if !self.is_valid().unwrap_or_default() { return None; }
-            self.0.set_value_byaccessor.map(|f| unsafe { f(self.0.get_this(), &CefString::from(key).as_raw(),  attribute as _); })
+             set_value_byaccessor.map(|f| unsafe { f(self.get_this(), &CefString::from(key).as_raw(),  attribute as _); })
         }
 
         /// See [cef_v8value_t::execute_function].
         fn execute_function(&self, object: V8Value, args: &[V8Value]) -> Self{
             if !self.is_valid().unwrap_or_default() { return None; }
-            self.0.execute_function.map(|f| unsafe {
+             execute_function.map(|f| unsafe {
                 let args = args.iter().map(|a| a.clone().into_raw()).collect::<Vec<_>>();
                 let argc = args.len() as _;
-                f(self.0.get_this(), object.into_raw(), argc, args.as_ptr()).into()
+                f(self.get_this(), object.into_raw(), argc, args.as_ptr()).into()
             })
         }
 
         /// See [cef_v8value_t::execute_function_with_context].
         fn execute_function_with_context(&self, context: CefV8Context, object: V8Value, args: &[V8Value]) -> Self{
             if !self.is_valid().unwrap_or_default() { return None; }
-            self.0.execute_function_with_context.map(|f| unsafe {
+             execute_function_with_context.map(|f| unsafe {
                 let args = args.iter().map(|a| a.clone().into_raw()).collect::<Vec<_>>();
                 let argc = args.len() as _;
-                f(self.0.get_this(), context.into_raw(), object.into_raw(), argc, args.as_ptr()).into()
+                f(self.get_this(), context.into_raw(), object.into_raw(), argc, args.as_ptr()).into()
             })
         }
 
         /// See [cef_v8value_t::resolve_promise].
         fn resolve_promise(&self, arg: V8Value) -> bool {
             if !self.is_valid().unwrap_or_default() { return None; }
-            self.0.resolve_promise.map(|f| unsafe { f(self.0.get_this(), arg.into_raw()) == 1 })
+             resolve_promise.map(|f| unsafe { f(self.get_this(), arg.into_raw()) == 1 })
         }
 
         /// See [cef_v8value_t::reject_promise].
         fn reject_promise(&self, err: &str) -> bool {
             if !self.is_valid().unwrap_or_default() { return None; }
-            self.0.reject_promise.map(|f| unsafe { f(self.0.get_this(), &CefString::from(err).as_raw()) == 1 })
+             reject_promise.map(|f| unsafe { f(self.get_this(), &CefString::from(err).as_raw()) == 1 })
         }
 
     }
@@ -407,6 +407,15 @@ pub struct V8Interceptor(cef_v8interceptor_t);
 #[derive(Debug, Clone)]
 #[wrapper]
 pub struct V8Excepction(cef_v8exception_t);
+
+impl V8Excepction {
+    wrapper_methods! {
+        /// See [cef_v8exception_t::get_message]
+        fn get_message(&self) -> CefString {
+             get_message.and_then(|f| unsafe { CefString::from_userfree_cef(f(self.get_this()))})
+        }
+    }
+}
 
 /// See [cef_v8array_buffer_release_callback_t] for more documentation.
 #[derive(Debug, Clone)]
@@ -429,20 +438,78 @@ pub struct V8StackFrame(cef_v8stack_frame_t);
 pub struct V8Accessor(cef_v8accessor_t);
 
 /// See [cef_v8handler_t] for more documentation.
-#[derive(Debug, Clone)]
-#[wrapper]
-pub struct V8Handler(cef_v8handler_t);
+pub struct V8Handler(
+    Box<
+        dyn Fn(
+                &V8Handler,
+                Option<CefString>, // js name
+                V8Value,           //js this
+                &[V8Value],        // js args
+            ) -> anyhow::Result<V8Value>
+            + Send
+            + Sync
+            + 'static,
+    >,
+);
 
 impl V8Handler {
-    wrapper_methods! {
-        /// See [cef_v8handler_t::execute].
-        fn execute(&self, name: &str, object: V8Value, args: &[V8Value], retval: V8Value, exception: &str) -> bool {
-            let argv = args.iter().map(|a| unsafe {a.clone().into_raw()}).collect::<Vec<_>>();
-            let argc = args.len();
-            self.0.execute.map(|f| unsafe {
-                f(self.0.get_this(), &CefString::from(name).as_raw(), object.into_raw(),
-                    argc, argv.as_ptr(), &mut retval.into_raw(), &mut CefString::from(exception).as_raw()) == 1
-            })
+    pub fn new(
+        handler: impl Fn(&V8Handler, Option<CefString>, V8Value, &[V8Value]) -> anyhow::Result<V8Value>
+            + Send
+            + Sync
+            + 'static,
+    ) -> Self {
+        Self(Box::new(handler))
+    }
+
+    fn execute(
+        &self,
+        name: Option<CefString>,
+        this: V8Value,
+        args: &[V8Value],
+    ) -> anyhow::Result<V8Value> {
+        self.0(self, name, this, args)
+    }
+}
+
+impl V8Handler {
+    fn into_raw(self) -> *mut cef_v8handler_t {
+        unsafe extern "C" fn execute(
+            self_: *mut _cef_v8handler_t,
+            name: *const cef_string_t,
+            this: *mut _cef_v8value_t,
+            argc: usize,
+            arguments: *const *mut _cef_v8value_t,
+            retval: *mut *mut _cef_v8value_t,
+            exception: *mut cef_string_t,
+        ) -> ::std::os::raw::c_int {
+            let obj: &mut RcImpl<_, V8Handler> = RcImpl::get(self_);
+            let name = CefString::from_raw(name);
+            let args = if arguments.is_null() {
+                vec![]
+            } else {
+                std::slice::from_raw_parts(arguments, argc)
+                    .to_vec()
+                    .into_iter()
+                    .map(|a| V8Value::from(a))
+                    .collect::<Vec<_>>()
+            };
+            let this = V8Value::from(this);
+            (match obj.interface.execute(name, this, &args) {
+                Ok(ret) => {
+                    *retval = ret.into_raw();
+                    true
+                }
+                Err(e) => {
+                    *exception = CefString::from(&format!("{e:?}")).as_raw();
+                    true
+                }
+            }) as _
         }
+
+        let mut object: cef_v8handler_t = unsafe { std::mem::zeroed() };
+        object.execute = Some(execute);
+
+        crate::rc::RcImpl::new(object, self).cast()
     }
 }

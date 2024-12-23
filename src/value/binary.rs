@@ -11,7 +11,7 @@ impl CefBinaryValue {
         if ptr.is_null() {
             Err(crate::error::Error::NullPtr)
         } else {
-            Ok(unsafe { CefBinaryValue::from_raw(ptr) })
+            Ok(unsafe { CefBinaryValue::from(ptr) })
         }
     }
 }

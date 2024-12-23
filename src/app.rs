@@ -43,7 +43,7 @@ pub trait CefApp: Sized {
         ) {
             let obj: &mut RcImpl<_, I> = RcImpl::get(this);
             let process_type = unsafe { CefString::from_raw(process_type) };
-            let cmd = unsafe { CefCommandLine::from_raw(command_line) };
+            let cmd = unsafe { CefCommandLine::from(command_line) };
 
             obj.interface
                 .on_before_command_line_processing(process_type, cmd);
@@ -170,6 +170,7 @@ pub trait CefRenderProcessHandler: Sized {
     ) {
     }
 
+    /// See [cef_render_process_handler_t::on_context_released] for more documentation.
     fn on_context_released(
         &self,
         browser: crate::CefBrowser,
@@ -178,6 +179,7 @@ pub trait CefRenderProcessHandler: Sized {
     ) {
     }
 
+    /// See [cef_render_process_handler_t::on_uncaught_exception] for more documentation.
     fn on_uncaught_exception(
         &self,
         browser: crate::CefBrowser,
@@ -188,6 +190,7 @@ pub trait CefRenderProcessHandler: Sized {
     ) {
     }
 
+    // See [cef_render_process_handler_t::on_focused_node_changed] for more documentation.
     // fn on_focused_node_changed(&self, browser: *mut _cef_browser_t, frame: *mut _cef_frame_t, node: *mut _cef_domnode_t);
 
     /// See [cef_render_process_handler_t::on_process_message_received] for more documentation.
@@ -220,8 +223,8 @@ pub trait CefRenderProcessHandler: Sized {
         ) {
             let handler: &crate::rc::RcImpl<_, I> = crate::rc::RcImpl::get(self_);
             handler.interface.on_browser_created(
-                CefBrowser::from_raw(browser),
-                CefDictionaryValue::from_raw(extra_info),
+                CefBrowser::from(browser),
+                CefDictionaryValue::from(extra_info),
             );
         }
 
@@ -232,7 +235,7 @@ pub trait CefRenderProcessHandler: Sized {
             let handler: &crate::rc::RcImpl<_, I> = crate::rc::RcImpl::get(self_);
             handler
                 .interface
-                .on_browser_destroyed(CefBrowser::from_raw(browser));
+                .on_browser_destroyed(CefBrowser::from(browser));
         }
 
         unsafe extern "C" fn get_load_handler<I: CefRenderProcessHandler>(
@@ -254,9 +257,9 @@ pub trait CefRenderProcessHandler: Sized {
         ) {
             let handler: &crate::rc::RcImpl<_, I> = crate::rc::RcImpl::get(self_);
             handler.interface.on_context_created(
-                CefBrowser::from_raw(browser),
-                crate::CefFrame::from_raw(frame),
-                crate::v8::CefV8Context::from_raw(context),
+                CefBrowser::from(browser),
+                crate::CefFrame::from(frame),
+                crate::v8::CefV8Context::from(context),
             );
         }
 
@@ -268,9 +271,9 @@ pub trait CefRenderProcessHandler: Sized {
         ) {
             let handler: &crate::rc::RcImpl<_, I> = crate::rc::RcImpl::get(self_);
             handler.interface.on_context_released(
-                CefBrowser::from_raw(browser),
-                crate::CefFrame::from_raw(frame),
-                crate::v8::CefV8Context::from_raw(context),
+                CefBrowser::from(browser),
+                crate::CefFrame::from(frame),
+                crate::v8::CefV8Context::from(context),
             );
         }
 
@@ -284,11 +287,11 @@ pub trait CefRenderProcessHandler: Sized {
         ) {
             let handler: &crate::rc::RcImpl<_, I> = crate::rc::RcImpl::get(self_);
             handler.interface.on_uncaught_exception(
-                CefBrowser::from_raw(browser),
-                CefFrame::from_raw(frame),
-                crate::v8::CefV8Context::from_raw(context),
-                crate::v8::V8Excepction::from_raw(exception),
-                crate::v8::V8StackTrace::from_raw(stack_trace),
+                CefBrowser::from(browser),
+                CefFrame::from(frame),
+                crate::v8::CefV8Context::from(context),
+                crate::v8::V8Excepction::from(exception),
+                crate::v8::V8StackTrace::from(stack_trace),
             );
         }
 
@@ -301,8 +304,8 @@ pub trait CefRenderProcessHandler: Sized {
                 ) {
                     let handler: &crate::rc::RcImpl<_, I> = crate::rc::RcImpl::get(self_);
                     handler.interface.on_focused_node_changed(
-                        CefBrowser::from_raw(browser),
-                        CefFrame::from_raw(frame),
+                        CefBrowser::from(browser),
+                        CefFrame::from(frame),
                         node,
                     );
                 }
@@ -317,10 +320,10 @@ pub trait CefRenderProcessHandler: Sized {
         ) -> ::std::os::raw::c_int {
             let handler: &crate::rc::RcImpl<_, I> = crate::rc::RcImpl::get(self_);
             handler.interface.on_process_message_received(
-                CefBrowser::from_raw(browser),
-                CefFrame::from_raw(frame),
+                CefBrowser::from(browser),
+                CefFrame::from(frame),
                 source_process,
-                crate::CefProcessMessage::from_raw(message),
+                crate::CefProcessMessage::from(message),
             ) as i32
         }
 
@@ -418,7 +421,7 @@ pub trait CefBrowserProcessHandler: Sized {
 
             handler
                 .interface
-                .on_before_child_process_launch(CefCommandLine::from_raw(command_line));
+                .on_before_child_process_launch(CefCommandLine::from(command_line));
         }
 
         unsafe extern "C" fn on_already_running_app_relaunch<I: CefBrowserProcessHandler>(
@@ -428,7 +431,7 @@ pub trait CefBrowserProcessHandler: Sized {
         ) -> ::std::os::raw::c_int {
             let handler: &crate::rc::RcImpl<_, I> = crate::rc::RcImpl::get(self_);
             handler.interface.on_already_running_app_relaunch(
-                CefCommandLine::from_raw(command_line),
+                CefCommandLine::from(command_line),
                 CefString::from_raw(current_directory).into(),
             ) as i32
         }

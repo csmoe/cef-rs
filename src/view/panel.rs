@@ -1,14 +1,10 @@
 use crate::prelude::*;
-use crate::{add_view_delegate_methods, view::CefView, ViewDelegate};
+use crate::{add_view_delegate_methods, view::CefView, view::CefWindow, ViewDelegate};
 
 /// See [cef_panel_t] for more documentation.
 #[derive(Debug, Clone)]
 #[wrapper]
 pub struct CefPanel(cef_panel_t);
-
-crate::convert_view! {
-    (CefPanel, as_window, CefWindow)
-}
 
 impl CefPanel {
     /// See [cef_panel_create]
@@ -18,21 +14,25 @@ impl CefPanel {
             if view.is_null() {
                 return Err(Error::NullPtr);
             }
-            Ok(Self::from_raw(view))
+            Ok(Self::from(view))
         }
     }
 }
 
 impl CefPanel {
     wrapper_methods!(
+        /// See [cef_panel_t::as_window]
+        fn as_window(&self) -> CefWindow {
+            as_window.map(|f| unsafe { CefWindow::from(f(self.get_this())) })
+        }
         /// See [cef_panel_t::set_to_fill_layout]
         fn set_to_fill_layout(&mut self) -> crate::CefFillLayout {
-            self.0.set_to_fill_layout.and_then(|f| unsafe {
-                let v = f(self.0.get_this());
+            set_to_fill_layout.and_then(|f| unsafe {
+                let v = f(self.get_this());
                 if v.is_null() {
                     None
                 } else {
-                    Some(crate::CefFillLayout::from_raw(v))
+                    Some(crate::CefFillLayout::from(v))
                 }
             })
         }
@@ -42,24 +42,24 @@ impl CefPanel {
             &mut self,
             settings: crate::CefBoxLayoutSettings,
         ) -> crate::CefBoxLayout {
-            self.0.set_to_box_layout.and_then(|f| unsafe {
-                let v = f(self.0.get_this(), &settings.into_raw());
+            set_to_box_layout.and_then(|f| unsafe {
+                let v = f(self.get_this(), &settings.into_raw());
                 if v.is_null() {
                     None
                 } else {
-                    Some(crate::CefBoxLayout::from_raw(v))
+                    Some(crate::CefBoxLayout::from(v))
                 }
             })
         }
 
         /// See [cef_panel_t::get_layout]
         fn get_layout(&self) -> crate::CefLayout {
-            self.0.get_layout.and_then(|f| unsafe {
-                let v = f(self.0.get_this());
+            get_layout.and_then(|f| unsafe {
+                let v = f(self.get_this());
                 if v.is_null() {
                     None
                 } else {
-                    Some(crate::CefLayout::from_raw(v))
+                    Some(crate::CefLayout::from(v))
                 }
             })
         }
@@ -87,12 +87,12 @@ impl CefPanel {
 
         /// See [cef_panel_t::get_child_view_at]
         fn get_child_view_at(&self, index: i32) -> crate::CefView {
-            self.0.get_child_view_at.and_then(|f| unsafe {
-                let v = f(self.0.get_this(), index);
+            get_child_view_at.and_then(|f| unsafe {
+                let v = f(self.get_this(), index);
                 if v.is_null() {
                     None
                 } else {
-                    Some(CefView::from_raw(v))
+                    Some(CefView::from(v))
                 }
             })
         }

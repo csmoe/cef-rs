@@ -31,7 +31,7 @@ pub trait DialogHandler: Sized {
             callback: *mut _cef_file_dialog_callback_t,
         ) -> ::std::os::raw::c_int {
             let object: &crate::rc::RcImpl<_, I> = crate::rc::RcImpl::get(self_);
-            let browser = crate::CefBrowser::from_raw(browser);
+            let browser = crate::CefBrowser::from(browser);
             let title = if title.is_null() {
                 None
             } else {

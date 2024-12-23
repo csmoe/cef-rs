@@ -10,24 +10,24 @@ impl CefLayout {
     wrapper_methods!(
         /// See [cef_layout_t::as_box_layout]
         fn as_box_layout(&self) -> CefBoxLayout {
-            self.0.as_box_layout.and_then(|f| unsafe {
-                let box_layout = f(self.0.get_this());
+             as_box_layout.and_then(|f| unsafe {
+                let box_layout = f(self.get_this());
                 if box_layout.is_null() {
                     None
                 } else {
-                    CefBoxLayout::from_raw(box_layout).into()
+                    CefBoxLayout::from(box_layout).into()
                 }
             })
         }
 
         /// See [cef_layout_t::as_fill_layout]
         fn as_fill_layout(&self) -> CefFillLayout {
-            self.0.as_fill_layout.and_then(|f| unsafe {
-                let fill_layout = f(self.0.get_this());
+             as_fill_layout.and_then(|f| unsafe {
+                let fill_layout = f(self.get_this());
                 if fill_layout.is_null() {
                     None
                 } else {
-                    CefFillLayout::from_raw(fill_layout).into()
+                    CefFillLayout::from(fill_layout).into()
                 }
             })
         }

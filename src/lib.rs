@@ -30,9 +30,11 @@ pub use browser::*;
 pub use cef_sys as sys;
 pub use client::*;
 pub use command_line::*;
+pub use error::*;
 pub use handler::*;
 pub use image::*;
 pub use menu_model::*;
+pub use net::*;
 pub use process_message::CefProcessMessage;
 pub use settings::*;
 pub use string::CefString;
@@ -87,5 +89,9 @@ mod alias {
     pub type CefPopupFeatures = cef_sys::cef_popup_features_t;
 
     pub type CefWindowOpenDisposition = cef_sys::cef_window_open_disposition_t;
+
+    pub type CefCookieSameSite = cef_sys::cef_cookie_same_site_t;
+
+    pub type CefCookiePriority = cef_sys::cef_cookie_priority_t;
 }
 pub use alias::*;

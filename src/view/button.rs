@@ -7,6 +7,18 @@ use crate::{add_view_delegate_methods, string::CefString};
 #[wrapper]
 pub struct CefButton(cef_button_t);
 
+impl CefButton {
+    wrapper_methods! {
+        /// See [cef_button_t::as_label_button]
+        fn as_label_button(&self) -> CefLabelButton {
+            as_label_button.map(|f| unsafe{
+                CefLabelButton::from(f(self.get_this()))
+            })
+        }
+
+    }
+}
+
 /// See [cef_label_button_t] for more documentation.
 #[derive(Debug, Clone)]
 #[wrapper]
@@ -32,7 +44,16 @@ impl CefLabelButton {
             if button.is_null() {
                 return Err(Error::NullPtr);
             }
-            Ok(Self::from_raw(button))
+            Ok(Self::from(button))
+        }
+    }
+
+    wrapper_methods! {
+        /// See [cef_lable_button_t::as_menu_button]
+        fn as_menu_button(&self) -> CefMenuButton {
+             as_menu_button.map(|f| unsafe{
+                CefMenuButton::from(f(self.get_this()))
+            })
         }
     }
 }
@@ -51,9 +72,9 @@ impl CefMenuButton {
             screen_point: &crate::CefPoint,
             anchor_position: cef_sys::cef_menu_anchor_position_t,
         ) {
-            self.0.show_menu.map(|f| unsafe {
+            show_menu.map(|f| unsafe {
                 f(
-                    self.0.get_this(),
+                    self.get_this(),
                     menu_model.into_raw(),
                     screen_point,
                     anchor_position,
@@ -63,7 +84,7 @@ impl CefMenuButton {
 
         /// See [cef_menu_button_t::trigger_menu]
         fn trigger_menu(&mut self) {
-            self.0.trigger_menu.map(|f| unsafe { f(self.0.get_this()) })
+            trigger_menu.map(|f| unsafe { f(self.get_this()) })
         }
     );
 }
@@ -97,12 +118,7 @@ impl CefMenuButton {
             if button.is_null() {
                 return Err(Error::NullPtr);
             }
-            Ok(Self::from_raw(button))
+            Ok(Self::from(button))
         }
     }
-}
-
-crate::convert_view! {
-    (CefButton, as_label_button, CefLabelButton),
-    (CefLabelButton, as_menu_button, CefMenuButton)
 }

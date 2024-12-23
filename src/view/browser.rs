@@ -22,7 +22,7 @@ impl CefBrowserView {
         settings: CefBrowserSettings,
     ) -> Result<CefBrowserView> {
         let client = client.map(|c| c.into_raw()).unwrap_or(null_mut());
-        let request_context = crate::net::RequestContext::global();
+        let request_context = crate::net::CefRequestContext::global();
 
         let view = unsafe {
             cef_browser_view_create(
@@ -38,22 +38,18 @@ impl CefBrowserView {
             return Err(Error::CannotCreateBrowserView);
         }
 
-        Ok(unsafe { CefBrowserView::from_raw(view) })
-    }
-
-    pub fn view(&self) -> CefView {
-        unsafe { crate::view::CefView(self.0.convert()) }
+        Ok(CefBrowserView::from(view))
     }
 
     wrapper_methods! {
         /// See [cef_browser_view_t::get_browser] for more documentation.
         fn get_browser(&self) -> crate::browser::CefBrowser {
-            self.0.get_browser.and_then(|f| unsafe {
-                let browser = f(self.0.get_this());
+             get_browser.and_then(|f| unsafe {
+                let browser = f(self.get_this());
                 if browser.is_null() {
                     None
                 } else {
-                    Some(crate::browser::CefBrowser::from_raw(browser))
+                    Some(crate::browser::CefBrowser::from(browser))
                 }
             })
         }

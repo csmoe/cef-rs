@@ -196,19 +196,11 @@ impl CefWindow {
         fn is_fullscreen(&self) -> bool;
         /// See [cef_window_t::set_title]
         fn set_title(&mut self, title: &str) {
-            unsafe {
-                self.0
-                    .set_title
-                    .map(|f| f(self.0.get_this(), &CefString::from(title).as_raw()))
-            }
+            set_title.map(|f| unsafe { f(self.get_this(), &CefString::from(title).as_raw()) })
         }
         /// See [cef_window_t::get_title]
         fn get_title(&self) -> CefString {
-            unsafe {
-                self.0
-                    .get_title
-                    .and_then(|f| CefString::from_raw(f(self.0.get_this())))
-            }
+            get_title.and_then(|f| unsafe { CefString::from_userfree_cef(f(self.get_this())) })
         }
         /// See [cef_window_t::set_window_icon]
         fn set_window_icon(&mut self, image: *mut cef_image_t);
@@ -256,9 +248,7 @@ impl CefWindow {
         #[cfg(target_os = "windows")]
         /// See [cef_window_t::get_window_handle]
         fn get_window_handle(&self) -> *mut windows::Win32::Foundation::HWND {
-            self.0
-                .get_window_handle
-                .map(|f| unsafe { f(self.0.get_this()).cast() })
+            get_window_handle.map(|f| unsafe { f(self.get_this()).cast() })
         }
         /// See [cef_window_t::send_key_press]
         fn send_key_press(&mut self, key_code: i32, event_flags: u32);
@@ -301,11 +291,7 @@ impl CefWindow {
         if window.is_null() {
             return Err(Error::NullPtr);
         }
-        Ok(unsafe { CefWindow::from_raw(window) })
-    }
-
-    pub fn get_panel(&self) -> CefPanel {
-        unsafe { CefPanel(self.0.convert()) }
+        Ok(CefWindow::from(window))
     }
 }
 
@@ -434,7 +420,7 @@ extern "C" fn on_window_created<I: WindowDelegate>(
     window: *mut cef_window_t,
 ) {
     let obj: &RcImpl<_, I> = RcImpl::get(this);
-    let window = unsafe { CefWindow::from_raw(window) };
+    let window = CefWindow::from(window);
     obj.interface.on_window_created(window);
 }
 
@@ -443,7 +429,7 @@ extern "C" fn on_window_closing<I: WindowDelegate>(
     window: *mut cef_window_t,
 ) {
     let obj: &mut RcImpl<_, I> = RcImpl::get(this);
-    let window = unsafe { CefWindow::from_raw(window) };
+    let window = CefWindow::from(window);
     obj.interface.on_window_closing(window);
 }
 
@@ -452,7 +438,7 @@ extern "C" fn on_window_destroyed<I: WindowDelegate>(
     window: *mut cef_window_t,
 ) {
     let obj: &mut RcImpl<_, I> = RcImpl::get(this);
-    let window = unsafe { CefWindow::from_raw(window) };
+    let window = CefWindow::from(window);
     obj.interface.on_window_destroyed(window);
 }
 
@@ -461,7 +447,7 @@ extern "C" fn can_close<I: WindowDelegate>(
     window: *mut cef_window_t,
 ) -> i32 {
     let obj: &mut RcImpl<_, I> = RcImpl::get(this);
-    let window = unsafe { CefWindow::from_raw(window) };
+    let window = CefWindow::from(window);
     let result = obj.interface.can_close(window);
     result as i32
 }

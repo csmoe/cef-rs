@@ -88,8 +88,6 @@ pub trait CefLifeSpanHandler: Sized {
 
     #[doc(hidden)]
     fn into_raw(self) -> *mut cef_life_span_handler_t {
-        let mut object: cef_life_span_handler_t = unsafe { std::mem::zeroed() };
-
         unsafe extern "C" fn on_before_popup<I: CefLifeSpanHandler>(
             self_: *mut _cef_life_span_handler_t,
             browser: *mut _cef_browser_t,
@@ -106,8 +104,8 @@ pub trait CefLifeSpanHandler: Sized {
             no_javascript_access: *mut ::std::os::raw::c_int,
         ) -> ::std::os::raw::c_int {
             let object: &crate::rc::RcImpl<_, I> = crate::rc::RcImpl::get(self_);
-            let browser = crate::CefBrowser::from_raw(browser);
-            let frame = crate::CefFrame::from_raw(frame);
+            let browser = crate::CefBrowser::from(browser);
+            let frame = crate::CefFrame::from(frame);
             let target_url = crate::CefString::from_raw(target_url);
             let target_frame_name = crate::CefString::from_raw(target_frame_name);
             let user_gesture = user_gesture != 0;
@@ -122,7 +120,7 @@ pub trait CefLifeSpanHandler: Sized {
             let extra_info = if extra_info.is_null() {
                 None
             } else {
-                CefDictionaryValue::from_raw(*extra_info).into()
+                CefDictionaryValue::from(*extra_info).into()
             };
             let mut no_js_access = *no_javascript_access != 0;
 
@@ -160,7 +158,7 @@ pub trait CefLifeSpanHandler: Sized {
             use_default_window: *mut ::std::os::raw::c_int,
         ) {
             let object: &crate::rc::RcImpl<_, I> = crate::rc::RcImpl::get(self_);
-            let browser = crate::CefBrowser::from_raw(browser);
+            let browser = crate::CefBrowser::from(browser);
             let window_info = &mut *window_info;
             let client = &mut *client;
             let settings = &mut *settings;
@@ -184,7 +182,7 @@ pub trait CefLifeSpanHandler: Sized {
             browser: *mut _cef_browser_t,
         ) {
             let object: &crate::rc::RcImpl<_, I> = crate::rc::RcImpl::get(self_);
-            let browser = crate::CefBrowser::from_raw(browser);
+            let browser = crate::CefBrowser::from(browser);
             object.interface.on_after_created(browser);
         }
 
@@ -193,7 +191,7 @@ pub trait CefLifeSpanHandler: Sized {
             browser: *mut _cef_browser_t,
         ) -> ::std::os::raw::c_int {
             let object: &crate::rc::RcImpl<_, I> = crate::rc::RcImpl::get(self_);
-            let browser = crate::CefBrowser::from_raw(browser);
+            let browser = crate::CefBrowser::from(browser);
             let result = object.interface.do_close(browser);
             if result {
                 1
@@ -207,10 +205,11 @@ pub trait CefLifeSpanHandler: Sized {
             browser: *mut _cef_browser_t,
         ) {
             let object: &crate::rc::RcImpl<_, I> = crate::rc::RcImpl::get(self_);
-            let browser = crate::CefBrowser::from_raw(browser);
+            let browser = crate::CefBrowser::from(browser);
             object.interface.on_before_close(browser);
         }
 
+        let mut object: cef_life_span_handler_t = unsafe { std::mem::zeroed() };
         object.on_before_popup = Some(on_before_popup::<Self>);
         object.on_before_dev_tools_popup = Some(on_before_dev_tools_popup::<Self>);
         object.on_after_created = Some(on_after_created::<Self>);

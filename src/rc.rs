@@ -42,6 +42,7 @@
 
 use std::{
     ops::Deref,
+    ptr::NonNull,
     sync::atomic::{fence, AtomicUsize, Ordering},
 };
 
@@ -122,7 +123,7 @@ impl Rc for cef_base_ref_counted_t {
 /// A smart pointer for types from cef library.
 #[derive(Debug)]
 pub struct RefGuard<T: Rc + FfiRc> {
-    object: *mut T,
+    object: core::ptr::NonNull<T>,
 }
 
 impl<T: Rc + FfiRc> RefGuard<T> {
@@ -134,7 +135,7 @@ impl<T: Rc + FfiRc> RefGuard<T> {
     /// ownership of the value. The reference count of the return value is already increased when
     /// you get it. So we don't need to increase it again manually. Using this method elsewhere may
     /// cause incorrect reference count and memory safty issues.
-    pub unsafe fn from_raw(ptr: *mut T) -> RefGuard<T> {
+    pub unsafe fn from_raw(ptr: core::ptr::NonNull<T>) -> RefGuard<T> {
         RefGuard { object: ptr }
     }
 
@@ -146,10 +147,10 @@ impl<T: Rc + FfiRc> RefGuard<T> {
     /// THis should be used when you want to manually increase the reference count upon getting the
     /// raw pointer. Using this method elsewehre may cause incorrect reference count and memory
     /// safety issues.
-    pub unsafe fn from_raw_add_ref(ptr: *mut T) -> RefGuard<T> {
+    pub unsafe fn from_raw_add_ref(ptr: core::ptr::NonNull<T>) -> RefGuard<T> {
         let guard = RefGuard { object: ptr };
 
-        guard.add_ref();
+        guard.object.add_ref();
 
         guard
     }
@@ -163,7 +164,7 @@ impl<T: Rc + FfiRc> RefGuard<T> {
     /// value to the function call. Using this method elsewehre may cause incorrect reference count
     /// and memory safety issues.
     pub unsafe fn get_this(&self) -> *mut T {
-        self.object
+        self.object.as_ptr()
     }
 
     /// Consume the [RefGuard] and return the raw pointer without decrease the reference count.
@@ -187,7 +188,7 @@ impl<T: Rc + FfiRc> RefGuard<T> {
     /// This should be used when the type has type `U` as its base type. Using this method
     /// elsewhere may cause memory safety issues.
     pub unsafe fn convert<U: Rc + FfiRc>(&self) -> RefGuard<U> {
-        RefGuard::from_raw_add_ref(self.get_this() as *mut _)
+        RefGuard::from_raw_add_ref(core::ptr::NonNull::new_unchecked(self.get_this() as *mut _))
     }
 }
 
@@ -204,17 +205,22 @@ impl<T: Rc + FfiRc> Clone for RefGuard<T> {
     }
 }
 
+impl<T: Rc> Rc for NonNull<T> {
+    fn as_base(&self) -> &cef_base_ref_counted_t {
+        unsafe { self.as_ref().as_base() }
+    }
+}
+
 impl<T: Rc + FfiRc> Deref for RefGuard<T> {
     type Target = T;
-
-    fn deref(&self) -> &T {
-        unsafe { &*self.object }
+    fn deref(&self) -> &Self::Target {
+        unsafe { self.object.as_ref() }
     }
 }
 
 impl<T: Rc + FfiRc> Drop for RefGuard<T> {
     fn drop(&mut self) {
-        unsafe { self.release() };
+        unsafe { self.object.as_ref().release() };
     }
 }
 
@@ -284,7 +290,7 @@ pub extern "C" fn release<T: FfiRc, I>(this: *mut cef_base_ref_counted_t) -> i32
         0
     } else {
         fence(Ordering::Acquire);
-        let _ = unsafe { Box::from_raw(this as *mut RcImpl<T, I>) };
+        let _ = unsafe { Box::from(this as *mut RcImpl<T, I>) };
         1
     }
 }

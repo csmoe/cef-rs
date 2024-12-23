@@ -24,76 +24,46 @@ pub use scroll_view::*;
 mod layout;
 pub use layout::*;
 
-macro_rules! convert_view {
-    ($( ($view:ident, $as_field:ident, $target_type:ident) ),*) => {
-        $(
-            impl From<$view> for Option<$crate::$target_type> {
-                fn from(value: $view) -> Self {
-                    value.0.$as_field.and_then(|f| {
-                        let v = unsafe { f(value.0.get_this()) };
-                        if v.is_null() {
-                            None
-                        } else {
-                            unsafe { Some($crate::view::$target_type::from_raw(v)) }
-                        }
-                    })
-                }
-            }
-        )*
-    };
-}
-pub(crate) use convert_view;
-
-convert_view! {
-    (CefView, as_browser_view, CefBrowserView),
-    (CefView, as_panel, CefPanel),
-    (CefView, as_textfield, CefTextField),
-    (CefView, as_scroll_view, ScrollView),
-    (CefView, as_button, CefButton)
-}
-
 /// See [cef_view_t] for more documentation.
 #[derive(Debug, Clone)]
 #[wrapper]
 pub struct CefView(cef_view_t);
 
 impl CefView {
-    #[cfg(debug_assertions)]
-    pub fn get_type_string(&self) -> Option<CefString> {
-        self.0
-            .get_type_string
-            .and_then(|f| unsafe { CefString::from_userfree_cef(f(self.0.get_this())) })
-    }
+    //#[cfg(debug_assertions)]
+    //pub fn get_type_string(&self) -> Option<CefString> {
+    //    self.0
+    //        .get_type_string
+    //        .and_then(|f| unsafe { CefString::from_userfree_cef(f(self.get_this())) })
+    //}
 
-    pub fn to_string(&self, include_children: bool) -> Option<CefString> {
-        self.0.to_string.and_then(|f| unsafe {
-            CefString::from_userfree_cef(f(self.0.get_this(), include_children.into()))
-        })
-    }
+    //pub fn to_string(&self, include_children: bool) -> Option<CefString> {
+    //    to_string.and_then(|f| unsafe {
+    //        CefString::from_userfree_cef(f(self.get_this(), include_children.into()))
+    //    })
+    //}
 
-    pub fn get_delegate(&self) -> Option<RefGuard<cef_view_delegate_t>> {
-        self.0.get_delegate.and_then(|f| {
-            let delegate = unsafe { f(self.0.get_this()) };
-            if delegate.is_null() {
-                None
-            } else {
-                Some(unsafe { RefGuard::from_raw(delegate) })
-            }
-        })
-    }
+    //pub fn get_delegate(&self) -> Option<RefGuard<cef_view_delegate_t>> {
+    //    get_delegate.and_then(|f| {
+    //        let delegate = unsafe { f(self.get_this()) };
+    //        if delegate.is_null() {
+    //            None
+    //        } else {
+    //            Some(unsafe { RefGuard::from(delegate) })
+    //        }
+    //    })
+    //}
 
-    pub fn get_window(&self) -> Option<CefWindow> {
-        unsafe {
-            self.0.get_window.and_then(|f| {
-                let window = f(self.0.get_this());
-                if window.is_null() {
-                    None
-                } else {
-                    Some(CefWindow::from_raw(window))
-                }
-            })
-        }
-    }
+    //pub fn get_window(&self) -> CefWindow {
+    //    get_window.and_then(|f| {
+    //        let window = f(self.get_this());
+    //        if window.is_null() {
+    //            None
+    //        } else {
+    //            Some(CefWindow::from(window))
+    //        }
+    //    })
+    //}
 
     wrapper_methods!(
         /// See [cef_view_t::is_valid]
@@ -112,23 +82,49 @@ impl CefView {
         fn set_group_id(&mut self, group: i32);
         /// See [cef_view_t::get_parent_view]
         fn get_parent_view(&self) -> CefView {
-            self.0.get_parent_view.and_then(|f| unsafe {
-                let view = f(self.0.get_this());
+            get_parent_view.and_then(|f| unsafe {
+                let view = f(self.get_this());
                 if view.is_null() {
                     None
                 } else {
-                    Some(CefView::from_raw(view))
+                    Some(CefView::from(view))
                 }
             })
         }
+
+        /// See [cef_view_t::as_panel]
+        fn as_panel(&self) -> CefPanel {
+            as_panel.map(|f| unsafe { CefPanel::from(f(self.get_this())) })
+        }
+
+        /// See [cef_view_t::as_browser_view]
+        fn as_browser_view(&self) -> CefBrowserView {
+            as_browser_view.map(|f| unsafe { CefBrowserView::from(f(self.get_this())) })
+        }
+
+        /// See [cef_view_t::as_textfield]
+        fn as_textfield(&self) -> CefTextField {
+            as_textfield.map(|f| unsafe { CefTextField::from(f(self.get_this())) })
+        }
+
+        /// See [cef_view_t::as_scroll_view]
+        fn as_scroll_view(&self) -> CefScrollView {
+            as_scroll_view.map(|f| unsafe { CefScrollView::from(f(self.get_this())) })
+        }
+
+        /// See [cef_view_t::as_button]
+        fn as_button(&self) -> CefButton {
+            as_button.map(|f| unsafe { CefButton::from(f(self.get_this())) })
+        }
+
         /// See [cef_view_t::get_view_for_id]
         fn get_view_for_id(&self, id: i32) -> CefView {
-            self.0.get_view_for_id.and_then(|f| unsafe {
-                let view = f(self.0.get_this(), id);
+            get_view_for_id.and_then(|f| unsafe {
+                let view = f(self.get_this(), id);
                 if view.is_null() {
                     None
                 } else {
-                    Some(CefView::from_raw(view))
+                    Some(CefView::from(view))
                 }
             })
         }
@@ -137,34 +133,26 @@ impl CefView {
         fn get_bounds(&self) -> CefRect;
         /// See [cef_view_t::set_bounds]
         fn set_bounds(&mut self, bounds: &CefRect) {
-            self.0
-                .set_bounds
-                .map(|f| unsafe { f(self.0.get_this(), bounds) })
+            set_bounds.map(|f| unsafe { f(self.get_this(), bounds) })
         }
 
         /// See [cef_view_t::get_size]
         fn get_size(&self) -> CefSize;
         /// See [cef_view_t::set_size]
         fn set_size(&mut self, size: &CefSize) {
-            self.0
-                .set_size
-                .map(|f| unsafe { f(self.0.get_this(), size) })
+            set_size.map(|f| unsafe { f(self.get_this(), size) })
         }
 
         /// See [cef_view_t::get_position]
         fn get_position(&self) -> crate::CefPoint;
         /// See [cef_view_t::set_position]
         fn set_position(&mut self, position: &crate::CefPoint) {
-            self.0
-                .set_position
-                .map(|f| unsafe { f(self.0.get_this(), position) })
+            set_position.map(|f| unsafe { f(self.get_this(), position) })
         }
 
         /// See [cef_view_t::set_insets]
         fn set_insets(&mut self, inset: &crate::CefInsets) {
-            self.0
-                .set_insets
-                .map(|f| unsafe { f(self.0.get_this(), inset) })
+            set_insets.map(|f| unsafe { f(self.get_this(), inset) })
         }
         /// See [cef_view_t::get_insets]
         fn get_insets(&self) -> crate::CefInsets;
@@ -218,46 +206,34 @@ impl CefView {
 
         /// See [cef_view_t::convert_point_to_screen]
         fn convert_point_to_screen(&self, point: &mut crate::CefPoint) -> bool {
-            self.0
-                .convert_point_to_screen
-                .map(|f| unsafe { f(self.0.get_this(), std::ptr::from_mut(point)) == 1 })
+            convert_point_to_screen
+                .map(|f| unsafe { f(self.get_this(), std::ptr::from_mut(point)) == 1 })
         }
         /// See [cef_view_t::convert_point_from_screen]
         fn convert_point_from_screen(&self, point: &mut crate::CefPoint) -> bool {
-            self.0
-                .convert_point_from_screen
-                .map(|f| unsafe { f(self.0.get_this(), std::ptr::from_mut(point)) == 1 })
+            convert_point_from_screen
+                .map(|f| unsafe { f(self.get_this(), std::ptr::from_mut(point)) == 1 })
         }
         /// See [cef_view_t::convert_point_to_window]
         fn convert_point_to_window(&self, point: &mut crate::CefPoint) -> bool {
-            self.0
-                .convert_point_to_window
-                .map(|f| unsafe { f(self.0.get_this(), std::ptr::from_mut(point)) == 1 })
+            convert_point_to_window
+                .map(|f| unsafe { f(self.get_this(), std::ptr::from_mut(point)) == 1 })
         }
         /// See [cef_view_t::convert_point_from_window]
         fn convert_point_from_window(&self, point: &mut crate::CefPoint) -> bool {
-            self.0
-                .convert_point_from_window
-                .map(|f| unsafe { f(self.0.get_this(), std::ptr::from_mut(point)) == 1 })
+            convert_point_from_window
+                .map(|f| unsafe { f(self.get_this(), std::ptr::from_mut(point)) == 1 })
         }
         /// See [cef_view_t::convert_point_to_view]
         fn convert_point_to_view(&self, point: &mut crate::CefPoint, view: CefView) -> bool {
-            self.0.convert_point_to_view.map(|f| unsafe {
-                f(
-                    self.0.get_this(),
-                    view.0.get_this(),
-                    std::ptr::from_mut(point),
-                ) == 1
+            convert_point_to_view.map(|f| unsafe {
+                f(self.get_this(), view.get_this(), std::ptr::from_mut(point)) == 1
             })
         }
         /// See [cef_view_t::convert_point_from_view]
         fn convert_point_from_view(&self, point: &mut crate::CefPoint, view: CefView) -> bool {
-            self.0.convert_point_from_view.map(|f| unsafe {
-                f(
-                    self.0.get_this(),
-                    view.0.get_this(),
-                    std::ptr::from_mut(point),
-                ) == 1
+            convert_point_from_view.map(|f| unsafe {
+                f(self.get_this(), view.get_this(), std::ptr::from_mut(point)) == 1
             })
         }
     );
@@ -329,9 +305,9 @@ pub(crate) extern "C" fn on_parent_view_changed<I: ViewDelegate>(
     parent: *mut cef_view_t,
 ) {
     let obj: &mut RcImpl<_, I> = RcImpl::get(this);
-    let view = unsafe { CefView::from_raw(view) };
+    let view = CefView::from(view);
     let added = added != 0;
-    let parent = unsafe { CefView::from_raw(parent) };
+    let parent = CefView::from(parent);
     obj.interface.on_child_view_changed(view, added, parent);
 }
 
@@ -342,9 +318,9 @@ pub(crate) extern "C" fn on_child_view_changed<I: ViewDelegate>(
     child: *mut cef_view_t,
 ) {
     let obj: &mut RcImpl<_, I> = RcImpl::get(this);
-    let view = unsafe { CefView::from_raw(view) };
+    let view = CefView::from(view);
     let added = added != 0;
-    let child = unsafe { CefView::from_raw(child) };
+    let child = CefView::from(child);
     obj.interface.on_child_view_changed(view, added, child);
 }
 
@@ -354,7 +330,7 @@ pub(crate) extern "C" fn on_window_changed<I: ViewDelegate>(
     added: c_int,
 ) {
     let obj: &mut RcImpl<_, I> = RcImpl::get(this);
-    let view = unsafe { CefView::from_raw(view) };
+    let view = CefView::from(view);
     let added = added != 0;
     obj.interface.on_window_changed(view, added);
 }

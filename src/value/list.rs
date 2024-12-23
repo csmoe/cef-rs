@@ -11,7 +11,7 @@ impl CefListValue {
         if ptr.is_null() {
             Err(crate::error::Error::NullPtr)
         } else {
-            Ok(unsafe { CefListValue::from_raw(ptr) })
+            Ok(CefListValue::from(ptr))
         }
     }
 
@@ -27,26 +27,22 @@ impl CefListValue {
 
         /// See [cef_list_value_t::is_same]
         fn is_same(&self, that: CefListValue) -> bool {
-            self.0
-                .is_same
-                .map(|f| unsafe { f(self.0.get_this(), that.0.into_raw()) == 1 })
+            is_same.map(|f| unsafe { f(self.get_this(), that.into_raw()) == 1 })
         }
 
         /// See [cef_list_value_t::is_equal]
         fn is_equal(&self, that: CefListValue) -> bool {
-            self.0
-                .is_equal
-                .map(|f| unsafe { f(self.0.get_this(), that.0.into_raw()) == 1 })
+            is_equal.map(|f| unsafe { f(self.get_this(), that.into_raw()) == 1 })
         }
 
         /// See [cef_list_value_t::copy]
         fn copy(&self) -> CefListValue {
-            self.0.copy.and_then(|f| unsafe {
-                let l = f(self.0.get_this());
+            copy.and_then(|f| unsafe {
+                let l = f(self.get_this());
                 if l.is_null() {
                     None
                 } else {
-                    Some(CefListValue::from_raw(l))
+                    Some(CefListValue::from(l))
                 }
             })
         }
@@ -68,12 +64,12 @@ impl CefListValue {
 
         /// See [cef_list_value_t::get_value]
         fn get_value(&self, index: usize) -> crate::CefValue {
-            self.0.get_value.and_then(|f| unsafe {
-                let v = f(self.0.get_this(), index);
+            get_value.and_then(|f| unsafe {
+                let v = f(self.get_this(), index);
                 if v.is_null() {
                     None
                 } else {
-                    Some(crate::CefValue::from_raw(v))
+                    Some(crate::CefValue::from(v))
                 }
             })
         }
@@ -89,52 +85,49 @@ impl CefListValue {
 
         /// See [cef_list_value_t::get_string]
         fn get_string(&self, index: usize) -> CefString {
-            self.0
-                .get_string
-                .and_then(|f| unsafe { CefString::from_userfree_cef(f(self.0.get_this(), index)) })
+            get_string
+                .and_then(|f| unsafe { CefString::from_userfree_cef(f(self.get_this(), index)) })
         }
 
         /// See [cef_list_value_t::get_binary]
         fn get_binary(&self, index: usize) -> crate::CefBinaryValue {
-            self.0.get_binary.and_then(|f| unsafe {
-                let v = f(self.0.get_this(), index);
+            get_binary.and_then(|f| unsafe {
+                let v = f(self.get_this(), index);
                 if v.is_null() {
                     None
                 } else {
-                    Some(crate::CefBinaryValue::from_raw(v))
+                    Some(crate::CefBinaryValue::from(v))
                 }
             })
         }
 
         /// See [cef_list_value_t::get_dictionary]
         fn get_dictionary(&self, index: usize) -> crate::CefDictionaryValue {
-            self.0.get_dictionary.and_then(|f| unsafe {
-                let v = f(self.0.get_this(), index);
+            get_dictionary.and_then(|f| unsafe {
+                let v = f(self.get_this(), index);
                 if v.is_null() {
                     None
                 } else {
-                    Some(crate::CefDictionaryValue::from_raw(v))
+                    Some(crate::CefDictionaryValue::from(v))
                 }
             })
         }
 
         /// See [cef_list_value_t::get_list]
         fn get_list(&self, index: usize) -> CefListValue {
-            self.0.get_list.and_then(|f| unsafe {
-                let v = f(self.0.get_this(), index);
+            get_list.and_then(|f| unsafe {
+                let v = f(self.get_this(), index);
                 if v.is_null() {
                     None
                 } else {
-                    Some(CefListValue::from_raw(v))
+                    Some(CefListValue::from(v))
                 }
             })
         }
 
         /// See [cef_list_value_t::set_value]
         fn set_value(&self, index: usize, value: crate::CefValue) -> bool {
-            self.0
-                .set_value
-                .map(|f| unsafe { f(self.0.get_this(), index, value.into_raw()) == 1 })
+            set_value.map(|f| unsafe { f(self.get_this(), index, value.into_raw()) == 1 })
         }
 
         /// See [cef_list_value_t::set_null]
@@ -151,8 +144,8 @@ impl CefListValue {
 
         /// See [cef_list_value_t::set_string]
         fn set_string(&self, index: usize, value: &str) -> bool {
-            self.0.set_string.map(|f| unsafe {
-                f(self.0.get_this(), index, &CefString::from(value).as_raw()) == 1
+            set_string.map(|f| unsafe {
+                f(self.get_this(), index, &CefString::from(value).as_raw()) == 1
             })
         }
 

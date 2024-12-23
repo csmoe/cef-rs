@@ -19,7 +19,7 @@ impl CefValue {
         if ptr.is_null() {
             Err(Error::NullPtr)
         } else {
-            Ok(unsafe { CefValue::from_raw(ptr) })
+            Ok(CefValue::from(ptr))
         }
     }
 }
@@ -37,26 +37,22 @@ impl CefValue {
 
         /// See [cef_value_t::is_same]
         fn is_same(&self, that: CefValue) -> bool {
-            self.0
-                .is_same
-                .map(|f| unsafe { f(self.0.get_this(), that.0.into_raw()) == 1 })
+            is_same.map(|f| unsafe { f(self.get_this(), that.into_raw()) == 1 })
         }
 
         /// See [cef_value_t::is_equal]
         fn is_equal(&self, that: CefValue) -> bool {
-            self.0
-                .is_equal
-                .map(|f| unsafe { f(self.0.get_this(), that.0.into_raw()) == 1 })
+            is_equal.map(|f| unsafe { f(self.get_this(), that.into_raw()) == 1 })
         }
 
         /// See [cef_value_t::copy]
         fn copy(&self) -> CefValue {
-            self.0.copy.and_then(|f| unsafe {
-                let v = f(self.0.get_this());
+            copy.and_then(|f| unsafe {
+                let v = f(self.get_this());
                 if v.is_null() {
                     None
                 } else {
-                    Some(CefValue::from_raw(v))
+                    Some(CefValue::from(v))
                 }
             })
         }
@@ -75,43 +71,41 @@ impl CefValue {
 
         /// See [cef_value_t::get_string]
         fn get_string(&self) -> CefString {
-            self.0
-                .get_string
-                .and_then(|f| unsafe { CefString::from_userfree_cef(f(self.0.get_this())) })
+            get_string.and_then(|f| unsafe { CefString::from_userfree_cef(f(self.get_this())) })
         }
 
         /// See [cef_value_t::get_binary]
         fn get_binary(&self) -> crate::CefBinaryValue {
-            self.0.get_binary.and_then(|f| unsafe {
-                let ptr = f(self.0.get_this());
+            get_binary.and_then(|f| unsafe {
+                let ptr = f(self.get_this());
                 if ptr.is_null() {
                     None
                 } else {
-                    Some(crate::CefBinaryValue::from_raw(ptr))
+                    Some(crate::CefBinaryValue::from(ptr))
                 }
             })
         }
 
         /// See [cef_value_t::get_dictionary]
         fn get_dictionary(&self) -> crate::CefDictionaryValue {
-            self.0.get_dictionary.and_then(|f| unsafe {
-                let ptr = f(self.0.get_this());
+            get_dictionary.and_then(|f| unsafe {
+                let ptr = f(self.get_this());
                 if ptr.is_null() {
                     None
                 } else {
-                    Some(crate::CefDictionaryValue::from_raw(ptr))
+                    Some(crate::CefDictionaryValue::from(ptr))
                 }
             })
         }
 
         /// See [cef_value_t::get_list]
         fn get_list(&self) -> crate::CefListValue {
-            self.0.get_list.and_then(|f| unsafe {
-                let ptr = f(self.0.get_this());
+            get_list.and_then(|f| unsafe {
+                let ptr = f(self.get_this());
                 if ptr.is_null() {
                     None
                 } else {
-                    Some(crate::CefListValue::from_raw(ptr))
+                    Some(crate::CefListValue::from(ptr))
                 }
             })
         }
@@ -130,9 +124,7 @@ impl CefValue {
 
         /// See [cef_value_t::set_string]
         fn set_string(&self, value: &str) -> bool {
-            self.0
-                .set_string
-                .map(|f| unsafe { f(self.0.get_this(), &CefString::from(value).as_raw()) == 1 })
+            set_string.map(|f| unsafe { f(self.get_this(), &CefString::from(value).as_raw()) == 1 })
         }
 
         /// See [cef_value_t::set_binary]
@@ -140,16 +132,12 @@ impl CefValue {
 
         /// See [cef_value_t::set_dictionary]
         fn set_dictionary(&self, value: crate::CefDictionaryValue) -> bool {
-            self.0
-                .set_dictionary
-                .map(|f| unsafe { f(self.0.get_this(), value.into_raw()) == 1 })
+            set_dictionary.map(|f| unsafe { f(self.get_this(), value.into_raw()) == 1 })
         }
 
         /// See [cef_value_t::set_list]
         fn set_list(&self, value: crate::CefListValue) -> bool {
-            self.0
-                .set_list
-                .map(|f| unsafe { f(self.0.get_this(), value.into_raw()) == 1 })
+            set_list.map(|f| unsafe { f(self.get_this(), value.into_raw()) == 1 })
         }
     );
 }

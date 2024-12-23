@@ -139,8 +139,6 @@ pub trait CefRenderHandler: Sized {
 
     #[doc(hidden)]
     fn into_raw(self) -> *mut cef_render_handler_t {
-        let mut object: cef_render_handler_t = unsafe { std::mem::zeroed() };
-
         unsafe extern "C" fn get_accessibility_handler<I: CefRenderHandler>(
             self_: *mut _cef_render_handler_t,
         ) -> *mut _cef_accessibility_handler_t {
@@ -154,7 +152,7 @@ pub trait CefRenderHandler: Sized {
             rect: *mut cef_rect_t,
         ) -> ::std::os::raw::c_int {
             let object: &crate::rc::RcImpl<_, I> = crate::rc::RcImpl::get(self_);
-            let browser = crate::CefBrowser::from_raw(browser);
+            let browser = crate::CefBrowser::from(browser);
             // FIXME
             let result = object.interface.get_root_screen_rect(browser, &mut *rect);
             result as i32
@@ -166,7 +164,7 @@ pub trait CefRenderHandler: Sized {
             rect: *mut cef_rect_t,
         ) {
             let object: &crate::rc::RcImpl<_, I> = crate::rc::RcImpl::get(self_);
-            let browser = crate::CefBrowser::from_raw(browser);
+            let browser = crate::CefBrowser::from(browser);
             object.interface.get_view_rect(browser, &mut *rect);
         }
 
@@ -179,7 +177,7 @@ pub trait CefRenderHandler: Sized {
             screen_y: *mut ::std::os::raw::c_int,
         ) -> ::std::os::raw::c_int {
             let object: &crate::rc::RcImpl<_, I> = crate::rc::RcImpl::get(self_);
-            let browser = crate::CefBrowser::from_raw(browser);
+            let browser = crate::CefBrowser::from(browser);
             let result = object.interface.get_screen_point(
                 browser,
                 view_x,
@@ -196,7 +194,7 @@ pub trait CefRenderHandler: Sized {
             screen_info: *mut cef_screen_info_t,
         ) -> ::std::os::raw::c_int {
             let object: &crate::rc::RcImpl<_, I> = crate::rc::RcImpl::get(self_);
-            let browser = crate::CefBrowser::from_raw(browser);
+            let browser = crate::CefBrowser::from(browser);
             object.interface.get_screen_info(browser, &mut *screen_info) as i32
         }
 
@@ -206,7 +204,7 @@ pub trait CefRenderHandler: Sized {
             show: ::std::os::raw::c_int,
         ) {
             let object: &crate::rc::RcImpl<_, I> = crate::rc::RcImpl::get(self_);
-            let browser = crate::CefBrowser::from_raw(browser);
+            let browser = crate::CefBrowser::from(browser);
             object.interface.on_popup_show(browser, show != 0);
         }
 
@@ -216,7 +214,7 @@ pub trait CefRenderHandler: Sized {
             rect: *const cef_rect_t,
         ) {
             let object: &crate::rc::RcImpl<_, I> = crate::rc::RcImpl::get(self_);
-            let browser = crate::CefBrowser::from_raw(browser);
+            let browser = crate::CefBrowser::from(browser);
             object.interface.on_popup_size(browser, &*rect);
         }
 
@@ -231,7 +229,7 @@ pub trait CefRenderHandler: Sized {
             height: ::std::os::raw::c_int,
         ) {
             let object: &crate::rc::RcImpl<_, I> = crate::rc::RcImpl::get(self_);
-            let browser = crate::CefBrowser::from_raw(browser);
+            let browser = crate::CefBrowser::from(browser);
             let dirty_rects = std::slice::from_raw_parts(dirty_rects, dirty_rects_count);
             let buffer =
                 std::slice::from_raw_parts(buffer as *const u8, (width * height * 4) as usize);
@@ -249,7 +247,7 @@ pub trait CefRenderHandler: Sized {
             shared_handle: *const cef_accelerated_paint_info_t,
         ) {
             let object: &crate::rc::RcImpl<_, I> = crate::rc::RcImpl::get(self_);
-            let browser = crate::CefBrowser::from_raw(browser);
+            let browser = crate::CefBrowser::from(browser);
             let dirty_rects = std::slice::from_raw_parts(dirty_rects, dirty_rects_count);
             object
                 .interface
@@ -263,7 +261,7 @@ pub trait CefRenderHandler: Sized {
             size: *mut cef_size_t,
         ) {
             let object: &crate::rc::RcImpl<_, I> = crate::rc::RcImpl::get(self_);
-            let browser = crate::CefBrowser::from_raw(browser);
+            let browser = crate::CefBrowser::from(browser);
             object
                 .interface
                 .get_touch_handle_size(browser, orientation, &mut *size);
@@ -275,7 +273,7 @@ pub trait CefRenderHandler: Sized {
             state: *const cef_touch_handle_state_t,
         ) {
             let object: &crate::rc::RcImpl<_, I> = crate::rc::RcImpl::get(self_);
-            let browser = crate::CefBrowser::from_raw(browser);
+            let browser = crate::CefBrowser::from(browser);
             object
                 .interface
                 .on_touch_handle_state_changed(browser, &*state);
@@ -290,7 +288,7 @@ pub trait CefRenderHandler: Sized {
             y: ::std::os::raw::c_int,
         ) -> ::std::os::raw::c_int {
             let object: &crate::rc::RcImpl<_, I> = crate::rc::RcImpl::get(self_);
-            let browser = crate::CefBrowser::from_raw(browser);
+            let browser = crate::CefBrowser::from(browser);
             object
                 .interface
                 // FIXME
@@ -303,7 +301,7 @@ pub trait CefRenderHandler: Sized {
             operation: cef_drag_operations_mask_t,
         ) {
             let object: &crate::rc::RcImpl<_, I> = crate::rc::RcImpl::get(self_);
-            let browser = crate::CefBrowser::from_raw(browser);
+            let browser = crate::CefBrowser::from(browser);
             object.interface.update_drag_cursor(browser, operation);
         }
 
@@ -314,7 +312,7 @@ pub trait CefRenderHandler: Sized {
             y: f64,
         ) {
             let object: &crate::rc::RcImpl<_, I> = crate::rc::RcImpl::get(self_);
-            let browser = crate::CefBrowser::from_raw(browser);
+            let browser = crate::CefBrowser::from(browser);
             object.interface.on_scroll_offset_changed(browser, x, y);
         }
 
@@ -326,7 +324,7 @@ pub trait CefRenderHandler: Sized {
             character_bounds: *const cef_rect_t,
         ) {
             let object: &crate::rc::RcImpl<_, I> = crate::rc::RcImpl::get(self_);
-            let browser = crate::CefBrowser::from_raw(browser);
+            let browser = crate::CefBrowser::from(browser);
             let character_bounds =
                 std::slice::from_raw_parts(character_bounds, character_bounds_count);
             object.interface.on_ime_composition_range_changed(
@@ -343,7 +341,7 @@ pub trait CefRenderHandler: Sized {
             selected_range: *const cef_range_t,
         ) {
             let object: &crate::rc::RcImpl<_, I> = crate::rc::RcImpl::get(self_);
-            let browser = crate::CefBrowser::from_raw(browser);
+            let browser = crate::CefBrowser::from(browser);
             let selected_text = crate::CefString::from_raw(selected_text).unwrap_or_default();
             object
                 .interface
@@ -356,12 +354,13 @@ pub trait CefRenderHandler: Sized {
             input_mode: cef_text_input_mode_t,
         ) {
             let object: &crate::rc::RcImpl<_, I> = crate::rc::RcImpl::get(self_);
-            let browser = crate::CefBrowser::from_raw(browser);
+            let browser = crate::CefBrowser::from(browser);
             object
                 .interface
                 .on_virtual_keyboard_requested(browser, input_mode);
         }
 
+        let mut object: cef_render_handler_t = unsafe { std::mem::zeroed() };
         object.get_accessibility_handler = Some(get_accessibility_handler::<Self>);
         object.get_root_screen_rect = Some(get_root_screen_rect::<Self>);
         object.get_view_rect = Some(get_view_rect::<Self>);

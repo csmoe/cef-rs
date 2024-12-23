@@ -41,20 +41,18 @@ impl CefFrame {
         ///fn get_text(&self, visitor: crate::StringVisitor);
 
         /// See [cef_frame_t::load_request]
-        fn load_request(&self, request: crate::net::Request);
+        fn load_request(&self, request: crate::net::CefRequest);
 
         /// See [cef_frame_t::load_url]
         fn load_url(&self, url: &str) {
-            self.0
-                .load_url
-                .map(|f| unsafe { f(self.0.get_this(), &CefString::from(url).as_raw()) })
+            load_url.map(|f| unsafe { f(self.get_this(), &CefString::from(url).as_raw()) })
         }
 
         /// See [cef_frame_t::execute_java_script]
         fn execute_java_script(&self, code: &str, script_url: &str, start_line: i32) {
-            self.0.execute_java_script.map(|f| unsafe {
+            execute_java_script.map(|f| unsafe {
                 f(
-                    self.0.get_this(),
+                    self.get_this(),
                     &CefString::from(code).as_raw(),
                     &CefString::from(script_url).as_raw(),
                     start_line,
@@ -70,57 +68,51 @@ impl CefFrame {
 
         /// See [cef_frame_t::get_name]
         fn get_name(&self) -> CefString {
-            self.0
-                .get_name
-                .and_then(|f| unsafe { CefString::from_userfree_cef(f(self.0.get_this())) })
+            get_name.and_then(|f| unsafe { CefString::from_userfree_cef(f(self.get_this())) })
         }
 
         /// See [cef_frame_t::get_identifier]
         fn get_identifier(&self) -> CefString {
-            self.0
-                .get_identifier
-                .and_then(|f| unsafe { CefString::from_userfree_cef(f(self.0.get_this())) })
+            get_identifier.and_then(|f| unsafe { CefString::from_userfree_cef(f(self.get_this())) })
         }
 
         /// See [cef_frame_t::get_parent]
         fn get_parent(&self) -> CefFrame {
-            self.0.get_parent.and_then(|f| unsafe {
-                let f = f(self.0.get_this());
+            get_parent.and_then(|f| unsafe {
+                let f = f(self.get_this());
                 if f.is_null() {
                     None
                 } else {
-                    Some(CefFrame::from_raw(f))
+                    Some(CefFrame::from(f))
                 }
             })
         }
 
         /// See [cef_frame_t::get_url]
         fn get_url(&self) -> CefString {
-            self.0
-                .get_url
-                .and_then(|f| unsafe { CefString::from_userfree_cef(f(self.0.get_this())) })
+            get_url.and_then(|f| unsafe { CefString::from_userfree_cef(f(self.get_this())) })
         }
 
         /// See [cef_frame_t::get_browser]
         fn get_browser(&self) -> crate::CefBrowser {
-            self.0.get_browser.and_then(|f| unsafe {
-                let f = f(self.0.get_this());
+            get_browser.and_then(|f| unsafe {
+                let f = f(self.get_this());
                 if f.is_null() {
                     None
                 } else {
-                    Some(crate::CefBrowser::from_raw(f))
+                    Some(crate::CefBrowser::from(f))
                 }
             })
         }
 
         // See [cef_frame_t::get_v8context]
         fn get_v8context(&self) -> crate::v8::CefV8Context {
-            self.0.get_v8context.and_then(|f| unsafe {
-                let f = f(self.0.get_this());
+            get_v8context.and_then(|f| unsafe {
+                let f = f(self.get_this());
                 if f.is_null() {
                     None
                 } else {
-                    Some(crate::v8::CefV8Context::from_raw(f))
+                    Some(crate::v8::CefV8Context::from(f))
                 }
             })
         }
@@ -141,9 +133,8 @@ impl CefFrame {
             target_process: crate::CefProcessId,
             message: crate::CefProcessMessage,
         ) {
-            self.0
-                .send_process_message
-                .map(|f| unsafe { f(self.0.get_this(), target_process, message.into_raw()) })
+            send_process_message
+                .map(|f| unsafe { f(self.get_this(), target_process, message.into_raw()) })
         }
     );
 }

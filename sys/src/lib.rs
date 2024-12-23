@@ -8,6 +8,8 @@ pub use cef_wrapper_macro::FfiRc;
 /// A marker trait for cef types that are reference counted(contains a [cef_base_ref_counted_t] or nested [cef_base_ref_counted_t]).
 pub trait FfiRc {}
 
+impl<T: FfiRc> FfiRc for core::ptr::NonNull<T> {}
+
 impl Default for cef_string_utf16_t {
     fn default() -> Self {
         Self {

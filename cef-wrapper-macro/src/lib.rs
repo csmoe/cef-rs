@@ -59,12 +59,24 @@ pub fn wrapper_methods(input: TokenStream) -> TokenStream {
         let args = quote! { #(#args,)* };
 
         let block = if let Some(block) = func.default.clone() {
-            quote! { #block }
+            quote! {{
+                let Some(inner) = &self.0 else { return None; };
+                let #name = inner.#name;
+                #block
+            }}
         } else {
-            let mut block = quote! {{ unsafe { self.0.#name.map(|f| f(self.0.get_this(), #args)) }}};
+            let mut block = quote! {{ unsafe {
+                    let Some(inner) = &self.0 else { return None; };
+                    inner.#name.map(|f| f(self.get_this(), #args))
+                }}
+            };
             if let Some(syn::Type::Path(TypePath { path, .. })) = ty {
                 if path.is_ident("bool") {
-                    block = quote! {{ unsafe { self.0.#name.map(|f| f(self.0.get_this(), #args) == 1) }}};
+                    block = quote! {{ unsafe {
+                            let Some(inner) = &self.0 else { return None; };
+                            inner.#name.map(|f| f(self.get_this(), #args) == 1)
+                        }}
+                    };
                 }
             }
             block
@@ -146,23 +158,27 @@ pub fn wrapper(_attr: TokenStream, item: TokenStream) -> TokenStream {
 
     let expanded = quote! {
         #(#attrs)*
-        pub struct #name(pub(crate) crate::rc::RefGuard<#sys>);
+        #[repr(transparent)]
+        pub struct #name(pub(crate) Option<crate::rc::RefGuard<#sys>>);
 
         impl crate::rc::Rc for #sys {
             fn as_base(&self) -> &cef_sys::cef_base_ref_counted_t {
-                &self.base.as_base()
+                unsafe { core::mem::transmute(self) }
             }
         }
 
         impl crate::rc::Rc for #name {
             fn as_base(&self) -> &cef_sys::cef_base_ref_counted_t {
-                self.0.as_base()
+                unsafe { core::mem::transmute(self) }
             }
         }
 
         impl From<*mut #sys> for #name {
             fn from(ptr: *mut #sys) -> Self {
-                unsafe { #name(crate::rc::RefGuard::from_raw(ptr)) }
+                let inner = core::ptr::NonNull::new(ptr);
+                unsafe {
+                    Self(inner.map(|p| Self::from_raw(p)))
+                }
             }
         }
 
@@ -180,13 +196,21 @@ pub fn wrapper(_attr: TokenStream, item: TokenStream) -> TokenStream {
 
         impl #name {
             #[allow(clippy::missing_safety_doc)]
-            pub unsafe fn from_raw(ptr: *mut #sys) -> Self {
-                Self(crate::rc::RefGuard::from_raw(ptr))
+            pub unsafe fn from_raw(ptr: core::ptr::NonNull<#sys>) -> crate::rc::RefGuard<#sys> {
+                crate::rc::RefGuard::from_raw(ptr)
             }
 
             #[allow(clippy::missing_safety_doc)]
             pub unsafe fn into_raw(self) -> *mut #sys {
-                self.0.into_raw()
+                let Some(inner) = self.0 else { return core::ptr::null_mut(); };
+                inner.into_raw()
+            }
+
+            pub unsafe fn get_this(&self) -> *mut #sys {
+                match &self.0 {
+                    Some(s) => s.get_this(),
+                    None => std::ptr::null_mut()
+                }
             }
         }
     };

@@ -58,7 +58,7 @@ impl CefCommandLine {
         if ptr.is_null() {
             return Err(Error::NullPtr);
         }
-        Ok(unsafe { CefCommandLine::from_raw(ptr) })
+        Ok(CefCommandLine::from(ptr))
     }
 
     pub fn process_type(&self) -> CefProcessType {
@@ -77,35 +77,36 @@ impl CefCommandLine {
         /// See [cef_command_line_t::init_from_argv]
         #[cfg(not(target_os = "windows"))]
         fn init_from_argv(&mut self, args: &mut crate::CefArgs) {
-            let Ok(args) = args.as_raw() else { return None };
-            self.0.init_from_argv.map(|f| unsafe { f(self.0.get_this(), args.argc, args.argv.cast()) })
+            let Ok(args) = args.as_raw() else { return None; };
+             init_from_argv.map(|f| unsafe { f(self.get_this(), args.argc, args.argv.cast()) })
         }
 
+        /// See [cef_command_line_t::init_from_string]
         #[cfg(target_os = "windows")]
         fn init_from_string(&mut self, args: &str) {
             let args = CefString::from(args);
-            self.0.init_from_string.map(|f| unsafe { f(self.0.get_this(), &args.as_raw()) })
+             init_from_string.map(|f| unsafe { f(self.get_this(), &args.as_raw()) })
         }
 
         /// See [cef_command_line_t::get_command_line_string]
         fn get_command_line_string(&self) -> CefString {
-            self.0.get_command_line_string.and_then(|f| unsafe { CefString::from_userfree_cef(f(self.0.get_this())) })
+             get_command_line_string.and_then(|f| unsafe { CefString::from_userfree_cef(f(self.get_this())) })
         }
 
         /// See [cef_command_line_t::append_switch]
         fn append_switch(&self, switch_name: &str) {
             unsafe {
                 let switch_name = CefString::from(&switch_name);
-                let Some(f) = self.0.append_switch else { return None };
-                f(self.0.get_this(), &switch_name.as_raw());
+                let Some(f) =  append_switch else { return None };
+                f(self.get_this(), &switch_name.as_raw());
                 Some(())
             }
         }
 
         /// See [cef_command_line_t::get_switch_value]
         fn get_switch_value(&self, switch_name: &str) -> CefString {
-            self.0.get_switch_value.and_then(|f| unsafe {
-                CefString::from_userfree_cef(f(self.0.get_this(), &CefString::from(&switch_name).as_raw()))
+             get_switch_value.and_then(|f| unsafe {
+                CefString::from_userfree_cef(f(self.get_this(), &CefString::from(&switch_name).as_raw()))
             })
         }
 
@@ -113,8 +114,8 @@ impl CefCommandLine {
         fn has_switch(&self, switch_name: &str) -> bool {
             unsafe {
                 let switch_name = CefString::from(&switch_name);
-                let Some(f) = self.0.has_switch else { return false.into() };
-                let has = f(self.0.get_this(), &switch_name.as_raw()) == 1;
+                let Some(f) =  has_switch else { return false.into() };
+                let has = f(self.get_this(), &switch_name.as_raw()) == 1;
                 has.into()
             }
         }

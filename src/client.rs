@@ -9,6 +9,7 @@ use crate::{rc::RcImpl, CefBrowser};
 pub trait CefClient: Sized {
     type LifeSpan: CefLifeSpanHandler;
     type Render: CefRenderHandler;
+    type ContextMenu: CefContextMenuHandler;
 
     /// See [cef_client_t::get_life_span_handler]
     fn get_life_span_handler(&self) -> Option<Self::LifeSpan> {
@@ -17,6 +18,11 @@ pub trait CefClient: Sized {
 
     /// See [cef_client_t::get_render_handler]
     fn get_render_handler(&self) -> Option<Self::Render> {
+        None
+    }
+
+    /// See [cef_client_t::get_request_handler]
+    fn get_context_menu_handler(&self) -> Option<Self::ContextMenu> {
         None
     }
     /*
@@ -30,10 +36,7 @@ pub trait CefClient: Sized {
             None
         }
 
-        /// See [cef_client_t::get_request_handler]
-        fn get_context_menu_handler(&self) -> Option<ContextMenuHandler> {
-            None
-        }
+
 
         /// See [cef_client_t::get_request_handler]
         fn get_dialog_handler<I: DialogHandler>(&self) -> Option<I> {
@@ -132,7 +135,7 @@ pub trait CefClient: Sized {
         //object.get_request_handler = Some(get_request_handler::<Self, H>);
         //object.get_download_handler = Some(get_download_handler::<Self, H>);
         //object.get_permission_handler = Some(get_permission_handler::<Self, H>);
-        //object.get_context_menu_handler = Some(get_context_menu_handler::<Self, H>);
+        object.get_context_menu_handler = Some(get_context_menu_handler::<Self>);
 
         RcImpl::new(object, self).cast()
     }
@@ -313,6 +316,17 @@ unsafe extern "C" fn get_life_span_handler<I: CefClient>(
         .map(|h| h.into_raw())
         .unwrap_or(core::ptr::null_mut())
 }
+
+pub(crate) unsafe extern "C" fn get_context_menu_handler<I: CefClient>(
+    self_: *mut cef_sys::cef_client_t,
+) -> *mut cef_sys::cef_context_menu_handler_t {
+    let obj: &mut RcImpl<_, I> = RcImpl::get(self_);
+    obj.interface
+        .get_context_menu_handler()
+        .map(|h| h.into_raw())
+        .unwrap_or(core::ptr::null_mut())
+}
+
 /*
 pub(crate) unsafe extern "C" fn get_audio_handler<I: CefClient>(
     self_: *mut cef_sys::cef_client_t,
@@ -384,15 +398,7 @@ pub(crate) unsafe extern "C" fn get_command_handler<I: CefClient>(
         .unwrap_or(core::ptr::null_mut())
 }
 
-pub(crate) unsafe extern "C" fn get_context_menu_handler<I: CefClient>(
-    self_: *mut cef_sys::cef_client_t,
-) -> *mut cef_sys::cef_context_menu_handler_t {
-    let obj: &mut RcImpl<_, I> = RcImpl::get(self_);
-    obj.interface
-        .get_context_menu_handler()
-        .map(|h| h.into_raw())
-        .unwrap_or(core::ptr::null_mut())
-}
+
 
 pub(crate) unsafe extern "C" fn get_dialog_handler<I: CefClient, H: DialogHandler>(
     self_: *mut cef_sys::cef_client_t,

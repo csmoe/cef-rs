@@ -5,9 +5,9 @@ use cef_wrapper_macro::wrapper;
 #[wrapper]
 /// See [cef_scroll_view_t] for more documentation.
 #[derive(Debug, Clone)]
-pub struct ScrollView(cef_scroll_view_t);
+pub struct CefScrollView(cef_scroll_view_t);
 
-impl ScrollView {
+impl CefScrollView {
     /// See [cef_sys::cef_scroll_view_create]
     pub fn create(delegate: impl ViewDelegate) -> Result<Self> {
         unsafe {
@@ -15,20 +15,20 @@ impl ScrollView {
             if view.is_null() {
                 return Err(Error::NullPtr);
             }
-            Ok(Self::from_raw(view))
+            Ok(Self::from(view))
         }
     }
 }
 
-impl ScrollView {
+impl CefScrollView {
     wrapper_methods!(
         /// See [cef_scroll_view_t::set_content_view]
         fn set_content_view(&mut self, view: crate::CefView);
         /// See [cef_scroll_view_t::get_content_view]
         fn get_content_view(&self) -> crate::CefView {
-            self.0.get_content_view.map(|f| unsafe {
-                let view = f(self.0.get_this());
-                crate::CefView::from_raw(view)
+            get_content_view.map(|f| unsafe {
+                let view = f(self.get_this());
+                crate::CefView::from(view)
             })
         }
         /// See [cef_scroll_view_t::get_visible_content_rect]

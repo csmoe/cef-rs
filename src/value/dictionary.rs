@@ -11,7 +11,7 @@ impl CefDictionaryValue {
         if ptr.is_null() {
             Err(crate::error::Error::NullPtr)
         } else {
-            Ok(unsafe { CefDictionaryValue::from_raw(ptr) })
+            Ok(unsafe { CefDictionaryValue::from(ptr) })
         }
     }
 }
