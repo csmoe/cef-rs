@@ -56,6 +56,24 @@ flatpak-builder --user --install --force-clean target app.example.demo.yml
 flatpak run app.example.demo
 ```
 
+### Windows
+
+#### Manual Install
+
+- Download Windows-64bit prebuilt with `sys/upgrade.rs`
+
+```sh
+cd sys
+cargo +nightly -Zscript upgrade.rs x86_64-pc-windows-msvc --download
+```
+
+- Build and run the demo with `PATH` in powershell
+
+```powershell
+$env:PATH += ';sys/cef/archive/windows/x86_64;'
+cargo run --example demo
+```
+
 ## Contributing
 
 Please see [CONTRIBUTING.md](CONTRIBUTING.md) for details.
