@@ -9,8 +9,8 @@ fn main() {
         .unwrap();
     match os.as_str() {
         "macos" => {
-            build::rustc_link_search_kind("framework", cef_link_path);
-            build::rustc_link_lib_kind("framework", "Chromium Embedded Framework");
+            build::rustc_link_search_kind("native", cef_link_path);
+            build::rustc_link_lib_kind("static", "cef_dll_wrapper");
         }
         "linux" => {
             build::rustc_link_lib_kind("dylib", "cef");

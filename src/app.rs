@@ -1,3 +1,7 @@
+use std::os::unix::ffi::OsStrExt;
+
+use camino::{Utf8Path, Utf8PathBuf};
+
 use crate::{
     args::CefArgs, command_line::CefCommandLine, error::Error, error::Result, rc::RcImpl,
     settings::CefSettings, string::CefString,
@@ -132,6 +136,46 @@ pub fn shutdown() {
 /// See [cef_do_message_loop_work] for more documentation.
 pub fn do_message_loop_work() {
     unsafe { cef_do_message_loop_work() }
+}
+
+#[cfg(target_os = "macos")]
+pub struct LibraryLoader {
+    path: std::path::PathBuf,
+}
+
+impl LibraryLoader {
+    const FRAMEWORK_PATH: &str =
+        "Chromium Embedded Framework.framework/Chromium Embedded Framework";
+
+    pub fn new(path: &std::path::Path, helper: bool) -> Self {
+        let resolver = if helper { "../../.." } else { "../Frameworks" };
+        let path = path.join(resolver).join(Self::FRAMEWORK_PATH);
+
+        Self { path }
+    }
+
+    // See [cef_load_library] for more documentation.
+    pub fn load(&self) -> Result<()> {
+        Self::load_library(&self.path)
+    }
+
+    fn load_library(name: &std::path::Path) -> Result<()> {
+        if unsafe { cef_load_library(name.as_os_str().as_bytes().as_ptr().cast()) } == 1 {
+            Ok(())
+        } else {
+            Err(Error::CannotInit(0))
+        }
+    }
+}
+
+impl Drop for LibraryLoader {
+    fn drop(&mut self) {
+        unsafe {
+            if cef_unload_library() != 1 {
+                eprintln!("cannot unload framework {}", self.path.display());
+            }
+        }
+    }
 }
 
 #[derive(Debug, Clone)]

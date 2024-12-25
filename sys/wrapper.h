@@ -1,6 +1,10 @@
 #ifndef CEF_RUST_SYS_WRAPPER_H
 #define CEF_RUST_SYS_WRAPPER_H
 
+#ifdef __APPLE__
+#include "include/wrapper/cef_library_loader.h"
+#endif
+
 #include "include/capi/cef_base_capi.h"
 #include "include/capi/cef_app_capi.h"
 

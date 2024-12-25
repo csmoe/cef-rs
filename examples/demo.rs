@@ -1,6 +1,7 @@
 use cef::{
     CefApp, CefArgs, CefBrowser, CefBrowserSettings, CefBrowserView, CefClient,
-    CefContextMenuHandler, CefSettings, CefString, PanelDelegate, ViewDelegate, WindowDelegate,
+    CefContextMenuHandler, CefSettings, CefString, LibraryLoader, PanelDelegate, ViewDelegate,
+    WindowDelegate,
 };
 
 #[derive(Debug, Clone, Copy)]
@@ -43,6 +44,10 @@ impl WindowDelegate for DemoWindow {
 }
 
 fn main() {
+    {
+        let loader = LibraryLoader::new(&std::env::current_exe().unwrap(), false);
+        loader.load().unwrap();
+    }
     let mut args = CefArgs::new(std::env::args());
     let app = Application;
     let mut settings = CefSettings::new();

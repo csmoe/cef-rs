@@ -1,4 +1,4 @@
-use cef::{CefApp, CefArgs, CefClient, CefSettings};
+use cef::{CefApp, CefArgs, CefClient, CefContextMenuHandler, CefSettings, LibraryLoader};
 
 #[derive(Debug, Clone, Copy)]
 struct Application;
@@ -14,9 +14,17 @@ struct DemoClient;
 impl CefClient for DemoClient {
     type Render = ();
     type LifeSpan = ();
+    type ContextMenu = ContextMenu;
 }
+struct ContextMenu;
+impl CefContextMenuHandler for ContextMenu {}
 
 fn main() {
+    {
+        let loader = LibraryLoader::new(&std::env::current_exe().unwrap(), true);
+        loader.load().unwrap();
+    }
+
     let mut args = CefArgs::new(std::env::args());
     let app = Application;
     let settings = CefSettings::new();
