@@ -5,7 +5,7 @@ git-fetch-with-cli = true
 CEF_PATH_macos_aarch64 = { value = "sys/cef/archive/macos/aarch64", relative = true }
 CEF_PATH_macos_x86_64 = { value = "sys/cef/archive/macos/x86_64/", relative = true }
 
-CEF_PATH_windows_x86 = { value = "sys/cef/archive/windows/i686", relative = true }
+CEF_PATH_windows_x86 = { value = "sys/cef/archive/windows/x86", relative = true }
 CEF_PATH_windows_x86_64 = { value = "sys/cef/archive/windows/x86_64" , relative = true }
 CEF_PATH_windows_aarch64 = { value = "sys/cef/archive/windows/aarch64" , relative = true }
 
