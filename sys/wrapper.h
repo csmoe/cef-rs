@@ -3,6 +3,11 @@
 
 #ifdef __APPLE__
 #include "include/wrapper/cef_library_loader.h"
+#include "include/cef_sandbox_mac.h"
+#endif
+
+#ifdef __WIN32
+#include "include/cef_sandbox_win.h"
 #endif
 
 #include "include/capi/cef_base_capi.h"

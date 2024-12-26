@@ -8,6 +8,17 @@ extern "C" {
     #[doc = "\n Unload the CEF library that was previously loaded. Returns true (1)\n on success and false (0) on failure.\n"]
     pub fn cef_unload_library() -> ::std::os::raw::c_int;
 }
+extern "C" {
+    #[doc = "\n Initialize the sandbox for this process. Returns the sandbox context\n handle on success or NULL on failure. The returned handle should be\n passed to cef_sandbox_destroy() immediately before process termination.\n"]
+    pub fn cef_sandbox_initialize(
+        argc: ::std::os::raw::c_int,
+        argv: *mut *mut ::std::os::raw::c_char,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    #[doc = "\n Destroy the specified sandbox context handle.\n"]
+    pub fn cef_sandbox_destroy(sandbox_context: *mut ::std::os::raw::c_void);
+}
 pub type uint_least16_t = u16;
 pub type __darwin_time_t = ::std::os::raw::c_long;
 pub type wchar_t = ::std::os::raw::c_int;
