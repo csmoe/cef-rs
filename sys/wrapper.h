@@ -6,7 +6,7 @@
 #include "include/cef_sandbox_mac.h"
 #endif
 
-#ifdef __WIN32
+#ifdef _WIN32
 #include "include/cef_sandbox_win.h"
 #endif
 
