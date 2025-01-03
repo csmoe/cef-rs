@@ -1,44 +1,167 @@
+use std::ops::Deref;
+use std::sync::Arc;
+
 use crate::{
     prelude::*, CefBrowserSettings, CefDictionaryValue, CefPopupFeatures, CefSettings,
     CefWindowInfo, CefWindowOpenDisposition,
 };
 use crate::{string::CefString, CefBrowser};
 
-/// See [cef_life_span_handler_t] for more docs.
-#[derive(Clone)]
-#[wrapper]
-pub struct BrowerLifeSpanHandler(cef_life_span_handler_t);
+pub struct CefLifeSpanWrapper<T: CefLifeSpanHandler> {
+    inner: Arc<T>,
+}
 
-pub trait BrowserLifeSpanCallback {
-    fn on_loading_state_change(
-        &self,
-        browser: CefBrowser,
-        is_loading: bool,
-        can_go_back: bool,
-        can_go_forward: bool,
-    );
-    fn on_load_start(
-        &self,
-        browser: CefBrowser,
-        frame: *mut cef_sys::cef_frame_t,
-        transition_type: cef_sys::cef_transition_type_t,
-    );
-    fn on_load_end(
-        &self,
-        browser: CefBrowser,
-        frame: *mut cef_sys::cef_frame_t,
-        http_status_code: i32,
-    );
-    fn on_load_error(
-        &self,
-        browser: CefBrowser,
-        frame: *mut cef_sys::cef_frame_t,
-        error_code: cef_sys::cef_errorcode_t,
-        error_text: CefString,
-        failed_url: CefString,
-    );
-    fn do_close(&self, browser: CefBrowser) -> bool;
-    fn on_before_close(&self, browser: CefBrowser);
+impl<T: CefLifeSpanHandler> Clone for CefLifeSpanWrapper<T> {
+    fn clone(&self) -> Self {
+        Self {
+            inner: self.inner.clone(),
+        }
+    }
+}
+
+impl<T: CefLifeSpanHandler> Deref for CefLifeSpanWrapper<T> {
+    type Target = T;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+
+impl<T: CefLifeSpanHandler> CefLifeSpanWrapper<T> {
+    pub fn new(inner: T) -> Self {
+        Self {
+            inner: Arc::new(inner),
+        }
+    }
+    unsafe extern "C" fn on_before_popup(
+        self_: *mut _cef_life_span_handler_t,
+        browser: *mut _cef_browser_t,
+        frame: *mut _cef_frame_t,
+        target_url: *const cef_string_t,
+        target_frame_name: *const cef_string_t,
+        target_disposition: cef_window_open_disposition_t,
+        user_gesture: ::std::os::raw::c_int,
+        popup_features: *const cef_popup_features_t,
+        window_info: *mut _cef_window_info_t,
+        client: *mut *mut _cef_client_t,
+        settings: *mut _cef_browser_settings_t,
+        extra_info: *mut *mut _cef_dictionary_value_t,
+        no_javascript_access: *mut ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int {
+        let browser = crate::CefBrowser::from(browser);
+        let frame = crate::CefFrame::from(frame);
+        let target_url = crate::CefString::from_raw(target_url);
+        let target_frame_name = crate::CefString::from_raw(target_frame_name);
+        let user_gesture = user_gesture != 0;
+        let popup_features = &*popup_features;
+        let window_info = CefWindowInfo::from_raw(window_info);
+        let client = &mut *client;
+        let settings = if settings.is_null() {
+            None
+        } else {
+            CefBrowserSettings::from_raw(*settings).into()
+        };
+        let extra_info = if extra_info.is_null() {
+            None
+        } else {
+            CefDictionaryValue::from(*extra_info).into()
+        };
+        let mut no_js_access = *no_javascript_access != 0;
+
+        let object: &crate::rc::RcImpl<_, Self> = crate::rc::RcImpl::get(self_);
+        let result = object.interface.on_before_popup(
+            browser,
+            frame,
+            target_url,
+            target_frame_name,
+            target_disposition,
+            user_gesture,
+            popup_features,
+            window_info,
+            client,
+            settings,
+            extra_info,
+            &mut no_js_access,
+        );
+
+        *no_javascript_access = if no_js_access { 1 } else { 0 };
+
+        if result {
+            1
+        } else {
+            0
+        }
+    }
+
+    unsafe extern "C" fn on_before_dev_tools_popup(
+        self_: *mut _cef_life_span_handler_t,
+        browser: *mut _cef_browser_t,
+        window_info: *mut _cef_window_info_t,
+        client: *mut *mut _cef_client_t,
+        settings: *mut _cef_browser_settings_t,
+        extra_info: *mut *mut _cef_dictionary_value_t,
+        use_default_window: *mut ::std::os::raw::c_int,
+    ) {
+        let object: &crate::rc::RcImpl<_, Self> = crate::rc::RcImpl::get(self_);
+        let browser = crate::CefBrowser::from(browser);
+        let window_info = &mut *window_info;
+        let client = &mut *client;
+        let settings = &mut *settings;
+        let extra_info = &mut *extra_info;
+        let mut use_default = *use_default_window != 0;
+
+        object.interface.on_before_dev_tools_popup(
+            browser,
+            window_info,
+            client,
+            settings,
+            extra_info,
+            &mut use_default,
+        );
+
+        *use_default_window = if use_default { 1 } else { 0 };
+    }
+
+    unsafe extern "C" fn on_after_created(
+        self_: *mut _cef_life_span_handler_t,
+        browser: *mut _cef_browser_t,
+    ) {
+        let object: &crate::rc::RcImpl<_, Self> = crate::rc::RcImpl::get(self_);
+        let browser = crate::CefBrowser::from(browser);
+        object.interface.on_after_created(browser);
+    }
+
+    unsafe extern "C" fn do_close(
+        self_: *mut _cef_life_span_handler_t,
+        browser: *mut _cef_browser_t,
+    ) -> ::std::os::raw::c_int {
+        let object: &crate::rc::RcImpl<_, Self> = crate::rc::RcImpl::get(self_);
+        let browser = crate::CefBrowser::from(browser);
+        let result = object.interface.do_close(browser);
+        if result {
+            1
+        } else {
+            0
+        }
+    }
+
+    unsafe extern "C" fn on_before_close(
+        self_: *mut _cef_life_span_handler_t,
+        browser: *mut _cef_browser_t,
+    ) {
+        let object: &crate::rc::RcImpl<_, Self> = crate::rc::RcImpl::get(self_);
+        let browser = crate::CefBrowser::from(browser);
+        object.interface.on_before_close(browser);
+    }
+
+    pub fn into_raw(self) -> *mut cef_life_span_handler_t {
+        let mut object: cef_life_span_handler_t = unsafe { std::mem::zeroed() };
+        object.on_before_popup = Some(Self::on_before_popup);
+        object.on_before_dev_tools_popup = Some(Self::on_before_dev_tools_popup);
+        object.on_after_created = Some(Self::on_after_created);
+        object.do_close = Some(Self::do_close);
+        object.on_before_close = Some(Self::on_before_close);
+        crate::rc::RcImpl::new(object, self).cast()
+    }
 }
 
 /// See [cef_life_span_handler_t] for more docs.
@@ -85,142 +208,12 @@ pub trait CefLifeSpanHandler: Sized {
 
     /// See [cef_life_span_handler_t::on_before_close].
     fn on_before_close(&self, browser: crate::CefBrowser) {}
-
-    #[doc(hidden)]
-    fn into_raw(self) -> *mut cef_life_span_handler_t {
-        unsafe extern "C" fn on_before_popup<I: CefLifeSpanHandler>(
-            self_: *mut _cef_life_span_handler_t,
-            browser: *mut _cef_browser_t,
-            frame: *mut _cef_frame_t,
-            target_url: *const cef_string_t,
-            target_frame_name: *const cef_string_t,
-            target_disposition: cef_window_open_disposition_t,
-            user_gesture: ::std::os::raw::c_int,
-            popup_features: *const cef_popup_features_t,
-            window_info: *mut _cef_window_info_t,
-            client: *mut *mut _cef_client_t,
-            settings: *mut _cef_browser_settings_t,
-            extra_info: *mut *mut _cef_dictionary_value_t,
-            no_javascript_access: *mut ::std::os::raw::c_int,
-        ) -> ::std::os::raw::c_int {
-            let object: &crate::rc::RcImpl<_, I> = crate::rc::RcImpl::get(self_);
-            let browser = crate::CefBrowser::from(browser);
-            let frame = crate::CefFrame::from(frame);
-            let target_url = crate::CefString::from_raw(target_url);
-            let target_frame_name = crate::CefString::from_raw(target_frame_name);
-            let user_gesture = user_gesture != 0;
-            let popup_features = &*popup_features;
-            let window_info = CefWindowInfo::from_raw(window_info);
-            let client = &mut *client;
-            let settings = if settings.is_null() {
-                None
-            } else {
-                CefBrowserSettings::from_raw(*settings).into()
-            };
-            let extra_info = if extra_info.is_null() {
-                None
-            } else {
-                CefDictionaryValue::from(*extra_info).into()
-            };
-            let mut no_js_access = *no_javascript_access != 0;
-
-            let result = object.interface.on_before_popup(
-                browser,
-                frame,
-                target_url,
-                target_frame_name,
-                target_disposition,
-                user_gesture,
-                popup_features,
-                window_info,
-                client,
-                settings,
-                extra_info,
-                &mut no_js_access,
-            );
-
-            *no_javascript_access = if no_js_access { 1 } else { 0 };
-
-            if result {
-                1
-            } else {
-                0
-            }
-        }
-
-        unsafe extern "C" fn on_before_dev_tools_popup<I: CefLifeSpanHandler>(
-            self_: *mut _cef_life_span_handler_t,
-            browser: *mut _cef_browser_t,
-            window_info: *mut _cef_window_info_t,
-            client: *mut *mut _cef_client_t,
-            settings: *mut _cef_browser_settings_t,
-            extra_info: *mut *mut _cef_dictionary_value_t,
-            use_default_window: *mut ::std::os::raw::c_int,
-        ) {
-            let object: &crate::rc::RcImpl<_, I> = crate::rc::RcImpl::get(self_);
-            let browser = crate::CefBrowser::from(browser);
-            let window_info = &mut *window_info;
-            let client = &mut *client;
-            let settings = &mut *settings;
-            let extra_info = &mut *extra_info;
-            let mut use_default = *use_default_window != 0;
-
-            object.interface.on_before_dev_tools_popup(
-                browser,
-                window_info,
-                client,
-                settings,
-                extra_info,
-                &mut use_default,
-            );
-
-            *use_default_window = if use_default { 1 } else { 0 };
-        }
-
-        unsafe extern "C" fn on_after_created<I: CefLifeSpanHandler>(
-            self_: *mut _cef_life_span_handler_t,
-            browser: *mut _cef_browser_t,
-        ) {
-            let object: &crate::rc::RcImpl<_, I> = crate::rc::RcImpl::get(self_);
-            let browser = crate::CefBrowser::from(browser);
-            object.interface.on_after_created(browser);
-        }
-
-        unsafe extern "C" fn do_close<I: CefLifeSpanHandler>(
-            self_: *mut _cef_life_span_handler_t,
-            browser: *mut _cef_browser_t,
-        ) -> ::std::os::raw::c_int {
-            let object: &crate::rc::RcImpl<_, I> = crate::rc::RcImpl::get(self_);
-            let browser = crate::CefBrowser::from(browser);
-            let result = object.interface.do_close(browser);
-            if result {
-                1
-            } else {
-                0
-            }
-        }
-
-        unsafe extern "C" fn on_before_close<I: CefLifeSpanHandler>(
-            self_: *mut _cef_life_span_handler_t,
-            browser: *mut _cef_browser_t,
-        ) {
-            let object: &crate::rc::RcImpl<_, I> = crate::rc::RcImpl::get(self_);
-            let browser = crate::CefBrowser::from(browser);
-            object.interface.on_before_close(browser);
-        }
-
-        let mut object: cef_life_span_handler_t = unsafe { std::mem::zeroed() };
-        object.on_before_popup = Some(on_before_popup::<Self>);
-        object.on_before_dev_tools_popup = Some(on_before_dev_tools_popup::<Self>);
-        object.on_after_created = Some(on_after_created::<Self>);
-        object.do_close = Some(do_close::<Self>);
-        object.on_before_close = Some(on_before_close::<Self>);
-        crate::rc::RcImpl::new(object, self).cast()
-    }
 }
 
+/*
 impl CefLifeSpanHandler for () {
     fn into_raw(self) -> *mut cef_life_span_handler_t {
         std::ptr::null_mut()
     }
 }
+*/

@@ -1,3 +1,10 @@
+use std::{
+    collections::HashMap,
+    panic::AssertUnwindSafe,
+    ptr::null_mut,
+    sync::{Arc, Mutex},
+};
+
 use crate::{prelude::*, rc::RcImpl};
 
 /// See [cef_v8context_t] for more documentation.
@@ -150,9 +157,7 @@ impl V8Value {
                 _: *mut _cef_v8array_buffer_release_callback_t,
                 buffer: *mut core::ffi::c_void,
             ) {
-                unsafe {
-                    _ = Box::from(buffer);
-                }
+                _ = Box::from(buffer);
             }
 
             let v = cef_v8value_create_array_buffer(
@@ -166,15 +171,10 @@ impl V8Value {
     }
 
     /// See [cef_v8value_create_array_buffer_with_copy].
-    pub fn array_buffer_with_copy(buffer: &mut [u8]) -> Self {
+    pub fn array_buffer_with_copy(buffer: &[u8]) -> Self {
         let len = buffer.len();
-        let ptr = buffer.as_mut_ptr();
-        unsafe {
-            Self::from(cef_v8value_create_array_buffer_with_copy(
-                ptr.cast(),
-                len as _,
-            ))
-        }
+        let ptr = buffer.as_ptr() as _;
+        unsafe { Self::from(cef_v8value_create_array_buffer_with_copy(ptr, len as _)) }
     }
 
     /// See [cef_v8value_create_promise].
@@ -191,6 +191,25 @@ impl V8Value {
                 handler.into_raw(),
             ))
         }
+    }
+
+    pub fn get_array_buffer(&self) -> &[u8] {
+        if !self.is_valid().unwrap_or_default() {
+            return &[];
+        }
+        if !self.is_array_buffer().unwrap_or_default() {
+            return &[];
+        }
+        let Some(len) = self.get_array_buffer_byte_length() else {
+            return &[];
+        };
+        let Some(ptr) = self.get_array_buffer_data() else {
+            return &[];
+        };
+        if ptr.is_null() {
+            panic!("null");
+        }
+        unsafe { std::slice::from_raw_parts_mut(ptr, len) }
     }
 }
 
@@ -286,6 +305,11 @@ impl V8Value {
              get_date_value.map(|f| unsafe { f(self.get_this())})
         }
 
+        /// See [cef_v8value_t::get_array_length]
+        fn get_array_length(&self) -> usize {
+            get_array_length.map(|f| unsafe {f(self.get_this()) as _} )
+        }
+
         /// See [cef_v8value_t::is_user_created].
         fn is_user_created(&self) -> bool;
 
@@ -364,22 +388,22 @@ impl V8Value {
         }
 
         /// See [cef_v8value_t::execute_function].
-        fn execute_function(&self, object: V8Value, args: &[V8Value]) -> Self{
+        fn execute_function(&self, object: Option<V8Value>, args: Vec<V8Value>) -> Self {
             if !self.is_valid().unwrap_or_default() { return None; }
              execute_function.map(|f| unsafe {
-                let args = args.iter().map(|a| a.clone().into_raw()).collect::<Vec<_>>();
-                let argc = args.len() as _;
-                f(self.get_this(), object.into_raw(), argc, args.as_ptr()).into()
+                let mut args = args.into_iter().map(|a| a.into_raw()).collect::<Vec<_>>();
+                let argc = args.len();
+                f(self.get_this(), object.map(|o|o.into_raw()).unwrap_or(null_mut()), argc, args.as_mut_ptr()).into()
             })
         }
 
         /// See [cef_v8value_t::execute_function_with_context].
-        fn execute_function_with_context(&self, context: CefV8Context, object: V8Value, args: &[V8Value]) -> Self{
+        fn execute_function_with_context(&self, context: CefV8Context, object: Option<V8Value>, args: Vec<V8Value>) -> Self {
             if !self.is_valid().unwrap_or_default() { return None; }
              execute_function_with_context.map(|f| unsafe {
                 let args = args.iter().map(|a| a.clone().into_raw()).collect::<Vec<_>>();
                 let argc = args.len() as _;
-                f(self.get_this(), context.into_raw(), object.into_raw(), argc, args.as_ptr()).into()
+                f(self.get_this(), context.into_raw(), object.map(|o|o.into_raw()).unwrap_or(null_mut()), argc, args.as_ptr()).into()
             })
         }
 
@@ -393,6 +417,30 @@ impl V8Value {
         fn reject_promise(&self, err: &str) -> bool {
             if !self.is_valid().unwrap_or_default() { return None; }
              reject_promise.map(|f| unsafe { f(self.get_this(), &CefString::from(err).as_raw()) == 1 })
+        }
+
+        /// See [cef_v8value_t::get_array_buffer_byte_length]
+        fn get_array_buffer_byte_length(&self) -> usize {
+            if !self.is_valid().unwrap_or_default() { return None; }
+            get_array_buffer_byte_length.map(|f| unsafe {
+                f(self.get_this()) as _
+            })
+        }
+
+        /// See [cef_v8value_t::get_array_buffer_data]
+        fn get_array_buffer_data(&self) -> *mut u8 {
+            if !self.is_valid().unwrap_or_default() { return None; }
+            let Some(len) = self.get_array_buffer_byte_length() else { return None;};
+            get_array_buffer_data.map(|f|unsafe {
+                f(self.get_this()).cast()
+            })
+        }
+
+        /// See [cef_v8value_t::get_function_name]
+        fn get_function_name(&self) -> CefString {
+            get_function_name.and_then(|f| unsafe {
+                CefString::from_userfree_cef(f(self.get_this()))
+            })
         }
 
     }
@@ -437,9 +485,32 @@ pub struct V8StackFrame(cef_v8stack_frame_t);
 #[wrapper]
 pub struct V8Accessor(cef_v8accessor_t);
 
+#[derive(Debug, Hash)]
+pub struct JsCallbackId {
+    pub fn_name: CefString,
+    pub browser_id: i32,
+    pub frame_id: CefString,
+}
+
+impl PartialEq for JsCallbackId {
+    fn eq(&self, other: &Self) -> bool {
+        self.browser_id == other.browser_id
+            && self.frame_id.to_string() == other.frame_id.to_string()
+            && self.fn_name.to_string() == other.fn_name.to_string()
+    }
+}
+
+impl Eq for JsCallbackId {}
+
+#[derive(Debug, Clone)]
+pub struct JsCallback {
+    pub context: CefV8Context,
+    pub function: V8Value,
+}
+
 /// See [cef_v8handler_t] for more documentation.
-pub struct V8Handler(
-    Box<
+pub struct V8Handler {
+    inner: Box<
         dyn Fn(
                 &V8Handler,
                 Option<CefString>, // js name
@@ -450,16 +521,21 @@ pub struct V8Handler(
             + Sync
             + 'static,
     >,
-);
+    callback_map: Arc<Mutex<HashMap<JsCallbackId, JsCallback>>>,
+}
 
 impl V8Handler {
     pub fn new(
+        callback_map: Arc<Mutex<HashMap<JsCallbackId, JsCallback>>>,
         handler: impl Fn(&V8Handler, Option<CefString>, V8Value, &[V8Value]) -> anyhow::Result<V8Value>
             + Send
             + Sync
             + 'static,
     ) -> Self {
-        Self(Box::new(handler))
+        Self {
+            inner: Box::new(handler),
+            callback_map,
+        }
     }
 
     fn execute(
@@ -468,7 +544,15 @@ impl V8Handler {
         this: V8Value,
         args: &[V8Value],
     ) -> anyhow::Result<V8Value> {
-        self.0(self, name, this, args)
+        (self.inner)(self, name, this, args)
+    }
+
+    pub fn insert_callback(&self, id: JsCallbackId, callback: JsCallback) {
+        self.callback_map.try_lock().unwrap().insert(id, callback);
+    }
+
+    pub fn remove_callback(&self, id: &JsCallbackId) -> Option<JsCallback> {
+        self.callback_map.try_lock().unwrap().get(id).cloned()
     }
 }
 
@@ -495,14 +579,21 @@ impl V8Handler {
                     .collect::<Vec<_>>()
             };
             let this = V8Value::from(this);
-            (match obj.interface.execute(name, this, &args) {
-                Ok(ret) => {
-                    *retval = ret.into_raw();
+            let ret = std::panic::catch_unwind(AssertUnwindSafe(|| {
+                obj.interface.execute(name, this, &args)
+            }));
+            (match ret {
+                Ok(Ok(r)) => {
+                    *retval = r.into_raw();
                     true
                 }
-                Err(e) => {
+                Ok(Err(e)) => {
                     *exception = CefString::from(&format!("{e:?}")).as_raw();
-                    true
+                    false
+                }
+                Err(e) => {
+                    *exception = CefString::from(&format!("rust panic: {e:?}")).as_raw();
+                    false
                 }
             }) as _
         }

@@ -56,23 +56,23 @@ impl CefSettings {
                 .browser_subprocess_path
                 .as_ref()
                 .map(|v| v.as_raw())
-                .unwrap_or_default(),
+                .unwrap_or(unsafe { core::mem::zeroed() }),
             framework_dir_path: self
                 .framework_dir_path
                 .as_ref()
                 .map(|v| v.as_raw())
-                .unwrap_or_default(),
+                .unwrap_or(unsafe { core::mem::zeroed() }),
             main_bundle_path: self
                 .main_bundle_path
                 .as_ref()
                 .map(|v| v.as_raw())
-                .unwrap_or_default(),
+                .unwrap_or(unsafe { core::mem::zeroed() }),
             chrome_app_icon_id: self.chrome_app_icon_id,
             chrome_policy_id: self
                 .chrome_policy_id
                 .as_ref()
                 .map(|v| v.as_raw())
-                .unwrap_or_default(),
+                .unwrap_or(unsafe { core::mem::zeroed() }),
             #[cfg(target_family = "unix")]
             disable_signal_handlers: self.disable_signal_handlers as c_int,
             multi_threaded_message_loop: self.multi_threaded_message_loop as c_int,
@@ -88,41 +88,45 @@ impl CefSettings {
                 .root_cache_path
                 .as_ref()
                 .map(|v| v.as_raw())
-                .unwrap_or_default(),
+                .unwrap_or(unsafe { core::mem::zeroed() }),
             persist_session_cookies: self.persist_session_cookies as c_int,
             user_agent: self
                 .user_agent
                 .as_ref()
                 .map(|v| v.as_raw())
-                .unwrap_or_default(),
+                .unwrap_or(unsafe { core::mem::zeroed() }),
             user_agent_product: self
                 .user_agent_product
                 .as_ref()
                 .map(|v| v.as_raw())
-                .unwrap_or_default(),
-            locale: self.locale.as_ref().map(|v| v.as_raw()).unwrap_or_default(),
+                .unwrap_or(unsafe { core::mem::zeroed() }),
+            locale: self
+                .locale
+                .as_ref()
+                .map(|v| v.as_raw())
+                .unwrap_or(unsafe { core::mem::zeroed() }),
             log_file: self
                 .log_file
                 .as_ref()
                 .map(|v| v.as_raw())
-                .unwrap_or_default(),
+                .unwrap_or(unsafe { core::mem::zeroed() }),
             log_severity: self.log_severity,
             log_items: self.log_items,
             javascript_flags: self
                 .javascript_flags
                 .as_ref()
                 .map(|v| v.as_raw())
-                .unwrap_or_default(),
+                .unwrap_or(unsafe { core::mem::zeroed() }),
             resources_dir_path: self
                 .resources_dir_path
                 .as_ref()
                 .map(|v| v.as_raw())
-                .unwrap_or_default(),
+                .unwrap_or(unsafe { core::mem::zeroed() }),
             locales_dir_path: self
                 .locales_dir_path
                 .as_ref()
                 .map(|v| v.as_raw())
-                .unwrap_or_default(),
+                .unwrap_or(unsafe { core::mem::zeroed() }),
             remote_debugging_port: self.remote_debugging_port as c_int,
             uncaught_exception_stack_size: self.uncaught_exception_stack_size as c_int,
             background_color: self.background_color as cef_color_t,
@@ -130,12 +134,12 @@ impl CefSettings {
                 .accept_language_list
                 .as_ref()
                 .map(|v| v.as_raw())
-                .unwrap_or_default(),
+                .unwrap_or(unsafe { core::mem::zeroed() }),
             cookieable_schemes_list: self
                 .cookieable_schemes_list
                 .as_ref()
                 .map(|v| v.as_raw())
-                .unwrap_or_default(),
+                .unwrap_or(unsafe { core::mem::zeroed() }),
             cookieable_schemes_exclude_defaults: self.cookieable_schemes_exclude_defaults as c_int,
         }
     }

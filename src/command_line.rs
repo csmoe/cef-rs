@@ -10,6 +10,7 @@ use crate::{
 #[derive(Debug, Clone)]
 pub struct CefCommandLine(cef_command_line_t);
 
+#[derive(Debug)]
 pub enum CefProcessType {
     Uknown,
     Browser,
@@ -100,6 +101,13 @@ impl CefCommandLine {
                 let Some(f) =  append_switch else { return None };
                 f(self.get_this(), &switch_name.as_raw());
                 Some(())
+            }
+        }
+
+        /// See [cef_command_line_t::append_switch_with_value]
+        fn append_switch_with_value(&self, name: &str, value: &str) {
+            unsafe {
+                append_switch_with_value.map(|f|{f(self.get_this(), &CefString::from(name).as_raw(), &CefString::from(value).as_raw())})
             }
         }
 

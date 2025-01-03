@@ -1,5 +1,7 @@
 use crate::{handler, prelude::*, CefBrowser, CefFrame};
 
+use super::CefCookieManager;
+
 /// See [cef_request_t] for more docs.
 #[derive(Debug, Clone)]
 #[wrapper]
@@ -200,6 +202,15 @@ impl CefRequestContext {
         fn get_handler(&self) -> *mut cef_request_context_handler_t {
             unsafe {
                 get_handler.map(|f| f(self.get_this()))
+            }
+        }
+
+        /// See [cef_request_context_t::get_cookie_manager]
+        fn get_cookie_manager(&self) -> CefCookieManager {
+            unsafe {
+                get_cookie_manager.map(|f|
+                    CefCookieManager::from(f(self.get_this(), std::ptr::null_mut()))
+                )
             }
         }
     }

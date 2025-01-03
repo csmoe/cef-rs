@@ -290,7 +290,7 @@ pub extern "C" fn release<T: FfiRc, I>(this: *mut cef_base_ref_counted_t) -> i32
         0
     } else {
         fence(Ordering::Acquire);
-        let _ = unsafe { Box::from(this as *mut RcImpl<T, I>) };
+        let _ = Box::from(this as *mut RcImpl<T, I>);
         1
     }
 }

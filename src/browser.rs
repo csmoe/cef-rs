@@ -235,6 +235,35 @@ impl CefBrowserSettings {
 pub struct CefBrowser(cef_browser_t);
 
 impl CefBrowser {
+    /// See [cef_browser_host_create_browser] for more documentation.
+    pub fn async_create<T: CefClient>(
+        window_info: CefWindowInfo,
+        client: Option<T>,
+        url: CefString,
+        settings: CefBrowserSettings,
+        request_context: Option<CefRequestContext>,
+    ) -> Result<()> {
+        let client = client.map(|c| c.into_raw()).unwrap_or(null_mut());
+        let req_ctxt = request_context
+            .map(|c| unsafe { c.into_raw() })
+            .unwrap_or(null_mut());
+        let ret = unsafe {
+            cef_browser_host_create_browser(
+                &window_info.as_raw(),
+                client,
+                &url.as_raw(),
+                &settings.as_raw(),
+                null_mut(),
+                req_ctxt,
+            )
+        };
+        if ret != 1 {
+            return Err(crate::error::Error::CannotCreateBrowser);
+        }
+
+        Ok(())
+    }
+
     /// See [cef_browser_host_create_browser_sync] for more documentation.
     pub fn create<T: CefClient>(
         window_info: CefWindowInfo,
@@ -247,6 +276,8 @@ impl CefBrowser {
         let req_ctxt = request_context
             .map(|c| unsafe { c.into_raw() })
             .unwrap_or(null_mut());
+
+        println!("{window_info:?}, {settings:?}");
         let ret = unsafe {
             cef_browser_host_create_browser_sync(
                 &window_info.as_raw(),
@@ -376,227 +407,236 @@ pub struct CefBrowserHost(cef_browser_host_t);
 /// FIXME
 impl CefBrowserHost {
     wrapper_methods! {
-                /// See [cef_browser_host_t::get_browser]
-                fn get_browser(&self) ->CefBrowser {
-                     get_browser.map(|f| unsafe {
-                        CefBrowser::from(f(self.get_this()))
-                    })
-                }
+        /// See [cef_browser_host_t::get_browser]
+        fn get_browser(&self) ->CefBrowser {
+             get_browser.map(|f| unsafe {
+                CefBrowser::from(f(self.get_this()))
+            })
+        }
 
-                /// See [cef_browser_host_t::close_browser]
-                fn close_browser(&self, force_close: bool);
+        /// See [cef_browser_host_t::close_browser]
+        fn close_browser(&self, force_close: bool);
 
-                /// See [cef_browser_host_t::try_close_browser]
-                fn try_close_browser(&self) -> bool;
+        /// See [cef_browser_host_t::try_close_browser]
+        fn try_close_browser(&self) -> bool;
 
-                /// See [cef_browser_host_t::is_ready_to_be_closed]
-                fn is_ready_to_be_closed(&self) -> bool;
+        /// See [cef_browser_host_t::is_ready_to_be_closed]
+        fn is_ready_to_be_closed(&self) -> bool;
 
-                /// See [cef_browser_host_t::set_focus]
-                fn set_focus(&self, focus: bool);
+        /// See [cef_browser_host_t::set_focus]
+        fn set_focus(&self, focus: bool);
 
-                /// See [cef_browser_host_t::get_window_handle]
-                #[cfg(target_os = "windows")]
-                fn get_window_handle(&self) -> windows::Win32::Foundation::HWND {
-                    let Some(f) =  get_window_handle else { return None; };
-                    unsafe { windows::Win32::Foundation::HWND(f(self.get_this()).cast()).into() }
-                }
+        /// See [cef_browser_host_t::get_window_handle]
+        #[cfg(target_os = "windows")]
+        fn get_window_handle(&self) -> windows::Win32::Foundation::HWND {
+            let Some(f) =  get_window_handle else { return None; };
+            unsafe { windows::Win32::Foundation::HWND(f(self.get_this()).cast()).into() }
+        }
 
-                /// See [cef_browser_host_t::get_opener_window_handle]
-                #[cfg(target_os = "windows")]
-                fn get_opener_window_handle(&self) -> windows::Win32::Foundation::HWND {
-                    let Some(f) =  get_opener_window_handle else { return None; };
-                    unsafe { windows::Win32::Foundation::HWND(f(self.get_this()).cast()).into() }
-                }
+        /// See [cef_browser_host_t::get_opener_window_handle]
+        #[cfg(target_os = "windows")]
+        fn get_opener_window_handle(&self) -> windows::Win32::Foundation::HWND {
+            let Some(f) =  get_opener_window_handle else { return None; };
+            unsafe { windows::Win32::Foundation::HWND(f(self.get_this()).cast()).into() }
+        }
 
-                /// See [cef_browser_host_t::has_view]
-                fn has_view(&self) -> bool;
+        /// See [cef_browser_host_t::has_view]
+        fn has_view(&self) -> bool;
 
-                /// See [cef_browser_host_t::get_client]
-                ///fn get_client<C: CefClient>(&self) -> Option<C> {
-                ///     get_client.map(|f| unsafe {
-                ///        f(self.get_this())
-                ///    })
-                ///}
+        /// See [cef_browser_host_t::get_client]
+        ///fn get_client<C: CefClient>(&self) -> Option<C> {
+        ///     get_client.map(|f| unsafe {
+        ///        f(self.get_this())
+        ///    })
+        ///}
 
-                /// See [cef_browser_host_t::get_request_context]
-                //fn get_request_context(&self) -> Option<CefRequestContext> {
-                //     get_request_context.map(|f| unsafe {
-                //        CefRequestContext::from(f(self.get_this()))
-                //    })
-                //}
+        /// See [cef_browser_host_t::get_request_context]
+        fn get_request_context(&self) -> CefRequestContext {
+             get_request_context.map(|f| unsafe {
+                CefRequestContext::from(f(self.get_this()))
+            })
+        }
+
+        /// See [cef_browser_host_t::was_resized]
+        fn was_resized(&self);
+
+        /// See [cef_browser_host_t::was_hidden]
+        fn was_hidden(&self, hidden: bool);
+
+        /// See [cef_browser_host_t::notify_screen_info_changed]
+        fn notify_screen_info_changed(&self);
     /*
-                /// See [cef_browser_host_t::can_zoom]
-                fn can_zoom(&self, command: cef_zoom_command_t) -> bool;
+        /// See [cef_browser_host_t::can_zoom]
+        fn can_zoom(&self, command: cef_zoom_command_t) -> bool;
 
-                /// See [cef_browser_host_t::zoom]
-                fn zoom(&self, command: cef_zoom_command_t);
+        /// See [cef_browser_host_t::zoom]
+        fn zoom(&self, command: cef_zoom_command_t);
 
-                /// See [cef_browser_host_t::get_default_zoom_level]
-                fn get_default_zoom_level(&self) -> f64;
+        /// See [cef_browser_host_t::get_default_zoom_level]
+        fn get_default_zoom_level(&self) -> f64;
 
-                /// See [cef_browser_host_t::get_zoom_level]
-                fn get_zoom_level(&self) -> f64;
+        /// See [cef_browser_host_t::get_zoom_level]
+        fn get_zoom_level(&self) -> f64;
 
-                /// See [cef_browser_host_t::set_zoom_level]
-                fn set_zoom_level(&self, zoom_level: f64);
+        /// See [cef_browser_host_t::set_zoom_level]
+        fn set_zoom_level(&self, zoom_level: f64);
 
-                /// See [cef_browser_host_t::run_file_dialog]
-                //fn run_file_dialog(&self, mode: cef_file_dialog_mode_t, title: &str, default_file_path: &str, accept_filters: &[String], callback: CefRunFileDialogCallback);
+        /// See [cef_browser_host_t::run_file_dialog]
+        //fn run_file_dialog(&self, mode: cef_file_dialog_mode_t, title: &str, default_file_path: &str, accept_filters: &[String], callback: CefRunFileDialogCallback);
 
-                /// See [cef_browser_host_t::start_download]
-                fn start_download(&self, url: &str);
+        /// See [cef_browser_host_t::start_download]
+        fn start_download(&self, url: &str);
 
-                /// See [cef_browser_host_t::download_image]
-                //fn download_image(&self, image_url: &str, is_favicon: bool, max_image_size: u32, bypass_cache: bool, callback: CefDownloadImageCallback);
+        /// See [cef_browser_host_t::download_image]
+        //fn download_image(&self, image_url: &str, is_favicon: bool, max_image_size: u32, bypass_cache: bool, callback: CefDownloadImageCallback);
 
-                /// See [cef_browser_host_t::print]
-                fn print(&self);
+        /// See [cef_browser_host_t::print]
+        fn print(&self);
 
-                /// See [cef_browser_host_t::print_to_pdf]
-                ///fn print_to_pdf(&self, path: &str, settings: &CefPdfPrintSettings, callback: CefPdfPrintCallback);
+        /// See [cef_browser_host_t::print_to_pdf]
+        ///fn print_to_pdf(&self, path: &str, settings: &CefPdfPrintSettings, callback: CefPdfPrintCallback);
 
-                /// See [cef_browser_host_t::find]
-                fn find(&self, search_text: &str, forward: bool, match_case: bool, find_next: bool);
+        /// See [cef_browser_host_t::find]
+        fn find(&self, search_text: &str, forward: bool, match_case: bool, find_next: bool);
 
-                /// See [cef_browser_host_t::stop_finding]
-                fn stop_finding(&self, clear_selection: bool);
+        /// See [cef_browser_host_t::stop_finding]
+        fn stop_finding(&self, clear_selection: bool);
 
-                /// See [cef_browser_host_t::show_dev_tools]
-                ///fn show_dev_tools(&self, window_info: &CefWindowInfo, client: CefClient, settings: &CefBrowserSettings, inspect_element_at: &CefPoint);
+        /// See [cef_browser_host_t::show_dev_tools]
+        ///fn show_dev_tools(&self, window_info: &CefWindowInfo, client: CefClient, settings: &CefBrowserSettings, inspect_element_at: &CefPoint);
 
-                /// See [cef_browser_host_t::close_dev_tools]
-                fn close_dev_tools(&self);
+        /// See [cef_browser_host_t::close_dev_tools]
+        fn close_dev_tools(&self);
 
-                /// See [cef_browser_host_t::has_dev_tools]
-                fn has_dev_tools(&self) -> bool;
+        /// See [cef_browser_host_t::has_dev_tools]
+        fn has_dev_tools(&self) -> bool;
 
-                /// See [cef_browser_host_t::send_dev_tools_message]
-                fn send_dev_tools_message(&self, message: &[u8]) -> bool;
+        /// See [cef_browser_host_t::send_dev_tools_message]
+        fn send_dev_tools_message(&self, message: &[u8]) -> bool;
 
-                /// See [cef_browser_host_t::execute_dev_tools_method]
-                ///fn execute_dev_tools_method(&self, message_id: i32, method: &str, params: Option<crate::CefDictionaryValue>) -> i32;
+        /// See [cef_browser_host_t::execute_dev_tools_method]
+        ///fn execute_dev_tools_method(&self, message_id: i32, method: &str, params: Option<crate::CefDictionaryValue>) -> i32;
 
-                /// See [cef_browser_host_t::add_dev_tools_message_observer]
-                ///fn add_dev_tools_message_observer(&self, observer: CefDevToolsMessageObserver) -> CefRegistration;
+        /// See [cef_browser_host_t::add_dev_tools_message_observer]
+        ///fn add_dev_tools_message_observer(&self, observer: CefDevToolsMessageObserver) -> CefRegistration;
 
-                /// See [cef_browser_host_t::get_navigation_entries]
-                ///fn get_navigation_entries(&self, visitor: CefNavigationEntryVisitor, current_only: bool);
+        /// See [cef_browser_host_t::get_navigation_entries]
+        ///fn get_navigation_entries(&self, visitor: CefNavigationEntryVisitor, current_only: bool);
 
-                /// See [cef_browser_host_t::replace_misspelling]
-                fn replace_misspelling(&self, word: &str);
+        /// See [cef_browser_host_t::replace_misspelling]
+        fn replace_misspelling(&self, word: &str);
 
-                /// See [cef_browser_host_t::add_word_to_dictionary]
-                fn add_word_to_dictionary(&self, word: &str);
+        /// See [cef_browser_host_t::add_word_to_dictionary]
+        fn add_word_to_dictionary(&self, word: &str);
 
-                /// See [cef_browser_host_t::is_window_rendering_disabled]
-                fn is_window_rendering_disabled(&self) -> bool;
+        /// See [cef_browser_host_t::is_window_rendering_disabled]
+        fn is_window_rendering_disabled(&self) -> bool;
 
-                /// See [cef_browser_host_t::was_resized]
-                fn was_resized(&self);
+        /// See [cef_browser_host_t::was_resized]
+        fn was_resized(&self);
 
-                /// See [cef_browser_host_t::was_hidden]
-                fn was_hidden(&self, hidden: bool);
+        /// See [cef_browser_host_t::was_hidden]
+        fn was_hidden(&self, hidden: bool);
 
-                /// See [cef_browser_host_t::notify_screen_info_changed]
-                fn notify_screen_info_changed(&self);
+        /// See [cef_browser_host_t::notify_screen_info_changed]
+        fn notify_screen_info_changed(&self);
 
-                /// See [cef_browser_host_t::invalidate]
-                fn invalidate(&self, element_type: cef_paint_element_type_t);
+        /// See [cef_browser_host_t::invalidate]
+        fn invalidate(&self, element_type: cef_paint_element_type_t);
 
-                /// See [cef_browser_host_t::send_external_begin_frame]
-                fn send_external_begin_frame(&self);
+        /// See [cef_browser_host_t::send_external_begin_frame]
+        fn send_external_begin_frame(&self);
 
-                /// See [cef_browser_host_t::send_key_event]
-                fn send_key_event(&self, event: &CefKeyEvent);
+        /// See [cef_browser_host_t::send_key_event]
+        fn send_key_event(&self, event: &CefKeyEvent);
 
-                /// See [cef_browser_host_t::send_mouse_click_event]
-                fn send_mouse_click_event(&self, event: &CefMouseEvent, type_: cef_mouse_button_type_t, mouse_up: bool, click_count: i32);
+        /// See [cef_browser_host_t::send_mouse_click_event]
+        fn send_mouse_click_event(&self, event: &CefMouseEvent, type_: cef_mouse_button_type_t, mouse_up: bool, click_count: i32);
 
-                /// See [cef_browser_host_t::send_mouse_move_event]
-                fn send_mouse_move_event(&self, event: &CefMouseEvent, mouse_leave: bool);
+        /// See [cef_browser_host_t::send_mouse_move_event]
+        fn send_mouse_move_event(&self, event: &CefMouseEvent, mouse_leave: bool);
 
-                /// See [cef_browser_host_t::send_mouse_wheel_event]
-                fn send_mouse_wheel_event(&self, event: &CefMouseEvent, delta_x: i32, delta_y: i32);
+        /// See [cef_browser_host_t::send_mouse_wheel_event]
+        fn send_mouse_wheel_event(&self, event: &CefMouseEvent, delta_x: i32, delta_y: i32);
 
-                /// See [cef_browser_host_t::send_touch_event]
-                fn send_touch_event(&self, event: &CefTouchEvent);
+        /// See [cef_browser_host_t::send_touch_event]
+        fn send_touch_event(&self, event: &CefTouchEvent);
 
-                /// See [cef_browser_host_t::send_capture_lost_event]
-                fn send_capture_lost_event(&self);
+        /// See [cef_browser_host_t::send_capture_lost_event]
+        fn send_capture_lost_event(&self);
 
-                /// See [cef_browser_host_t::notify_move_or_resize_started]
-                fn notify_move_or_resize_started(&self);
+        /// See [cef_browser_host_t::notify_move_or_resize_started]
+        fn notify_move_or_resize_started(&self);
 
-                /// See [cef_browser_host_t::get_windowless_frame_rate]
-                fn get_windowless_frame_rate(&self) -> i32;
+        /// See [cef_browser_host_t::get_windowless_frame_rate]
+        fn get_windowless_frame_rate(&self) -> i32;
 
-                /// See [cef_browser_host_t::set_windowless_frame_rate]
-                fn set_windowless_frame_rate(&self, frame_rate: i32);
+        /// See [cef_browser_host_t::set_windowless_frame_rate]
+        fn set_windowless_frame_rate(&self, frame_rate: i32);
 
-                /// See [cef_browser_host_t::ime_set_composition]
-                fn ime_set_composition(&self, text: &str, underlines: &[CefCompositionUnderline], replacement_range: &CefRange, selection_range: &CefRange);
+        /// See [cef_browser_host_t::ime_set_composition]
+        fn ime_set_composition(&self, text: &str, underlines: &[CefCompositionUnderline], replacement_range: &CefRange, selection_range: &CefRange);
 
-                /// See [cef_browser_host_t::ime_commit_text]
-                fn ime_commit_text(&self, text: &str, replacement_range: &CefRange, relative_cursor_pos: i32);
+        /// See [cef_browser_host_t::ime_commit_text]
+        fn ime_commit_text(&self, text: &str, replacement_range: &CefRange, relative_cursor_pos: i32);
 
-                /// See [cef_browser_host_t::ime_finish_composing_text]
-                fn ime_finish_composing_text(&self, keep_selection: bool);
+        /// See [cef_browser_host_t::ime_finish_composing_text]
+        fn ime_finish_composing_text(&self, keep_selection: bool);
 
-                /// See [cef_browser_host_t::ime_cancel_composition]
-                fn ime_cancel_composition(&self);
+        /// See [cef_browser_host_t::ime_cancel_composition]
+        fn ime_cancel_composition(&self);
 
-                /// See [cef_browser_host_t::drag_target_drag_enter]
-                fn drag_target_drag_enter(&self, drag_data: CefDragData, event: &CefMouseEvent, allowed_ops: cef_drag_operations_mask_t);
+        /// See [cef_browser_host_t::drag_target_drag_enter]
+        fn drag_target_drag_enter(&self, drag_data: CefDragData, event: &CefMouseEvent, allowed_ops: cef_drag_operations_mask_t);
 
-                /// See [cef_browser_host_t::drag_target_drag_over]
-                fn drag_target_drag_over(&self, event: &CefMouseEvent, allowed_ops: cef_drag_operations_mask_t);
+        /// See [cef_browser_host_t::drag_target_drag_over]
+        fn drag_target_drag_over(&self, event: &CefMouseEvent, allowed_ops: cef_drag_operations_mask_t);
 
-                /// See [cef_browser_host_t::drag_target_drag_leave]
-                fn drag_target_drag_leave(&self);
+        /// See [cef_browser_host_t::drag_target_drag_leave]
+        fn drag_target_drag_leave(&self);
 
-                /// See [cef_browser_host_t::drag_target_drop]
-                fn drag_target_drop(&self, event: &CefMouseEvent);
+        /// See [cef_browser_host_t::drag_target_drop]
+        fn drag_target_drop(&self, event: &CefMouseEvent);
 
-                /// See [cef_browser_host_t::drag_source_ended_at]
-                fn drag_source_ended_at(&self, x: i32, y: i32, op: cef_drag_operations_mask_t);
+        /// See [cef_browser_host_t::drag_source_ended_at]
+        fn drag_source_ended_at(&self, x: i32, y: i32, op: cef_drag_operations_mask_t);
 
-                /// See [cef_browser_host_t::drag_source_system_drag_ended]
-                fn drag_source_system_drag_ended(&self);
+        /// See [cef_browser_host_t::drag_source_system_drag_ended]
+        fn drag_source_system_drag_ended(&self);
 
-                /// See [cef_browser_host_t::get_visible_navigation_entry]
-                fn get_visible_navigation_entry(&self) -> Option<CefNavigationEntry> {
-                     get_visible_navigation_entry.map(|f| unsafe {
-                        CefNavigationEntry::from(f(self.get_this()))
-                    })
-                }
+        /// See [cef_browser_host_t::get_visible_navigation_entry]
+        fn get_visible_navigation_entry(&self) -> Option<CefNavigationEntry> {
+             get_visible_navigation_entry.map(|f| unsafe {
+                CefNavigationEntry::from(f(self.get_this()))
+            })
+        }
 
-                /// See [cef_browser_host_t::set_accessibility_state]
-                fn set_accessibility_state(&self, state: cef_state_t);
+        /// See [cef_browser_host_t::set_accessibility_state]
+        fn set_accessibility_state(&self, state: cef_state_t);
 
-                /// See [cef_browser_host_t::set_auto_resize_enabled]
-                fn set_auto_resize_enabled(&self, enabled: bool, min_size: &CefSize, max_size: &CefSize);
+        /// See [cef_browser_host_t::set_auto_resize_enabled]
+        fn set_auto_resize_enabled(&self, enabled: bool, min_size: &CefSize, max_size: &CefSize);
 
-                /// See [cef_browser_host_t::set_audio_muted]
-                fn set_audio_muted(&self, mute: bool);
+        /// See [cef_browser_host_t::set_audio_muted]
+        fn set_audio_muted(&self, mute: bool);
 
-                /// See [cef_browser_host_t::is_audio_muted]
-                fn is_audio_muted(&self) -> bool;
+        /// See [cef_browser_host_t::is_audio_muted]
+        fn is_audio_muted(&self) -> bool;
 
-                /// See [cef_browser_host_t::is_fullscreen]
-                fn is_fullscreen(&self) -> bool;
+        /// See [cef_browser_host_t::is_fullscreen]
+        fn is_fullscreen(&self) -> bool;
 
-                /// See [cef_browser_host_t::exit_fullscreen]
-                fn exit_fullscreen(&self, will_cause_resize: bool);
+        /// See [cef_browser_host_t::exit_fullscreen]
+        fn exit_fullscreen(&self, will_cause_resize: bool);
 
-                /// See [cef_browser_host_t::can_execute_chrome_command]
-                fn can_execute_chrome_command(&self, command_id: i32) -> bool;
+        /// See [cef_browser_host_t::can_execute_chrome_command]
+        fn can_execute_chrome_command(&self, command_id: i32) -> bool;
 
-                /// See [cef_browser_host_t::execute_chrome_command]
-                fn execute_chrome_command(&self, command_id: i32, disposition: cef_window_open_disposition_t);
+        /// See [cef_browser_host_t::execute_chrome_command]
+        fn execute_chrome_command(&self, command_id: i32, disposition: cef_window_open_disposition_t);
 
-                /// See [cef_browser_host_t::is_render_process_unresponsive]
-                fn is_render_process_unresponsive(&self) -> bool;
+        /// See [cef_browser_host_t::is_render_process_unresponsive]
+        fn is_render_process_unresponsive(&self) -> bool;
         */
                 /// See [cef_browser_host_t::get_runtime_style]
                 fn get_runtime_style(&self) -> cef_runtime_style_t;

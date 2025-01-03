@@ -90,6 +90,9 @@ impl CefFrame {
 
         /// See [cef_frame_t::get_url]
         fn get_url(&self) -> CefString {
+            if !self.is_valid().unwrap_or_default() {
+                return None;
+            }
             get_url.and_then(|f| unsafe { CefString::from_userfree_cef(f(self.get_this())) })
         }
 

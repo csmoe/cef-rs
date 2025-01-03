@@ -10,9 +10,10 @@ pub trait CefClient: Sized {
     type LifeSpan: CefLifeSpanHandler;
     type Render: CefRenderHandler;
     type ContextMenu: CefContextMenuHandler;
+    type Load: CefLoadHandler;
 
     /// See [cef_client_t::get_life_span_handler]
-    fn get_life_span_handler(&self) -> Option<Self::LifeSpan> {
+    fn get_life_span_handler(&self) -> Option<CefLifeSpanWrapper<Self::LifeSpan>> {
         None
     }
 
@@ -25,86 +26,80 @@ pub trait CefClient: Sized {
     fn get_context_menu_handler(&self) -> Option<Self::ContextMenu> {
         None
     }
-    /*
-        /// See [cef_client_t::get_audio_handler]
-        fn get_audio_handler(&self) -> Option<AudioHandler> {
-            None
-        }
+    // /// See [cef_client_t::get_audio_handler]
+    // fn get_audio_handler(&self) -> Option<AudioHandler> {
+    //     None
+    // }
 
-        /// See [cef_client_t::get_command_handler]
-        fn get_command_handler(&self) -> Option<CommandHandler> {
-            None
-        }
+    // /// See [cef_client_t::get_command_handler]
+    // fn get_command_handler(&self) -> Option<CommandHandler> {
+    //     None
+    // }
 
+    // /// See [cef_client_t::get_request_handler]
+    // fn get_dialog_handler<I: DialogHandler>(&self) -> Option<I> {
+    //     None
+    // }
 
+    // /// See [cef_client_t::get_display_handler]
+    // fn get_display_handler<I: DisplayHandler>(&self) -> Option<I> {
+    //     None
+    // }
 
-        /// See [cef_client_t::get_request_handler]
-        fn get_dialog_handler<I: DialogHandler>(&self) -> Option<I> {
-            None
-        }
+    // /// See [cef_client_t::get_download_handler]
+    // fn get_download_handler(&self) -> Option<DownloadHandler> {
+    //     None
+    // }
 
-        /// See [cef_client_t::get_display_handler]
-        fn get_display_handler<I: DisplayHandler>(&self) -> Option<I> {
-            None
-        }
+    // /// See [cef_client_t::get_drag_handler]
+    // fn get_drag_handler(&self) -> Option<DragHandler> {
+    //     None
+    // }
 
-        /// See [cef_client_t::get_download_handler]
-        fn get_download_handler(&self) -> Option<DownloadHandler> {
-            None
-        }
+    // /// See [cef_client_t::get_find_handler]
+    // fn get_find_handler(&self) -> Option<FindHandler> {
+    //     None
+    // }
 
-        /// See [cef_client_t::get_drag_handler]
-        fn get_drag_handler(&self) -> Option<DragHandler> {
-            None
-        }
+    // /// See [cef_client_t::get_focus_handler]
+    // fn get_focus_handler(&self) -> Option<FocusHandler> {
+    //     None
+    // }
 
-        /// See [cef_client_t::get_find_handler]
-        fn get_find_handler(&self) -> Option<FindHandler> {
-            None
-        }
+    // /// See [cef_client_t::get_frame_handler]
+    // fn get_frame_handler(&self) -> Option<CefFrameHandler> {
+    //     None
+    // }
 
-        /// See [cef_client_t::get_focus_handler]
-        fn get_focus_handler(&self) -> Option<FocusHandler> {
-            None
-        }
+    // /// See [cef_client_t::get_permission_handler]
+    // fn get_permission_handler(&self) -> Option<PermissionHandler> {
+    //     None
+    // }
 
-        /// See [cef_client_t::get_frame_handler]
-        fn get_frame_handler(&self) -> Option<CefFrameHandler> {
-            None
-        }
+    // /// See [cef_client_t::get_jsdialog_handler]
+    // fn get_jsdialog_handler(&self) -> Option<JsDialogHandler> {
+    //     None
+    // }
 
-        /// See [cef_client_t::get_permission_handler]
-        fn get_permission_handler(&self) -> Option<PermissionHandler> {
-            None
-        }
+    // /// See [cef_client_t::get_keyboard_handler]
+    // fn get_keyboard_handler(&self) -> Option<KeyboardHandler> {
+    //     None
+    // }
 
-        /// See [cef_client_t::get_jsdialog_handler]
-        fn get_jsdialog_handler(&self) -> Option<JsDialogHandler> {
-            None
-        }
+    /// See [cef_client_t::get_load_handler]
+    fn get_load_handler(&self) -> Option<CefLoadHandlerWrapper<Self::Load>> {
+        None
+    }
 
-        /// See [cef_client_t::get_keyboard_handler]
-        fn get_keyboard_handler(&self) -> Option<KeyboardHandler> {
-            None
-        }
+    // /// See [cef_client_t::get_print_handler]
+    // fn get_print_handler(&self) -> Option<PrintHandler> {
+    //     None
+    // }
 
-
-
-        /// See [cef_client_t::get_load_handler]
-        fn get_load_handler(&self) -> Option<LoadHandler> {
-            None
-        }
-
-        /// See [cef_client_t::get_print_handler]
-        fn get_print_handler(&self) -> Option<PrintHandler> {
-            None
-        }
-
-        /// See [cef_client_t::get_request_handler]
-        fn get_request_handler(&self) -> Option<RequestHandler> {
-            None
-        }
-    */
+    // /// See [cef_client_t::get_request_handler]
+    // fn get_request_handler(&self) -> Option<RequestHandler> {
+    //     None
+    // }
 
     /// See [cef_client_t::on_process_message_received]
     fn on_process_message_received(
@@ -122,7 +117,7 @@ pub trait CefClient: Sized {
         let mut object: cef_client_t = unsafe { std::mem::zeroed() };
         //object.get_drag_handler = Some(get_drag_handler::<Self, H>);
         //object.get_find_handler = Some(get_find_handler::<Self, H>);
-        //object.get_load_handler = Some(get_load_handler::<Self, H>);
+        object.get_load_handler = Some(get_load_handler::<Self>);
         //object.get_audio_handler = Some(get_audio_handler::<Self, H>);
         //object.get_focus_handler = Some(get_focus_handler::<Self, H>);
         //object.get_frame_handler = Some(get_frame_handler::<Self, H>);
@@ -136,164 +131,9 @@ pub trait CefClient: Sized {
         //object.get_download_handler = Some(get_download_handler::<Self, H>);
         //object.get_permission_handler = Some(get_permission_handler::<Self, H>);
         object.get_context_menu_handler = Some(get_context_menu_handler::<Self>);
+        object.on_process_message_received = Some(on_process_message_received::<Self>);
 
         RcImpl::new(object, self).cast()
-    }
-}
-
-pub struct ClientBuilder<Render: CefRenderHandler = (), LifeSpan: CefLifeSpanHandler = ()> {
-    render: Option<Render>,
-    life_span: Option<LifeSpan>,
-    //key_board: Option<KeyBoard>,
-    //js_diag: Option<JsDiag>,
-    //permission: Option<Permission>,
-    //frame: Option<Frame>,
-    //audio: Option<Audio>,
-    //command: Option<Command>,
-    //context_menu: Option<ContextMenu>,
-    //dialog: Option<Dialog>,
-    //display: Option<Display>,
-    //download: Option<Download>,
-    //drag: Option<Drag>,
-    //find: Option<Find>,
-    //focus: Option<Focus>,
-}
-
-impl<Render: CefRenderHandler, LifeSpan: CefLifeSpanHandler> Default
-    for ClientBuilder<Render, LifeSpan>
-{
-    fn default() -> Self {
-        Self {
-            render: None,
-            life_span: None,
-        }
-    }
-}
-
-impl<
-        Render: CefRenderHandler,
-        LifeSpan: CefLifeSpanHandler,
-        //Request: RequestCallback + Default,
-        //KeyBoard: KeyboardCallback + Default,
-        //JsDiag: JsDialogCallback + Default,
-        //Permission: PermissionCallback + Default,
-        //Frame: CefFrameCallback + Default,
-        //Audio: AudioCallback + Default,
-        //Command: CommandCallback + Default,
-        //ContextMenu: ContextMenuCallback + Default,
-        //Dialog: DialogHandler + Default,
-        //Display: DisplayHandler + Default,
-        //Download: DownloadCallback + Default,
-        //Drag: DragCallback + Default,
-        //Find: FindCallback + Default,
-        //Focus: FocusCallback + Default,
-    >
-    ClientBuilder<
-        Render,
-        LifeSpan,
-        //Request,
-        //KeyBoard,
-        //JsDiag,
-        //Permission,
-        //Frame,
-        //Audio,
-        //Command,
-        //ContextMenu,
-        //Dialog,
-        //Display,
-        //Download,
-        //Drag,
-        //Find,
-        //Focus,
-    >
-{
-    pub fn new() -> Self {
-        Default::default()
-    }
-
-    pub fn with_render_callback(mut self, render: Render) -> Self {
-        self.render = Some(render);
-        self
-    }
-
-    pub fn with_life_span_callback(mut self, life_span: LifeSpan) -> Self {
-        self.life_span = Some(life_span);
-        self
-    }
-
-    /*
-    pub fn with_request_callback(mut self, request: Request) -> Self {
-        self.request = Some(request);
-        self
-    }
-
-    pub fn with_key_board_callback(mut self, key_board: KeyBoard) -> Self {
-        self.key_board = Some(key_board);
-        self
-    }
-
-    pub fn with_js_diag_callback(mut self, js_diag: JsDiag) -> Self {
-        self.js_diag = Some(js_diag);
-        self
-    }
-
-    pub fn with_permission_callback(mut self, permission: Permission) -> Self {
-        self.permission = Some(permission);
-        self
-    }
-
-    pub fn with_frame_callback(mut self, frame: Frame) -> Self {
-        self.frame = Some(frame);
-        self
-    }
-
-    pub fn with_audio_callback(mut self, audio: Audio) -> Self {
-        self.audio = Some(audio);
-        self
-    }
-
-    pub fn with_command_callback(mut self, command: Command) -> Self {
-        self.command = Some(command);
-        self
-    }
-
-    pub fn with_context_menu_callback(mut self, context_menu: ContextMenu) -> Self {
-        self.context_menu = Some(context_menu);
-        self
-    }
-
-    pub fn with_dialog_callback(mut self, dialog: Dialog) -> Self {
-        self.dialog = Some(dialog);
-        self
-    }
-
-    pub fn with_display_callback(mut self, display: Display) -> Self {
-        self.display = Some(display);
-        self
-    }
-
-    pub fn with_download_callback(mut self, download: Download) -> Self {
-        self.download = Some(download);
-        self
-    }
-
-    pub fn with_drag_callback(mut self, drag: Drag) -> Self {
-        self.drag = Some(drag);
-        self
-    }
-
-    pub fn with_find_callback(mut self, find: Find) -> Self {
-        self.find = Some(find);
-        self
-    }
-
-    pub fn with_focus_callback(mut self, focus: Focus) -> Self {
-        self.focus = Some(focus);
-        self
-    }*/
-
-    pub fn build(self) -> Self {
-        self
     }
 }
 
@@ -311,10 +151,9 @@ unsafe extern "C" fn get_life_span_handler<I: CefClient>(
     self_: *mut cef_sys::cef_client_t,
 ) -> *mut cef_sys::cef_life_span_handler_t {
     let obj: &mut RcImpl<_, I> = RcImpl::get(self_);
-    obj.interface
-        .get_life_span_handler()
-        .map(|h| h.into_raw())
-        .unwrap_or(core::ptr::null_mut())
+    obj.interface.get_life_span_handler().unwrap().into_raw()
+    //.map(|h| h.into_raw())
+    //.unwrap_or(core::ptr::null_mut())
 }
 
 pub(crate) unsafe extern "C" fn get_context_menu_handler<I: CefClient>(
@@ -323,6 +162,32 @@ pub(crate) unsafe extern "C" fn get_context_menu_handler<I: CefClient>(
     let obj: &mut RcImpl<_, I> = RcImpl::get(self_);
     obj.interface
         .get_context_menu_handler()
+        .map(|h| h.into_raw())
+        .unwrap_or(core::ptr::null_mut())
+}
+
+pub(crate) unsafe extern "C" fn on_process_message_received<I: CefClient>(
+    self_: *mut cef_sys::_cef_client_t,
+    browser: *mut cef_sys::_cef_browser_t,
+    frame: *mut cef_sys::_cef_frame_t,
+    source_process: cef_sys::cef_process_id_t,
+    message: *mut cef_sys::_cef_process_message_t,
+) -> ::std::os::raw::c_int {
+    let obj: &mut RcImpl<_, I> = RcImpl::get(self_);
+    obj.interface.on_process_message_received(
+        CefBrowser::from(browser),
+        crate::CefFrame::from(frame),
+        source_process,
+        crate::CefProcessMessage::from(message),
+    ) as _
+}
+
+pub(crate) unsafe extern "C" fn get_load_handler<I: CefClient>(
+    self_: *mut cef_sys::cef_client_t,
+) -> *mut cef_sys::cef_load_handler_t {
+    let obj: &mut RcImpl<_, I> = RcImpl::get(self_);
+    obj.interface
+        .get_load_handler()
         .map(|h| h.into_raw())
         .unwrap_or(core::ptr::null_mut())
 }
@@ -460,15 +325,7 @@ pub(crate) unsafe extern "C" fn get_focus_handler<I: CefClient>(
         .unwrap_or(core::ptr::null_mut())
 }
 
-pub(crate) unsafe extern "C" fn get_load_handler<I: CefClient>(
-    self_: *mut cef_sys::cef_client_t,
-) -> *mut cef_sys::cef_load_handler_t {
-    let obj: &mut RcImpl<_, I> = RcImpl::get(self_);
-    obj.interface
-        .get_load_handler()
-        .map(|h| h.into_raw())
-        .unwrap_or(core::ptr::null_mut())
-}
+
 
 pub(crate) unsafe extern "C" fn get_print_handler<I: CefClient>(
     self_: *mut cef_sys::cef_client_t,

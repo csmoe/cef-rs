@@ -1,12 +1,62 @@
-use std::os::unix::ffi::OsStrExt;
-
-use camino::{Utf8Path, Utf8PathBuf};
+use std::ops::Deref;
+use std::ptr::null_mut;
+use std::sync::Arc;
 
 use crate::{
     args::CefArgs, command_line::CefCommandLine, error::Error, error::Result, rc::RcImpl,
     settings::CefSettings, string::CefString,
 };
-use crate::{prelude::*, CefBrowser, CefDictionaryValue, CefFrame};
+use crate::{
+    prelude::*, CefBrowser, CefClient, CefDictionaryValue, CefFrame, CefLoadHandlerWrapper,
+    LoadHandler, RefCountWrapper,
+};
+
+#[cfg(target_os = "macos")]
+mod helper {
+    use crate::prelude::*;
+
+    pub struct LibraryLoader {
+        path: std::path::PathBuf,
+    }
+
+    impl LibraryLoader {
+        const FRAMEWORK_PATH: &str =
+            "Chromium Embedded Framework.framework/Chromium Embedded Framework";
+
+        pub fn new(path: &std::path::Path, helper: bool) -> Self {
+            let resolver = if helper { "../../.." } else { "../Frameworks" };
+            let path = path.join(resolver).join(Self::FRAMEWORK_PATH);
+
+            Self { path }
+        }
+
+        // See [cef_load_library] for more documentation.
+        pub fn load(&self) -> crate::Result<()> {
+            Self::load_library(&self.path)
+        }
+
+        fn load_library(name: &std::path::Path) -> crate::Result<()> {
+            use std::os::unix::ffi::OsStrExt;
+            if unsafe { cef_load_library(name.as_os_str().as_bytes().as_ptr().cast()) } == 1 {
+                Ok(())
+            } else {
+                Err(Error::CannotInit(0))
+            }
+        }
+    }
+
+    impl Drop for LibraryLoader {
+        fn drop(&mut self) {
+            unsafe {
+                if cef_unload_library() != 1 {
+                    eprintln!("cannot unload framework {}", self.path.display());
+                }
+            }
+        }
+    }
+}
+#[cfg(target_os = "macos")]
+pub use helper::*;
 
 /// Handle process-specific callbacks
 ///
@@ -35,57 +85,82 @@ pub trait CefApp: Sized {
     fn get_render_process_handler(&self) -> Option<Self::RenderProcess> {
         None
     }
+}
 
-    #[doc(hidden)]
-    fn into_raw(self) -> *mut cef_app_t {
+pub struct CefAppWrapper<T: CefApp> {
+    inner: Arc<T>,
+}
+
+impl<T: CefApp> Clone for CefAppWrapper<T> {
+    fn clone(&self) -> Self {
+        Self {
+            inner: self.inner.clone(),
+        }
+    }
+}
+
+impl<T: CefApp> Deref for CefAppWrapper<T> {
+    type Target = T;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+
+impl<T: CefApp> CefAppWrapper<T> {
+    pub fn new(inner: Arc<T>) -> Self {
+        Self { inner }
+    }
+    extern "C" fn on_before_command_line_processing(
+        this: *mut cef_app_t,
+        process_type: *const cef_string_t,
+        command_line: *mut cef_command_line_t,
+    ) {
+        let obj: &mut RcImpl<_, Self> = RcImpl::get(this);
+        let process_type = unsafe { CefString::from_raw(process_type) };
+        let cmd = { CefCommandLine::from(command_line) };
+
+        obj.interface
+            .on_before_command_line_processing(process_type, cmd);
+    }
+
+    extern "C" fn get_render_process_handler(
+        this: *mut cef_app_t,
+    ) -> *mut cef_render_process_handler_t {
+        let app: &mut RcImpl<_, Self> = RcImpl::get(this);
+        app.interface
+            .get_render_process_handler()
+            .map(|handler| handler.into_raw())
+            .unwrap_or(std::ptr::null_mut())
+    }
+
+    extern "C" fn get_browser_process_handler(
+        this: *mut cef_app_t,
+    ) -> *mut cef_browser_process_handler_t {
+        let app: &mut RcImpl<_, Self> = RcImpl::get(this);
+        let Some(handler) = app.interface.get_browser_process_handler() else {
+            return std::ptr::null_mut();
+        };
+        handler.into_raw()
+    }
+}
+
+impl<T: CefApp> CefAppWrapper<T> {
+    pub fn into_raw(self) -> *mut cef_app_t {
         let mut object: cef_app_t = unsafe { std::mem::zeroed() };
-
-        extern "C" fn on_before_command_line_processing<I: CefApp>(
-            this: *mut cef_app_t,
-            process_type: *const cef_string_t,
-            command_line: *mut cef_command_line_t,
-        ) {
-            let obj: &mut RcImpl<_, I> = RcImpl::get(this);
-            let process_type = unsafe { CefString::from_raw(process_type) };
-            let cmd = unsafe { CefCommandLine::from(command_line) };
-
-            obj.interface
-                .on_before_command_line_processing(process_type, cmd);
-        }
-        object.on_before_command_line_processing = Some(on_before_command_line_processing::<Self>);
-
-        extern "C" fn get_render_process_handler<I: CefApp>(
-            this: *mut cef_app_t,
-        ) -> *mut cef_render_process_handler_t {
-            let app: &mut RcImpl<_, I> = RcImpl::get(this);
-
-            app.interface
-                .get_render_process_handler()
-                .map(|handler| handler.into_raw())
-                .unwrap_or(std::ptr::null_mut())
-        }
-        object.get_render_process_handler = Some(get_render_process_handler::<Self>);
-
-        extern "C" fn get_browser_process_handler<I: CefApp>(
-            this: *mut cef_app_t,
-        ) -> *mut cef_browser_process_handler_t {
-            let app: &mut RcImpl<_, I> = RcImpl::get(this);
-            let Some(handler) = app.interface.get_browser_process_handler() else {
-                return std::ptr::null_mut();
-            };
-            handler.into_raw()
-        }
-        object.get_browser_process_handler = Some(get_browser_process_handler::<Self>);
+        object.on_before_command_line_processing = Some(Self::on_before_command_line_processing);
+        object.get_render_process_handler = Some(Self::get_render_process_handler);
+        object.get_browser_process_handler = Some(Self::get_browser_process_handler);
+        // object.get_resource_bundle_handler = Some(Self::get_resource)
 
         RcImpl::new(object, self).cast()
     }
 }
 
 /// See [cef_execute_process] for more documentation.
-pub fn execute_process<T: CefApp>(args: &mut CefArgs, app: Option<T>) -> Result<()> {
+pub fn execute_process<T: CefApp>(args: &mut CefArgs, app: Option<Arc<T>>) -> Result<()> {
     let args = args.as_raw()?;
     let app = app
-        .map(|app| app.into_raw())
+        .map(|app| CefAppWrapper::new(app).into_raw())
         .unwrap_or(std::ptr::null_mut());
 
     let code = unsafe { cef_execute_process(&args, app, std::ptr::null_mut()) };
@@ -104,12 +179,12 @@ pub fn execute_process<T: CefApp>(args: &mut CefArgs, app: Option<T>) -> Result<
 pub fn initialize<T: CefApp>(
     args: &mut CefArgs,
     settings: &CefSettings,
-    app: Option<T>,
+    app: Option<Arc<T>>,
 ) -> Result<()> {
     let args = args.as_raw()?;
     let settings = settings.as_raw();
     let app = app
-        .map(|app| app.into_raw())
+        .map(|app| CefAppWrapper::new(app).into_raw())
         .unwrap_or(std::ptr::null_mut());
     if unsafe { cef_initialize(&args, &settings, app, std::ptr::null_mut()) != 1 } {
         Err(Error::CannotInit(unsafe { cef_get_exit_code() }))
@@ -138,46 +213,6 @@ pub fn do_message_loop_work() {
     unsafe { cef_do_message_loop_work() }
 }
 
-#[cfg(target_os = "macos")]
-pub struct LibraryLoader {
-    path: std::path::PathBuf,
-}
-
-impl LibraryLoader {
-    const FRAMEWORK_PATH: &str =
-        "Chromium Embedded Framework.framework/Chromium Embedded Framework";
-
-    pub fn new(path: &std::path::Path, helper: bool) -> Self {
-        let resolver = if helper { "../../.." } else { "../Frameworks" };
-        let path = path.join(resolver).join(Self::FRAMEWORK_PATH);
-
-        Self { path }
-    }
-
-    // See [cef_load_library] for more documentation.
-    pub fn load(&self) -> Result<()> {
-        Self::load_library(&self.path)
-    }
-
-    fn load_library(name: &std::path::Path) -> Result<()> {
-        if unsafe { cef_load_library(name.as_os_str().as_bytes().as_ptr().cast()) } == 1 {
-            Ok(())
-        } else {
-            Err(Error::CannotInit(0))
-        }
-    }
-}
-
-impl Drop for LibraryLoader {
-    fn drop(&mut self) {
-        unsafe {
-            if cef_unload_library() != 1 {
-                eprintln!("cannot unload framework {}", self.path.display());
-            }
-        }
-    }
-}
-
 #[derive(Debug, Clone)]
 #[wrapper]
 /// See [cef_render_process_handler_t] for more documentation.
@@ -201,7 +236,7 @@ pub trait CefRenderProcessHandler: Sized {
     fn on_browser_destroyed(&self, browser: crate::CefBrowser) {}
 
     /// See [cef_render_process_handler_t::get_load_handler] for more documentation.
-    fn get_load_handler(&self) -> Option<crate::handler::LoadHandler> {
+    fn get_load_handler(&self) -> Option<LoadHandler> {
         None
     }
 
@@ -268,7 +303,11 @@ pub trait CefRenderProcessHandler: Sized {
             let handler: &crate::rc::RcImpl<_, I> = crate::rc::RcImpl::get(self_);
             handler.interface.on_browser_created(
                 CefBrowser::from(browser),
-                CefDictionaryValue::from(extra_info),
+                if extra_info.is_null() {
+                    CefDictionaryValue::create().unwrap()
+                } else {
+                    CefDictionaryValue::from(extra_info)
+                },
             );
         }
 
@@ -426,8 +465,8 @@ pub trait CefBrowserProcessHandler: Sized {
     fn on_schedule_message_pump_work(&self, delay_ms: i64) {}
 
     /// See [cef_browser_process_handler_t::get_default_client]
-    fn get_default_client(&self) -> *mut _cef_client_t {
-        std::ptr::null_mut()
+    fn get_default_client(&self) -> *mut cef_client_t {
+        null_mut()
     }
 
     /// See [cef_browser_process_handler_t::get_default_request_context_handler]
@@ -490,9 +529,12 @@ pub trait CefBrowserProcessHandler: Sized {
 
         unsafe extern "C" fn get_default_client<I: CefBrowserProcessHandler>(
             self_: *mut _cef_browser_process_handler_t,
-        ) -> *mut _cef_client_t {
+        ) -> *mut cef_client_t {
             let handler: &crate::rc::RcImpl<_, I> = crate::rc::RcImpl::get(self_);
             handler.interface.get_default_client()
+            // FIXME
+            //.map(|c| c.into_raw())
+            //.unwrap_or(null_mut())
         }
 
         unsafe extern "C" fn get_default_request_context_handler<I: CefBrowserProcessHandler>(
@@ -515,12 +557,7 @@ pub trait CefBrowserProcessHandler: Sized {
     }
 }
 
-impl CefBrowserProcessHandler for () {
-    #[doc(hidden)]
-    fn into_raw(self) -> *mut cef_browser_process_handler_t {
-        std::ptr::null_mut()
-    }
-}
+impl CefBrowserProcessHandler for () {}
 
 #[derive(Debug, Clone)]
 #[wrapper]

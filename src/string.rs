@@ -16,7 +16,7 @@ use std::ptr::null_mut;
 use widestring::U16CString;
 
 /// Helper type to deal with Cef string. It's essentially an UTF-16 C string.
-#[derive(Debug, Default, Clone)]
+#[derive(Debug, Default, Clone, Hash)]
 pub struct CefString(U16CString);
 
 impl CefString {
@@ -44,6 +44,9 @@ impl CefString {
     /// to convert to `U16CString`, this method will returns `None`.
     #[allow(clippy::missing_safety_doc)]
     pub unsafe fn from_userfree_cef(ptr: cef_string_userfree_utf16_t) -> Option<CefString> {
+        if ptr.is_null() {
+            return None;
+        }
         unsafe {
             let res = Self::from_raw(ptr);
             cef_sys::cef_string_userfree_utf16_free(ptr);
@@ -54,6 +57,12 @@ impl CefString {
     /// Get raw [cef_string_utf16_t] which doesn't have the ownership of the value.
     /// This should be used when you need to pass the `*const cef_string_utf16_t` to the function.
     pub fn as_raw(&self) -> cef_string_utf16_t {
+        unsafe extern "C" fn free_string(str_: *mut cef_sys::char16_t) {
+            if str_.is_null() {
+                return;
+            }
+            _ = U16CString::from_raw(str_);
+        }
         cef_string_utf16_t {
             length: self.0.len(),
             str_: self.0.as_ptr().cast_mut(),

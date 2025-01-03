@@ -1,7 +1,5 @@
 #![doc = include_str!("../README.md")]
 
-mod interface;
-
 mod app;
 mod args;
 mod browser;
@@ -10,6 +8,7 @@ mod command_line;
 mod error;
 mod handler;
 mod image;
+mod interface;
 mod menu_model;
 mod multimap;
 mod net;
@@ -17,17 +16,26 @@ mod preference_manager;
 mod prelude;
 mod process_message;
 mod rc;
+//mod sandbox;
 mod scoped;
 mod settings;
 mod string;
+mod task;
 mod v8;
 mod value;
 mod view;
+
+use std::{
+    marker::PhantomData,
+    ops::{Deref, DerefMut},
+    sync::atomic::{AtomicU32, Ordering},
+};
 
 pub use app::*;
 pub use args::*;
 pub use browser::*;
 pub use cef_sys as sys;
+use cef_sys::cef_base_ref_counted_t;
 pub use client::*;
 pub use command_line::*;
 pub use error::*;
@@ -38,6 +46,7 @@ pub use net::*;
 pub use process_message::CefProcessMessage;
 pub use settings::*;
 pub use string::CefString;
+pub use task::*;
 pub use v8::*;
 pub use value::*;
 pub use view::*;
@@ -93,5 +102,83 @@ mod alias {
     pub type CefCookieSameSite = cef_sys::cef_cookie_same_site_t;
 
     pub type CefCookiePriority = cef_sys::cef_cookie_priority_t;
+
+    pub type CefThreadId = cef_sys::cef_thread_id_t;
+
+    pub type CefErrorCode = cef_sys::cef_errorcode_t;
+
+    pub type CefTransitionType = cef_sys::cef_transition_type_t;
 }
 pub use alias::*;
+
+#[repr(C)]
+pub(crate) struct RefCountWrapper<C, W> {
+    __wrapper: W,
+    count: AtomicU32,
+    phantom: PhantomData<C>,
+}
+impl<C, W> Deref for RefCountWrapper<C, W> {
+    type Target = W;
+
+    fn deref(&self) -> &Self::Target {
+        &self.__wrapper
+    }
+}
+impl<C, W> DerefMut for RefCountWrapper<C, W> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.__wrapper
+    }
+}
+impl<C, W> RefCountWrapper<C, W> {
+    fn wrap_ptr<F>(wrapper: F) -> *mut C
+    where
+        F: FnOnce(cef_base_ref_counted_t) -> W,
+    {
+        let base = RefCountWrapper::<C, W> {
+            __wrapper: wrapper(cef_base_ref_counted_t {
+                size: std::mem::size_of::<Self>(),
+                add_ref: Some(Self::add_ref),
+                release: Some(Self::release),
+                has_one_ref: Some(Self::has_one_ref),
+                has_at_least_one_ref: Some(Self::has_at_least_one_ref),
+            }),
+            count: AtomicU32::new(1),
+            phantom: PhantomData,
+        };
+        Box::into_raw(Box::new(base)) as *mut C
+    }
+
+    fn from_ptr<'a>(ptr: *mut cef_base_ref_counted_t) -> &'a mut RefCountWrapper<C, W> {
+        unsafe { &mut *(ptr as *mut _) }
+    }
+    extern "C" fn add_ref(ptr: *mut cef_base_ref_counted_t) {
+        let base = Self::from_ptr(ptr);
+        base.count.fetch_add(1, Ordering::Relaxed);
+    }
+    extern "C" fn release(ptr: *mut cef_base_ref_counted_t) -> i32 {
+        let base = Self::from_ptr(ptr);
+        let old_count = base.count.fetch_sub(1, Ordering::Release);
+        if old_count == 1 {
+            unsafe { _ = Box::from_raw(base) };
+            1
+        } else {
+            0
+        }
+    }
+    extern "C" fn has_one_ref(ptr: *mut cef_base_ref_counted_t) -> i32 {
+        let base = Self::from_ptr(ptr);
+        if base.count.load(Ordering::SeqCst) == 1 {
+            1
+        } else {
+            0
+        }
+    }
+    extern "C" fn has_at_least_one_ref(ptr: *mut cef_base_ref_counted_t) -> i32 {
+        let base = Self::from_ptr(ptr);
+        if base.count.load(Ordering::SeqCst) >= 1 {
+            1
+        } else {
+            0
+        }
+    }
+}

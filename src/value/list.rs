@@ -143,10 +143,8 @@ impl CefListValue {
         fn set_double(&self, index: usize, value: f64) -> bool;
 
         /// See [cef_list_value_t::set_string]
-        fn set_string(&self, index: usize, value: &str) -> bool {
-            set_string.map(|f| unsafe {
-                f(self.get_this(), index, &CefString::from(value).as_raw()) == 1
-            })
+        fn set_string(&self, index: usize, value: CefString) -> bool {
+            set_string.map(|f| unsafe { f(self.get_this(), index, &value.as_raw()) == 1 })
         }
 
         /// See [cef_list_value_t::set_binary]

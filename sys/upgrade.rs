@@ -10,6 +10,7 @@ sha1_smol = "1"
 indicatif = "0"
 ---
 
+use std::io::Write;
 const DOWNLOAD_TEMPLATE: &str =
     "{msg} {spinner:.green} [{elapsed_precise}] [{wide_bar:.cyan/blue}] {bytes}/{total_bytes} ({eta})";
 
@@ -46,7 +47,8 @@ fn main() {
             if TARGETS.contains(target) {
                 let (os, arch) = target_to_os_arch(target);
                 let cef_path = std::env::var(&format!("CEF_PATH_{os}_{arch}")).map(std::path::PathBuf::from).unwrap();
-                download_prebuilt_cef(target, &cef_path);
+                let archive_dir = download_prebuilt_cef(target, &cef_path);
+                build_cef_dll_wrapper(&cef_path, &archive_dir, &os);
             } else {
                 eprintln!("expected targets: {TARGETS:?}");
                 std::process::exit(1);
@@ -70,7 +72,7 @@ fn main() {
     }
 }
 
-fn download_prebuilt_cef(target: &str, cef_path: &std::path::Path) {
+fn download_prebuilt_cef(target: &str, cef_path: &std::path::Path) -> std::path::PathBuf {
     let metadata: toml::Table =
         toml::from_str(&std::fs::read_to_string("./Cargo.toml").unwrap()).unwrap();
     let cef_version = metadata["package"]["metadata"]["cef_version"]
@@ -146,7 +148,16 @@ fn download_prebuilt_cef(target: &str, cef_path: &std::path::Path) {
     ));
     tar::Archive::new(decoder).unpack(&download).unwrap();
 
-    let from = download.join(file.strip_suffix(".tar.bz2").unwrap());
+    // extracted dir path
+    let extracted_dir = download.join(file.strip_suffix(".tar.bz2").unwrap());
+    // rename to long path to a shorter path
+    let (os, arch) = target_to_os_arch(&target);
+    let from = download.join(format!("archive_{os}_{arch}"));
+    if from.exists() {
+        std::fs::remove_dir_all(&from).unwrap();
+    }
+    std::fs::rename(extracted_dir, &from).unwrap();
+
     if cef_path.exists() {
         std::fs::remove_dir_all(&cef_path).unwrap();
     }
@@ -156,6 +167,7 @@ fn download_prebuilt_cef(target: &str, cef_path: &std::path::Path) {
     }
     copy_directory(&from.join("include"), &cef_path.join("include"));
     println!("cef: extracted into {:?}", cef_path);
+    from
 }
 
 fn calculate_file_sha1(mut reader: std::io::BufReader<std::fs::File>) -> String {
@@ -175,10 +187,9 @@ fn calculate_file_sha1(mut reader: std::io::BufReader<std::fs::File>) -> String 
 }
 
 fn bindgen(target: &str, cef_path: &std::path::Path) {
-    use std::io::Write;
-    let mut gen = std::process::Command::new("bindgen");
+    let mut g = std::process::Command::new("bindgen");
     let binding = target.replace('-', "_") + ".rs";
-    gen.args([
+    g.args([
         "wrapper.h",
         "-o",
         &format!("src/bindings/{binding}"),
@@ -202,14 +213,45 @@ fn bindgen(target: &str, cef_path: &std::path::Path) {
             .output()
             .unwrap();
         let path = String::from_utf8_lossy(&output.stdout).trim().to_string();
-        gen.arg(format!("--sysroot={path}"));
+        g.arg(format!("--sysroot={path}"));
     }
 
-    println!("cef: bindgen cmd={gen:?}");
-    let output = gen.output().unwrap();
+    println!("cef: bindgen cmd={g:?}");
+    let output = g.output().unwrap();
     std::io::stdout().write_all(&output.stdout).unwrap();
     std::io::stderr().write_all(&output.stderr).unwrap();
     assert!(output.status.success());
+}
+
+fn build_cef_dll_wrapper(cef_path: &std::path::Path, archive_dir: &std::path::Path, os: &str) {
+    let lib_name = format!("libcef_dll_wrapper.{}", if os == "windows" { "lib" } else { "a" });
+    if cef_path.join(&lib_name).exists() {
+        println!("cef: {lib_name} already exists, skip building");
+        return;
+    }
+    let build_dir = archive_dir.join("build");
+    std::fs::create_dir_all(&build_dir).unwrap();
+    let mut g = std::process::Command::new("cmake");
+    g.current_dir(&build_dir).args([
+        r#"-G Ninja"#,
+        "-DCMAKE_OBJECT_PATH_MAX=500",
+        "-DCMAKE_BUILD_TYPE=RelWithDebInfo",
+        ".."
+    ]);
+    println!("cef: build cef_dll_wrapper cmd={g:?}");
+    let output = g.output().unwrap();
+    std::io::stdout().write_all(&output.stdout).unwrap();
+    std::io::stderr().write_all(&output.stderr).unwrap();
+    assert!(output.status.success());
+
+    let mut g = std::process::Command::new("ninja");
+    g.current_dir(&build_dir).arg("libcef_dll_wrapper");
+    let output = g.output().unwrap();
+    std::io::stdout().write_all(&output.stdout).unwrap();
+    std::io::stderr().write_all(&output.stderr).unwrap();
+    assert!(output.status.success());
+
+    std::fs::copy(&build_dir.join("libcef_dll_wrapper").join(&lib_name), &cef_path.join(&lib_name)).unwrap();
 }
 
 fn copy_directory(src: &std::path::Path, dst: &std::path::Path) {

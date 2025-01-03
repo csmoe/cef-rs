@@ -1,3 +1,5 @@
+use std::ptr::NonNull;
+
 use crate::{prelude::*, CefBaseTime, CefCookiePriority, CefCookieSameSite};
 
 #[derive(Debug, Clone)]
@@ -59,6 +61,62 @@ impl CefCookie {
             priority,
         }
     }
+
+    fn from_raw(cookie: *const cef_cookie_t) -> Option<Self> {
+        if cookie.is_null() {
+            return None;
+        };
+        unsafe {
+            let cookie = *cookie;
+            let cookie = CefCookie {
+                name: CefString::from_raw(&cookie.name).unwrap(),
+                value: CefString::from_raw(&cookie.value).unwrap(),
+                domain: CefString::from_raw(&cookie.domain).unwrap(),
+                path: CefString::from_raw(&cookie.domain).unwrap(),
+                secure: cookie.secure == 1,
+                httponly: cookie.httponly == 1,
+                creation: cookie.creation,
+                last_access: cookie.last_access,
+                has_expires: cookie.has_expires == 1,
+                expires: cookie.expires,
+                same_site: cookie.same_site,
+                priority: cookie.priority,
+            };
+            Some(cookie)
+        }
+    }
+}
+
+/// See [cef_cookie_visitor_t]
+pub trait CefCookieVisitor: Sized {
+    /// See [cef_cookie_visitor_t::visit]
+    fn visit(
+        &self,
+        cookie: Option<CefCookie>,
+        count: u32,
+        total: u32,
+        delete: Option<NonNull<bool>>,
+    ) -> bool;
+
+    #[doc(hidden)]
+    fn into_raw(self) -> *mut cef_cookie_visitor_t {
+        unsafe extern "C" fn visit<T: CefCookieVisitor>(
+            self_: *mut _cef_cookie_visitor_t,
+            cookie: *const _cef_cookie_t,
+            count: ::std::os::raw::c_int,
+            total: ::std::os::raw::c_int,
+            deleteCookie: *mut ::std::os::raw::c_int,
+        ) -> ::std::os::raw::c_int {
+            let object: &crate::rc::RcImpl<_, T> = crate::rc::RcImpl::get(self_);
+            let delete = NonNull::new(deleteCookie as _);
+            object
+                .interface
+                .visit(CefCookie::from_raw(cookie), count as _, total as _, delete) as _
+        }
+        let mut object: cef_cookie_visitor_t = unsafe { std::mem::zeroed() };
+        object.visit = Some(visit::<Self>);
+        crate::rc::RcImpl::new(object, self).cast()
+    }
 }
 
 #[wrapper]
@@ -71,10 +129,10 @@ impl CefCookieManager {
         fn set_cookie(&self,
             url: CefString,
             cookie: CefCookie,
-            callback: impl CefSetCookieCallback,
+            callback: Option<impl CefSetCookieCallback>,
         ) -> bool {
             set_cookie.map(|f|unsafe {
-                f(self.get_this(), &url.as_raw(), &cookie.into_raw(), callback.into_raw()) == 1
+                f(self.get_this(), &url.as_raw(), &cookie.into_raw(), callback.map(|c| c.into_raw()).unwrap_or(std::ptr::null_mut())) == 1
             })
         }
 
@@ -83,10 +141,17 @@ impl CefCookieManager {
             &self,
             url: CefString,
             cookie_name: CefString,
-            callback: impl CefDeleteCookiesCallback,
+            callback: Option<impl CefDeleteCookiesCallback>,
         ) -> bool {
             delete_cookies.map(|f| unsafe {
-                f(self.get_this(), &url.as_raw(), &cookie_name.as_raw(), callback.into_raw())  == 1
+                f(self.get_this(), &url.as_raw(), &cookie_name.as_raw(), callback.map(|c|c.into_raw()).unwrap_or(std::ptr::null_mut()))  == 1
+            })
+        }
+
+        /// See [cef_cookie_manager_t::visit_all_cookies]
+        fn visit_all_cookies(&self, visitor: impl CefCookieVisitor) -> bool {
+            visit_all_cookies.map(|f| unsafe {
+                f(self.get_this(), visitor.into_raw()) == 1
             })
         }
     }

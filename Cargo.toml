@@ -40,12 +40,6 @@ short_description = "An example of a bundled CEF application"
 long_description = """ CEF application in Rust """
 osx_frameworks = [ "sys/cef/archive/Chromium Embedded Framework.framework" ]
 
-[features]
-dox = ["cef-sys/dox"]
-
-[package.metadata.docs.rs]
-features = [ "dox" ]
-
 [workspace]
 members = [
  "sys",

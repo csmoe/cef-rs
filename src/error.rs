@@ -1,3 +1,5 @@
+use crate::CefThreadId;
+
 #[derive(thiserror::Error, Debug)]
 pub enum Error {
     #[error("init failure: {0}")]
@@ -15,6 +17,8 @@ pub enum Error {
     NullPtr,
     #[error("js call ignored")]
     IgnoreJsFn,
+    #[error("cannot post to cef_thread({0})")]
+    CannotPostTask(/*cef_thread_id*/ u8),
     #[error("raw: {0:?}")]
     Raw(Option<crate::string::CefString>),
 }
