@@ -27,14 +27,7 @@ impl CefPanel {
         }
         /// See [cef_panel_t::set_to_fill_layout]
         fn set_to_fill_layout(&mut self) -> crate::CefFillLayout {
-            set_to_fill_layout.and_then(|f| unsafe {
-                let v = f(self.get_this());
-                if v.is_null() {
-                    None
-                } else {
-                    Some(crate::CefFillLayout::from(v))
-                }
-            })
+            set_to_fill_layout.map(|f| unsafe { crate::CefFillLayout::from(f(self.get_this())) })
         }
 
         /// See [cef_panel_t::set_to_box_layout]
@@ -42,26 +35,14 @@ impl CefPanel {
             &mut self,
             settings: crate::CefBoxLayoutSettings,
         ) -> crate::CefBoxLayout {
-            set_to_box_layout.and_then(|f| unsafe {
-                let v = f(self.get_this(), &settings.into_raw());
-                if v.is_null() {
-                    None
-                } else {
-                    Some(crate::CefBoxLayout::from(v))
-                }
+            set_to_box_layout.map(|f| unsafe {
+                crate::CefBoxLayout::from(f(self.get_this(), &settings.into_raw()))
             })
         }
 
         /// See [cef_panel_t::get_layout]
         fn get_layout(&self) -> crate::CefLayout {
-            get_layout.and_then(|f| unsafe {
-                let v = f(self.get_this());
-                if v.is_null() {
-                    None
-                } else {
-                    Some(crate::CefLayout::from(v))
-                }
-            })
+            get_layout.map(|f| unsafe { crate::CefLayout::from(f(self.get_this())) })
         }
 
         /// See [cef_panel_t::layout]
@@ -87,14 +68,7 @@ impl CefPanel {
 
         /// See [cef_panel_t::get_child_view_at]
         fn get_child_view_at(&self, index: i32) -> crate::CefView {
-            get_child_view_at.and_then(|f| unsafe {
-                let v = f(self.get_this(), index);
-                if v.is_null() {
-                    None
-                } else {
-                    Some(CefView::from(v))
-                }
-            })
+            get_child_view_at.map(|f| unsafe { CefView::from(f(self.get_this(), index)) })
         }
     );
 }
