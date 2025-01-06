@@ -1,7 +1,9 @@
+use std::sync::Arc;
+
 use cef::{
     CefApp, CefArgs, CefBrowser, CefBrowserSettings, CefBrowserView, CefClient,
-    CefContextMenuHandler, CefSettings, CefString, LibraryLoader, PanelDelegate, ViewDelegate,
-    WindowDelegate,
+    CefContextMenuHandler, CefLifeSpanHandler, CefLoadHandler, CefSettings, CefString,
+    LibraryLoader, PanelDelegate, ViewDelegate, WindowDelegate,
 };
 
 #[derive(Debug, Clone, Copy)]
@@ -16,13 +18,20 @@ impl CefApp for Application {
 struct DemoClient;
 
 impl CefClient for DemoClient {
-    type LifeSpan = ();
+    type LifeSpan = LifeSpanHandler;
     type Render = ();
+    type Load = LoadHandler;
     type ContextMenu = ContextMenu;
 }
 
 struct ContextMenu;
 impl CefContextMenuHandler for ContextMenu {}
+
+struct LifeSpanHandler;
+impl CefLifeSpanHandler for LifeSpanHandler {}
+
+struct LoadHandler;
+impl CefLoadHandler for LoadHandler {}
 
 #[derive(Debug)]
 struct DemoWindow {
@@ -52,8 +61,8 @@ fn main() {
     let app = Application;
     let mut settings = CefSettings::new();
     settings.root_cache_path = CefString::from("/tmp/demo").into();
-    cef::execute_process(&mut args, Some(app)).unwrap();
-    cef::initialize(&mut args, &settings, Some(app)).unwrap();
+    cef::execute_process(&mut args, Some(Arc::new(app))).unwrap();
+    cef::initialize(&mut args, &settings, Some(Arc::new(app))).unwrap();
 
     let window_info = cef::CefWindowInfo::new();
     let browser_settings = CefBrowserSettings::new();

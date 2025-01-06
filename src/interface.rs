@@ -1,3 +1,7 @@
+/// FIXME
+///
+/// Auto-gen the bindings?
+
 pub unsafe trait CefInterface: Sized + 'static {
     type VTable;
     type Super: CefInterface;

@@ -12,6 +12,7 @@ fn main() {
             "cef_dll_wrapper"
         },
     );
+    // TODO link sandbox
     //build::rustc_link_lib_kind("static", "cef_sandbox");
     match os.as_str() {
         "macos" => {

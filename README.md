@@ -32,7 +32,7 @@ cd sys
 - Build and run the application with `LD_LIBRARY_PATH` (or you can also add rpath to your cargo config or build script):
 
 ```sh
-LD_LIBRARY_PATH=sys/cef/archive cargo r --example demo
+LD_LIBRARY_PATH=sys/cef/archive_linux_x86_64 cargo r --example demo
 ```
 
 #### Flatpak
