@@ -26,6 +26,11 @@ Hi! We, the maintainers, are really excited that you are interested in contribut
 
 ### Quick start
 
+#### Install CMake and Ninja-Build
+
+> CEF release is distributed with the prebuilt dynamic binaries(libcef) and cef_dll_wrapper source code, We must compile
+> cef_dll_wrapper into static library then link with it(See[Build Steps](https://bitbucket.org/chromiumembedded/cef/wiki/Tutorial.md))
+
 #### Download CEF from [cef-builds](https://cef-builds.spotifycdn.com/index.html)
 
 ```sh
