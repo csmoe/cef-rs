@@ -3,7 +3,6 @@ use crate::{
     client::CefClient,
     error::{Error, Result},
     string::CefString,
-    view::CefView,
     CefBrowserSettings,
 };
 use cef_sys::{cef_browser_view_create, cef_browser_view_t};

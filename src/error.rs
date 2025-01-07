@@ -1,4 +1,3 @@
-use crate::CefThreadId;
 
 #[derive(thiserror::Error, Debug)]
 pub enum Error {

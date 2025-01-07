@@ -1,8 +1,7 @@
 use crate::rc::Rc;
-use crate::string::CefString;
 use crate::{
     prelude::*,
-    rc::{RcImpl, RefGuard},
+    rc::RcImpl,
     CefRect, CefSize,
 };
 use cef_sys::{cef_view_delegate_t, cef_view_t};

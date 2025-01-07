@@ -575,7 +575,7 @@ impl V8Handler {
                 std::slice::from_raw_parts(arguments, argc)
                     .to_vec()
                     .into_iter()
-                    .map(|a| V8Value::from(a))
+                    .map(V8Value::from)
                     .collect::<Vec<_>>()
             };
             let this = V8Value::from(this);

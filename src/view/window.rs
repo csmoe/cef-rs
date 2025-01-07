@@ -3,7 +3,7 @@ use crate::{
     add_view_delegate_methods,
     rc::RcImpl,
     string::CefString,
-    view::{CefPanel, PanelDelegate},
+    view::PanelDelegate,
     CefRect, CefState,
 };
 

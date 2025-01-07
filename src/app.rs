@@ -6,10 +6,7 @@ use crate::{
     args::CefArgs, command_line::CefCommandLine, error::Error, error::Result, rc::RcImpl,
     settings::CefSettings, string::CefString,
 };
-use crate::{
-    prelude::*, CefBrowser, CefClient, CefDictionaryValue, CefFrame, CefLoadHandlerWrapper,
-    LoadHandler, RefCountWrapper,
-};
+use crate::{prelude::*, CefBrowser, CefDictionaryValue, CefFrame, LoadHandler};
 
 #[cfg(target_os = "macos")]
 mod helper {
@@ -486,7 +483,7 @@ pub trait CefBrowserProcessHandler: Sized {
             let handler: &crate::rc::RcImpl<_, I> = crate::rc::RcImpl::get(self_);
             handler
                 .interface
-                .on_register_custom_preferences(type_.into(), registrar);
+                .on_register_custom_preferences(type_, registrar);
         }
 
         unsafe extern "C" fn on_context_initialized<I: CefBrowserProcessHandler>(
@@ -515,7 +512,7 @@ pub trait CefBrowserProcessHandler: Sized {
             let handler: &crate::rc::RcImpl<_, I> = crate::rc::RcImpl::get(self_);
             handler.interface.on_already_running_app_relaunch(
                 CefCommandLine::from(command_line),
-                CefString::from_raw(current_directory).into(),
+                CefString::from_raw(current_directory),
             ) as i32
         }
 
@@ -601,7 +598,7 @@ pub trait CefResourceBundleHandler: Sized {
             result as ::std::os::raw::c_int
         }
 
-        unsafe extern "C" fn get_data_resource<I: CefResourceBundleHandler>(
+        unsafe extern "C" fn get_data_resource(
             self_: *mut _cef_resource_bundle_handler_t,
             resource_id: ::std::os::raw::c_int,
             data: *mut *mut ::std::os::raw::c_void,
@@ -622,7 +619,7 @@ pub trait CefResourceBundleHandler: Sized {
             0
         }
 
-        unsafe extern "C" fn get_data_resource_for_scale<I: CefResourceBundleHandler>(
+        unsafe extern "C" fn get_data_resource_for_scale(
             self_: *mut _cef_resource_bundle_handler_t,
             resource_id: ::std::os::raw::c_int,
             scale_factor: cef_scale_factor_t,
@@ -647,8 +644,8 @@ pub trait CefResourceBundleHandler: Sized {
         }
 
         handler.get_localized_string = Some(get_localized_string::<Self>);
-        handler.get_data_resource = Some(get_data_resource::<Self>);
-        handler.get_data_resource_for_scale = Some(get_data_resource_for_scale::<Self>);
+        handler.get_data_resource = Some(get_data_resource);
+        handler.get_data_resource_for_scale = Some(get_data_resource_for_scale);
 
         crate::rc::RcImpl::new(handler, self).cast()
     }

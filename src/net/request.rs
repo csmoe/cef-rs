@@ -1,4 +1,4 @@
-use crate::{handler, prelude::*, CefBrowser, CefFrame};
+use crate::{prelude::*, CefBrowser, CefFrame};
 
 use super::CefCookieManager;
 
@@ -457,7 +457,7 @@ pub trait CefRequestHandler: Sized {
         ) {
         }
 
-        let mut object: cef_request_handler_t = unsafe { std::mem::zeroed() };
+        let object: cef_request_handler_t = unsafe { std::mem::zeroed() };
         crate::rc::RcImpl::new(object, self).cast()
     }
 }

@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use crate::{string::CefString, CefBrowser, CefRect};
+use crate::string::CefString;
 
 /// See [cef_render_handler_t] for more docs.
 #[derive(Debug, Clone)]

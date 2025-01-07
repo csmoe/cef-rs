@@ -22,12 +22,12 @@ pub struct Base {
 
 impl Base {
     unsafe extern "C" fn add_ref(this: *mut cef_sys::cef_base_ref_counted_t) {
-        let self_ = unsafe { core::mem::transmute::<_, &Self>(this) };
+        let self_ = unsafe { &*this.cast::<Self>() };
         <_ as BaseImpl>::add_ref(self_);
     }
 
     unsafe extern "C" fn release(this: *mut cef_sys::cef_base_ref_counted_t) -> i32 {
-        let self_ = unsafe { core::mem::transmute::<_, &Self>(this) };
+        let self_ = unsafe { &*this.cast::<Self>() };
         let should_release = <_ as BaseImpl>::release(self_);
         if should_release {
             _ = Box::from(this);
@@ -36,12 +36,12 @@ impl Base {
     }
 
     unsafe extern "C" fn has_one_ref(this: *mut cef_sys::cef_base_ref_counted_t) -> i32 {
-        let self_ = unsafe { core::mem::transmute::<_, &Self>(this) };
+        let self_ = unsafe { &*this.cast::<Self>() };
         <_ as BaseImpl>::has_one_ref(self_) as _
     }
 
     unsafe extern "C" fn has_at_least_one_ref(this: *mut cef_sys::cef_base_ref_counted_t) -> i32 {
-        let self_ = unsafe { core::mem::transmute::<_, &Self>(this) };
+        let self_ = unsafe { &*this.cast::<Self>() };
         <_ as BaseImpl>::has_at_least_one_ref(self_) as _
     }
 }
@@ -105,20 +105,12 @@ pub(crate) mod ref_counted {
 
     #[inline(always)]
     pub fn has_one_ref(ref_count: &AtomicU32) -> bool {
-        if ref_count.load(Ordering::Acquire) == 1 {
-            true
-        } else {
-            false
-        }
+        ref_count.load(Ordering::Acquire) == 1
     }
 
     #[inline(always)]
     pub fn has_at_least_one_ref(ref_count: &AtomicU32) -> bool {
-        if ref_count.load(Ordering::Acquire) >= 1 {
-            true
-        } else {
-            false
-        }
+        ref_count.load(Ordering::Acquire) >= 1
     }
 
     #[inline(always)]

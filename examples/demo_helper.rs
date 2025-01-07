@@ -1,4 +1,6 @@
-use cef::{CefApp, CefArgs, CefClient, CefContextMenuHandler, CefSettings, LibraryLoader};
+#[cfg(target_os = "macos")]
+use cef::LibraryLoader;
+use cef::{CefApp, CefArgs, CefSettings};
 
 #[derive(Debug, Clone, Copy)]
 struct Application;
@@ -8,18 +10,8 @@ impl CefApp for Application {
     type BrowserProcess = ();
 }
 
-#[derive(Debug, Copy, Clone)]
-struct DemoClient;
-
-impl CefClient for DemoClient {
-    type Render = ();
-    type LifeSpan = ();
-    type ContextMenu = ContextMenu;
-}
-struct ContextMenu;
-impl CefContextMenuHandler for ContextMenu {}
-
 fn main() {
+    #[cfg(target_os = "macos")]
     {
         let loader = LibraryLoader::new(&std::env::current_exe().unwrap(), true);
         loader.load().unwrap();
@@ -28,8 +20,8 @@ fn main() {
     let mut args = CefArgs::new(std::env::args());
     let app = Application;
     let settings = CefSettings::new();
-    cef::execute_process(&mut args, Some(app)).unwrap();
-    cef::initialize(&mut args, &settings, Some(app)).unwrap();
+    cef::execute_process(&mut args, Some(app.into())).unwrap();
+    cef::initialize(&mut args, &settings, Some(app.into())).unwrap();
 
     cef::run_message_loop();
 

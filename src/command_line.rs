@@ -1,7 +1,7 @@
 use std::str::FromStr;
 
 use crate::{
-    interface::{Base, CefInterface},
+    interface::CefInterface,
     prelude::*,
 };
 

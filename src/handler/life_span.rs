@@ -2,10 +2,10 @@ use std::ops::Deref;
 use std::sync::Arc;
 
 use crate::{
-    prelude::*, CefBrowserSettings, CefDictionaryValue, CefPopupFeatures, CefSettings,
+    prelude::*, CefBrowserSettings, CefDictionaryValue, CefPopupFeatures,
     CefWindowInfo, CefWindowOpenDisposition,
 };
-use crate::{string::CefString, CefBrowser};
+use crate::string::CefString;
 
 pub struct CefLifeSpanWrapper<T: CefLifeSpanHandler> {
     inner: Arc<T>,

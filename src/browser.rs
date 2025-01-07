@@ -1,10 +1,9 @@
 use crate::{
     client::CefClient, error::Result, net::CefRequestContext, prelude::*, string::CefString,
-    view::CefWindowInfo, CefBrowserView, CefChromeToolbarType, CefState,
+    view::CefWindowInfo, CefBrowserView, CefState,
 };
 use cef_sys::{
-    cef_browser_host_create_browser_sync, cef_browser_settings_t, cef_browser_t, cef_client_t,
-    cef_gesture_command_t,
+    cef_browser_host_create_browser_sync, cef_browser_settings_t, cef_browser_t,
 };
 use std::{ffi::c_int, ptr::null_mut};
 

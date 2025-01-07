@@ -21,6 +21,12 @@ impl Drop for CefStringMultiMap {
     }
 }
 
+impl Default for CefStringMultiMap {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl CefStringMultiMap {
     /// See [cef_string_multimap_alloc]
     pub fn new() -> Self {

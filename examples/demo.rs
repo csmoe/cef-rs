@@ -1,10 +1,11 @@
-use std::sync::Arc;
-
+#[cfg(target_os = "macos")]
+use cef::LibraryLoader;
 use cef::{
     CefApp, CefArgs, CefBrowser, CefBrowserSettings, CefBrowserView, CefClient,
     CefContextMenuHandler, CefLifeSpanHandler, CefLoadHandler, CefSettings, CefString,
-    LibraryLoader, PanelDelegate, ViewDelegate, WindowDelegate,
+    PanelDelegate, ViewDelegate, WindowDelegate,
 };
+use std::sync::Arc;
 
 #[derive(Debug, Clone, Copy)]
 struct Application;
@@ -45,7 +46,7 @@ impl ViewDelegate for DemoWindow {
 }
 impl PanelDelegate for DemoWindow {}
 impl WindowDelegate for DemoWindow {
-    fn on_window_created(&self, mut window: cef::CefWindow) {}
+    fn on_window_created(&self, window: cef::CefWindow) {}
 
     fn on_window_destroyed(&self, _window: cef::CefWindow) {
         cef::quit_message_loop();
@@ -53,6 +54,7 @@ impl WindowDelegate for DemoWindow {
 }
 
 fn main() {
+    #[cfg(target_os = "macos")]
     {
         let loader = LibraryLoader::new(&std::env::current_exe().unwrap(), false);
         loader.load().unwrap();
