@@ -1,7 +1,7 @@
 #!/usr/bin/env -S RUSTFLAGS=-Copt-level=3 cargo +nightly --config ../.cargo/config.toml -v -Zscript
 ---cargo
 [dependencies]
-ureq = "2"
+ureq = { version = "2", features = [ "json" ] }
 tar = "0"
 toml = { version = "0.8", features = [ "parse" ] }
 bzip2 = "0"
@@ -10,10 +10,14 @@ sha1_smol = "1"
 indicatif = "0"
 ---
 
+use std::env;
+use std::ops::Deref;
+use std::fs::{self, File};
 use std::io::Write;
-const DOWNLOAD_TEMPLATE: &str =
-    "{msg} {spinner:.green} [{elapsed_precise}] [{wide_bar:.cyan/blue}] {bytes}/{total_bytes} ({eta})";
+use std::path::{Path, PathBuf};
+use std::process::{exit, Command};
 
+const DOWNLOAD_TEMPLATE: &str = "{msg} {spinner:.green} [{elapsed_precise}] [{wide_bar:.cyan/blue}] {bytes}/{total_bytes} ({eta})";
 const HELP: &str = r#"
 Usage:
     on *nix platform: ./upgrade.rs <target> [ --download | --bindgen ]
@@ -38,69 +42,59 @@ const TARGETS: &[&str] = &[
 const URL: &str = "https://cef-builds.spotifycdn.com";
 
 fn main() {
-    use std::ops::Deref;
-    let args = std::env::args().collect::<Vec<_>>();
+    let args = env::args().collect::<Vec<_>>();
     let args = args.iter().map(|s| s.deref()).collect::<Vec<_>>();
 
-    match args.as_slice() {
-        [_, target @ _, "--download", ..] => {
-            if TARGETS.contains(target) {
-                let (os, arch) = target_to_os_arch(target);
-                let cef_path = std::env::var(&format!("CEF_PATH_{os}_{arch}")).map(std::path::PathBuf::from).unwrap();
-                let archive_dir = download_prebuilt_cef(target, &cef_path);
-                build_cef_dll_wrapper(&cef_path, &archive_dir, &os);
-            } else {
-                eprintln!("expected targets: {TARGETS:?}");
-                std::process::exit(1);
-            }
+    match &args[1..] {
+        [target, "--download"] if TARGETS.contains(target) => {
+            let (os, arch) = target_to_os_arch(target);
+            let cef_path = env::var(&format!("CEF_PATH_{os}_{arch}"))
+                .map(PathBuf::from)
+                .expect("CEF_PATH environment variable not set");
+            let archive_dir = download_prebuilt_cef(target, &cef_path);
+            build_cef_dll_wrapper(&cef_path, &archive_dir, os);
         }
-        [_, target @ _, "--bindgen", ..] => {
-            if TARGETS.contains(target) {
-                let (os, arch) = target_to_os_arch(target);
-                let cef_path = std::env::var(&format!("CEF_PATH_{os}_{arch}")).map(std::path::PathBuf::from).unwrap();
-
-                bindgen(&target, &cef_path);
-            } else {
-                eprintln!("expected targets: {TARGETS:?}");
-                std::process::exit(1);
-            }
+        [target, "--bindgen"] if TARGETS.contains(target) => {
+            let (os, arch) = target_to_os_arch(target);
+            let cef_path = env::var(&format!("CEF_PATH_{os}_{arch}"))
+                .map(PathBuf::from)
+                .expect("CEF_PATH environment variable not set");
+            bindgen(target, &cef_path);
         }
         _ => {
             eprintln!("{HELP}");
-            std::process::exit(1);
+            exit(1);
         }
     }
 }
 
-fn download_prebuilt_cef(target: &str, cef_path: &std::path::Path) -> std::path::PathBuf {
+fn download_prebuilt_cef(target: &str, cef_path: &Path) -> PathBuf {
     let metadata: toml::Table =
-        toml::from_str(&std::fs::read_to_string("./Cargo.toml").unwrap()).unwrap();
+        toml::from_str(&fs::read_to_string("./Cargo.toml").unwrap()).unwrap();
     let cef_version = metadata["package"]["metadata"]["cef_version"]
         .as_str()
         .unwrap();
     println!("cef: trying to download {target} {cef_version}");
 
-    let url = std::env::var("CEF_URL").unwrap_or(URL.into());
+    let url = env::var("CEF_URL").unwrap_or_else(|_| URL.to_string());
     let platform = target_to_cef_target(target);
-    let index_resp = ureq::get(&format!("{url}/index.json"))
+    let index: serde_json::Value = ureq::get(&format!("{url}/index.json"))
         .call()
         .unwrap()
-        .into_reader();
-    let index: serde_json::Value = serde_json::from_reader(index_resp).unwrap();
-    let versions = index
-        .pointer(&format!("/{platform}/versions"))
-        .unwrap()
-        .as_array()
+        .into_json()
         .unwrap();
-    let (file, sha) = versions
+
+    let (file, sha) = index[platform]["versions"]
+        .as_array()
+        .unwrap()
         .iter()
         .find_map(|v| {
-            if v["cef_version"].as_str() == Some(&cef_version)
+            if v["cef_version"].as_str() == Some(cef_version)
                 && v["channel"].as_str() == Some("stable")
             {
                 v["files"].as_array().unwrap().iter().find_map(|f| {
                     if f["type"].as_str() == Some("minimal") {
-                        f["name"].as_str().zip(f["sha1"].as_str())
+                        Some((f["name"].as_str().unwrap(), f["sha1"].as_str().unwrap()))
                     } else {
                         None
                     }
@@ -109,74 +103,83 @@ fn download_prebuilt_cef(target: &str, cef_path: &std::path::Path) -> std::path:
                 None
             }
         })
-        .unwrap();
-    let cef_url = format!("{url}/{file}");
+        .expect("Matching CEF version not found");
 
+    let cef_url = format!("{url}/{file}");
     println!("cef: downloading url {cef_url}");
-    let download = &cef_path.parent().unwrap();
-    std::fs::create_dir_all(&download).unwrap();
-    let download_file = download.join(&file);
-    if !download_file.exists()
-        || calculate_file_sha1(std::io::BufReader::new(
-            std::fs::File::open(&download_file).unwrap(),
-        )) != sha
-    {
-        let mut f = std::fs::File::create(&download_file).unwrap();
-        let resp = ureq::get(&cef_url).call().unwrap();
-        let length: u64 = resp.header("Content-Length").unwrap().parse().unwrap();
-        let bar = indicatif::ProgressBar::new(!0);
-        bar.set_message("Downloading");
-        bar.set_style(
-            indicatif::ProgressStyle::with_template(DOWNLOAD_TEMPLATE)
-                .unwrap()
-                .progress_chars("##-"),
-        );
-        bar.set_length(length);
-        std::io::copy(&mut bar.wrap_read(resp.into_reader()), &mut f).unwrap();
+
+    let download = cef_path.parent().unwrap();
+    fs::create_dir_all(download).unwrap();
+    let download_file = download.join(file);
+
+    if !download_file.exists() || calculate_file_sha1(&download_file) != sha {
+        download_file_with_progress(&cef_url, &download_file);
     }
-    assert_eq!(
-        calculate_file_sha1(std::io::BufReader::new(
-            std::fs::File::open(&download_file).unwrap()
-        )),
-        sha,
-        "sha1sum mismatch"
-    );
+
+    assert_eq!(calculate_file_sha1(&download_file), sha, "sha1sum mismatch");
     println!("cef: downloaded into {}", download_file.display());
 
-    let decoder = bzip2::bufread::BzDecoder::new(std::io::BufReader::new(
-        std::fs::File::open(download_file).unwrap(),
-    ));
-    tar::Archive::new(decoder).unpack(&download).unwrap();
-
-    // extracted dir path
-    let extracted_dir = download.join(file.strip_suffix(".tar.bz2").unwrap());
-    // rename to long path to a shorter path
-    let (os, arch) = target_to_os_arch(&target);
-    let from = download.join(format!("archive_{os}_{arch}"));
-    if from.exists() {
-        std::fs::remove_dir_all(&from).unwrap();
-    }
-    std::fs::rename(extracted_dir, &from).unwrap();
-
-    if cef_path.exists() {
-        std::fs::remove_dir_all(&cef_path).unwrap();
-    }
-    std::fs::rename(from.join("Release"), &cef_path).unwrap();
-    if platform.contains("windows") {
-        copy_directory(&from.join("Resources"), &cef_path);
-    }
-    copy_directory(&from.join("include"), &cef_path.join("include"));
-    println!("cef: extracted into {:?}", cef_path);
-    from
+    extract_and_organize(download, file, &download_file, target, cef_path)
 }
 
-fn calculate_file_sha1(mut reader: std::io::BufReader<std::fs::File>) -> String {
+fn download_file_with_progress(url: &str, path: &Path) {
+    let mut file = File::create(path).unwrap();
+    let resp = ureq::get(url).call().unwrap();
+    let length: u64 = resp.header("Content-Length").unwrap().parse().unwrap();
+
+    let bar = indicatif::ProgressBar::new(length);
+    bar.set_style(
+        indicatif::ProgressStyle::with_template(DOWNLOAD_TEMPLATE)
+            .unwrap()
+            .progress_chars("##-"),
+    );
+    bar.set_message("Downloading");
+
+    std::io::copy(&mut bar.wrap_read(resp.into_reader()), &mut file).unwrap();
+}
+
+fn extract_and_organize(
+    download_path: &Path,
+    file_name: &str,
+    download_file: &Path,
+    target: &str,
+    cef_path: &Path,
+) -> PathBuf {
+    let decoder =
+        bzip2::bufread::BzDecoder::new(std::io::BufReader::new(File::open(download_file).unwrap()));
+    tar::Archive::new(decoder).unpack(download_path).unwrap();
+
+    let extracted_dir = download_path.join(file_name.strip_suffix(".tar.bz2").unwrap());
+    let (os, arch) = target_to_os_arch(target);
+    let archive_dir = download_path.join(format!("archive_{os}_{arch}"));
+
+    if archive_dir.exists() {
+        fs::remove_dir_all(&archive_dir).unwrap();
+    }
+    fs::rename(extracted_dir, &archive_dir).unwrap();
+
+    if cef_path.exists() {
+        fs::remove_dir_all(cef_path).unwrap();
+    }
+    fs::rename(archive_dir.join("Release"), cef_path).unwrap();
+
+    if target.contains("windows") {
+        copy_directory(&archive_dir.join("Resources"), cef_path);
+    }
+    copy_directory(&archive_dir.join("include"), &cef_path.join("include"));
+
+    println!("cef: extracted into {:?}", cef_path);
+    archive_dir
+}
+
+fn calculate_file_sha1(path: &Path) -> String {
     use std::io::Read;
+    let mut file = std::io::BufReader::new(File::open(path).unwrap());
     let mut sha1 = sha1_smol::Sha1::new();
-    let mut buffer = [0; 1024];
+    let mut buffer = [0; 8192];
 
     loop {
-        let count = reader.read(&mut buffer).unwrap();
+        let count = file.read(&mut buffer).unwrap();
         if count == 0 {
             break;
         }
@@ -186,13 +189,13 @@ fn calculate_file_sha1(mut reader: std::io::BufReader<std::fs::File>) -> String 
     sha1.digest().to_string()
 }
 
-fn bindgen(target: &str, cef_path: &std::path::Path) {
-    let mut g = std::process::Command::new("bindgen");
-    let binding = target.replace('-', "_") + ".rs";
-    g.args([
+fn bindgen(target: &str, cef_path: &Path) {
+    let binding = format!("src/bindings/{}.rs", target.replace('-', "_"));
+    let mut cmd = Command::new("bindgen");
+    cmd.args([
         "wrapper.h",
         "-o",
-        &format!("src/bindings/{binding}"),
+        &binding,
         "--default-enum-style=rust_non_exhaustive",
         "--allowlist-type",
         "cef_.*",
@@ -202,62 +205,81 @@ fn bindgen(target: &str, cef_path: &std::path::Path) {
         ".*_mask_t",
         "--with-derive-custom-struct",
         r#".*=crate::FfiRc"#,
-        // clang args
         "--",
         &format!("-I{}", cef_path.display()),
         &format!("--target={target}"),
     ]);
+
     if target.contains("apple") {
-        let output = std::process::Command::new("xcrun")
+        let sdk_path = Command::new("xcrun")
             .args(["--sdk", "macosx", "--show-sdk-path"])
             .output()
-            .unwrap();
-        let path = String::from_utf8_lossy(&output.stdout).trim().to_string();
-        g.arg(format!("--sysroot={path}"));
+            .unwrap()
+            .stdout;
+        cmd.arg(format!(
+            "--sysroot={}",
+            String::from_utf8_lossy(&sdk_path).trim()
+        ));
     }
 
-    println!("cef: bindgen cmd={g:?}");
-    let output = g.output().unwrap();
+    println!("cef: bindgen cmd={:?}", cmd);
+    let output = cmd.output().unwrap();
     std::io::stdout().write_all(&output.stdout).unwrap();
     std::io::stderr().write_all(&output.stderr).unwrap();
     assert!(output.status.success());
 }
 
-fn build_cef_dll_wrapper(cef_path: &std::path::Path, archive_dir: &std::path::Path, os: &str) {
-    let lib_name = format!("libcef_dll_wrapper.{}", if os == "windows" { "lib" } else { "a" });
+fn build_cef_dll_wrapper(cef_path: &Path, archive_dir: &Path, os: &str) {
+    let lib_name = format!(
+        "libcef_dll_wrapper.{}",
+        if os == "windows" { "lib" } else { "a" }
+    );
     if cef_path.join(&lib_name).exists() {
         println!("cef: {lib_name} already exists, skip building");
         return;
     }
+
     let build_dir = archive_dir.join("build");
-    std::fs::create_dir_all(&build_dir).unwrap();
-    let mut g = std::process::Command::new("cmake");
-    g.current_dir(&build_dir).args([
-        r#"-G Ninja"#,
-        "-DCMAKE_OBJECT_PATH_MAX=500",
-        "-DCMAKE_BUILD_TYPE=RelWithDebInfo",
-        ".."
-    ]);
-    println!("cef: build cef_dll_wrapper cmd={g:?}");
-    let output = g.output().unwrap();
-    std::io::stdout().write_all(&output.stdout).unwrap();
-    std::io::stderr().write_all(&output.stderr).unwrap();
-    assert!(output.status.success());
+    fs::create_dir_all(&build_dir).unwrap();
 
-    let mut g = std::process::Command::new("ninja");
-    g.current_dir(&build_dir).arg("libcef_dll_wrapper");
-    let output = g.output().unwrap();
-    std::io::stdout().write_all(&output.stdout).unwrap();
-    std::io::stderr().write_all(&output.stderr).unwrap();
-    assert!(output.status.success());
+    let cmake_output = Command::new("cmake")
+        .current_dir(&build_dir)
+        .args([
+            "-G",
+            "Ninja",
+            "-DCMAKE_OBJECT_PATH_MAX=500",
+            "-DCMAKE_BUILD_TYPE=RelWithDebInfo",
+            "..",
+        ])
+        .output()
+        .unwrap();
 
-    std::fs::copy(&build_dir.join("libcef_dll_wrapper").join(&lib_name), &cef_path.join(&lib_name)).unwrap();
+    print_command_output(&cmake_output);
+
+    let ninja_output = Command::new("ninja")
+        .current_dir(&build_dir)
+        .arg("libcef_dll_wrapper")
+        .output()
+        .unwrap();
+
+    print_command_output(&ninja_output);
+
+    fs::copy(
+        build_dir.join("libcef_dll_wrapper").join(&lib_name),
+        cef_path.join(&lib_name),
+    )
+    .unwrap();
 }
 
-fn copy_directory(src: &std::path::Path, dst: &std::path::Path) {
-    std::fs::create_dir_all(dst).unwrap();
+fn print_command_output(output: &std::process::Output) {
+    std::io::stdout().write_all(&output.stdout).unwrap();
+    std::io::stderr().write_all(&output.stderr).unwrap();
+    assert!(output.status.success());
+}
 
-    for entry in std::fs::read_dir(src).unwrap() {
+fn copy_directory(src: &Path, dst: &Path) {
+    fs::create_dir_all(dst).unwrap();
+    for entry in fs::read_dir(src).unwrap() {
         let entry = entry.unwrap();
         let src_path = entry.path();
         let dst_path = dst.join(entry.file_name());
@@ -265,7 +287,7 @@ fn copy_directory(src: &std::path::Path, dst: &std::path::Path) {
         if entry.file_type().unwrap().is_dir() {
             copy_directory(&src_path, &dst_path);
         } else {
-            std::fs::copy(&src_path, &dst_path).unwrap();
+            fs::copy(&src_path, &dst_path).unwrap();
         }
     }
 }
@@ -280,7 +302,7 @@ fn target_to_cef_target(target: &str) -> &str {
         "x86_64-unknown-linux-gnu" => "linux64",
         "arm-unknown-linux-gnueabi" => "linuxarm",
         "aarch64-unknown-linux-gnu" => "linuxarm64",
-        v @ _ => panic!("unsupported {v:?}"),
+        v => panic!("unsupported {v:?}"),
     }
 }
 
@@ -294,6 +316,6 @@ fn target_to_os_arch(target: &str) -> (&str, &str) {
         "x86_64-unknown-linux-gnu" => ("linux", "x86_64"),
         "arm-unknown-linux-gnueabi" => ("linux", "arm"),
         "aarch64-unknown-linux-gnu" => ("linux", "aarch64"),
-        v @ _ => panic!("unsupported {v:?}"),
+        v => panic!("unsupported {v:?}"),
     }
 }
