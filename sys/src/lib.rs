@@ -6,32 +6,7 @@
     clippy::all
 )]
 mod bindings;
-
-use std::ptr::null_mut;
-
 pub use bindings::*;
-
-impl Default for _cef_string_utf16_t {
-    fn default() -> Self {
-        Self {
-            str_: null_mut(),
-            length: 0,
-            dtor: None,
-        }
-    }
-}
-
-impl Default for cef_log_severity_t {
-    fn default() -> Self {
-        Self::LOGSEVERITY_DEFAULT
-    }
-}
-
-impl Default for cef_log_items_t {
-    fn default() -> Self {
-        Self::LOG_ITEMS_DEFAULT
-    }
-}
 
 #[cfg(test)]
 mod test {

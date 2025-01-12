@@ -1620,6 +1620,9 @@ impl<'a> ParseTree<'a> {
                 continue;
             };
             let ty = arg_ty.ty.to_token_stream().to_string();
+            if ty == quote! { ::std::os::raw::c_void }.to_string() {
+                continue;
+            }
             let ty = make_rust_type_name(&ty).unwrap_or(ty);
             if rust_name == ty.as_str() {
                 continue;
@@ -2012,7 +2015,7 @@ impl<'a> ParseTree<'a> {
                     }
                 }
             }
-            
+
             pub trait #wrap_trait : #impl_trait {
                 fn wrap_rc(&mut self, object: *mut RcImpl<#name_ident, Self>);
             }

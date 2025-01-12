@@ -2,9 +2,9 @@
 resolver = "2"
 
 members = [
-    "cef",
-    "sys",
     "update-bindings",
+    "sys",
+    "cef",
 ]
 
 [workspace.package]
@@ -14,6 +14,7 @@ license = "Apache-2.0 OR MIT"
 authors = [
     "Wu Yu Wei <yuweiwu@pm.me>",
     "Bill Avery <wravery@gmail.com>",
+    "csmoe <csmoe@msn.com>",
 ]
 repository = "https://github.com/wusyong/cef-rs"
 

@@ -1,28 +1,12 @@
-#!/usr/bin/env -S RUSTFLAGS=-Copt-level=3 cargo +nightly --config ../.cargo/config.toml -v -Zscript
----cargo
-[dependencies]
-ureq = { version = "2", features = [ "json" ] }
-tar = "0"
-toml = { version = "0.8", features = [ "parse" ] }
-bzip2 = "0"
-serde_json = "1"
-sha1_smol = "1"
-indicatif = "0"
----
-
-use std::env;
-use std::ops::Deref;
-use std::fs::{self, File};
-use std::io::Write;
-use std::path::{Path, PathBuf};
-use std::process::{exit, Command};
+use crate::dirs;
+use std::{
+    env,
+    fs::{self, File},
+    path::{Path, PathBuf},
+    process::Command,
+};
 
 const DOWNLOAD_TEMPLATE: &str = "{msg} {spinner:.green} [{elapsed_precise}] [{wide_bar:.cyan/blue}] {bytes}/{total_bytes} ({eta})";
-const HELP: &str = r#"
-Usage:
-    on *nix platform: ./upgrade.rs <target> [ --download | --bindgen ]
-    on windows platform: cargo +nightly --config ../.cargo/.config.toml -Zscript upgrade.rs <target> [ --download | --bindgen ]
-"#;
 
 const TARGETS: &[&str] = &[
     // macos
@@ -41,40 +25,27 @@ const TARGETS: &[&str] = &[
 
 const URL: &str = "https://cef-builds.spotifycdn.com";
 
-fn main() {
-    let args = env::args().collect::<Vec<_>>();
-    let args = args.iter().map(|s| s.deref()).collect::<Vec<_>>();
+pub fn download(target: &str) -> PathBuf {
+    assert!(TARGETS.contains(&target), "unsupported target {target}");
+    let (os, arch) = target_to_os_arch(target);
+    let cef_path = dirs::get_cef_root(os, arch);
+    download_prebuilt_cef(target, &cef_path)
+}
 
-    match &args[1..] {
-        [target, "--download"] if TARGETS.contains(target) => {
-            let (os, arch) = target_to_os_arch(target);
-            let cef_path = env::var(&format!("CEF_PATH_{os}_{arch}"))
-                .map(PathBuf::from)
-                .expect("CEF_PATH environment variable not set");
-            let archive_dir = download_prebuilt_cef(target, &cef_path);
-            build_cef_dll_wrapper(&cef_path, &archive_dir, os);
-        }
-        [target, "--bindgen"] if TARGETS.contains(target) => {
-            let (os, arch) = target_to_os_arch(target);
-            let cef_path = env::var(&format!("CEF_PATH_{os}_{arch}"))
-                .map(PathBuf::from)
-                .expect("CEF_PATH environment variable not set");
-            bindgen(target, &cef_path);
-        }
-        _ => {
-            eprintln!("{HELP}");
-            exit(1);
-        }
-    }
+pub fn sys_bindgen(target: &str) -> crate::Result<()> {
+    assert!(TARGETS.contains(&target), "unsupported target {target}");
+    let (os, arch) = target_to_os_arch(target);
+    let cef_path = dirs::get_cef_root(os, arch);
+    bindgen(target, &cef_path)
+}
+
+pub fn get_target_bindings(target: &str) -> String {
+    assert!(TARGETS.contains(&target), "unsupported target {target}");
+    format!("{}.rs", target.replace('-', "_"))
 }
 
 fn download_prebuilt_cef(target: &str, cef_path: &Path) -> PathBuf {
-    let metadata: toml::Table =
-        toml::from_str(&fs::read_to_string("./Cargo.toml").unwrap()).unwrap();
-    let cef_version = metadata["package"]["metadata"]["cef_version"]
-        .as_str()
-        .unwrap();
-    println!("cef: trying to download {target} {cef_version}");
+    println!("cef: trying to download {target}");
 
     let url = env::var("CEF_URL").unwrap_or_else(|_| URL.to_string());
     let platform = target_to_cef_target(target);
@@ -89,9 +60,7 @@ fn download_prebuilt_cef(target: &str, cef_path: &Path) -> PathBuf {
         .unwrap()
         .iter()
         .find_map(|v| {
-            if v["cef_version"].as_str() == Some(cef_version)
-                && v["channel"].as_str() == Some("stable")
-            {
+            if v["channel"].as_str() == Some("stable") {
                 v["files"].as_array().unwrap().iter().find_map(|f| {
                     if f["type"].as_str() == Some("minimal") {
                         Some((f["name"].as_str().unwrap(), f["sha1"].as_str().unwrap()))
@@ -163,9 +132,7 @@ fn extract_and_organize(
     }
     fs::rename(archive_dir.join("Release"), cef_path).unwrap();
 
-    if target.contains("windows") {
-        copy_directory(&archive_dir.join("Resources"), cef_path);
-    }
+    copy_directory(&archive_dir.join("Resources"), cef_path);
     copy_directory(&archive_dir.join("include"), &cef_path.join("include"));
 
     println!("cef: extracted into {:?}", cef_path);
@@ -189,26 +156,18 @@ fn calculate_file_sha1(path: &Path) -> String {
     sha1.digest().to_string()
 }
 
-fn bindgen(target: &str, cef_path: &Path) {
-    let binding = format!("src/bindings/{}.rs", target.replace('-', "_"));
-    let mut cmd = Command::new("bindgen");
-    cmd.args([
-        "wrapper.h",
-        "-o",
-        &binding,
-        "--default-enum-style=rust_non_exhaustive",
-        "--allowlist-type",
-        "cef_.*",
-        "--allowlist-function",
-        "cef_.*",
-        "--bitfield-enum",
-        ".*_mask_t",
-        "--with-derive-custom-struct",
-        r#".*=crate::FfiRc"#,
-        "--",
-        &format!("-I{}", cef_path.display()),
-        &format!("--target={target}"),
-    ]);
+fn bindgen(target: &str, cef_path: &Path) -> crate::Result<()> {
+    let mut sys_bindings = dirs::get_sys_dir()?;
+    let mut wrapper = sys_bindings.clone();
+    sys_bindings.push("src");
+    sys_bindings.push("bindings");
+    sys_bindings.push(format!("{}.rs", target.replace('-', "_")));
+    wrapper.push("wrapper.h");
+
+    let mut clang_args = vec![
+        format!("-I{}", cef_path.display()),
+        format!("--target={target}"),
+    ];
 
     if target.contains("apple") {
         let sdk_path = Command::new("xcrun")
@@ -216,65 +175,25 @@ fn bindgen(target: &str, cef_path: &Path) {
             .output()
             .unwrap()
             .stdout;
-        cmd.arg(format!(
+        clang_args.push(format!(
             "--sysroot={}",
             String::from_utf8_lossy(&sdk_path).trim()
         ));
     }
 
-    println!("cef: bindgen cmd={:?}", cmd);
-    let output = cmd.output().unwrap();
-    std::io::stdout().write_all(&output.stdout).unwrap();
-    std::io::stderr().write_all(&output.stderr).unwrap();
-    assert!(output.status.success());
-}
+    let bindings = bindgen::Builder::default()
+        .header(wrapper.display().to_string())
+        .default_enum_style(bindgen::EnumVariation::Rust {
+            non_exhaustive: true,
+        })
+        .allowlist_type("cef_.*")
+        .allowlist_function("cef_.*")
+        .bitfield_enum(".*_mask_t")
+        .clang_args(clang_args)
+        .generate()?;
 
-fn build_cef_dll_wrapper(cef_path: &Path, archive_dir: &Path, os: &str) {
-    let lib_name = format!(
-        "libcef_dll_wrapper.{}",
-        if os == "windows" { "lib" } else { "a" }
-    );
-    if cef_path.join(&lib_name).exists() {
-        println!("cef: {lib_name} already exists, skip building");
-        return;
-    }
-
-    let build_dir = archive_dir.join("build");
-    fs::create_dir_all(&build_dir).unwrap();
-
-    let cmake_output = Command::new("cmake")
-        .current_dir(&build_dir)
-        .args([
-            "-G",
-            "Ninja",
-            "-DCMAKE_OBJECT_PATH_MAX=500",
-            "-DCMAKE_BUILD_TYPE=RelWithDebInfo",
-            "..",
-        ])
-        .output()
-        .unwrap();
-
-    print_command_output(&cmake_output);
-
-    let ninja_output = Command::new("ninja")
-        .current_dir(&build_dir)
-        .arg("libcef_dll_wrapper")
-        .output()
-        .unwrap();
-
-    print_command_output(&ninja_output);
-
-    fs::copy(
-        build_dir.join("libcef_dll_wrapper").join(&lib_name),
-        cef_path.join(&lib_name),
-    )
-    .unwrap();
-}
-
-fn print_command_output(output: &std::process::Output) {
-    std::io::stdout().write_all(&output.stdout).unwrap();
-    std::io::stderr().write_all(&output.stderr).unwrap();
-    assert!(output.status.success());
+    bindings.write_to_file(&sys_bindings)?;
+    Ok(())
 }
 
 fn copy_directory(src: &Path, dst: &Path) {
@@ -299,6 +218,7 @@ fn target_to_cef_target(target: &str) -> &str {
         "i686-pc-windows-msvc" => "windows32",
         "x86_64-pc-windows-msvc" => "windows64",
         "aarch64-pc-windows-msvc" => "windowsarm64",
+        "i686-unknown-linux-gnu" => "linux32",
         "x86_64-unknown-linux-gnu" => "linux64",
         "arm-unknown-linux-gnueabi" => "linuxarm",
         "aarch64-unknown-linux-gnu" => "linuxarm64",
@@ -314,6 +234,7 @@ fn target_to_os_arch(target: &str) -> (&str, &str) {
         "x86_64-pc-windows-msvc" => ("windows", "x86_64"),
         "aarch64-pc-windows-msvc" => ("windows", "aarch64"),
         "x86_64-unknown-linux-gnu" => ("linux", "x86_64"),
+        "i686-unknown-linux-gnu" => ("linux", "x86"),
         "arm-unknown-linux-gnueabi" => ("linux", "arm"),
         "aarch64-unknown-linux-gnu" => ("linux", "aarch64"),
         v => panic!("unsupported {v:?}"),
