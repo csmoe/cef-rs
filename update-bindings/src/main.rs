@@ -47,6 +47,13 @@ const DEFAULT_TARGET: &str = "aarch64-unknown-linux-gnu";
 #[cfg(all(target_os = "linux", target_arch = "arm"))]
 const DEFAULT_TARGET: &str = "arm-unknown-linux-gnueabi";
 
+#[cfg(all(target_os = "windows", target_arch = "x86_64"))]
+const DEFAULT_TARGET: &str = "x86_64-pc-windows-msvc";
+#[cfg(all(target_os = "windows", target_arch = "x86"))]
+const DEFAULT_TARGET: &str = "i686-pc-windows-msvc";
+#[cfg(all(target_os = "windows", target_arch = "aarch64"))]
+const DEFAULT_TARGET: &str = "aarch64-pc-windows-msvc";
+
 fn main() -> Result<()> {
     let args = Args::parse();
     let target = args.target.as_deref().unwrap_or(DEFAULT_TARGET);
