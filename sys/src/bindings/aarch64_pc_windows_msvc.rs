@@ -820,7 +820,9 @@ const _: () = {
     ["Alignment of HINSTANCE__"][::std::mem::align_of::<HINSTANCE__>() - 4usize];
     ["Offset of field: HINSTANCE__::unused"][::std::mem::offset_of!(HINSTANCE__, unused) - 0usize];
 };
-pub type HINSTANCE = *mut HINSTANCE__;
+#[repr(transparent)]
+#[derive(Debug, Copy, Clone)]
+pub struct HINSTANCE(pub *mut HINSTANCE__);
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct HWND__ {
@@ -832,7 +834,9 @@ const _: () = {
     ["Alignment of HWND__"][::std::mem::align_of::<HWND__>() - 4usize];
     ["Offset of field: HWND__::unused"][::std::mem::offset_of!(HWND__, unused) - 0usize];
 };
-pub type HWND = *mut HWND__;
+#[repr(transparent)]
+#[derive(Debug, Copy, Clone)]
+pub struct HWND(pub *mut HWND__);
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct HICON__ {

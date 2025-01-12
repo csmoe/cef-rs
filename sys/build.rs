@@ -10,8 +10,16 @@ fn main() -> Result<(), String> {
             })
         })
         .map_err(|e| format!("Couldn't get the path of shared library: {e}"))?;
+    
+    match std::env::var("CARGO_CFG_TARGET_OS") {
+        Ok(os) if os == "windows" => {
+            println!("cargo:rustc-link-lib=libcef");
+        }
+        _ => {
+            println!("cargo:rustc-link-lib=cef");
+        }
+    }
 
-    println!("cargo:rustc-link-lib=cef");
     println!("cargo:rustc-link-search={path}");
     Ok(())
 }

@@ -189,6 +189,8 @@ fn bindgen(target: &str, cef_path: &Path) -> crate::Result<()> {
         .allowlist_type("cef_.*")
         .allowlist_function("cef_.*")
         .bitfield_enum(".*_mask_t")
+        .new_type_alias("HINSTANCE")
+        .new_type_alias("HWND")
         .clang_args(clang_args)
         .generate()?;
 

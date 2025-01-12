@@ -8,6 +8,20 @@
 mod bindings;
 pub use bindings::*;
 
+#[cfg(target_os = "windows")]
+impl Default for HWND {
+    fn default() -> Self {
+        Self(std::ptr::null_mut())
+    }
+}
+
+#[cfg(target_os = "windows")]
+impl Default for HINSTANCE {
+    fn default() -> Self {
+        Self(std::ptr::null_mut())
+    }
+}
+
 #[cfg(test)]
 mod test {
     use super::*;
