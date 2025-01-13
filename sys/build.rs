@@ -10,17 +10,27 @@ fn main() -> Result<(), String> {
             })
         })
         .map_err(|e| format!("Couldn't get the path of shared library: {e}"))?;
-    
-    match std::env::var("CARGO_CFG_TARGET_OS") {
-        Ok(os) if os == "windows" => {
-            println!("cargo:rustc-link-lib=libcef");
+
+    println!("cargo::rustc-link-search={path}");
+
+    match std::env::var("CARGO_CFG_TARGET_OS").as_deref() {
+        Ok("linux") => {
+            println!("cargo::rustc-link-lib=dylib=cef");
         }
-        _ => {
-            println!("cargo:rustc-link-lib=cef");
+        Ok("windows") => {
+            println!("cargo::rustc-link-lib=dylib=libcef");
         }
+        Ok("macos") => {
+            println!("cargo::rustc-link-lib=framework=AppKit");
+
+            // println!("cargo::rustc-link-search={path}/Chromium Embedded Framework.framework");
+            println!("cargo::rustc-link-arg={path}/Chromium Embedded Framework.framework/Chromium Embedded Framework");
+
+            println!("cargo::rustc-link-arg={path}/cef_sandbox.a");
+        }
+        os => unimplemented!("unknown target {}", os.unwrap_or("(unset)")),
     }
 
-    println!("cargo:rustc-link-search={path}");
     Ok(())
 }
 

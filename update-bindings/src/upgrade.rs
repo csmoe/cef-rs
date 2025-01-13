@@ -132,7 +132,10 @@ fn extract_and_organize(
     }
     fs::rename(archive_dir.join("Release"), cef_path).unwrap();
 
-    copy_directory(&archive_dir.join("Resources"), cef_path);
+    if os != "macos" {
+        copy_directory(&archive_dir.join("Resources"), cef_path);
+    }
+
     copy_directory(&archive_dir.join("include"), &cef_path.join("include"));
 
     println!("cef: extracted into {:?}", cef_path);
@@ -164,24 +167,7 @@ fn bindgen(target: &str, cef_path: &Path) -> crate::Result<()> {
     sys_bindings.push(format!("{}.rs", target.replace('-', "_")));
     wrapper.push("wrapper.h");
 
-    let mut clang_args = vec![
-        format!("-I{}", cef_path.display()),
-        format!("--target={target}"),
-    ];
-
-    if target.contains("apple") {
-        let sdk_path = Command::new("xcrun")
-            .args(["--sdk", "macosx", "--show-sdk-path"])
-            .output()
-            .unwrap()
-            .stdout;
-        clang_args.push(format!(
-            "--sysroot={}",
-            String::from_utf8_lossy(&sdk_path).trim()
-        ));
-    }
-
-    let bindings = bindgen::Builder::default()
+    let mut bindings = bindgen::Builder::default()
         .header(wrapper.display().to_string())
         .default_enum_style(bindgen::EnumVariation::Rust {
             non_exhaustive: true,
@@ -189,10 +175,27 @@ fn bindgen(target: &str, cef_path: &Path) -> crate::Result<()> {
         .allowlist_type("cef_.*")
         .allowlist_function("cef_.*")
         .bitfield_enum(".*_mask_t")
-        .new_type_alias("HINSTANCE")
-        .new_type_alias("HWND")
-        .clang_args(clang_args)
-        .generate()?;
+        .clang_args([
+            format!("-I{}", cef_path.display()),
+            format!("--target={target}"),
+        ]);
+
+    if target.contains("windows") {
+        bindings = bindings.new_type_alias("HINSTANCE").new_type_alias("HWND");
+    } else if target.contains("apple") {
+        let sdk_path = Command::new("xcrun")
+            .args(["--sdk", "macosx", "--show-sdk-path"])
+            .output()
+            .unwrap()
+            .stdout;
+
+        bindings = bindings.clang_arg(format!(
+            "--sysroot={}",
+            String::from_utf8_lossy(&sdk_path).trim()
+        ));
+    }
+
+    let bindings = bindings.generate()?;
 
     bindings.write_to_file(&sys_bindings)?;
     Ok(())

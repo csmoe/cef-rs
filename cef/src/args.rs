@@ -19,13 +19,13 @@ impl Args {
             .iter()
             .map(|arg| arg.as_ptr())
             .collect::<Vec<*const c_char>>();
-        #[cfg(target_os = "linux")]
+        #[cfg(target_os = "windows")]
+        let main_args = Default::default();
+        #[cfg(not(target_os = "windows"))]
         let main_args = MainArgs {
             argc: _argv.len() as i32,
             argv: _argv.as_ptr() as *mut *mut _,
         };
-        #[cfg(target_os = "windows")]
-        let main_args = Default::default();
 
         Self {
             _source,

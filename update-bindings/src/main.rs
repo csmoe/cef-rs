@@ -54,6 +54,11 @@ const DEFAULT_TARGET: &str = "i686-pc-windows-msvc";
 #[cfg(all(target_os = "windows", target_arch = "aarch64"))]
 const DEFAULT_TARGET: &str = "aarch64-pc-windows-msvc";
 
+#[cfg(all(target_os = "macos", target_arch = "x86_64"))]
+const DEFAULT_TARGET: &str = "x86_64-apple-darwin";
+#[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+const DEFAULT_TARGET: &str = "aarch64-apple-darwin";
+
 fn main() -> Result<()> {
     let args = Args::parse();
     let target = args.target.as_deref().unwrap_or(DEFAULT_TARGET);

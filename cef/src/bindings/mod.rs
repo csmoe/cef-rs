@@ -32,3 +32,13 @@ pub use i686_pc_windows_msvc::*;
 mod aarch64_pc_windows_msvc;
 #[cfg(all(target_os = "windows", target_arch = "aarch64"))]
 pub use aarch64_pc_windows_msvc::*;
+
+#[cfg(all(target_os = "macos", target_arch = "x86_64"))]
+mod x86_64_apple_darwin;
+#[cfg(all(target_os = "macos", target_arch = "x86_64"))]
+pub use x86_64_apple_darwin::*;
+
+#[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+mod aarch64_apple_darwin;
+#[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+pub use aarch64_apple_darwin::*;
