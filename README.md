@@ -1,3 +1,4 @@
+# NOTE: Development continues in https://github.com/tauri-apps/cef-rs
 
 <div align="center">
   <picture>
